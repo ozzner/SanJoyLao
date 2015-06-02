@@ -1,6 +1,30 @@
 <resources>
+    <!--Created by android studio-->
     <string name="app_name">SanJoyLao</string>
-
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+
+    <!--San Joy Lao configurations-->
+    <string name="default_text">Renzo D. Santillán Ch.</string>
+
+    <!-- Navigation actionbar names -->
+    <string name="drawer_open">Cerrar</string>
+    <string name="drawer_close">Abrir</string>
+
+    <string-array name="nav_drawer_labels">
+        <item>@string/item_title_banquets</item>
+        <item>@string/item_title_meat_and_chicken</item>
+        <item>@string/item_title_soup</item>
+        <item>@string/item_title_fish</item>
+        <item>@string/item_title_vegetarian_food</item>
+        <item>@string/item_title_call_center</item>
+    </string-array>
+
+    <string name="item_title_banquets">Banquetes</string>
+    <string name="item_title_meat_and_chicken">Carnes y pollo</string>
+    <string name="item_title_soup">Sopas</string>
+    <string name="item_title_fish">Pescados</string>
+    <string name="item_title_vegetarian_food">Comida vegetariana</string>
+    <string name="item_title_call_center">Central telefónica</string>
+
 </resources>
