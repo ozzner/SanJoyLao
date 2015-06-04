@@ -6,7 +6,11 @@
     <file url="file://$PROJECT_DIR$/app/src/main/res/drawable-xhdpi" charset="windows-1252" />
     <file url="file://$PROJECT_DIR$/app/src/main/res/drawable-xxhdpi" charset="windows-1252" />
     <file url="file://$PROJECT_DIR$/app/src/main/res/drawable-xxxhdpi" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/ic_no_image.png" charset="windows-1252" />
     <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/ic_profile.png" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/list_item_normal.xml" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/list_item_pressed.xml" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/list_selector.xml" charset="windows-1252" />
     <file url="PROJECT" charset="UTF-8" />
   </component>
 </project>

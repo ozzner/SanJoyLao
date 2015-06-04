@@ -12,6 +12,7 @@
     <color name="white">#ffffff</color>
 
     <!--Gray colors-->
+    <color name="gray">#808080</color>
     <color name="gray_color_0">#DDDDDD</color>
     <color name="gray_color_1">#CCCCCC</color>
     <color name="gray_color_2">#B9B9B9</color>
