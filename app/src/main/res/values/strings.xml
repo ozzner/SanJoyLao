@@ -26,5 +26,6 @@
     <string name="item_title_fish">Pescados</string>
     <string name="item_title_vegetarian_food">Comida vegetariana</string>
     <string name="item_title_call_center">Central telefónica</string>
+    <string name="title_activity_options">Options Activity</string>
 
 </resources>

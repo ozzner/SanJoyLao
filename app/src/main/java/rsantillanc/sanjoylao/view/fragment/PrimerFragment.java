@@ -1,6 +1,7 @@
 package rsantillanc.sanjoylao.view.fragment;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -9,12 +10,15 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
 import rsantillanc.sanjoylao.R;
-import rsantillanc.sanjoylao.custom.adapter.RecyclerViewAdapter;
+import rsantillanc.sanjoylao.custom.adapter.RecyclerViewBanquetAdapter;
 import rsantillanc.sanjoylao.model.BanquetModel;
+import rsantillanc.sanjoylao.util.Const;
+import rsantillanc.sanjoylao.view.activity.OptionsActivity;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -22,7 +26,7 @@ import rsantillanc.sanjoylao.model.BanquetModel;
 public class PrimerFragment extends Fragment {
 
     private RecyclerView mRecyclerView;
-    private RecyclerViewAdapter mAdapter;
+    private RecyclerViewBanquetAdapter mAdapter;
     private ArrayList<BanquetModel>banquets;
     private LinearLayoutManager mLinearLayoutManager;
 
@@ -50,13 +54,27 @@ public class PrimerFragment extends Fragment {
         /*Setup*/
         BanquetModel model = new BanquetModel();
         banquets = model.testData();
-        mAdapter =  new RecyclerViewAdapter(banquets,activity);
+        mAdapter =  new RecyclerViewBanquetAdapter(banquets,activity);
+        mAdapter.setOnItemClickListener(new RecyclerViewBanquetAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View v, int index) {
+
+                Bundle bundle = new Bundle();
+                bundle.putSerializable(Const.TAG_BANQUET,banquets.get(index));
+                Intent in = new Intent(getActivity(), OptionsActivity.class);
+                in.putExtras(bundle);
+                startActivity(in);
+
+                Toast.makeText(getActivity(),"opening... position: " + index,Toast.LENGTH_LONG).show();
+            }
+        });
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setHasFixedSize(false);
         mLinearLayoutManager = new LinearLayoutManager(activity);
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
 
     }
+
 
 
 }

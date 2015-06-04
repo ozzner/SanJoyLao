@@ -13,18 +13,20 @@ import java.util.List;
 
 import rsantillanc.sanjoylao.R;
 import rsantillanc.sanjoylao.model.BanquetModel;
+import rsantillanc.sanjoylao.util.Const;
 
 /**
  * Created by RenzoD on 03/06/2015.
  */
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.BanquetViewHolder> {
+public class RecyclerViewBanquetAdapter extends RecyclerView.Adapter<RecyclerViewBanquetAdapter.BanquetViewHolder> {
 
     private LayoutInflater layIn;
     private List<BanquetModel> banquetItems = Collections.EMPTY_LIST;
     private Context ctx;
+    private OnItemClickListener mItemClickListener;
 
 
-    public RecyclerViewAdapter(List<BanquetModel> banquetItems, Context ctx) {
+    public RecyclerViewBanquetAdapter(List<BanquetModel> banquetItems, Context ctx) {
         this.layIn = LayoutInflater.from(ctx);
         this.banquetItems = banquetItems;
         this.ctx = ctx;
@@ -39,7 +41,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public void onBindViewHolder(BanquetViewHolder holder, int index) {
        BanquetModel banquet = banquetItems.get(index);
-       holder.tvPrice.setText(String.valueOf(banquet.getPrice()));
+       holder.tvPrice.setText(Const.PRICE_USD + String.valueOf(banquet.getPrice()));
        holder.tvName.setText(banquet.getName());
        holder.tvOptions.setText(banquet.getOption());
     }
@@ -50,7 +52,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
 
-    class BanquetViewHolder extends RecyclerView.ViewHolder {
+    class BanquetViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+
         TextView tvName;
         TextView tvOptions;
         TextView tvPrice;
@@ -62,7 +65,23 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             tvOptions = (TextView) itemView.findViewById(R.id.tv_banquet_options);
             tvPrice = (TextView) itemView.findViewById(R.id.tv_banquet_price);
             ivBanquet = (ImageView) itemView.findViewById(R.id.iv_banquet);
+            itemView.setOnClickListener(this);
         }
+
+        @Override
+        public void onClick(View v) {
+            if (mItemClickListener != null)
+                mItemClickListener.onItemClick(v,getPosition());
+        }
+    }
+
+
+    public void setOnItemClickListener(OnItemClickListener mListener){
+        this.mItemClickListener = mListener;
+    }
+
+    public interface OnItemClickListener{
+       public void onItemClick(View v , int index);
     }
 
 

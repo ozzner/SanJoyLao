@@ -26,9 +26,9 @@ public class BanquetModel implements Serializable {
     public ArrayList<BanquetModel> testData(){
 
         ArrayList<BanquetModel> model = new ArrayList<>();
-        model.add(new BanquetModel(55.65,"Banquete para 2 personas","6 opciones a elegir"));
-        model.add( new BanquetModel(155.8,"Banquete para 6 personas","2 opciones a elegir"));
-        model.add(new BanquetModel(95.88,"Banquete para 4 personas","4 opciones a elegir"));
+        model.add(new BanquetModel(55.65,"Banquete para 2 personas","6 opciones"));
+        model.add( new BanquetModel(155.8,"Banquete para 6 personas","2 opciones"));
+        model.add(new BanquetModel(95.88,"Banquete para 4 personas","4 opciones"));
 
         return model;
     }
