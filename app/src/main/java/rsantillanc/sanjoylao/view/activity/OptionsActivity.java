@@ -45,8 +45,6 @@ public class OptionsActivity extends ActionBarActivity {
     private void setUpActionBar(BanquetModel model) {
         mToolbar = (Toolbar)findViewById(R.id.toolbar_options);
         setSupportActionBar(mToolbar);
-//        getSupportActionBar().setDisplayShowHomeEnabled(true);
-//        getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         mToolbar.setTitle(model.getName());
     }
