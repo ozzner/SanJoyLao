@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,11 +41,29 @@ public class RecyclerViewOptionsAdapter extends RecyclerView.Adapter<RecyclerVie
     }
 
     @Override
-    public void onBindViewHolder(OptionsViewHolder holder, final int index) {
+    public void onBindViewHolder(final OptionsViewHolder holder, final int index) {
        OptionsModel options = optionsItems.get(index);
        holder.tvPlate1.setText(options.getPlateName1());
        holder.tvPlate1.setText(options.getPlateName1());
        holder.tvPlate2.setText(options.getPlateName2());
+
+
+       /*Listeners*/
+        holder.ivPlate1.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(ctx,"Plate name: " + holder.tvPlate1.getText(), Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
+        holder.ivPlate2.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(ctx,"Plate name: " + holder.tvPlate2.getText(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
        holder.btPedir.setOnClickListener(new OnClickListener() {
            @Override
            public void onClick(View v) {
@@ -64,6 +83,8 @@ public class RecyclerViewOptionsAdapter extends RecyclerView.Adapter<RecyclerVie
         TextView tvTitle;
         TextView tvPlate1;
         TextView tvPlate2;
+        ImageView ivPlate1;
+        ImageView ivPlate2;
         Button btPedir;
 
         public OptionsViewHolder(View itemView) {
@@ -71,6 +92,8 @@ public class RecyclerViewOptionsAdapter extends RecyclerView.Adapter<RecyclerVie
             tvTitle = (TextView) itemView.findViewById(R.id.tv_options_title);
             tvPlate1 = (TextView) itemView.findViewById(R.id.tv_plate1);
             tvPlate2 = (TextView) itemView.findViewById(R.id.tv_plate2);
+            ivPlate1 = (ImageView)itemView.findViewById(R.id.iv_plate_one);
+            ivPlate2 = (ImageView)itemView.findViewById(R.id.iv_plate_two);
             btPedir = (Button) itemView.findViewById(R.id.bt_options_pedir);
         }
 

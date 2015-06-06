@@ -9,7 +9,7 @@
         android:id="@+id/cv_item_banquet"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
+        android:foreground="@drawable/list_selector"
         android:padding="@dimen/space_16dp">
 
         <RelativeLayout
