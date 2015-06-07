@@ -19,11 +19,16 @@
         <activity
             android:name=".view.activity.OptionsActivity"
             android:label="@string/title_activity_options"
-            android:parentActivityName="rsantillanc.sanjoylao.view.activity.MainActivity" >
+            android:parentActivityName=".view.activity.MainActivity" >
+
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="rsantillanc.sanjoylao.view.activity.MainActivity" />
+        </activity>
+        <activity
+            android:name=".view.popup.DetailsOptionsPopup"
+            android:label="@string/title_activity_details_options_popup" >
         </activity>
     </application>
 
