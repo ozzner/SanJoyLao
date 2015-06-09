@@ -5,6 +5,13 @@
     android:padding="@dimen/space_16dp"
     tools:context="rsantillanc.sanjoylao.view.fragment.DescriptionFragment">
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
     <TextView
         android:id="@+id/tv_description"
         android:layout_width="wrap_content"
@@ -13,5 +20,8 @@
         android:text="@string/lorem_ipsum"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:typeface="sans" />
+
+        </LinearLayout>
+    </ScrollView>
 
 </FrameLayout>

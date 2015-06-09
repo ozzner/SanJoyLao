@@ -28,7 +28,8 @@
         </activity>
         <activity
             android:name=".view.popup.DetailsOptionsPopup"
-            android:label="@string/title_activity_details_options_popup" >
+            android:label="@string/title_activity_details_options_popup"
+            android:windowSoftInputMode="adjustResize|stateHidden">
         </activity>
     </application>
 

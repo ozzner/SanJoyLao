@@ -45,9 +45,10 @@ public class DetailsOptionsPopup extends ActionBarActivity {
 
     private void setUpRatingBar() {
         mRatingBar.setIsIndicator(true);
-        mRatingBar.setMax(6);
-        mRatingBar.setStepSize(1);
-        mRatingBar.setNumStars(4);
+        mRatingBar.setMax(10);
+        mRatingBar.setStepSize((float) 0.5);
+        mRatingBar.setNumStars(6);
+        mRatingBar.setRating((float) 2.5);
     }
 
     private void setUpViewPager() {

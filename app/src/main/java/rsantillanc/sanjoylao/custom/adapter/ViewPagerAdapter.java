@@ -30,7 +30,9 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
         this.numTabs = numTabs;
     }
 
-    CharSequence getTitlePage(int position){
+
+   @Override
+    public CharSequence getPageTitle(int position){
         Drawable image = _context.getResources().getDrawable(icons[position]);
         image.setBounds(0, 0, image.getIntrinsicWidth(), image.getIntrinsicHeight());
         SpannableString sb = new SpannableString(" ");
@@ -39,6 +41,8 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
 
         return sb;
     }
+
+
     @Override
     public Fragment getItem(int position) {
 
