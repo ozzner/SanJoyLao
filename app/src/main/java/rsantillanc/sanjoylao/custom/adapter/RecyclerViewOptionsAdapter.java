@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.Collections;
 import java.util.List;
@@ -44,7 +43,6 @@ public class RecyclerViewOptionsAdapter extends RecyclerView.Adapter<RecyclerVie
     public void onBindViewHolder(final OptionsViewHolder holder, final int index) {
        OptionsModel options = optionsItems.get(index);
        holder.tvPlate1.setText(options.getPlateName1());
-       holder.tvPlate1.setText(options.getPlateName1());
        holder.tvPlate2.setText(options.getPlateName2());
 
 
@@ -52,22 +50,21 @@ public class RecyclerViewOptionsAdapter extends RecyclerView.Adapter<RecyclerVie
         holder.ivPlate1.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(ctx,"Plate name: " + holder.tvPlate1.getText(), Toast.LENGTH_SHORT).show();
-
+                mItemClickListener.onItemClick(view, index);
             }
         });
 
         holder.ivPlate2.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(ctx,"Plate name: " + holder.tvPlate2.getText(), Toast.LENGTH_SHORT).show();
+                mItemClickListener.onItemClick(view, index);
             }
         });
 
        holder.btPedir.setOnClickListener(new OnClickListener() {
            @Override
            public void onClick(View v) {
-               Toast.makeText(v.getContext(),"Click " + index, Toast.LENGTH_SHORT).show();
+              //TODO open alertDialog.
            }
        });
 
