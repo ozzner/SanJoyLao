@@ -36,7 +36,7 @@ public class RecyclerViewOptionsAdapter extends RecyclerView.Adapter<RecyclerVie
 
     @Override
     public OptionsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View banquet = layIn.inflate(R.layout.row_item_options,parent,false);
+        View banquet = layIn.inflate(R.layout.row_options,parent,false);
         return new OptionsViewHolder(banquet);
     }
 

@@ -6,6 +6,7 @@
 
     <!--San Joy Lao configurations-->
     <string name="default_text">Renzo D. Santillán Ch.</string>
+    <string name="default_datatime">19-Jul. 19:32</string>
     <string name="lorem_ipsum">
         Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto.
         Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500,
@@ -21,15 +22,6 @@
     <string name="drawer_open">Cerrar</string>
     <string name="drawer_close">Abrir</string>
 
-    <string-array name="nav_drawer_labels">
-        <item>@string/item_title_banquets</item>
-        <item>@string/item_title_meat_and_chicken</item>
-        <item>@string/item_title_soup</item>
-        <item>@string/item_title_fish</item>
-        <item>@string/item_title_vegetarian_food</item>
-        <item>@string/item_title_call_center</item>
-    </string-array>
-
     <string name="item_title_banquets">Banquetes</string>
     <string name="item_title_meat_and_chicken">Carnes y pollo</string>
     <string name="item_title_soup">Sopas</string>
@@ -39,7 +31,11 @@
     <string name="title_activity_options">Options Activity</string>
     <string name="title_activity_details_options_popup">Detalle de opciones</string>
 
-<!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
+    <!--Tabs-->
+    <string name="tab_description">Descrip.</string>
+    <string name="tab_comments">Coment.</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!--Buttons-->
+    <string name="button_send">Enviar</string>
 </resources>

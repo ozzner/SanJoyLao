@@ -22,7 +22,8 @@
                 android:layout_width="@dimen/space_10dp"
                 android:layout_height="@dimen/editext_height"
                 android:textSize="@dimen/space_12dp"
-                android:text="@string/button_send"/>
+                android:text="@string/button_send"
+                android:background="@drawable/button_selector"/>
 
         </LinearLayout>
 

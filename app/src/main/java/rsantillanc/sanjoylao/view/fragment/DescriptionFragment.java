@@ -2,7 +2,7 @@ package rsantillanc.sanjoylao.view.fragment;
 
 
 import android.os.Bundle;
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,10 +13,13 @@ import rsantillanc.sanjoylao.R;
  * A simple {@link Fragment} subclass.
  */
 public class DescriptionFragment extends Fragment {
+    private static DescriptionFragment instance;
 
+    public static DescriptionFragment newInstance(String param1, String param2) {
+        if (instance == null)
+            instance =  new DescriptionFragment();
 
-    public DescriptionFragment() {
-        // Required empty public constructor
+        return instance;
     }
 
 

@@ -34,7 +34,7 @@ public class RecyclerViewBanquetAdapter extends RecyclerView.Adapter<RecyclerVie
 
     @Override
     public BanquetViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View banquet = layIn.inflate(R.layout.row_item_banquet,parent,false);
+        View banquet = layIn.inflate(R.layout.row_banquet,parent,false);
         return new BanquetViewHolder(banquet);
     }
 

@@ -12,7 +12,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -21,6 +20,7 @@ import rsantillanc.sanjoylao.custom.adapter.RecyclerViewOptionsAdapter;
 import rsantillanc.sanjoylao.model.BanquetModel;
 import rsantillanc.sanjoylao.model.OptionsModel;
 import rsantillanc.sanjoylao.util.Const;
+import rsantillanc.sanjoylao.view.popup.DetailsOptionsPopup;
 
 public class OptionsActivity extends ActionBarActivity {
 
@@ -65,7 +65,14 @@ public class OptionsActivity extends ActionBarActivity {
         mAdapter.setOnItemClickListener(new RecyclerViewOptionsAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View v, int index) {
-                Toast.makeText(v.getContext(),"Title: " + options.get(index).getTitle(), Toast.LENGTH_LONG).show();
+                //TODO Abrir el popup
+//                Toast.makeText(v.getContext(), "Title: " + options.get(index).getTitle(), Toast.LENGTH_LONG).show();
+
+                Intent popup = new Intent(getApplicationContext(), DetailsOptionsPopup.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable(Const.TAG_DETAILS_OPTIONS,options.get(index));
+                popup.putExtras(bundle);
+                startActivity(popup);
             }
         });
     }

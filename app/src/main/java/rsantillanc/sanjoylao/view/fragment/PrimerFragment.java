@@ -68,6 +68,7 @@ public class PrimerFragment extends Fragment {
                 Toast.makeText(getActivity(),"opening... position: " + index,Toast.LENGTH_LONG).show();
             }
         });
+
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setHasFixedSize(false);
         mLinearLayoutManager = new LinearLayoutManager(activity);

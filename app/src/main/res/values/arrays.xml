@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--Navigation drawer-->
+    <string-array name="nav_drawer_labels">
+        <item>@string/item_title_banquets</item>
+        <item>@string/item_title_meat_and_chicken</item>
+        <item>@string/item_title_soup</item>
+        <item>@string/item_title_fish</item>
+        <item>@string/item_title_vegetarian_food</item>
+        <item>@string/item_title_call_center</item>
+    </string-array>
+
+    <!--Tabs-->
+    <string-array name="tabs_names">
+        <item>@string/tab_description</item>
+        <item>@string/tab_comments</item>
+    </string-array>
+</resources>

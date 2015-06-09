@@ -60,7 +60,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_no_image"
-                    android:foreground="@drawable/list_selector"
+                    android:background="@drawable/list_selector"
                     />
 
                 <ImageView
@@ -71,7 +71,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_alignParentTop="true"
                     android:src="@drawable/ic_no_image"
-                    android:foreground="@drawable/list_selector"
+                    android:background="@drawable/list_selector"
                     />
 
                 <TextView
