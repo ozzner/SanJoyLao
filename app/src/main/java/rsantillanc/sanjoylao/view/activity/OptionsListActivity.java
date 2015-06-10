@@ -22,8 +22,7 @@ import rsantillanc.sanjoylao.model.OptionsModel;
 import rsantillanc.sanjoylao.util.Const;
 import rsantillanc.sanjoylao.view.popup.DetailsOptionsPopup;
 
-public class OptionsActivity extends ActionBarActivity {
-
+public class OptionsListActivity extends ActionBarActivity {
 
     private RecyclerView mRecyclerView;
     private RecyclerViewOptionsAdapter mAdapter;

@@ -18,7 +18,7 @@ import rsantillanc.sanjoylao.R;
 import rsantillanc.sanjoylao.custom.adapter.RecyclerViewBanquetAdapter;
 import rsantillanc.sanjoylao.model.BanquetModel;
 import rsantillanc.sanjoylao.util.Const;
-import rsantillanc.sanjoylao.view.activity.OptionsActivity;
+import rsantillanc.sanjoylao.view.activity.OptionsListActivity;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -61,7 +61,7 @@ public class PrimerFragment extends Fragment {
 
                 Bundle bundle = new Bundle();
                 bundle.putSerializable(Const.TAG_BANQUET,banquets.get(index));
-                Intent in = new Intent(getActivity(), OptionsActivity.class);
+                Intent in = new Intent(getActivity(), OptionsListActivity.class);
                 in.putExtras(bundle);
                 startActivity(in);
 

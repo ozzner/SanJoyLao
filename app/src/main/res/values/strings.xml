@@ -7,6 +7,7 @@
     <!--San Joy Lao configurations-->
     <string name="default_text">Renzo D. Santillán Ch.</string>
     <string name="default_datatime">19-Jul. 19:32</string>
+  
     <string name="lorem_ipsum">
         Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto.
         Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500,
@@ -38,4 +39,6 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <!--Buttons-->
     <string name="button_send">Enviar</string>
+    <string name="button_order">Pedir</string>
+    <string name="title_activity_options_grid">Options</string>
 </resources>

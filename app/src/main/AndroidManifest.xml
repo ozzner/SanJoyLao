@@ -17,7 +17,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".view.activity.OptionsActivity"
+            android:name=".view.activity.OptionsListActivity"
             android:label="@string/title_activity_options"
             android:parentActivityName=".view.activity.MainActivity" >
 
@@ -30,8 +30,11 @@
             android:name=".view.popup.DetailsOptionsPopup"
             android:label="@string/title_activity_details_options_popup"
             android:theme="@android:style/Theme.Holo.Light.Dialog.NoActionBar.MinWidth"
-            android:windowSoftInputMode="stateHidden|adjustResize"
-            >
+            android:windowSoftInputMode="stateHidden|adjustResize" >
+        </activity>
+        <activity
+            android:name=".view.activity.OptionsGridActivity"
+            android:label="@string/title_activity_options_grid" >
         </activity>
     </application>
 

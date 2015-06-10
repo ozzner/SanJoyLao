@@ -5,6 +5,7 @@ package rsantillanc.sanjoylao.util;
  */
 public class Const {
     public static final String PRICE_USD = "USD ";
+    public static final String PRICE_PEN = "S/. ";
     public static final String TAG_BANQUET = "BANQUET";
     public static final String TAG_DETAILS_OPTIONS = "DETAILS_OPTIONS";
 }

@@ -41,7 +41,7 @@ public class RecyclerViewBanquetAdapter extends RecyclerView.Adapter<RecyclerVie
     @Override
     public void onBindViewHolder(BanquetViewHolder holder, int index) {
        BanquetModel banquet = banquetItems.get(index);
-       holder.tvPrice.setText(Const.PRICE_USD + String.valueOf(banquet.getPrice()));
+       holder.tvPrice.setText(Const.PRICE_PEN + String.valueOf(banquet.getPrice()));
        holder.tvName.setText(banquet.getName());
        holder.tvOptions.setText(banquet.getOption());
     }
