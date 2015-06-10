@@ -4,6 +4,17 @@
     android:layout_height="match_parent"
     tools:context="rsantillanc.sanjoylao.view.activity.OptionsGridActivity">
 
+    <LinearLayout
+        android:id="@+id/container_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/toolbar_options"
+            layout="@layout/custom_toolbar" />
+
+    </LinearLayout>
 
     <ProgressBar
         android:id="@+id/pg_loader"
@@ -18,6 +29,7 @@
         android:layout_height="@dimen/editext_height"
         android:orientation="horizontal"
         android:weightSum="1"
+        android:layout_below="@+id/container_toolbar"
         android:padding="@dimen/space_4dp">
 
         <TextView

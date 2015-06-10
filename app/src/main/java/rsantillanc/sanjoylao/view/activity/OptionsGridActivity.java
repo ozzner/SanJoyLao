@@ -1,18 +1,55 @@
 package rsantillanc.sanjoylao.view.activity;
 
-import android.support.v7.app.ActionBarActivity;
+import android.content.Context;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.GridView;
+
+import java.util.ArrayList;
 
 import rsantillanc.sanjoylao.R;
+import rsantillanc.sanjoylao.custom.adapter.GridViewAdapter;
+import rsantillanc.sanjoylao.model.BanquetModel;
+import rsantillanc.sanjoylao.model.OptionsModel;
+import rsantillanc.sanjoylao.util.Const;
 
 public class OptionsGridActivity extends ActionBarActivity {
+
+    private GridViewAdapter mGridAdapter;
+    private ArrayList<OptionsModel> options;
+    private OptionsModel opModel;
+    private Toolbar mToolbar;
+    private GridView mGridView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_options_grid);
+
+        init(getApplicationContext());
+        BanquetModel model = (BanquetModel)getIntent().getSerializableExtra(Const.TAG_BANQUET);
+        setUpActionBar(model);
+    }
+
+    private void init(Context ctx) {
+        mGridView = (GridView)findViewById(R.id.gv_options);
+        mToolbar = (Toolbar)findViewById(R.id.toolbar_options);
+
+        /*Setup*/
+        opModel = new OptionsModel();
+        options = opModel.testData();
+        mGridAdapter = new GridViewAdapter(ctx,options);
+        mGridView.setAdapter(mGridAdapter);
+
+    }
+
+    private void setUpActionBar(BanquetModel model) {
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        mToolbar.setTitle(Const.PRICE_PEN + String.valueOf(model.getPrice()));
     }
 
     @Override

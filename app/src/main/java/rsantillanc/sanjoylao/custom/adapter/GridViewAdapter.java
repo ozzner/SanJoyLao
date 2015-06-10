@@ -5,17 +5,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 
 import java.util.Collections;
 import java.util.List;
 
+import rsantillanc.sanjoylao.R;
 import rsantillanc.sanjoylao.model.OptionsModel;
 
 /**
  * Created by RenzoD on 09/06/2015.
  */
-public class GridViewAdapter extends BaseAdapter {
+public class GridViewAdapter extends BaseAdapter implements View.OnClickListener{
 
+    private OptionsModel oOption;
     private LayoutInflater layIn;
     private List<OptionsModel> optionsItems = Collections.EMPTY_LIST;
     private Context ctx;
@@ -48,11 +51,33 @@ public class GridViewAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        return null;
+        View vi = convertView;
+        OptionsGridViewHolder holder;
+        oOption = (OptionsModel)getItem(position);
+
+        if (vi == null){
+            holder = new OptionsGridViewHolder();
+
+            vi =  layIn.inflate(R.layout.row_grid_options,parent,false);
+            holder.ivLoader = (ImageView)vi.findViewById(R.id.iv_loader);
+            vi.setTag(holder);
+        }else{
+            holder = (OptionsGridViewHolder)vi.getTag();
+        }
+
+        /*SetUp*/
+        holder.ivLoader.setImageResource(R.drawable.plate_3);
+
+        return vi;
+    }
+
+    @Override
+    public void onClick(View v) {
+        //TODO open details activity.
     }
 
 
     static class OptionsGridViewHolder{
-
+        ImageView ivLoader;
     }
 }
