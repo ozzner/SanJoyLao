@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="@dimen/space_8dp"
+    android:background="@color/gray_color_0"
     tools:context="rsantillanc.sanjoylao.view.fragment.DescriptionFragment">
 
     <ScrollView
@@ -20,6 +21,7 @@
         android:layout_gravity="center"
         android:text="@string/lorem_ipsum"
         android:typeface="sans"
+        android:textColor="@color/black"
       />
 
         </LinearLayout>
