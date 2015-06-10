@@ -1,11 +1,20 @@
 package rsantillanc.sanjoylao.view.activity;
 
+import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.Point;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.TypedValue;
+import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.WindowManager;
 import android.widget.GridView;
 
 import java.util.ArrayList;
@@ -15,14 +24,17 @@ import rsantillanc.sanjoylao.custom.adapter.GridViewAdapter;
 import rsantillanc.sanjoylao.model.BanquetModel;
 import rsantillanc.sanjoylao.model.OptionsModel;
 import rsantillanc.sanjoylao.util.Const;
+import rsantillanc.sanjoylao.view.popup.DetailsOptionsPopup;
 
-public class OptionsGridActivity extends ActionBarActivity {
+public class OptionsGridActivity extends ActionBarActivity implements GridViewAdapter.OnPlateClickListener {
 
     private GridViewAdapter mGridAdapter;
     private ArrayList<OptionsModel> options;
     private OptionsModel opModel;
+    private GridViewAdapter.OnPlateClickListener mListener;
     private Toolbar mToolbar;
     private GridView mGridView;
+    private int columnWidth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,9 +51,12 @@ public class OptionsGridActivity extends ActionBarActivity {
         mToolbar = (Toolbar)findViewById(R.id.toolbar_options);
 
         /*Setup*/
+
         opModel = new OptionsModel();
         options = opModel.testData();
-        mGridAdapter = new GridViewAdapter(ctx,options);
+        InitilizeGridLayout();
+        mGridAdapter = new GridViewAdapter(ctx,options,columnWidth);
+        mGridAdapter.setOnPlateClickListener(this);
         mGridView.setAdapter(mGridAdapter);
 
     }
@@ -72,5 +87,65 @@ public class OptionsGridActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+
+
+    //********************************************
+
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
+    @SuppressWarnings("deprecation")
+    public int getScreenWidth() {
+        int columnWidth;
+        WindowManager wm = (WindowManager) getApplicationContext()
+                .getSystemService(Context.WINDOW_SERVICE);
+        Display display = wm.getDefaultDisplay();
+
+        final Point point = new Point();
+        try {
+            display.getSize(point);
+        } catch (java.lang.NoSuchMethodError ignore) {
+            // Older device
+            point.x = display.getWidth();
+            point.y = display.getHeight();
+        }
+        columnWidth = point.x;
+        return columnWidth;
+    }
+
+
+    /**
+     * Method to calculate the grid dimensions Calculates number columns and
+     * columns width in grid
+     * */
+    private void InitilizeGridLayout() {
+        Resources r = getResources();
+        float padding = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
+                Const.GRID_PADDING, r.getDisplayMetrics());
+
+        // Column width
+        columnWidth = (int) ((getScreenWidth() - ((4) * padding)) /2);
+
+        // Setting number of grid columns
+        mGridView.setNumColumns(2);
+        mGridView.setColumnWidth(columnWidth);
+        mGridView.setStretchMode(GridView.NO_STRETCH);
+        mGridView.setPadding((int) padding, (int) padding, (int) padding,
+                (int) padding);
+
+        // Setting horizontal and vertical padding
+        mGridView.setHorizontalSpacing((int) padding);
+        mGridView.setVerticalSpacing((int) padding);
+    }
+
+
+    @Override
+    public void onClicked(View v) {
+
+        Intent popup = new Intent(getApplicationContext(), DetailsOptionsPopup.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(Const.TAG_DETAILS_OPTIONS,options.get(0));
+        popup.putExtras(bundle);
+        startActivity(popup);
     }
 }

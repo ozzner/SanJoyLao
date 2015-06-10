@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import java.util.Collections;
 import java.util.List;
@@ -22,14 +23,16 @@ public class GridViewAdapter extends BaseAdapter implements View.OnClickListener
     private LayoutInflater layIn;
     private List<OptionsModel> optionsItems = Collections.EMPTY_LIST;
     private Context ctx;
+    private int imgWidth;
+    private OnPlateClickListener mListener;
 
-//    OnItemClickListener mItemClickListener;
 
 
-    public GridViewAdapter(Context ctx, List<OptionsModel> optionsItems) {
+    public GridViewAdapter(Context ctx, List<OptionsModel> optionsItems,int width) {
         this.ctx = ctx;
         this.optionsItems = optionsItems;
         this.layIn = LayoutInflater.from(ctx);
+        this.imgWidth = width;
     }
 
     @Override
@@ -60,6 +63,9 @@ public class GridViewAdapter extends BaseAdapter implements View.OnClickListener
 
             vi =  layIn.inflate(R.layout.row_grid_options,parent,false);
             holder.ivLoader = (ImageView)vi.findViewById(R.id.iv_loader);
+            holder.ivLoader.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            holder.ivLoader.setLayoutParams(new RelativeLayout.LayoutParams(imgWidth,imgWidth));
+            holder.ivLoader.setOnClickListener(this);
             vi.setTag(holder);
         }else{
             holder = (OptionsGridViewHolder)vi.getTag();
@@ -73,11 +79,18 @@ public class GridViewAdapter extends BaseAdapter implements View.OnClickListener
 
     @Override
     public void onClick(View v) {
-        //TODO open details activity.
+       mListener.onClicked(v);
     }
 
+    public void setOnPlateClickListener(OnPlateClickListener listener){
+        this.mListener = listener;
+    }
 
+    public interface OnPlateClickListener{
+        void onClicked(View v);
+    }
     static class OptionsGridViewHolder{
         ImageView ivLoader;
     }
+
 }

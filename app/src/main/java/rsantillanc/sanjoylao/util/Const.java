@@ -9,4 +9,5 @@ public class Const {
     public static final String TAG_BANQUET = "BANQUET";
     public static final String TAG_DETAILS_OPTIONS = "DETAILS_OPTIONS";
     public static final String TAG_EMPTY = "Empty";
+    public static final float GRID_PADDING = 4;
 }
