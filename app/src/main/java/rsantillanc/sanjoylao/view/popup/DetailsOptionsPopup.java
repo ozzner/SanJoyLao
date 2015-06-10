@@ -1,8 +1,8 @@
 package rsantillanc.sanjoylao.view.popup;
 
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.RatingBar;
@@ -13,7 +13,7 @@ import rsantillanc.sanjoylao.model.OptionsModel;
 import rsantillanc.sanjoylao.util.Const;
 import rsantillanc.sanjoylao.util.SlidingTabLayout;
 
-public class DetailsOptionsPopup extends ActionBarActivity {
+public class DetailsOptionsPopup extends FragmentActivity {
     private OptionsModel oOption;
     private RatingBar mRatingBar;
     private SlidingTabLayout mSlindingTabLayout;

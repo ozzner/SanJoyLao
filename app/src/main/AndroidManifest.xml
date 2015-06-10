@@ -29,7 +29,9 @@
         <activity
             android:name=".view.popup.DetailsOptionsPopup"
             android:label="@string/title_activity_details_options_popup"
-            android:windowSoftInputMode="adjustResize|stateHidden">
+            android:theme="@android:style/Theme.Holo.Light.Dialog.NoActionBar.MinWidth"
+            android:windowSoftInputMode="adjustPan"
+            >
         </activity>
     </application>
 

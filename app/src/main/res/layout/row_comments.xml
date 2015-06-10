@@ -2,19 +2,20 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="@dimen/space_8dp"
+    android:padding="@dimen/space_4dp"
     android:orientation="vertical">
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="wrap_content"
-        android:layout_height="@dimen/space_56dp"
+        android:layout_height="@dimen/space_40dp"
         android:id="@+id/linearLayout"
+        android:layout_marginLeft="@dimen/space_8dp"
         android:gravity="center">
 
         <ImageView
-            android:layout_width="35dp"
-            android:layout_height="35dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:id="@+id/iv_comment_profile"
             android:src="@drawable/ic_profile" />
 
@@ -28,7 +29,8 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginRight="@dimen/space_8dp"/>
+        android:layout_marginRight="@dimen/space_8dp"
+        android:textSize="@dimen/txt_12sp"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -36,10 +38,13 @@
         android:text="@string/default_text"
         android:id="@+id/tv_comment"
         android:layout_gravity="center_vertical"
-        android:layout_marginLeft="20dp"
-        android:layout_marginStart="31dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="-10dp"
         android:layout_below="@+id/tv_comment_time"
         android:layout_toRightOf="@+id/linearLayout"
         android:layout_toEndOf="@+id/linearLayout"
+        android:textSize="@dimen/txt_12sp"
+        android:maxWidth="225dp"
+        android:maxLines="3"
         />
 </RelativeLayout>

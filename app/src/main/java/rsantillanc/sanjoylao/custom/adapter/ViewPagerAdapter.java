@@ -50,11 +50,11 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
 
         switch (position){
             case 0:
-                page = CommentsFragment.newInstance(null,null);
+                page = DescriptionFragment.newInstance(null,null);
                 break;
 
             case 1:
-                page = DescriptionFragment.newInstance(null,null);
+                page = CommentsFragment.newInstance(null,null);
                 break;
         }
 

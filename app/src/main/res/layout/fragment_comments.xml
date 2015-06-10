@@ -7,39 +7,44 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_marginTop="@dimen/space_8dp"
-        >
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:weightSum="3">
-
-            <EditText
-                android:id="@+id/et_input_comment"
-                android:layout_weight="2.5"
-                android:layout_width="0dp"
-                android:layout_height="@dimen/editext_height"/>
-
-            <Button
-                android:id="@+id/btn_send_comment"
-                android:layout_weight="0.5"
-                android:layout_width="@dimen/space_10dp"
-                android:layout_height="@dimen/editext_height"
-                android:textSize="@dimen/space_12dp"
-                android:text="@string/button_send"
-                android:background="@drawable/button_selector"/>
-
-        </LinearLayout>
+        android:orientation="vertical">
 
         <ListView
             android:id="@+id/lv_comentarios"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:divider="@color/gray_color_2"
             android:layout_weight="1"
-            android:dividerHeight="0.75dp" >
-        </ListView>
+            android:divider="@color/gray_color_0"
+            android:dividerHeight="0.75dp"></ListView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/input_comment_height"
+            android:elevation="@dimen/space_4dp"
+            android:weightSum="3">
+
+            <EditText
+                android:id="@+id/et_input_comment"
+                style="@style/CustomEditTextStyle"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2.5" />
+
+            <Space
+                android:layout_width="1dp"
+                android:layout_height="match_parent" />
+
+            <Button
+                android:id="@+id/btn_send_comment"
+                android:layout_width="@dimen/space_10dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                android:background="@drawable/button_inverse_selector"
+                android:text="@string/button_send"
+                android:textColor="@color/white"
+                android:textSize="@dimen/txt_12sp" />
+
+        </LinearLayout>
     </LinearLayout>
 
 </FrameLayout>
