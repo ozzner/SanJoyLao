@@ -10,11 +10,7 @@
         <activity
             android:name=".view.activity.MainActivity"
             android:label="@string/app_name" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".view.activity.OptionsListActivity"
@@ -35,6 +31,15 @@
         <activity
             android:name=".view.activity.OptionsGridActivity"
             android:label="@string/title_activity_options_grid" >
+        </activity>
+        <activity
+            android:name=".view.activity.LoginActivity"
+            android:label="@string/title_activity_login" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
     </application>
 

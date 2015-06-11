@@ -50,4 +50,8 @@
     <string name="button_send">Enviar</string>
     <string name="button_order">Pedir</string>
     <string name="title_activity_options_grid">Options</string>
+    <string name="title_activity_login">Inicio sesión</string>
+
+    <!--Login-->
+    <string name="tv_login">Iniciar sesión</string>
 </resources>

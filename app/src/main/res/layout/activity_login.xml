@@ -1,0 +1,89 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="rsantillanc.sanjoylao.view.activity.LoginActivity">
+
+    <LinearLayout
+        android:id="@+id/container_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/custom_toolbar" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/lay_container"
+        android:weightSum="3">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:id="@+id/lay_logo"
+            android:layout_weight="2.4"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/iv_logo_login"
+                android:src="@drawable/logo" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:id="@+id/lay_midde"
+            android:layout_weight="0.2"
+            android:gravity="center"
+           >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/red"
+                android:layout_marginLeft="@dimen/space_16dp"
+                android:layout_marginRight="@dimen/space_16dp"
+                android:layout_gravity="center_horizontal" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tv_login"
+                android:gravity="bottom"
+                android:layout_marginTop="@dimen/space_4dp"
+                android:id="@+id/textView4" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.4"
+            android:gravity="center"
+            android:id="@+id/lay_buttons">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_google"
+                android:id="@+id/iv_google" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_facebook"
+                android:id="@+id/iv_facebook" />
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>
