@@ -12,26 +12,40 @@ import android.view.MenuItem;
 import android.view.View;
 
 import rsantillanc.sanjoylao.R;
+import rsantillanc.sanjoylao.view.fragment.DescriptionFragment;
 import rsantillanc.sanjoylao.view.fragment.DrawerFragment;
-import rsantillanc.sanjoylao.view.fragment.PrimerFragment;
-import rsantillanc.sanjoylao.view.fragment.SegundoFragment;
+import rsantillanc.sanjoylao.view.fragment.BanquetsFragment;
+import rsantillanc.sanjoylao.view.fragment.InputsFragment;
+import rsantillanc.sanjoylao.view.fragment.MainFragment;
 
 
-public class MainActivity extends ActionBarActivity implements DrawerFragment.FragmentDrawerListener{
+public class MainActivity extends ActionBarActivity implements DrawerFragment.FragmentDrawerListener {
     private Toolbar toBa;
     private DrawerFragment fragDra;
+
+    /*Const*/
+    private static final int INPUT = 0;
+    private static final int RICE = 1;
+    private static final int SOUP = 2;
+    private static final int CHEF = 3;
+    private static final int CHICKEN_MEAT = 4;
+    private static final int FISH = 5;
+    private static final int VEGETARIAN = 6;
+    private static final int BANQUETS = 7;
+    private static final int DRINKS = 8;
+    private static final int CENTRAL = 9;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setUpActionBar();
-        fragDra = (DrawerFragment)getFragmentManager().findFragmentById(R.id.fragment_navigation_drawer);
+        fragDra = (DrawerFragment) getFragmentManager().findFragmentById(R.id.fragment_navigation_drawer);
         fragDra.setUp(R.id.fragment_navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout), toBa);
         fragDra.setDrawerListener(this);
-        displayView(0);
+        displayView(10);
     }
-
 
 
     private void setUpActionBar() {
@@ -67,23 +81,50 @@ public class MainActivity extends ActionBarActivity implements DrawerFragment.Fr
         displayView(position);
     }
 
+//
 
     private void displayView(int position) {
         Fragment fragment = null;
         String title = getString(R.string.app_name);
         switch (position) {
-            case 0:
-                fragment = new PrimerFragment();
-                title = getString(R.string.item_title_banquets);
+
+
+            case INPUT:
+                fragment = DescriptionFragment.newInstance(null, null);
                 break;
-            case 1:
-                fragment = new SegundoFragment();
+            case RICE:
+                fragment = DescriptionFragment.newInstance(null, null);
+                break;
+            case SOUP:
+                fragment = DescriptionFragment.newInstance(null, null);
+                break;
+            case CHEF:
+                fragment = DescriptionFragment.newInstance(null, null);
+                break;
+            case CHICKEN_MEAT:
                 title = getString(R.string.item_title_meat_and_chicken);
                 break;
-          default:
-              fragment = new SegundoFragment();
-              title = getString(R.string.item_title_soup);
+            case FISH:
+                fragment = DescriptionFragment.newInstance(null, null);
                 break;
+            case VEGETARIAN:
+                fragment = DescriptionFragment.newInstance(null, null);
+                break;
+            case BANQUETS:
+                fragment = new BanquetsFragment();
+                title = getString(R.string.item_title_banquets);
+                break;
+            case DRINKS:
+                fragment = DescriptionFragment.newInstance(null, null);
+                break;
+            case CENTRAL:
+                fragment = DescriptionFragment.newInstance(null, null);
+                break;
+
+            default:
+                fragment = MainFragment.newInstance();
+                break;
+
         }
 
         if (fragment != null) {

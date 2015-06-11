@@ -24,7 +24,7 @@ import rsantillanc.sanjoylao.view.activity.OptionsListActivity;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class PrimerFragment extends Fragment {
+public class BanquetsFragment extends Fragment {
 
     private RecyclerView mRecyclerView;
     private RecyclerViewBanquetAdapter mAdapter;
@@ -33,7 +33,7 @@ public class PrimerFragment extends Fragment {
 
 
 
-    public PrimerFragment() {
+    public BanquetsFragment() {
         // Required empty public constructor
     }
 

@@ -36,11 +36,15 @@ public class DrawerFragment extends Fragment {
     private NavigationDrawerAdapter navDraAdp;
     private View contView;
     private static String[] titles = null;
-    private static int[] icons = {R.drawable.ic_banquet
-                                 ,R.drawable.ic_meat_and_chicken
+    private static int[] icons = {R.drawable.ic_input
                                  ,R.drawable.ic_soup
+                                 ,R.drawable.ic_rice
+                                 ,R.drawable.ic_chef
+                                 ,R.drawable.ic_meat_and_chicken
                                  ,R.drawable.ic_fish_food
                                  ,R.drawable.ic_vegetarian_food
+                                 ,R.drawable.ic_banquet
+                                 ,R.drawable.ic_drinks
                                  ,R.drawable.ic_phone_number};
 
     private FragmentDrawerListener drawerListener;

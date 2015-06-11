@@ -1,0 +1,65 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context="rsantillanc.sanjoylao.view.fragment.MainFragment">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/iv_logo_main"
+            android:layout_gravity="center"
+            android:src="@drawable/logo"
+            android:layout_marginTop="78dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="italic"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="@string/motto"
+            android:id="@+id/tv_motto"
+            android:layout_gravity="center_horizontal|bottom"
+            android:layout_marginTop="35dp"
+            android:layout_below="@+id/iv_logo_main"
+            android:layout_centerHorizontal="true" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="1"
+            android:layout_marginTop="@dimen/space_14dp"
+         android:layout_below="@+id/tv_motto">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="+51 947387583"
+                android:id="@+id/textView"
+                android:layout_below="@+id/tv_motto"
+                android:layout_centerHorizontal="true"
+                android:layout_weight="0.5"
+                android:gravity="center" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="01 426-7799"
+                android:id="@+id/textView2"
+                android:layout_weight="0.5"
+                android:gravity="center" />
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</FrameLayout>

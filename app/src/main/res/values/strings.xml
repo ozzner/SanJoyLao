@@ -7,6 +7,7 @@
     <!--San Joy Lao configurations-->
     <string name="default_text">Renzo D. Santillán Ch.</string>
     <string name="default_datatime">19-Jul. 19:32</string>
+    <string name="motto">\"Donde usted es parte de la familia...\"</string>
   
     <string name="lorem_ipsum">
         Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto.
@@ -23,12 +24,19 @@
     <string name="drawer_open">Cerrar</string>
     <string name="drawer_close">Abrir</string>
 
-    <string name="item_title_banquets">Banquetes</string>
-    <string name="item_title_meat_and_chicken">Carnes y pollo</string>
+    <string name="item_title_inputs">Entradas</string>
     <string name="item_title_soup">Sopas</string>
+    <string name="item_title_rices">Arroces</string>
+    <string name="item_title_chef">Recomendaciones del chef</string>
+    <string name="item_title_meat_and_chicken">Pollos y carnes</string>
     <string name="item_title_fish">Pescados</string>
     <string name="item_title_vegetarian_food">Comida vegetariana</string>
+    <string name="item_title_banquets">Banquetes</string>
+    <string name="item_title_drinks">Vinos y bebidas</string>
     <string name="item_title_call_center">Central telefónica</string>
+
+
+
     <string name="title_activity_options">Options Activity</string>
     <string name="title_activity_details_options_popup">Detalle de opciones</string>
 
@@ -37,6 +45,7 @@
     <string name="tab_description">Descrip.</string>
     <string name="tab_comments">Coment.</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
     <!--Buttons-->
     <string name="button_send">Enviar</string>
     <string name="button_order">Pedir</string>
