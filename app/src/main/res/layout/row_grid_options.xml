@@ -16,8 +16,24 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:src="@drawable/ic_loading" />
+        android:src="@drawable/ic_loading">
 
+
+
+    </ImageView>
+
+    <TextView
+        style="@style/custom_textview"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/editext_height"
+        android:text="@string/default_text"
+        android:id="@+id/textView3"
+        android:textSize="@dimen/txt_14sp"
+        android:background="@color/gray_trans_50"
+        android:gravity="center"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        />
     <!-- Thumbnail Image -->
 
     <!--<com.android.volley.toolbox.NetworkImageView-->
