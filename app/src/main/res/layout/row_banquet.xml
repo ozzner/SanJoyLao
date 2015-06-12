@@ -22,12 +22,14 @@
                 android:id="@+id/lay_image"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/space_8dp">
+                android:layout_marginRight="@dimen/space_8dp"
+                android:padding="@dimen/space_4dp">
                 <ImageView
                     android:id="@+id/iv_banquet"
-                    android:layout_width="65dp"
-                    android:layout_height="65dp"
-                    android:src="@drawable/ic_no_image"/>
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/plate_2"/>
             </LinearLayout>
 
 

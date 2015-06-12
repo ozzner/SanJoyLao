@@ -18,19 +18,20 @@
 
     <ImageView
         android:layout_marginLeft="@dimen/space_12dp"
-        android:layout_width="40dp"
-        android:layout_height="36dp"
-        android:src="@drawable/abc_ic_ab_back_mtrl_am_alpha"
+        android:layout_width="42dp"
+        android:layout_height="38dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_drinks"
         android:id="@+id/iv_icons_nav"
        />
 
     <TextView
         android:id="@+id/tv_title"
         android:layout_width="match_parent"
-        android:layout_height="36dp"
+        android:layout_height="38dp"
         android:gravity="left|center"
         android:layout_marginLeft="@dimen/space_24dp"
-        android:textSize="@dimen/txt_14sp"
+        android:textSize="@dimen/txt_15sp"
         android:text="@string/default_text"
         android:textColor="@color/black"
         />
