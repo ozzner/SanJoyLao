@@ -1,12 +1,16 @@
 package rsantillanc.sanjoylao.custom.adapter;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -80,6 +84,27 @@ public class ListViewAdapter extends BaseAdapter {
                     soupHolder.tvPrice1 = (TextView) vi.findViewById(R.id.tv_price1);
                     soupHolder.tvPrice2 = (TextView) vi.findViewById(R.id.tv_price2);
                     soupHolder.tvPrice3 = (TextView) vi.findViewById(R.id.tv_price3);
+                    soupHolder.btOrder  = (Button)vi.findViewById(R.id.bt_order_soup);
+                    final String[] array =  {"Personal " + soupHolder.tvPrice1.getText().toString(),
+                                        "Mediana " + soupHolder.tvPrice2.getText().toString(),
+                                        "Grande " +soupHolder.tvPrice3.getText().toString()};
+
+                    soupHolder.btOrder.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            AlertDialog.Builder builder = new AlertDialog.Builder(_context);
+                            builder.setTitle("Opciones")
+                                    .setSingleChoiceItems(array, -1, new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            dialog.cancel();
+                                            Toast.makeText(_context,"Pedido correcto!",Toast.LENGTH_LONG).show();
+                                        }
+                                    });
+
+                            builder.create().show();
+                        }
+                    });
 
                     vi.setTag(soupHolder);
 
@@ -139,6 +164,7 @@ public class ListViewAdapter extends BaseAdapter {
     static class SoupViewHolder {
         TextView tvName, tvTitle1, tvTitle2, tvTitle3, tvPrice1, tvPrice2, tvPrice3;
         ImageView ivImageSoup;
+        Button btOrder;
     }
 
 

@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -35,6 +36,7 @@ public class DrawerFragment extends Fragment {
     private DrawerLayout draLay;
     private NavigationDrawerAdapter navDraAdp;
     private View contView;
+    private TextView tvUsername;
     private static String[] titles = null;
     private static int[] icons = {R.drawable.ic_input
                                  ,R.drawable.ic_soup
@@ -95,6 +97,7 @@ public class DrawerFragment extends Fragment {
 
         final View layView = inflater.inflate(R.layout.fragment_navigation_drawer,container,false);
         recView = (RecyclerView)layView.findViewById(R.id.drawerList);
+        tvUsername = (TextView)layView.findViewById(R.id.tv_username_main);
 
         navDraAdp = new NavigationDrawerAdapter(getItems(),getActivity());
         recView.setAdapter(navDraAdp);

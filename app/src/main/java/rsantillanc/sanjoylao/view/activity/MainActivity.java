@@ -7,9 +7,14 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.widget.Toast;
+
+import java.lang.reflect.Method;
 
 import rsantillanc.sanjoylao.R;
 import rsantillanc.sanjoylao.view.fragment.BanquetsFragment;
@@ -20,6 +25,7 @@ import rsantillanc.sanjoylao.view.fragment.SoupFragment;
 
 
 public class MainActivity extends ActionBarActivity implements DrawerFragment.FragmentDrawerListener {
+    private static final String TAG = MainActivity.class.getSimpleName();
     private Toolbar toBa;
     private DrawerFragment fragDra;
 
@@ -69,8 +75,14 @@ public class MainActivity extends ActionBarActivity implements DrawerFragment.Fr
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_orders) {
+            Toast.makeText(getApplication(),"Abre mis pedidos",Toast.LENGTH_LONG).show();
             return true;
+        }else if (id == R.id.action_about){
+            Toast.makeText(getApplication(),"San Joy Lao App|V0.9.3",Toast.LENGTH_LONG).show();
+        }else {
+//            finish();
+            Toast.makeText(getApplication(),"Closing...",Toast.LENGTH_LONG).show();
         }
 
         return super.onOptionsItemSelected(item);
@@ -136,5 +148,27 @@ public class MainActivity extends ActionBarActivity implements DrawerFragment.Fr
             // set the custom_toolbar title
             getSupportActionBar().setTitle(title);
         }
+    }
+
+    @Override
+    public boolean onMenuOpened(int featureId, Menu menu)
+    {
+        if(featureId == Window.FEATURE_ACTION_BAR && menu != null){
+            if(menu.getClass().getSimpleName().equals("MenuBuilder")){
+                try{
+                    Method m = menu.getClass().getDeclaredMethod(
+                            "setOptionalIconsVisible", Boolean.TYPE);
+                    m.setAccessible(true);
+                    m.invoke(menu, true);
+                }
+                catch(NoSuchMethodException e){
+                    Log.e(TAG, "onMenuOpened", e);
+                }
+                catch(Exception e){
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+        return super.onMenuOpened(featureId, menu);
     }
 }

@@ -2,7 +2,9 @@
     <!--Created by android studio-->
     <string name="app_name">San Joy Lao</string>
     <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_logout">Cerrar sesión</string>
+    <string name="action_about">Acerca de</string>
+    <string name="action_orders">Mis pedidos</string>
 
     <!--San Joy Lao configurations-->
     <string name="default_text">Renzo D. Santillán Ch.</string>
