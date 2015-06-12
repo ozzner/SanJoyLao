@@ -23,9 +23,9 @@ public class CommentModel implements Serializable {
     public CommentModel() {
     }
 
-    public ArrayList<CommentModel> testData(){
+    public ArrayList<Object> testData(){
 
-        ArrayList<CommentModel> model = new ArrayList<>();
+        ArrayList<Object> model = new ArrayList<>();
         model.add(new CommentModel(0,"Muy bueno recomendable.","23:20"));
         model.add(new CommentModel(1,"Buen platillo, recomendable con yucas.","10:25"));
         model.add(new CommentModel(3,"Aceptable para la entrada","9:55"));

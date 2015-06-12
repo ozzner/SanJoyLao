@@ -36,4 +36,6 @@
     <!--Navigation drawer-->
     <dimen name="editext_height">45dp</dimen>
     <dimen name="input_comment_height">45dp</dimen>
+    <dimen name="button_height">25dp</dimen>
+    <dimen name="item_soup_height">120dp</dimen>
 </resources>

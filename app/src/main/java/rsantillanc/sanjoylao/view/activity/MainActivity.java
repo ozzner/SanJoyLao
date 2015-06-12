@@ -12,11 +12,11 @@ import android.view.MenuItem;
 import android.view.View;
 
 import rsantillanc.sanjoylao.R;
+import rsantillanc.sanjoylao.view.fragment.BanquetsFragment;
 import rsantillanc.sanjoylao.view.fragment.DescriptionFragment;
 import rsantillanc.sanjoylao.view.fragment.DrawerFragment;
-import rsantillanc.sanjoylao.view.fragment.BanquetsFragment;
-import rsantillanc.sanjoylao.view.fragment.InputsFragment;
 import rsantillanc.sanjoylao.view.fragment.MainFragment;
+import rsantillanc.sanjoylao.view.fragment.SoupFragment;
 
 
 public class MainActivity extends ActionBarActivity implements DrawerFragment.FragmentDrawerListener {
@@ -92,11 +92,11 @@ public class MainActivity extends ActionBarActivity implements DrawerFragment.Fr
             case INPUT:
                 fragment = DescriptionFragment.newInstance(null, null);
                 break;
-            case RICE:
-                fragment = DescriptionFragment.newInstance(null, null);
-                break;
             case SOUP:
-                fragment = DescriptionFragment.newInstance(null, null);
+                fragment = SoupFragment.newInstance();
+                break;
+            case RICE:
+                fragment = SoupFragment.newInstance();
                 break;
             case CHEF:
                 fragment = DescriptionFragment.newInstance(null, null);

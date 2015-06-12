@@ -19,6 +19,7 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_login);
         ivFacebook = (ImageView)findViewById(R.id.iv_facebook);
         ivGoogle = (ImageView)findViewById(R.id.iv_google);
@@ -26,6 +27,7 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
         ivFacebook.setOnClickListener(this);
         ivGoogle.setOnClickListener(this);
         setUpActionBar();
+
     }
 
 

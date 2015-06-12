@@ -54,4 +54,7 @@
 
     <!--Login-->
     <string name="tv_login">Iniciar sesión</string>
+    <string name="personal">Personal</string>
+    <string name="mediana">Mediana</string>
+    <string name="grande">Grande</string>
 </resources>
