@@ -22,6 +22,7 @@
     <!--TextViews-->
     <dimen name="txt_10sp">10sp</dimen>
     <dimen name="txt_12sp">12sp</dimen>
+    <dimen name="txt_13sp">13sp</dimen>
     <dimen name="txt_14sp">14sp</dimen>
     <dimen name="txt_16sp">16sp</dimen>
     <dimen name="txt_18sp">18sp</dimen>
@@ -37,5 +38,5 @@
     <dimen name="editext_height">45dp</dimen>
     <dimen name="input_comment_height">45dp</dimen>
     <dimen name="button_height">25dp</dimen>
-    <dimen name="item_soup_height">120dp</dimen>
+    <dimen name="item_soup_height">130dp</dimen>
 </resources>

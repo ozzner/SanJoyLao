@@ -85,9 +85,16 @@ public class ListViewAdapter extends BaseAdapter {
 
                 } else
                     soupHolder = (SoupViewHolder) vi.getTag();
-                soupHolder.tvPrice1.setText(String.valueOf(Const.PRICE_PEN + oSoup.getPricePersonal()));
-                soupHolder.tvPrice2.setText(String.valueOf(Const.PRICE_PEN + oSoup.getPriceMedium()));
-                soupHolder.tvPrice3.setText(String.valueOf(Const.PRICE_PEN + oSoup.getPriceBig()));
+
+                soupHolder.tvName.setText(oSoup.getTitle());
+                soupHolder.tvPrice1.setText(Const.PRICE_PEN + String.format("%1.2f", oSoup.getPricePersonal()));
+                soupHolder.tvPrice2.setText(Const.PRICE_PEN + String.format("%1.2f", oSoup.getPriceMedium()));
+                soupHolder.tvPrice3.setText(Const.PRICE_PEN + String.format("%1.2f", oSoup.getPriceBig()));
+
+                if (position % 2 == 0)
+                    soupHolder.ivImageSoup.setImageResource(R.drawable.plate_3);
+                else
+                    soupHolder.ivImageSoup.setImageResource(R.drawable.plate_2);
 
 
                 break;
