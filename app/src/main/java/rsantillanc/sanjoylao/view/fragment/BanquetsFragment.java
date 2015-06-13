@@ -28,7 +28,7 @@ public class BanquetsFragment extends Fragment {
 
     private RecyclerView mRecyclerView;
     private RecyclerViewBanquetAdapter mAdapter;
-    private ArrayList<BanquetModel>banquets;
+    private ArrayList<Object>banquets;
     private LinearLayoutManager mLinearLayoutManager;
 
 
@@ -61,10 +61,10 @@ public class BanquetsFragment extends Fragment {
             public void onItemClick(View v, int index) {
 
                 Bundle bundle = new Bundle();
-                bundle.putSerializable(Const.TAG_BANQUET,banquets.get(index));
+                bundle.putSerializable(Const.TAG_BANQUET,(BanquetModel)banquets.get(index));
                 Intent in ;
 
-                if (banquets.get(index).isFlagOptions())
+                if (((BanquetModel)banquets.get(index)).isFlagOptions())
                     in= new Intent(getActivity(), OptionsListActivity.class);
                 else
                     in= new Intent(getActivity(), OptionsGridActivity.class);

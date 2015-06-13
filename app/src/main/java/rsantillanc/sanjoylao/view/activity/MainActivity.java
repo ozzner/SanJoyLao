@@ -21,6 +21,7 @@ import rsantillanc.sanjoylao.view.fragment.BanquetsFragment;
 import rsantillanc.sanjoylao.view.fragment.DescriptionFragment;
 import rsantillanc.sanjoylao.view.fragment.DrawerFragment;
 import rsantillanc.sanjoylao.view.fragment.MainFragment;
+import rsantillanc.sanjoylao.view.fragment.OrdersFragment;
 import rsantillanc.sanjoylao.view.fragment.SoupFragment;
 
 
@@ -31,8 +32,8 @@ public class MainActivity extends ActionBarActivity implements DrawerFragment.Fr
 
     /*Const*/
     private static final int INPUT = 0;
-    private static final int RICE = 1;
-    private static final int SOUP = 2;
+    private static final int SOUP = 1;
+    private static final int RICE = 2;
     private static final int CHEF = 3;
     private static final int CHICKEN_MEAT = 4;
     private static final int FISH = 5;
@@ -76,10 +77,15 @@ public class MainActivity extends ActionBarActivity implements DrawerFragment.Fr
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_orders) {
-            Toast.makeText(getApplication(),"Abre mis pedidos",Toast.LENGTH_LONG).show();
+
+             Fragment fragment = OrdersFragment.newInstance();
+             FragmentManager man = getSupportFragmentManager();
+             FragmentTransaction tran = man.beginTransaction();
+             tran.replace(R.id.container_body,fragment).commit();
+
             return true;
         }else if (id == R.id.action_about){
-            Toast.makeText(getApplication(),"San Joy Lao App|V0.9.3",Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplication(),"San Joy Lao App | V.0.9.4",Toast.LENGTH_LONG).show();
         }else {
 //            finish();
             Toast.makeText(getApplication(),"Closing...",Toast.LENGTH_LONG).show();
@@ -108,7 +114,7 @@ public class MainActivity extends ActionBarActivity implements DrawerFragment.Fr
                 fragment = SoupFragment.newInstance();
                 break;
             case RICE:
-                fragment = SoupFragment.newInstance();
+                fragment = DescriptionFragment.newInstance(null, null);
                 break;
             case CHEF:
                 fragment = DescriptionFragment.newInstance(null, null);

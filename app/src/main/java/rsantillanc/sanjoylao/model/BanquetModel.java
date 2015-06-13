@@ -10,6 +10,8 @@ import rsantillanc.sanjoylao.util.Const;
  */
 public class BanquetModel implements Serializable {
 
+    private static final long serialVersionUID = 0L;
+
     private double price;
     private String name;
     private String option;
@@ -30,9 +32,9 @@ public class BanquetModel implements Serializable {
         this.flagOptions = true;
     }
 
-    public ArrayList<BanquetModel> testData(){
+    public ArrayList<Object> testData(){
 
-        ArrayList<BanquetModel> model = new ArrayList<>();
+        ArrayList<Object> model = new ArrayList<>();
         model.add(new BanquetModel(55.65,"Banquete para 2 personas","6 opciones",true));
         model.add(new BanquetModel(152.00,"Banquete para 4 personas",Const.TAG_EMPTY,false));
         model.add( new BanquetModel(155.8,"Banquete para 6 personas","2 opciones",true));

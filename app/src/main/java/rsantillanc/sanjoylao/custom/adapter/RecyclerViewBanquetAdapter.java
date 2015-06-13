@@ -21,12 +21,12 @@ import rsantillanc.sanjoylao.util.Const;
 public class RecyclerViewBanquetAdapter extends RecyclerView.Adapter<RecyclerViewBanquetAdapter.BanquetViewHolder> {
 
     private LayoutInflater layIn;
-    private List<BanquetModel> banquetItems = Collections.EMPTY_LIST;
+    private List<Object> banquetItems = Collections.EMPTY_LIST;
     private Context ctx;
     private OnItemClickListener mItemClickListener;
 
 
-    public RecyclerViewBanquetAdapter(List<BanquetModel> banquetItems, Context ctx) {
+    public RecyclerViewBanquetAdapter(List<Object> banquetItems, Context ctx) {
         this.layIn = LayoutInflater.from(ctx);
         this.banquetItems = banquetItems;
         this.ctx = ctx;
@@ -40,7 +40,7 @@ public class RecyclerViewBanquetAdapter extends RecyclerView.Adapter<RecyclerVie
 
     @Override
     public void onBindViewHolder(BanquetViewHolder holder, int index) {
-       BanquetModel banquet = banquetItems.get(index);
+       BanquetModel banquet = (BanquetModel) banquetItems.get(index);
        holder.tvPrice.setText(Const.PRICE_PEN + String.valueOf(banquet.getPrice()));
        holder.tvName.setText(banquet.getName());
        holder.tvOptions.setText(banquet.getOption());
@@ -62,7 +62,7 @@ public class RecyclerViewBanquetAdapter extends RecyclerView.Adapter<RecyclerVie
         public BanquetViewHolder(View itemView) {
             super(itemView);
             tvName = (TextView) itemView.findViewById(R.id.tv_banquet_name);
-            tvOptions = (TextView) itemView.findViewById(R.id.tv_banquet_options);
+            tvOptions = (TextView) itemView.findViewById(R.id.tv_banquet_option);
             tvPrice = (TextView) itemView.findViewById(R.id.tv_banquet_price);
             ivBanquet = (ImageView) itemView.findViewById(R.id.iv_banquet);
             itemView.setOnClickListener(this);

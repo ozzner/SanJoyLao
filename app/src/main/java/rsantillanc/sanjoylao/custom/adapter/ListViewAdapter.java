@@ -15,6 +15,7 @@ import android.widget.Toast;
 import java.util.List;
 
 import rsantillanc.sanjoylao.R;
+import rsantillanc.sanjoylao.model.BanquetModel;
 import rsantillanc.sanjoylao.model.CommentModel;
 import rsantillanc.sanjoylao.model.SoupModel;
 import rsantillanc.sanjoylao.util.Const;
@@ -28,6 +29,8 @@ public class ListViewAdapter extends BaseAdapter {
     private CommentModel oComment;
     //Soups
     private SoupModel oSoup;
+    //banquet
+    private BanquetModel oBanquet;
 
     private List<Object> listObjects;
     private Context _context;
@@ -84,10 +87,10 @@ public class ListViewAdapter extends BaseAdapter {
                     soupHolder.tvPrice1 = (TextView) vi.findViewById(R.id.tv_price1);
                     soupHolder.tvPrice2 = (TextView) vi.findViewById(R.id.tv_price2);
                     soupHolder.tvPrice3 = (TextView) vi.findViewById(R.id.tv_price3);
-                    soupHolder.btOrder  = (Button)vi.findViewById(R.id.bt_order_soup);
-                    final String[] array =  {"Personal " + soupHolder.tvPrice1.getText().toString(),
-                                        "Mediana " + soupHolder.tvPrice2.getText().toString(),
-                                        "Grande " +soupHolder.tvPrice3.getText().toString()};
+                    soupHolder.btOrder = (Button) vi.findViewById(R.id.bt_order_soup);
+                    final String[] array = {"Personal " + soupHolder.tvPrice1.getText().toString(),
+                            "Mediana " + soupHolder.tvPrice2.getText().toString(),
+                            "Grande " + soupHolder.tvPrice3.getText().toString()};
 
                     soupHolder.btOrder.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -98,7 +101,7 @@ public class ListViewAdapter extends BaseAdapter {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
                                             dialog.cancel();
-                                            Toast.makeText(_context,"Pedido correcto!",Toast.LENGTH_LONG).show();
+                                            Toast.makeText(_context, "Pedido correcto!", Toast.LENGTH_LONG).show();
                                         }
                                     });
 
@@ -147,6 +150,31 @@ public class ListViewAdapter extends BaseAdapter {
                 holder.tvDatatime.setText(oComment.getDatatime());
                 break;
 
+            case Const.ORDERS:
+                //TODO borrar luego ya que no es correcto, solo es por pruebas.
+                OrdersViewHolder orderHolder = null;
+                oBanquet = (BanquetModel) getItem(position);
+
+                if (vi == null) {
+                    vi = layIn.inflate(R.layout.row_orders, parent, false);
+
+                    orderHolder = new OrdersViewHolder();
+                    orderHolder.tvName = (TextView) vi.findViewById(R.id.tv_order_name);
+                    orderHolder.tvOptions = (TextView) vi.findViewById(R.id.tv_order_option);
+                    orderHolder.tvPrice = (TextView) vi.findViewById(R.id.tv_order_price);
+                    orderHolder.ivDelete = (ImageView) vi.findViewById(R.id.iv_order_delete);
+
+                    vi.setTag(orderHolder);
+
+                }else
+                    orderHolder = (OrdersViewHolder)vi.getTag();
+
+                orderHolder.tvPrice.setText(Const.PRICE_PEN + String.valueOf(oBanquet.getPrice()));
+                orderHolder.tvName.setText(oBanquet.getName());
+                orderHolder.tvOptions.setText(oBanquet.getOption());
+
+                break;
+
         }
 
 
@@ -165,6 +193,13 @@ public class ListViewAdapter extends BaseAdapter {
         TextView tvName, tvTitle1, tvTitle2, tvTitle3, tvPrice1, tvPrice2, tvPrice3;
         ImageView ivImageSoup;
         Button btOrder;
+    }
+
+    static class OrdersViewHolder {
+        TextView tvName;
+        TextView tvOptions;
+        TextView tvPrice;
+        ImageView ivDelete;
     }
 
 

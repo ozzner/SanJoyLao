@@ -25,4 +25,5 @@ public class Const {
 
     //Others options
     public static final int COMMENTS = -1;
+    public static final int ORDERS = -2;
 }

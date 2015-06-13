@@ -1,0 +1,59 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="rsantillanc.sanjoylao.view.fragment.OrdersFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="1">
+
+    <ListView
+        android:id="@+id/lv_orders"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:divider="@color/whitesmoke"
+        android:layout_weight="0.9"
+        android:dividerHeight="0.75dp">
+
+    </ListView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_below="@+id/lv_orders"
+        android:layout_weight="0.1"
+        android:weightSum="1"
+        android:paddingRight="@dimen/space_16dp"
+        android:paddingLeft="@dimen/space_16dp"
+        android:orientation="horizontal"
+        android:background="@color/red">
+
+        <TextView
+            android:layout_width="@dimen/space_0dp"
+            android:layout_height="match_parent"
+            android:textColor="@color/white"
+            android:layout_weight="0.5"
+            android:gravity="left|center_vertical"
+            android:textSize="@dimen/txt_20sp"
+            android:textStyle="bold"
+            android:textAllCaps="true"
+            android:text="TOTAL"/>
+
+        <TextView
+            android:id="@+id/tv_order_price_total"
+            android:layout_width="@dimen/space_0dp"
+            android:gravity="center_vertical|right"
+            android:layout_weight="0.5"
+            android:layout_height="match_parent"
+            android:textColor="@color/white"
+            android:textSize="@dimen/txt_20sp"
+            android:textStyle="bold"
+            android:textAllCaps="true"
+            android:text="@string/default_text"/>
+
+    </LinearLayout>
+    </LinearLayout>
+</FrameLayout>
