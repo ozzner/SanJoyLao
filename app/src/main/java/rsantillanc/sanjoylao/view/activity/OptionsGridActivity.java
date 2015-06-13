@@ -62,9 +62,9 @@ public class OptionsGridActivity extends ActionBarActivity implements GridViewAd
     }
 
     private void setUpActionBar(BanquetModel model) {
+        mToolbar.setTitle(Const.PRICE_PEN + String.valueOf(model.getPrice()));
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        mToolbar.setTitle(Const.PRICE_PEN + String.valueOf(model.getPrice()));
     }
 
     @Override
@@ -84,6 +84,8 @@ public class OptionsGridActivity extends ActionBarActivity implements GridViewAd
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
+        }else if (id == R.id.home){
+            finish();
         }
 
         return super.onOptionsItemSelected(item);

@@ -3,8 +3,6 @@ package rsantillanc.sanjoylao.view.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.NavUtils;
-import android.support.v4.app.TaskStackBuilder;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -36,16 +34,16 @@ public class OptionsListActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_options);
+        mToolbar = (Toolbar)findViewById(R.id.toolbar_options);
         init(getApplicationContext());
         BanquetModel model = (BanquetModel)getIntent().getSerializableExtra(Const.TAG_BANQUET);
         setUpActionBar(model);
     }
 
     private void setUpActionBar(BanquetModel model) {
-        mToolbar = (Toolbar)findViewById(R.id.toolbar_options);
+        mToolbar.setTitle(model.getName());
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        mToolbar.setTitle(model.getName());
     }
 
     private void init(Context ctx) {
@@ -64,8 +62,6 @@ public class OptionsListActivity extends ActionBarActivity {
         mAdapter.setOnItemClickListener(new RecyclerViewOptionsAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View v, int index) {
-                //TODO Abrir el popup
-//                Toast.makeText(v.getContext(), "Title: " + options.get(index).getTitle(), Toast.LENGTH_LONG).show();
 
                 Intent popup = new Intent(getApplicationContext(), DetailsOptionsPopup.class);
                 Bundle bundle = new Bundle();
@@ -89,22 +85,7 @@ public class OptionsListActivity extends ActionBarActivity {
         switch (item.getItemId()) {
 
             case android.R.id.home:
-//                finish();
-
-                Intent upIntent = NavUtils.getParentActivityIntent(this);
-                if (NavUtils.shouldUpRecreateTask(this, upIntent)) {
-                    // This activity is NOT part of this app's task, so create a new task
-                    // when navigating up, with a synthesized back stack.
-                    TaskStackBuilder.create(this)
-                            // Add all of this activity's parents to the back stack
-                            .addNextIntentWithParentStack(upIntent)
-                                    // Navigate up to the closest parent
-                            .startActivities();
-                } else {
-                    // This activity is part of this app's task, so simply
-                    // navigate up to the logical parent activity.
-                    NavUtils.navigateUpTo(this, upIntent);
-                }
+                finish();
                 return true;
         }
 

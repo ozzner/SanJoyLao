@@ -15,6 +15,7 @@ import java.util.List;
 
 import rsantillanc.sanjoylao.R;
 import rsantillanc.sanjoylao.model.OptionsModel;
+import rsantillanc.sanjoylao.util.Const;
 
 /**
  * Created by RenzoD on 03/06/2015.
@@ -44,6 +45,7 @@ public class RecyclerViewOptionsAdapter extends RecyclerView.Adapter<RecyclerVie
        OptionsModel options = optionsItems.get(index);
        holder.tvPlate1.setText(options.getPlateName1());
        holder.tvPlate2.setText(options.getPlateName2());
+       holder.tvTitle.setText(Const.TAG_OPTIONS + " " + (index + 1));
 
 
        /*Listeners*/

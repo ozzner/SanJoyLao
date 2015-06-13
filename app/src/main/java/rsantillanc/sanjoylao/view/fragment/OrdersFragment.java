@@ -66,7 +66,7 @@ public class OrdersFragment extends Fragment {
         }
         DecimalFormat myFormatter = new DecimalFormat("##,###.##", DecimalFormatSymbols.getInstance(Locale.US));
         String output = myFormatter.format(total);
-//        tvPriceTotal.setText(Const.PRICE_PEN + String.format(Locale.US,"%,d%.2f", total));
+//        tvPriceTotal.setText(Const.PRICE_PEN + String.format(Locale.US,"%.2f", total));
         tvPriceTotal.setText(Const.PRICE_PEN + output);
 
     }
