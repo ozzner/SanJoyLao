@@ -57,22 +57,26 @@
 
                 <ImageView
                     android:id="@+id/iv_plate_one"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_no_image"
+                    android:layout_width="165dp"
+                    android:layout_height="165dp"
+                    android:src="@drawable/plate_2"
+                    android:scaleType="centerCrop"
                     android:background="@drawable/list_selector"
                     />
 
                 <ImageView
                     android:id="@+id/iv_plate_two"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="165dp"
+                    android:layout_height="165dp"
+                    android:scaleType="centerCrop"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
                     android:layout_alignParentTop="true"
-                    android:src="@drawable/ic_no_image"
+                    android:src="@drawable/plate_1"
                     android:background="@drawable/list_selector"
                     />
+
+
 
                 <TextView
                     android:background="@color/colorPrimary_trans_35"
