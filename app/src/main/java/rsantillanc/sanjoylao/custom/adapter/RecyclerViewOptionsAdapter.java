@@ -101,6 +101,7 @@ public class RecyclerViewOptionsAdapter extends RecyclerView.Adapter<RecyclerVie
             if (mItemClickListener != null)
                 mItemClickListener.onItemClick(v,getPosition());
         }
+
     }
 
     public void setOnItemClickListener(OnItemClickListener mListener) {

@@ -28,6 +28,7 @@
     <dimen name="txt_16sp">16sp</dimen>
     <dimen name="txt_18sp">18sp</dimen>
     <dimen name="txt_20sp">20sp</dimen>
+    <dimen name="txt_24sp">24sp</dimen>
 
     <!--Navigation drawer-->
     <dimen name="nav_drawer_width">305dp</dimen>
@@ -40,4 +41,7 @@
     <dimen name="input_comment_height">45dp</dimen>
     <dimen name="button_height">25dp</dimen>
     <dimen name="item_soup_height">130dp</dimen>
+    <dimen name="height_profile_background">150dp</dimen>
+    <dimen name="width_image_row_nav_drawer">42dp</dimen>
+    <dimen name="height_image_row_nav_drawer">38dp</dimen>
 </resources>

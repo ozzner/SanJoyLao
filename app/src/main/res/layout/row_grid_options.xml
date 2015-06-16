@@ -27,7 +27,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/editext_height"
         android:text="@string/default_text"
-        android:id="@+id/textView3"
+        android:id="@+id/tv_name_plate_grid_options"
         android:textSize="@dimen/txt_14sp"
         android:background="@color/gray_trans_50"
         android:gravity="center"

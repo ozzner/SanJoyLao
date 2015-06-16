@@ -15,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.GridView;
 
 import java.util.ArrayList;
@@ -28,12 +29,13 @@ import rsantillanc.sanjoylao.view.popup.DetailsOptionsPopup;
 
 public class OptionsGridActivity extends ActionBarActivity implements GridViewAdapter.OnPlateClickListener {
 
+    private Toolbar mToolbar;
+    private Button btOrder;
+    private GridView mGridView;
     private GridViewAdapter mGridAdapter;
     private ArrayList<OptionsModel> options;
     private OptionsModel opModel;
     private GridViewAdapter.OnPlateClickListener mListener;
-    private Toolbar mToolbar;
-    private GridView mGridView;
     private int columnWidth;
 
     @Override
@@ -47,11 +49,22 @@ public class OptionsGridActivity extends ActionBarActivity implements GridViewAd
     }
 
     private void init(Context ctx) {
+        btOrder = (Button)findViewById(R.id.bt_options_grid_order);
+        //Borrar esto luego.
+        btOrder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent popup = new Intent(getApplicationContext(), DetailsOptionsPopup.class);
+//        Bundle bundle = new Bundle();
+//        bundle.putSerializable(Const.TAG_DETAILS_OPTIONS,options.get(0));
+//        popup.putExtras(bundle);
+                startActivity(popup);
+            }
+        });
         mGridView = (GridView)findViewById(R.id.gv_options);
         mToolbar = (Toolbar)findViewById(R.id.toolbar_options);
 
         /*Setup*/
-
         opModel = new OptionsModel();
         options = opModel.testData();
         InitilizeGridLayout();
@@ -145,9 +158,10 @@ public class OptionsGridActivity extends ActionBarActivity implements GridViewAd
     public void onClicked(View v) {
 
         Intent popup = new Intent(getApplicationContext(), DetailsOptionsPopup.class);
-        Bundle bundle = new Bundle();
-        bundle.putSerializable(Const.TAG_DETAILS_OPTIONS,options.get(0));
-        popup.putExtras(bundle);
+//        Bundle bundle = new Bundle();
+//        bundle.putSerializable(Const.TAG_DETAILS_OPTIONS,options.get(0));
+//        popup.putExtras(bundle);
         startActivity(popup);
+
     }
 }

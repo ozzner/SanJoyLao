@@ -1,0 +1,7 @@
+<resources>
+    <dimen name="activity_horizontal_margin">64dp</dimen>
+    <dimen name="nav_drawer_width">420dp</dimen>
+    <dimen name="height_profile_background">200dp</dimen>
+    <dimen name="width_image_row_nav_drawer">52dp</dimen>
+    <dimen name="height_image_row_nav_drawer">48dp</dimen>
+</resources>

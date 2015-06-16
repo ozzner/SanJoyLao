@@ -41,6 +41,7 @@
             android:textSize="@dimen/txt_16sp"/>
 
         <Button
+            android:id="@+id/bt_options_grid_order"
             android:background="@drawable/button_inverse_pressed"
             android:layout_width="@dimen/space_0dp"
             android:layout_height="match_parent"
@@ -61,6 +62,7 @@
         android:gravity="center"
         android:numColumns="auto_fit"
         android:stretchMode="columnWidth"
+        android:scrollbars="none"
         android:layout_below="@+id/lay_controls"/>
 
 </RelativeLayout>

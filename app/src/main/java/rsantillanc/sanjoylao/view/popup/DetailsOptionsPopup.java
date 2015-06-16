@@ -10,7 +10,6 @@ import android.widget.RatingBar;
 import rsantillanc.sanjoylao.R;
 import rsantillanc.sanjoylao.custom.adapter.ViewPagerAdapter;
 import rsantillanc.sanjoylao.model.OptionsModel;
-import rsantillanc.sanjoylao.util.Const;
 import rsantillanc.sanjoylao.util.SlidingTabLayout;
 
 public class DetailsOptionsPopup extends FragmentActivity {
@@ -25,7 +24,7 @@ public class DetailsOptionsPopup extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.popup_details_options);
-        oOption = (OptionsModel) getIntent().getSerializableExtra(Const.TAG_DETAILS_OPTIONS);
+//        oOption = (OptionsModel) getIntent().getSerializableExtra(Const.TAG_DETAILS_OPTIONS);
         initComponents();
     }
 

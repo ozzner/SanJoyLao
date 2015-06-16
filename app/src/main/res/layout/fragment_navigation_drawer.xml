@@ -8,7 +8,7 @@
     <RelativeLayout
         android:id="@+id/nav_header_container"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="@dimen/height_profile_background"
         android:layout_alignParentTop="true"
         android:background="@drawable/bg_profile">
 
