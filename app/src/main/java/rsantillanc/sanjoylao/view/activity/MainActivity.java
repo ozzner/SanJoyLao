@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -52,6 +53,36 @@ public class MainActivity extends ActionBarActivity implements DrawerFragment.Fr
         fragDra.setUp(R.id.fragment_navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout), toBa);
         fragDra.setDrawerListener(this);
         displayView(10);
+        showLayoutSize();
+    }
+
+    private void showLayoutSize() {
+        DisplayMetrics metrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        int widthPixels = metrics.widthPixels;
+        int heightPixels = metrics.heightPixels;
+        float scaleFactor = metrics.density;
+        float widthDp = widthPixels / scaleFactor;
+        float heightDp = heightPixels / scaleFactor;
+        Toast.makeText(getApplicationContext(),
+                "Width: " +widthDp + " dp" + "\n Height: " + heightDp + " dp",
+                Toast.LENGTH_SHORT).show();
+
+        float smallestWidth = Math.min(widthDp, heightDp);
+
+        if (smallestWidth > 720) {
+            Toast.makeText(getApplicationContext(),"Tablet 10",
+                    Toast.LENGTH_LONG).show();
+
+        }
+        else if (smallestWidth > 600) {
+            Toast.makeText(getApplicationContext(),"Tablet 7",
+                    Toast.LENGTH_LONG).show();
+        }else {
+            Toast.makeText(getApplicationContext(),"No es tablet.",
+                    Toast.LENGTH_LONG).show();
+        }
+
     }
 
 

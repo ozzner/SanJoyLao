@@ -41,7 +41,7 @@ public class BanquetsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View banquet = inflater.inflate(R.layout.fragment_primer, container, false);
+        View banquet = inflater.inflate(R.layout.fragment_banquets, container, false);
         init(getActivity(),banquet);
         return banquet;
     }
