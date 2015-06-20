@@ -36,10 +36,11 @@
                 android:layout_weight="1" />
 
             <FrameLayout
-                android:id="@+id/detail_body"
+                android:id="@+id/container_details_body"
                 android:layout_width="0dp"
                 android:layout_height="fill_parent"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                />
         </LinearLayout>
 
 

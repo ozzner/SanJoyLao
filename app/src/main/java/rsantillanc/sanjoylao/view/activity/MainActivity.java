@@ -1,5 +1,7 @@
 package rsantillanc.sanjoylao.view.activity;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -7,7 +9,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,16 +19,22 @@ import android.widget.Toast;
 import java.lang.reflect.Method;
 
 import rsantillanc.sanjoylao.R;
+import rsantillanc.sanjoylao.util.Android;
+import rsantillanc.sanjoylao.util.Const;
 import rsantillanc.sanjoylao.view.fragment.BanquetsFragment;
 import rsantillanc.sanjoylao.view.fragment.DescriptionFragment;
 import rsantillanc.sanjoylao.view.fragment.DrawerFragment;
+import rsantillanc.sanjoylao.view.fragment.FrontFragment;
 import rsantillanc.sanjoylao.view.fragment.MainFragment;
 import rsantillanc.sanjoylao.view.fragment.OrdersFragment;
 import rsantillanc.sanjoylao.view.fragment.SoupFragment;
 
 
 public class MainActivity extends ActionBarActivity implements DrawerFragment.FragmentDrawerListener {
+    //Debug var
     private static final String TAG = MainActivity.class.getSimpleName();
+
+    //views
     private Toolbar toBa;
     private DrawerFragment fragDra;
 
@@ -42,52 +49,45 @@ public class MainActivity extends ActionBarActivity implements DrawerFragment.Fr
     private static final int BANQUETS = 7;
     private static final int DRINKS = 8;
     private static final int CENTRAL = 9;
+    private static final int MAIN = 10;
+
+    //Globals vars
+    private int typeOfDevice = -1;
+    private Context mContext = null;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        mContext = getApplicationContext();
+        initViews();
+
         setUpActionBar();
-        fragDra = (DrawerFragment) getFragmentManager().findFragmentById(R.id.fragment_navigation_drawer);
-        fragDra.setUp(R.id.fragment_navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout), toBa);
-        fragDra.setDrawerListener(this);
-        displayView(10);
-        showLayoutSize();
+        setUpDrawer();
+        setUpOrientation();
+
+        displayView(MAIN);
+
     }
 
-    private void showLayoutSize() {
-        DisplayMetrics metrics = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(metrics);
-        int widthPixels = metrics.widthPixels;
-        int heightPixels = metrics.heightPixels;
-        float scaleFactor = metrics.density;
-        float widthDp = widthPixels / scaleFactor;
-        float heightDp = heightPixels / scaleFactor;
-        Toast.makeText(getApplicationContext(),
-                "Width: " +widthDp + " dp" + "\n Height: " + heightDp + " dp",
-                Toast.LENGTH_SHORT).show();
+    private void setUpOrientation() {
+        Android.setScreenOrientation(this);
+    }
 
-        float smallestWidth = Math.min(widthDp, heightDp);
+    private void setUpDrawer() {
+        fragDra.setUp(R.id.fragment_navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout), toBa);
+        fragDra.setDrawerListener(this);
+    }
 
-        if (smallestWidth > 720) {
-            Toast.makeText(getApplicationContext(),"Tablet 10",
-                    Toast.LENGTH_LONG).show();
-
-        }
-        else if (smallestWidth > 600) {
-            Toast.makeText(getApplicationContext(),"Tablet 7",
-                    Toast.LENGTH_LONG).show();
-        }else {
-            Toast.makeText(getApplicationContext(),"No es tablet.",
-                    Toast.LENGTH_LONG).show();
-        }
-
+    private void initViews() {
+        toBa = (Toolbar) findViewById(R.id.toolbar);
+        fragDra = (DrawerFragment) getFragmentManager().findFragmentById(R.id.fragment_navigation_drawer);
     }
 
 
     private void setUpActionBar() {
-        toBa = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toBa);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
     }
@@ -109,17 +109,19 @@ public class MainActivity extends ActionBarActivity implements DrawerFragment.Fr
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_orders) {
 
-             Fragment fragment = OrdersFragment.newInstance();
-             FragmentManager man = getSupportFragmentManager();
-             FragmentTransaction tran = man.beginTransaction();
-             tran.replace(R.id.container_body,fragment).commit();
+            Fragment fragment = OrdersFragment.newInstance();
+            FragmentManager man = getSupportFragmentManager();
+            FragmentTransaction tran = man.beginTransaction();
+            tran.replace(R.id.container_body, fragment).commit();
 
             return true;
-        }else if (id == R.id.action_about){
-            Toast.makeText(getApplication(),"San Joy Lao App | V.0.9.4",Toast.LENGTH_LONG).show();
-        }else {
-//            finish();
-            Toast.makeText(getApplication(),"Closing...",Toast.LENGTH_LONG).show();
+        } else if (id == R.id.action_about) {
+            Toast.makeText(getApplication(), "San Joy Lao App | V.0.9.4", Toast.LENGTH_LONG).show();
+        } else {
+            Intent login = new Intent(mContext, LoginActivity.class);
+            startActivity(login);
+            finish();
+            Toast.makeText(getApplication(), "Closing...", Toast.LENGTH_LONG).show();
         }
 
         return super.onOptionsItemSelected(item);
@@ -135,8 +137,8 @@ public class MainActivity extends ActionBarActivity implements DrawerFragment.Fr
     private void displayView(int position) {
         Fragment fragment = null;
         String title = getString(R.string.app_name);
-        switch (position) {
 
+        switch (position) {
 
             case INPUT:
                 fragment = DescriptionFragment.newInstance(null, null);
@@ -169,14 +171,23 @@ public class MainActivity extends ActionBarActivity implements DrawerFragment.Fr
             case CENTRAL:
                 fragment = DescriptionFragment.newInstance(null, null);
                 break;
-
             default:
                 fragment = MainFragment.newInstance();
+                typeOfDevice = Android.getTypeDevice(this);
+
+                if (typeOfDevice > Const.PHONE_SCREEN) {
+                    Fragment details = FrontFragment.getInstance();
+                    FragmentManager fragmentManager = getSupportFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.container_details_body, details);
+                    fragmentTransaction.commit();
+                }
                 break;
 
         }
 
         if (fragment != null) {
+
             FragmentManager fragmentManager = getSupportFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.replace(R.id.container_body, fragment);
@@ -188,20 +199,17 @@ public class MainActivity extends ActionBarActivity implements DrawerFragment.Fr
     }
 
     @Override
-    public boolean onMenuOpened(int featureId, Menu menu)
-    {
-        if(featureId == Window.FEATURE_ACTION_BAR && menu != null){
-            if(menu.getClass().getSimpleName().equals("MenuBuilder")){
-                try{
+    public boolean onMenuOpened(int featureId, Menu menu) {
+        if (featureId == Window.FEATURE_ACTION_BAR && menu != null) {
+            if (menu.getClass().getSimpleName().equals("MenuBuilder")) {
+                try {
                     Method m = menu.getClass().getDeclaredMethod(
                             "setOptionalIconsVisible", Boolean.TYPE);
                     m.setAccessible(true);
                     m.invoke(menu, true);
-                }
-                catch(NoSuchMethodException e){
+                } catch (NoSuchMethodException e) {
                     Log.e(TAG, "onMenuOpened", e);
-                }
-                catch(Exception e){
+                } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
             }

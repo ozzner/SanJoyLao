@@ -27,4 +27,9 @@ public class Const {
     //Others options
     public static final int COMMENTS = -1;
     public static final int ORDERS = -2;
+
+    //Type screen
+    public static final int TABLET_10 = 2;
+    public static final int TABLET_7 = 1;
+    public static final int PHONE_SCREEN = 0;
 }

@@ -7,11 +7,12 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/SanJoyLaoTheme" >
+
         <activity
             android:name=".view.activity.MainActivity"
             android:label="@string/app_name" >
-
         </activity>
+
         <activity
             android:name=".view.activity.OptionsListActivity"
             android:label="@string/title_activity_options"
@@ -22,25 +23,29 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="rsantillanc.sanjoylao.view.activity.MainActivity" />
         </activity>
+
         <activity
             android:name=".view.popup.DetailsOptionsPopup"
             android:label="@string/title_activity_details_options_popup"
             android:theme="@android:style/Theme.Holo.Light.Dialog.NoActionBar.MinWidth"
             android:windowSoftInputMode="stateHidden|adjustResize" >
         </activity>
+
         <activity
             android:name=".view.activity.OptionsGridActivity"
             android:label="@string/title_activity_options_grid" >
         </activity>
+
         <activity
             android:name=".view.activity.LoginActivity"
-            android:label="@string/title_activity_login" >
+            android:label="@string/title_activity_login"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
     </application>
 
 </manifest>
