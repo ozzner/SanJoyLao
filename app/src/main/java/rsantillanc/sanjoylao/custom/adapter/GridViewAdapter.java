@@ -65,7 +65,7 @@ public class GridViewAdapter extends BaseAdapter implements View.OnClickListener
 
             vi =  layIn.inflate(R.layout.row_grid_options,parent,false);
             holder.ivLoader = (ImageView)vi.findViewById(R.id.iv_loader);
-            holder.tvName = (TextView) vi.findViewById(R.id.tv_name_plate_grid_options);
+            holder.tvName = (TextView)vi.findViewById(R.id.tv_name_plate_grid_options);
             vi.setTag(holder);
 
         }else{

@@ -2,6 +2,7 @@ package rsantillanc.sanjoylao.view.fragment;
 
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Point;
@@ -18,21 +19,26 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
 import rsantillanc.sanjoylao.R;
 import rsantillanc.sanjoylao.custom.adapter.GridViewAdapter;
 import rsantillanc.sanjoylao.custom.adapter.RecyclerViewOptionsAdapter;
+import rsantillanc.sanjoylao.custom.dialog.SJLAlertDialog;
 import rsantillanc.sanjoylao.model.BanquetModel;
 import rsantillanc.sanjoylao.model.OptionsModel;
 import rsantillanc.sanjoylao.util.Const;
+import rsantillanc.sanjoylao.util.SJLPreferences;
 import rsantillanc.sanjoylao.view.popup.DetailsOptionsPopup;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class BanquetDetailsFragment extends Fragment implements GridViewAdapter.OnPlateClickListener {
+public class BanquetDetailsFragment extends Fragment implements GridViewAdapter.OnPlateClickListener
+        ,SJLAlertDialog.OnBookingListener {
+
     private static BanquetDetailsFragment instance;
 
     private Toolbar mToolbar;
@@ -47,6 +53,10 @@ public class BanquetDetailsFragment extends Fragment implements GridViewAdapter.
     private RecyclerView mRecyclerView;
     private RecyclerViewOptionsAdapter mAdapter;
     private LinearLayoutManager mLinearLayoutManager;
+    private SJLAlertDialog customDialog;
+    private SJLPreferences mPreferences;
+
+
 
 
     public static BanquetDetailsFragment getInstance() {
@@ -62,6 +72,9 @@ public class BanquetDetailsFragment extends Fragment implements GridViewAdapter.
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         oBanquet = (BanquetModel)getArguments().getSerializable(Const.TAG_BANQUET);
+        mPreferences = new SJLPreferences(getActivity());
+        customDialog = new SJLAlertDialog();
+        customDialog.set(this);
     }
 
     @Override
@@ -76,9 +89,9 @@ public class BanquetDetailsFragment extends Fragment implements GridViewAdapter.
             initGridComponents(vi);
         }
 
-
         return vi;
     }
+
 
     private void initListComponents(final View vi) {
         final Context ctx = vi.getContext();
@@ -94,6 +107,7 @@ public class BanquetDetailsFragment extends Fragment implements GridViewAdapter.
         mRecyclerView.setHasFixedSize(false);
         mLinearLayoutManager = new LinearLayoutManager(ctx);
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
+
 
         mAdapter.setOnItemClickListener(new RecyclerViewOptionsAdapter.OnItemClickListener() {
             @Override
@@ -114,11 +128,12 @@ public class BanquetDetailsFragment extends Fragment implements GridViewAdapter.
         btOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent popup = new Intent(getActivity(), DetailsOptionsPopup.class);
-//        Bundle bundle = new Bundle();
-//        bundle.putSerializable(Const.TAG_DETAILS_OPTIONS,options.get(0));
-//        popup.putExtras(bundle);
-                startActivity(popup);
+                int val = mPreferences.getSaveStoredByKey(SJLPreferences.KEY_ORDER_TYPE);
+                String title = getString(R.string.title_booking_options);
+                if (val == SJLPreferences.INT_DEFAULT_VALUE)
+                SJLAlertDialog.showTypeBookAlert(getActivity(),title);
+                else
+                    Toast.makeText(getActivity(),"¡Agregado!",Toast.LENGTH_LONG).show();
             }
         });
         mGridView = (GridView)vi.findViewById(R.id.gv_options);
@@ -176,15 +191,22 @@ public class BanquetDetailsFragment extends Fragment implements GridViewAdapter.
     }
 
 
-
-
     @Override
     public void onClicked(View v) {
+
 
         Intent popup = new Intent(getActivity(), DetailsOptionsPopup.class);
 //        Bundle bundle = new Bundle();
 //        bundle.putSerializable(Const.TAG_DETAILS_OPTIONS,options.get(0));
 //        popup.putExtras(bundle);
         startActivity(popup);
+    }
+
+    @Override
+    public void onClick(DialogInterface dialog, int index) {
+        mPreferences = new SJLPreferences(getActivity());
+        mPreferences.saveOrderType(index);
+        Toast.makeText(getActivity(),"¡Agregado option: !" + index,Toast.LENGTH_LONG).show();
+        dialog.cancel();
     }
 }

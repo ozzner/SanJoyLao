@@ -59,4 +59,16 @@
     <string name="personal">Personal</string>
     <string name="mediana">Mediana</string>
     <string name="grande">Grande</string>
+
+    <!--Titles-->
+    <string name="title_alert_warning"></string>
+    <string name="title_booking_options">¿Qué tipo de servicio desea elegir?</string>
+    <string name="title_alert_yes">Si</string>
+    
+    <!--Bookings-->
+    <string name="booking_table">Servicio a la mesa</string>
+    <string name="booking_order">Reservar una orden</string>
+    <string name="booking_delivery">Delivery</string>
+
+    
 </resources>

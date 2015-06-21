@@ -81,7 +81,7 @@ public class RecyclerViewBanquetAdapter extends RecyclerView.Adapter<RecyclerVie
     }
 
     public interface OnItemClickListener{
-       public void onItemClick(View v , int index);
+       void onItemClick(View v , int index);
     }
 
 

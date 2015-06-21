@@ -20,4 +20,12 @@
         <item>@string/tab_description</item>
         <item>@string/tab_comments</item>
     </string-array>
+
+    <!--Bookings-->
+    <string-array name="bookings">
+        <item>@string/booking_table</item>
+        <item>@string/booking_order</item>
+        <item>@string/booking_delivery</item>
+    </string-array>
+
 </resources>

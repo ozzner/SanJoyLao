@@ -21,6 +21,7 @@ import java.lang.reflect.Method;
 import rsantillanc.sanjoylao.R;
 import rsantillanc.sanjoylao.util.Android;
 import rsantillanc.sanjoylao.util.Const;
+import rsantillanc.sanjoylao.util.SJLPreferences;
 import rsantillanc.sanjoylao.view.fragment.BanquetsFragment;
 import rsantillanc.sanjoylao.view.fragment.DescriptionFragment;
 import rsantillanc.sanjoylao.view.fragment.DrawerFragment;
@@ -60,6 +61,9 @@ public class MainActivity extends ActionBarActivity implements DrawerFragment.Fr
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //delete this and paste in splash activity
+        SJLPreferences preferences = new SJLPreferences(getApplicationContext());
+        preferences.run();
 
         mContext = getApplicationContext();
         initViews();
