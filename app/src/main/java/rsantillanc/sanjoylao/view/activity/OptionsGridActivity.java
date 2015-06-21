@@ -69,7 +69,7 @@ public class OptionsGridActivity extends ActionBarActivity implements GridViewAd
                 int val = mPreferences.getSaveStoredByKey(SJLPreferences.KEY_ORDER_TYPE);
                 String title = getString(R.string.title_booking_options);
                 if (val == SJLPreferences.INT_DEFAULT_VALUE)
-                    SJLAlertDialog.showTypeBookAlert(ctx, title);
+                    SJLAlertDialog.showTypeBookAlert(OptionsGridActivity.this, title);
                 else {
 
                     Intent popup = new Intent(getApplicationContext(), DetailsOptionsPopup.class);
