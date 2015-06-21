@@ -14,15 +14,15 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:id="@+id/rv_banquets"
-            android:layout_weight="1.75"
+            android:layout_weight="1.5"
             android:padding="@dimen/space_4dp"
             />
 
         <FrameLayout
             android:id="@+id/container_details_banquet"
             android:layout_width="0dp"
-            android:layout_height="fill_parent"
-            android:layout_weight="1.25"
+            android:layout_height="match_parent"
+            android:layout_weight="1.5"
             />
 
     </LinearLayout>

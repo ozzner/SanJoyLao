@@ -142,7 +142,7 @@ public class BanquetDetailsFragment extends Fragment implements GridViewAdapter.
                 Const.GRID_PADDING, r.getDisplayMetrics());
 
         // Column width
-        columnWidth = (int) ((getScreenWidth() - ((4) * padding)) /2);
+        columnWidth = (int) ((getScreenWidth()/2 - ((4) * padding)) /2);
 
         // Setting number of grid columns
         mGridView.setNumColumns(2);
