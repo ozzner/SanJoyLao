@@ -23,7 +23,6 @@ import rsantillanc.sanjoylao.util.Android;
 import rsantillanc.sanjoylao.util.Const;
 import rsantillanc.sanjoylao.util.SJLPreferences;
 import rsantillanc.sanjoylao.view.fragment.BanquetsFragment;
-import rsantillanc.sanjoylao.view.fragment.DescriptionFragment;
 import rsantillanc.sanjoylao.view.fragment.DrawerFragment;
 import rsantillanc.sanjoylao.view.fragment.FrontFragment;
 import rsantillanc.sanjoylao.view.fragment.MainFragment;
@@ -147,35 +146,35 @@ public class MainActivity extends ActionBarActivity implements DrawerFragment.Fr
         switch (position) {
 
             case INPUT:
-                fragment = DescriptionFragment.newInstance(null, null);
+                fragment = MainFragment.newInstance();
                 break;
             case SOUP:
                 fragment = SoupFragment.newInstance();
                 break;
             case RICE:
-                fragment = DescriptionFragment.newInstance(null, null);
+                fragment = MainFragment.newInstance();
                 break;
             case CHEF:
-                fragment = DescriptionFragment.newInstance(null, null);
+                fragment = MainFragment.newInstance();
                 break;
             case CHICKEN_MEAT:
-                title = getString(R.string.item_title_meat_and_chicken);
+                fragment = MainFragment.newInstance();
                 break;
             case FISH:
-                fragment = DescriptionFragment.newInstance(null, null);
+                fragment = MainFragment.newInstance();
                 break;
             case VEGETARIAN:
-                fragment = DescriptionFragment.newInstance(null, null);
+                fragment = MainFragment.newInstance();
                 break;
             case BANQUETS:
-                fragment = new BanquetsFragment();
+                fragment = BanquetsFragment.newInstance();
                 title = getString(R.string.item_title_banquets);
                 break;
             case DRINKS:
-                fragment = DescriptionFragment.newInstance(null, null);
+                fragment = MainFragment.newInstance();
                 break;
             case CENTRAL:
-                fragment = DescriptionFragment.newInstance(null, null);
+                fragment = MainFragment.newInstance();
                 break;
             default:
                 fragment = MainFragment.newInstance();

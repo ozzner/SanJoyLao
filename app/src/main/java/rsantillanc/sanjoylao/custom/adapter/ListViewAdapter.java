@@ -177,7 +177,7 @@ public class ListViewAdapter extends BaseAdapter implements View.OnClickListener
                     orderHolder = (OrdersViewHolder)vi.getTag();
 
                 orderHolder.tvPrice.setText(Const.PRICE_PEN + String.valueOf(oBanquet.getPrice()));
-                orderHolder.tvName.setText(oBanquet.getName());
+                orderHolder.tvName.setText((position+1) + ".- " + oBanquet.getName());//Delete hardcode
                 orderHolder.tvOptions.setText(oBanquet.getOption());
                 orderHolder.ivDelete.setOnClickListener(this);
                 orderHolder.ivInfo.setOnClickListener(this);

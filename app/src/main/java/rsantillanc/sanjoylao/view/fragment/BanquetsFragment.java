@@ -29,6 +29,7 @@ import rsantillanc.sanjoylao.view.activity.OptionsListActivity;
  */
 public class BanquetsFragment extends Fragment {
 
+    private static BanquetsFragment instance;
     private RecyclerView mRecyclerView;
     private RecyclerViewBanquetAdapter mAdapter;
     private ArrayList<Object> banquets;
@@ -98,5 +99,13 @@ public class BanquetsFragment extends Fragment {
 
     }
 
+
+
+
+        public static BanquetsFragment newInstance() {
+                instance =  new BanquetsFragment();
+
+            return instance;
+        }
 
 }

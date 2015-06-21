@@ -6,9 +6,10 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
@@ -27,8 +28,8 @@ public class OrdersFragment extends Fragment {
 
     private static OrdersFragment instance;
     private ListView mListView;
-    private EditText etInput;
     private TextView tvPriceTotal,tvNumTable;
+    private Button btConfirm;
     private double total = 0.0;
     private List<Object> orders;
 
@@ -56,6 +57,15 @@ public class OrdersFragment extends Fragment {
         mListView = (ListView) v.findViewById(R.id.lv_orders);
         tvNumTable = (TextView) v.findViewById(R.id.tv_number_table);
         tvPriceTotal = (TextView) v.findViewById(R.id.tv_order_price_total);
+        btConfirm = (Button)v.findViewById(R.id.bt_confirm_order);
+
+        //Delete after this
+        btConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getActivity(),"¡Pedido exitoso!",Toast.LENGTH_SHORT).show();
+            }
+        });
 
         /*Setup*/
         BanquetModel oModel = new BanquetModel();
@@ -66,6 +76,7 @@ public class OrdersFragment extends Fragment {
         for (Object order : orders) {
             total += ((BanquetModel) order).getPrice();
         }
+
         DecimalFormat myFormatter = new DecimalFormat("##,###.##", DecimalFormatSymbols.getInstance(Locale.US));
         String output = myFormatter.format(total);
 //        tvPriceTotal.setText(Const.PRICE_PEN + String.format(Locale.US,"%.2f", total));

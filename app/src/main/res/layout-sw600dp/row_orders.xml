@@ -23,14 +23,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="@dimen/space_8dp"
-                android:padding="@dimen/space_4dp">
-                <ImageView
-                    android:id="@+id/iv_order"
-                    android:layout_width="120dp"
-                    android:layout_height="120dp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/plate_2"/>
-            </LinearLayout>
+                android:padding="@dimen/space_4dp"></LinearLayout>
 
 
             <TextView
@@ -51,6 +44,7 @@
                 android:textSize="@dimen/txt_16sp"
                 android:textColor="@color/gray"
                 android:text="6 Opciones a elegir"
+                android:layout_marginLeft="@dimen/space_4dp"
                 android:layout_below="@+id/tv_order_name"
                 android:layout_toRightOf="@+id/lay_order_image"
                 android:layout_toEndOf="@+id/lay_order_image" />

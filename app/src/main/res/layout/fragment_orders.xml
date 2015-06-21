@@ -10,48 +10,22 @@
         android:orientation="vertical"
         android:weightSum="1">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:gravity="left|center"
-            android:paddingLeft="@dimen/space_8dp"
-            android:orientation="vertical"
-            android:layout_height="@dimen/editext_height">
 
-            <TextView
-                android:id="@+id/tv_number_table"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/default_text"
-                android:textSize="@dimen/txt_18sp"/>
 
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:background="@color/red"/>
 
-        <ListView
-            android:id="@+id/lv_orders"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.9"
-            android:divider="@color/whitesmoke"
-            android:dividerHeight="0.75dp">
-
-        </ListView>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_below="@+id/lv_orders"
-            android:layout_weight="0.1"
-            android:background="@color/red"
+            android:layout_weight="0.075"
+            android:background="@color/colorPrimaryDark"
             android:orientation="horizontal"
             android:paddingLeft="@dimen/space_16dp"
             android:paddingRight="@dimen/space_16dp"
             android:weightSum="1">
 
             <TextView
+                android:id="@+id/tv_number_table"
                 android:layout_width="@dimen/space_0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0.5"
@@ -76,6 +50,32 @@
 
         </LinearLayout>
 
+        <ListView
+            android:id="@+id/lv_orders"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.925"
+            android:divider="@color/whitesmoke"
+            android:scrollbars="none"
+            android:dividerHeight="0.75dp">
+        </ListView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:gravity="left|center"
+            android:orientation="vertical"
+            android:layout_height="@dimen/editext_height">
+
+            <Button
+                android:background="@drawable/button_inverse_selector"
+                android:id="@+id/bt_confirm_order"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/button_confirm_order"
+                android:textSize="@dimen/txt_16sp"
+                android:textColor="@color/white"/>
+
+        </LinearLayout>
 
     </LinearLayout>
 </FrameLayout>

@@ -75,10 +75,10 @@ public class SoupModel implements Serializable {
 
         ArrayList<Object> model = new ArrayList<>();
         model.add(new SoupModel("Sopa wantan",1.0,1.5,2.0,-1));
-        model.add(new SoupModel("Sopa de pollo",1.8,5.5,2.0,-1));
-        model.add(new SoupModel("Menestrón",1.0,1.5,2.0,-1));
-        model.add(new SoupModel("Ajinomen",1.5,1.8,3.8,-1));
-        model.add(new SoupModel("Caldo de mote",1.0,3.5,8.0,-1));
+        model.add(new SoupModel("Sopa Sam Sí",1.8,5.5,2.0,-1));
+        model.add(new SoupModel("Sopa Wo Min",1.0,1.5,2.0,-1));
+        model.add(new SoupModel("Caldo de Pichón",1.5,1.8,3.8,-1));
+        model.add(new SoupModel("CSopa Siu Kao \"San Joy Lao\"",1.0,3.5,8.0,-1));
 
         return model;
     }
