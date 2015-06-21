@@ -119,7 +119,9 @@ public class MainActivity extends ActionBarActivity implements DrawerFragment.Fr
             FragmentTransaction tran = man.beginTransaction();
             tran.replace(R.id.container_body, fragment).commit();
 
+            toBa.setTitle(getString(R.string.title_orders));
             return true;
+
         } else if (id == R.id.action_about) {
             Toast.makeText(getApplication(), "San Joy Lao App | V.0.9.4", Toast.LENGTH_LONG).show();
         } else {
@@ -150,6 +152,7 @@ public class MainActivity extends ActionBarActivity implements DrawerFragment.Fr
                 break;
             case SOUP:
                 fragment = SoupFragment.newInstance();
+                title = getString(R.string.item_title_soup);
                 break;
             case RICE:
                 fragment = MainFragment.newInstance();

@@ -37,6 +37,8 @@
     <string name="item_title_drinks">Vinos y bebidas</string>
     <string name="item_title_call_center">Central telefónica</string>
 
+    <string name="title_orders">Mis pedidos</string>
+
 
 
     <string name="title_activity_options">Options Activity</string>
