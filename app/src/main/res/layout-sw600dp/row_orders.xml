@@ -14,7 +14,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="140dp"
             android:padding="@dimen/space_8dp"
             >
 
@@ -26,8 +26,8 @@
                 android:padding="@dimen/space_4dp">
                 <ImageView
                     android:id="@+id/iv_order"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
                     android:scaleType="centerCrop"
                     android:src="@drawable/plate_2"/>
             </LinearLayout>
@@ -37,7 +37,7 @@
                 android:id="@+id/tv_order_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="16sp"
+                android:textSize="@dimen/txt_18sp"
                 android:layout_marginTop="@dimen/space_4dp"
                 android:textColor="@color/black"
                 android:text="Banquete para 2 personas"
@@ -48,19 +48,19 @@
                 android:id="@+id/tv_order_option"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="14sp"
+                android:textSize="@dimen/txt_16sp"
                 android:textColor="@color/gray"
                 android:text="6 Opciones a elegir"
-                android:layout_alignBottom="@+id/iv_order_info"
-                android:layout_alignLeft="@+id/tv_order_name"
-                android:layout_alignStart="@+id/tv_order_name" />
+                android:layout_below="@+id/tv_order_name"
+                android:layout_toRightOf="@+id/lay_order_image"
+                android:layout_toEndOf="@+id/lay_order_image" />
 
             <TextView
                 android:id="@+id/tv_order_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="25.00"
-                android:textSize="@dimen/txt_14sp"
+                android:textSize="@dimen/txt_16sp"
                 android:textStyle="bold"
                 android:textColor="@color/red"
                 android:layout_alignTop="@+id/iv_order_delete"

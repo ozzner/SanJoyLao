@@ -23,7 +23,7 @@ import rsantillanc.sanjoylao.util.Const;
 /**
  * Created by RenzoD on 09/06/2015.
  */
-public class ListViewAdapter extends BaseAdapter {
+public class ListViewAdapter extends BaseAdapter implements View.OnClickListener {
 
     //Comments
     private CommentModel oComment;
@@ -168,6 +168,7 @@ public class ListViewAdapter extends BaseAdapter {
                     orderHolder.tvName = (TextView) vi.findViewById(R.id.tv_order_name);
                     orderHolder.tvOptions = (TextView) vi.findViewById(R.id.tv_order_option);
                     orderHolder.tvPrice = (TextView) vi.findViewById(R.id.tv_order_price);
+                    orderHolder.ivInfo = (ImageView) vi.findViewById(R.id.iv_order_info);
                     orderHolder.ivDelete = (ImageView) vi.findViewById(R.id.iv_order_delete);
 
                     vi.setTag(orderHolder);
@@ -178,6 +179,8 @@ public class ListViewAdapter extends BaseAdapter {
                 orderHolder.tvPrice.setText(Const.PRICE_PEN + String.valueOf(oBanquet.getPrice()));
                 orderHolder.tvName.setText(oBanquet.getName());
                 orderHolder.tvOptions.setText(oBanquet.getOption());
+                orderHolder.ivDelete.setOnClickListener(this);
+                orderHolder.ivInfo.setOnClickListener(this);
 
                 break;
 
@@ -185,6 +188,16 @@ public class ListViewAdapter extends BaseAdapter {
 
 
         return vi;
+    }
+
+    //Click images
+    @Override
+    public void onClick(View v) {
+        if (v.getId() == R.id.iv_order_delete){
+            Toast.makeText(_context,"¡Eliminado!",Toast.LENGTH_SHORT).show();
+        }else if (v.getId() == R.id.iv_order_info){
+            Toast.makeText(_context,"¡Abre info!",Toast.LENGTH_SHORT).show();
+        }
     }
 
 
@@ -206,6 +219,7 @@ public class ListViewAdapter extends BaseAdapter {
         TextView tvOptions;
         TextView tvPrice;
         ImageView ivDelete;
+        ImageView ivInfo;
     }
 
 

@@ -28,7 +28,7 @@ public class OrdersFragment extends Fragment {
     private static OrdersFragment instance;
     private ListView mListView;
     private EditText etInput;
-    private TextView tvPriceTotal;
+    private TextView tvPriceTotal,tvNumTable;
     private double total = 0.0;
     private List<Object> orders;
 
@@ -54,11 +54,13 @@ public class OrdersFragment extends Fragment {
     private void initComponents(View v) {
         /*Get views*/
         mListView = (ListView) v.findViewById(R.id.lv_orders);
+        tvNumTable = (TextView) v.findViewById(R.id.tv_number_table);
         tvPriceTotal = (TextView) v.findViewById(R.id.tv_order_price_total);
 
         /*Setup*/
         BanquetModel oModel = new BanquetModel();
         orders = oModel.testData();
+        tvNumTable.setText("Mesa N° 19");
         mListView.setAdapter(new ListViewAdapter(getActivity(), orders, Const.ORDERS));
 
         for (Object order : orders) {

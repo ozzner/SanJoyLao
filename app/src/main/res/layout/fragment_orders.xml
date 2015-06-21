@@ -10,50 +10,72 @@
         android:orientation="vertical"
         android:weightSum="1">
 
-    <ListView
-        android:id="@+id/lv_orders"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:divider="@color/whitesmoke"
-        android:layout_weight="0.9"
-        android:dividerHeight="0.75dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:gravity="left|center"
+            android:paddingLeft="@dimen/space_8dp"
+            android:orientation="vertical"
+            android:layout_height="@dimen/editext_height">
 
-    </ListView>
+            <TextView
+                android:id="@+id/tv_number_table"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/default_text"
+                android:textSize="@dimen/txt_18sp"/>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_below="@+id/lv_orders"
-        android:layout_weight="0.1"
-        android:weightSum="1"
-        android:paddingRight="@dimen/space_16dp"
-        android:paddingLeft="@dimen/space_16dp"
-        android:orientation="horizontal"
-        android:background="@color/red">
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/red"/>
 
-        <TextView
-            android:layout_width="@dimen/space_0dp"
-            android:layout_height="match_parent"
-            android:textColor="@color/white"
-            android:layout_weight="0.5"
-            android:gravity="left|center_vertical"
-            android:textSize="@dimen/txt_20sp"
-            android:textStyle="bold"
-            android:textAllCaps="true"
-            android:text="TOTAL"/>
+        <ListView
+            android:id="@+id/lv_orders"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.9"
+            android:divider="@color/whitesmoke"
+            android:dividerHeight="0.75dp">
 
-        <TextView
-            android:id="@+id/tv_order_price_total"
-            android:layout_width="@dimen/space_0dp"
-            android:gravity="center_vertical|right"
-            android:layout_weight="0.5"
-            android:layout_height="match_parent"
-            android:textColor="@color/white"
-            android:textSize="@dimen/txt_20sp"
-            android:textStyle="bold"
-            android:textAllCaps="true"
-            android:text="@string/default_text"/>
+        </ListView>
 
-    </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_below="@+id/lv_orders"
+            android:layout_weight="0.1"
+            android:background="@color/red"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/space_16dp"
+            android:paddingRight="@dimen/space_16dp"
+            android:weightSum="1">
+
+            <TextView
+                android:layout_width="@dimen/space_0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                android:gravity="left|center_vertical"
+                android:text="TOTAL"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:textSize="@dimen/txt_20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_order_price_total"
+                android:layout_width="@dimen/space_0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                android:gravity="center_vertical|right"
+                android:text="@string/default_text"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:textSize="@dimen/txt_20sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+
     </LinearLayout>
 </FrameLayout>
