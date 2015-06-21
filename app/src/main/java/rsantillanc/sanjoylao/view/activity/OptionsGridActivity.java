@@ -2,6 +2,7 @@ package rsantillanc.sanjoylao.view.activity;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Point;
@@ -17,17 +18,20 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
 import rsantillanc.sanjoylao.R;
 import rsantillanc.sanjoylao.custom.adapter.GridViewAdapter;
+import rsantillanc.sanjoylao.custom.dialog.SJLAlertDialog;
 import rsantillanc.sanjoylao.model.BanquetModel;
 import rsantillanc.sanjoylao.model.OptionsModel;
 import rsantillanc.sanjoylao.util.Const;
+import rsantillanc.sanjoylao.util.SJLPreferences;
 import rsantillanc.sanjoylao.view.popup.DetailsOptionsPopup;
 
-public class OptionsGridActivity extends ActionBarActivity implements GridViewAdapter.OnPlateClickListener {
+public class OptionsGridActivity extends ActionBarActivity implements GridViewAdapter.OnPlateClickListener,SJLAlertDialog.OnBookingListener  {
 
     private Toolbar mToolbar;
     private Button btOrder;
@@ -37,38 +41,53 @@ public class OptionsGridActivity extends ActionBarActivity implements GridViewAd
     private OptionsModel opModel;
     private GridViewAdapter.OnPlateClickListener mListener;
     private int columnWidth;
+    private Context _context;
+    private SJLPreferences mPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_options_grid);
+        mPreferences = new SJLPreferences(getApplicationContext());
+        SJLAlertDialog mDialog = new SJLAlertDialog();
+        mDialog.set(this);
 
         init(getApplicationContext());
-        BanquetModel model = (BanquetModel)getIntent().getSerializableExtra(Const.TAG_BANQUET);
+        BanquetModel model = (BanquetModel) getIntent().getSerializableExtra(Const.TAG_BANQUET);
         setUpActionBar(model);
     }
 
-    private void init(Context ctx) {
-        btOrder = (Button)findViewById(R.id.bt_options_grid_order);
+    private void init(final Context ctx) {
+        _context = ctx;
+        btOrder = (Button) findViewById(R.id.bt_options_grid_order);
         //Borrar esto luego.
         btOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent popup = new Intent(getApplicationContext(), DetailsOptionsPopup.class);
-//        Bundle bundle = new Bundle();
-//        bundle.putSerializable(Const.TAG_DETAILS_OPTIONS,options.get(0));
-//        popup.putExtras(bundle);
-                startActivity(popup);
+
+
+                int val = mPreferences.getSaveStoredByKey(SJLPreferences.KEY_ORDER_TYPE);
+                String title = getString(R.string.title_booking_options);
+                if (val == SJLPreferences.INT_DEFAULT_VALUE)
+                    SJLAlertDialog.showTypeBookAlert(ctx, title);
+                else {
+
+                    Intent popup = new Intent(getApplicationContext(), DetailsOptionsPopup.class);
+                    startActivity(popup);
+                    Toast.makeText(ctx, "¡Agregado!", Toast.LENGTH_LONG).show();
+                }
+
+
             }
         });
-        mGridView = (GridView)findViewById(R.id.gv_options);
-        mToolbar = (Toolbar)findViewById(R.id.toolbar_options);
+        mGridView = (GridView) findViewById(R.id.gv_options);
+        mToolbar = (Toolbar) findViewById(R.id.toolbar_options);
 
         /*Setup*/
         opModel = new OptionsModel();
         options = opModel.testData();
         InitilizeGridLayout();
-        mGridAdapter = new GridViewAdapter(ctx,options,columnWidth);
+        mGridAdapter = new GridViewAdapter(ctx, options, columnWidth);
         mGridAdapter.setOnPlateClickListener(this);
         mGridView.setAdapter(mGridAdapter);
 
@@ -97,13 +116,12 @@ public class OptionsGridActivity extends ActionBarActivity implements GridViewAd
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
-        }else if (id == R.id.home){
+        } else if (id == R.id.home) {
             finish();
         }
 
         return super.onOptionsItemSelected(item);
     }
-
 
 
     //********************************************
@@ -132,14 +150,14 @@ public class OptionsGridActivity extends ActionBarActivity implements GridViewAd
     /**
      * Method to calculate the grid dimensions Calculates number columns and
      * columns width in grid
-     * */
+     */
     private void InitilizeGridLayout() {
         Resources r = getResources();
         float padding = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
                 Const.GRID_PADDING, r.getDisplayMetrics());
 
         // Column width
-        columnWidth = (int) ((getScreenWidth() - ((4) * padding)) /2);
+        columnWidth = (int) ((getScreenWidth() - ((4) * padding)) / 2);
 
         // Setting number of grid columns
         mGridView.setNumColumns(2);
@@ -163,5 +181,13 @@ public class OptionsGridActivity extends ActionBarActivity implements GridViewAd
 //        popup.putExtras(bundle);
         startActivity(popup);
 
+    }
+
+    @Override
+    public void onClick(DialogInterface dialog, int index) {
+        mPreferences = new SJLPreferences(_context);
+        mPreferences.saveOrderType(index);
+        Toast.makeText(_context,"¡Agregado option: !" + index,Toast.LENGTH_LONG).show();
+        dialog.cancel();
     }
 }
