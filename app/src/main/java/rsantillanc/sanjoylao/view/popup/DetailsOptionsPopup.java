@@ -9,11 +9,9 @@ import android.widget.RatingBar;
 
 import rsantillanc.sanjoylao.R;
 import rsantillanc.sanjoylao.custom.adapter.ViewPagerAdapter;
-import rsantillanc.sanjoylao.model.OptionsModel;
 import rsantillanc.sanjoylao.util.SlidingTabLayout;
 
 public class DetailsOptionsPopup extends FragmentActivity {
-    private OptionsModel oOption;
     private RatingBar mRatingBar;
     private SlidingTabLayout mSlindingTabLayout;
     private ViewPager mViewPager;
@@ -63,7 +61,7 @@ public class DetailsOptionsPopup extends FragmentActivity {
     }
 
     protected void setUpSlindingTab(){
-        mSlindingTabLayout.setCustomTabView(R.layout.custom_tab,0);
+        mSlindingTabLayout.setCustomTabView(R.layout.custom_tab, 0);
         mSlindingTabLayout.setDistributeEvenly(true);
         mSlindingTabLayout.setViewPager(mViewPager);
         mSlindingTabLayout.setCustomTabColorizer(new SlidingTabLayout.TabColorizer() {
@@ -71,6 +69,7 @@ public class DetailsOptionsPopup extends FragmentActivity {
             public int getIndicatorColor(int position) {
                 return getResources().getColor(R.color.whitesmoke);
             }
+
         });
     }
 

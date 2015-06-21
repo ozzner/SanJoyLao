@@ -38,7 +38,6 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
         SpannableString sb = new SpannableString(" ");
         ImageSpan imageSpan = new ImageSpan(image);
         sb.setSpan(imageSpan, 0,sb.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-
         return sb;
     }
 
@@ -56,8 +55,10 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
             case 1:
                 page = CommentsFragment.newInstance(null,null);
                 break;
+            default:
+                page = CommentsFragment.newInstance(null,null);
+                break;
         }
-
 
         return page;
     }

@@ -64,10 +64,12 @@ public class MainActivity extends ActionBarActivity implements DrawerFragment.Fr
         mContext = getApplicationContext();
         initViews();
 
+        //Configurations
         setUpActionBar();
         setUpDrawer();
         setUpOrientation();
 
+        //Show fragment
         displayView(MAIN);
 
     }
@@ -174,14 +176,6 @@ public class MainActivity extends ActionBarActivity implements DrawerFragment.Fr
             default:
                 fragment = MainFragment.newInstance();
                 typeOfDevice = Android.getTypeDevice(this);
-
-                if (typeOfDevice > Const.PHONE_SCREEN) {
-                    Fragment details = FrontFragment.getInstance();
-                    FragmentManager fragmentManager = getSupportFragmentManager();
-                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                    fragmentTransaction.replace(R.id.container_details_body, details);
-                    fragmentTransaction.commit();
-                }
                 break;
 
         }
@@ -193,10 +187,18 @@ public class MainActivity extends ActionBarActivity implements DrawerFragment.Fr
             fragmentTransaction.replace(R.id.container_body, fragment);
             fragmentTransaction.commit();
 
+            if (typeOfDevice > Const.PHONE_SCREEN &&  position == MAIN) {
+                Fragment details = FrontFragment.getInstance();
+                FragmentTransaction secondTransaction = fragmentManager.beginTransaction();
+                secondTransaction.replace(R.id.container_details_main, details);
+                secondTransaction.commit();
+            }
+
             // set the custom_toolbar title
             getSupportActionBar().setTitle(title);
         }
     }
+
 
     @Override
     public boolean onMenuOpened(int featureId, Menu menu) {

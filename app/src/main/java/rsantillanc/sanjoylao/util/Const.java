@@ -24,7 +24,7 @@ public class Const {
     public static final int DRINKS = 8;
     public static final int CENTRAL = 9;
 
-    //Others options
+    //Others menu options
     public static final int COMMENTS = -1;
     public static final int ORDERS = -2;
 

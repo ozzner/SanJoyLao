@@ -37,9 +37,7 @@ public class CommentsFragment extends Fragment {
     }
 
     public static CommentsFragment newInstance(String param1, String param2) {
-       if (instance == null)
            instance =  new CommentsFragment();
-
         return instance;
     }
 

@@ -1,0 +1,33 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="rsantillanc.sanjoylao.view.fragment.SoupFragment">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:weightSum="3">
+
+
+        <ListView
+            android:id="@+id/lv_soups"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1.75"
+            android:padding="2dp"
+            android:scrollbars="none"
+            android:divider="@color/whitesmoke"
+            android:dividerHeight="0.75dp"/>
+
+        <FrameLayout
+            android:id="@+id/container_details_soup"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="1.25"
+            />
+    </LinearLayout>
+
+</FrameLayout>

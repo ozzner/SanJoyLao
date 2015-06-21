@@ -36,6 +36,7 @@ public class ListViewAdapter extends BaseAdapter {
     private Context _context;
     private LayoutInflater layIn;
     private int labelIndex;
+    private OnItemClickListener mListener;
 
 
     public ListViewAdapter(Context _context, List<Object> list, int tag) {
@@ -64,7 +65,7 @@ public class ListViewAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
 
         View vi = convertView;
 
@@ -124,7 +125,12 @@ public class ListViewAdapter extends BaseAdapter {
                 else
                     soupHolder.ivImageSoup.setImageResource(R.drawable.plate_2);
 
-
+                vi.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mListener.onItemClick(v, position);
+                    }
+                });
                 break;
 
             case Const.COMMENTS:
@@ -202,5 +208,13 @@ public class ListViewAdapter extends BaseAdapter {
         ImageView ivDelete;
     }
 
+
+    //Interfaces
+    public interface OnItemClickListener{
+        void onItemClick(View v, int index);
+    }
+    public void setOnItemClickListener(OnItemClickListener listener){
+        this.mListener = listener;
+    }
 
 }
