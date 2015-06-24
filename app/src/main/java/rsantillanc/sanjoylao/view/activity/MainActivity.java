@@ -27,6 +27,7 @@ import rsantillanc.sanjoylao.view.fragment.DrawerFragment;
 import rsantillanc.sanjoylao.view.fragment.FrontFragment;
 import rsantillanc.sanjoylao.view.fragment.MainFragment;
 import rsantillanc.sanjoylao.view.fragment.OrdersFragment;
+import rsantillanc.sanjoylao.view.fragment.RiceFragment;
 import rsantillanc.sanjoylao.view.fragment.SoupFragment;
 
 
@@ -155,7 +156,8 @@ public class MainActivity extends ActionBarActivity implements DrawerFragment.Fr
                 title = getString(R.string.item_title_soup);
                 break;
             case RICE:
-                fragment = MainFragment.newInstance();
+                fragment = RiceFragment.newInstance();
+                title = getString(R.string.item_title_rices);
                 break;
             case CHEF:
                 fragment = MainFragment.newInstance();

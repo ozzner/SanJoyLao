@@ -2,12 +2,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="@dimen/item_soup_height"
+    android:background="@drawable/bg_main_image"
     >
 
     <android.support.v7.widget.CardView
-        android:id="@+id/cv_item_soup"
+        android:id="@+id/cv_rice_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/bg_main_image"
         android:foreground="@drawable/list_selector"
        >
 
@@ -30,11 +32,11 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:id="@+id/iv_image_soup"
+                    android:id="@+id/iv_rice"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/plate_1" />
+                    android:src="@drawable/plate_2" />
             </LinearLayout>
 
             <!--Content-->
@@ -52,22 +54,26 @@
                     android:id="@+id/lay_name"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:gravity="left|center_vertical"
+                    android:paddingRight="@dimen/space_8dp"
+                    android:layout_weight="1.4"
+                    android:gravity="right|center_vertical"
                     android:orientation="horizontal"
                     android:paddingLeft="@dimen/space_8dp">
 
                     <TextView
-                        android:id="@+id/tv_name"
+                        android:id="@+id/tv_rice_name"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:text="Large Text"
-                        android:textAppearance="?android:attr/textAppearanceLarge" />
+                        android:autoText="true"
+                        android:singleLine="false"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/txt_16sp"/>
                 </LinearLayout>
 
                 <!--Titles-->
                 <LinearLayout
-                    android:id="@+id/lay_titles"
+                    android:id="@+id/lay_rice_titles"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="0.75"
@@ -77,40 +83,41 @@
                     android:paddingLeft="@dimen/space_10dp">
 
                     <TextView
-                        android:id="@+id/tv_title1"
+                        android:id="@+id/tv_rice_title1"
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
                         android:textSize="@dimen/txt_14sp"
                         android:textColor="@color/black"
                         android:gravity="left"
-                        android:text="@string/title_personal"
+                        android:text="@string/title_taza"
                         />
 
                     <TextView
-                        android:id="@+id/tv_title2"
+                        android:id="@+id/tv_rice_title2"
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:gravity="left"
                         android:layout_height="wrap_content"
                         android:textColor="@color/black"
-                        android:text="@string/title_mediana"
+                        android:text="@string/title_fuente"
                         android:textSize="@dimen/txt_14sp" />
 
                     <TextView
-                        android:id="@+id/tv_title3"
+                        android:id="@+id/tv_rice_title3"
                         android:layout_width="0dp"
                         android:layout_weight="1"
-                        android:layout_height="wrap_content"
-                        android:textSize="@dimen/txt_14sp"
                         android:gravity="left"
+                        android:layout_height="wrap_content"
                         android:textColor="@color/black"
-                        android:text="@string/title_grande"/>
+                        android:text=""
+                        android:textSize="@dimen/txt_14sp" />
+
                 </LinearLayout>
 
                 <!--Price-->
                 <LinearLayout
-                    android:id="@+id/lay_prices"
+                    android:id="@+id/lay_rice_prices"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="0.75"
@@ -119,7 +126,7 @@
                     android:paddingLeft="@dimen/space_10dp">
 
                     <TextView
-                        android:id="@+id/tv_price1"
+                        android:id="@+id/tv_rice_price1"
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
@@ -128,7 +135,7 @@
                         android:textSize="@dimen/txt_13sp" />
 
                     <TextView
-                        android:id="@+id/tv_price2"
+                        android:id="@+id/tv_rice_price2"
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:gravity="left"
@@ -137,27 +144,27 @@
                         android:text="S/. 55.50" />
 
                     <TextView
-                        android:id="@+id/tv_price3"
+                        android:id="@+id/tv_rice_price3"
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
                         android:textSize="@dimen/txt_13sp"
                         android:gravity="left"
-                        android:text="S/. 25.00" />
+                        android:text="" />
                 </LinearLayout>
 
                 <!--Order-->
                 <LinearLayout
-                    android:id="@+id/lay_button"
+                    android:id="@+id/lay_rice_button_order"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="1.5"
+                    android:layout_weight="1.0"
                     android:gravity="right|center_vertical"
                     android:orientation="horizontal"
                     android:paddingRight="@dimen/space_8dp">
 
                     <Button
-                        android:id="@+id/bt_order_soup"
+                        android:id="@+id/bt_rice_order"
                         android:layout_width="65dp"
                         android:layout_height="@dimen/button_height"
                         android:background="@drawable/button_selector"

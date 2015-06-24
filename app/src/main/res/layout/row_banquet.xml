@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
+    android:background="@drawable/bg_main_image"
  >
 
     <android.support.v7.widget.CardView
@@ -10,12 +10,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:foreground="@drawable/list_selector"
+        android:background="@color/transparent"
         android:padding="@dimen/space_16dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:padding="@dimen/space_8dp"
+            android:background="@color/transparent"
             >
 
             <LinearLayout

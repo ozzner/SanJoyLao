@@ -17,8 +17,10 @@ import java.util.List;
 import rsantillanc.sanjoylao.R;
 import rsantillanc.sanjoylao.model.BanquetModel;
 import rsantillanc.sanjoylao.model.CommentModel;
+import rsantillanc.sanjoylao.model.RiceModel;
 import rsantillanc.sanjoylao.model.SoupModel;
 import rsantillanc.sanjoylao.util.Const;
+import rsantillanc.sanjoylao.util.Strings;
 
 /**
  * Created by RenzoD on 09/06/2015.
@@ -29,8 +31,10 @@ public class ListViewAdapter extends BaseAdapter implements View.OnClickListener
     private CommentModel oComment;
     //Soups
     private SoupModel oSoup;
-    //banquet
+    //Banquet
     private BanquetModel oBanquet;
+    //Rice
+    private RiceModel oRice;
 
     private List<Object> listObjects;
     private Context _context;
@@ -133,6 +137,43 @@ public class ListViewAdapter extends BaseAdapter implements View.OnClickListener
                 });
                 break;
 
+            case Const.RICE:
+            RiceViewHolder riceHolder;
+            oRice = (RiceModel) getItem(position);
+
+            if (vi == null) {
+                riceHolder = new RiceViewHolder();
+
+                vi = layIn.inflate(R.layout.row_rice, parent, false);
+                riceHolder.ivImageRice = (ImageView) vi.findViewById(R.id.iv_rice);
+                riceHolder.tvName = (TextView) vi.findViewById(R.id.tv_rice_name);
+                riceHolder.tvPrice1 = (TextView) vi.findViewById(R.id.tv_rice_price1);
+                riceHolder.tvPrice2 = (TextView) vi.findViewById(R.id.tv_rice_price2);
+
+                vi.setTag(riceHolder);
+
+            } else
+                riceHolder = (RiceViewHolder) vi.getTag();
+
+                riceHolder.tvName.setText(oRice.getTitle());
+                riceHolder.tvPrice1.setText(Const.PRICE_PEN + Strings.format(oRice.getPriceTaza(), Strings.FORMAT_MILES));
+                riceHolder.tvPrice2.setText(Const.PRICE_PEN + Strings.format(oRice.getPriceFuente(), Strings.FORMAT_MILES));
+
+
+            if (position % 2 == 0)
+                riceHolder.ivImageRice.setImageResource(R.drawable.plate_1);
+            else
+                riceHolder.ivImageRice.setImageResource(R.drawable.plate_2);
+
+            vi.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mListener.onItemClick(v, position);
+                }
+            });
+
+            break;
+
             case Const.COMMENTS:
 
                 CommentViewHolder holder;
@@ -212,6 +253,11 @@ public class ListViewAdapter extends BaseAdapter implements View.OnClickListener
         TextView tvName, tvTitle1, tvTitle2, tvTitle3, tvPrice1, tvPrice2, tvPrice3;
         ImageView ivImageSoup;
         Button btOrder;
+    }
+
+    static class RiceViewHolder {
+        TextView tvName,tvPrice1, tvPrice2;
+        ImageView ivImageRice;
     }
 
     static class OrdersViewHolder {
