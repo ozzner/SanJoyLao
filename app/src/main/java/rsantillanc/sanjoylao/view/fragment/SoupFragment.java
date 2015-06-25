@@ -1,6 +1,7 @@
 package rsantillanc.sanjoylao.view.fragment;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -19,6 +20,7 @@ import rsantillanc.sanjoylao.custom.adapter.ListViewAdapter;
 import rsantillanc.sanjoylao.model.SoupModel;
 import rsantillanc.sanjoylao.util.Android;
 import rsantillanc.sanjoylao.util.Const;
+import rsantillanc.sanjoylao.view.popup.DetailsOptionsPopup;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -78,15 +80,27 @@ public class SoupFragment extends Fragment implements View.OnClickListener, List
 
     @Override
     public void onItemClick(View v, int index) {
-       int dvc = Android.getTypeDevice(getActivity());
+        int id = v.getId();
+        int dvc = Android.getTypeDevice(getActivity());
 
-        if (dvc > Const.PHONE_SCREEN){
+        if (dvc > Const.PHONE_SCREEN) {
             startFragment();
+        }
+
+        switch (id){
+            case R.id.iv_soup_info:
+                openInfoSoup();
+                break;
         }
 
     }
 
-    protected void startFragment(){
+    private void openInfoSoup() {
+        Intent in = new Intent(getActivity(), DetailsOptionsPopup.class);
+        startActivity(in);
+    }
+
+    protected void startFragment() {
         Fragment details = SoupDetailsFragment.getInstance();
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();

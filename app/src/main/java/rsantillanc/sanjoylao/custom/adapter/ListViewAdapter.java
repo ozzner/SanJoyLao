@@ -87,6 +87,7 @@ public class ListViewAdapter extends BaseAdapter implements View.OnClickListener
 
                     vi = layIn.inflate(R.layout.row_soup, parent, false);
                     soupHolder.ivImageSoup = (ImageView) vi.findViewById(R.id.iv_image_soup);
+                    soupHolder.ivInfo = (ImageView) vi.findViewById(R.id.iv_soup_info);
                     soupHolder.tvName = (TextView) vi.findViewById(R.id.tv_name);
                     soupHolder.tvTitle1 = (TextView) vi.findViewById(R.id.tv_title1);
                     soupHolder.tvTitle2 = (TextView) vi.findViewById(R.id.tv_title2);
@@ -95,36 +96,48 @@ public class ListViewAdapter extends BaseAdapter implements View.OnClickListener
                     soupHolder.tvPrice2 = (TextView) vi.findViewById(R.id.tv_price2);
                     soupHolder.tvPrice3 = (TextView) vi.findViewById(R.id.tv_price3);
                     soupHolder.btOrder = (Button) vi.findViewById(R.id.bt_order_soup);
-                    final String[] array = {"Personal " + soupHolder.tvPrice1.getText().toString(),
-                            "Mediana " + soupHolder.tvPrice2.getText().toString(),
-                            "Grande " + soupHolder.tvPrice3.getText().toString()};
-
-                    soupHolder.btOrder.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            AlertDialog.Builder builder = new AlertDialog.Builder(_context);
-                            builder.setTitle("Opciones")
-                                    .setSingleChoiceItems(array, -1, new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            dialog.cancel();
-                                            Toast.makeText(_context, "Pedido correcto!", Toast.LENGTH_LONG).show();
-                                        }
-                                    });
-
-                            builder.create().show();
-                        }
-                    });
 
                     vi.setTag(soupHolder);
 
                 } else
                     soupHolder = (SoupViewHolder) vi.getTag();
 
+                final String[] array = {
+                        "Personal " + Const.PRICE_PEN + Strings.format(oSoup.getPricePersonal(),Strings.FORMAT_MILES),
+                        "Mediana " + Const.PRICE_PEN + Strings.format(oSoup.getPriceMedium(),Strings.FORMAT_MILES),
+                        "Grande " + Const.PRICE_PEN + Strings.format(oSoup.getPriceBig(),Strings.FORMAT_MILES)};
+
+
+
+                //Click listener info
+                soupHolder.ivInfo.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mListener.onItemClick(v, position);
+                    }
+                });
+
+                //Click open open alert
+                soupHolder.btOrder.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(_context);
+                        builder.setTitle("Opciones")
+                                .setSingleChoiceItems(array, -1, new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.cancel();
+                                        Toast.makeText(_context, "Pedido correcto!", Toast.LENGTH_LONG).show();
+                                    }
+                                });
+
+                        builder.create().show();
+                    }
+                });
                 soupHolder.tvName.setText(oSoup.getTitle());
-                soupHolder.tvPrice1.setText(Const.PRICE_PEN + String.format("%1.2f", oSoup.getPricePersonal()));
-                soupHolder.tvPrice2.setText(Const.PRICE_PEN + String.format("%1.2f", oSoup.getPriceMedium()));
-                soupHolder.tvPrice3.setText(Const.PRICE_PEN + String.format("%1.2f", oSoup.getPriceBig()));
+                soupHolder.tvPrice1.setText(Const.PRICE_PEN + Strings.format(oSoup.getPricePersonal(),Strings.FORMAT_MILES));
+                soupHolder.tvPrice2.setText(Const.PRICE_PEN + Strings.format(oSoup.getPriceMedium(),Strings.FORMAT_MILES));
+                soupHolder.tvPrice3.setText(Const.PRICE_PEN + Strings.format(oSoup.getPriceBig(),Strings.FORMAT_MILES));
 
                 if (position % 2 == 0)
                     soupHolder.ivImageSoup.setImageResource(R.drawable.plate_3);
@@ -140,41 +153,41 @@ public class ListViewAdapter extends BaseAdapter implements View.OnClickListener
                 break;
 
             case Const.RICE:
-            RiceViewHolder riceHolder;
-            oRice = (RiceModel) getItem(position);
+                RiceViewHolder riceHolder;
+                oRice = (RiceModel) getItem(position);
 
-            if (vi == null) {
-                riceHolder = new RiceViewHolder();
+                if (vi == null) {
+                    riceHolder = new RiceViewHolder();
 
-                vi = layIn.inflate(R.layout.row_rice, parent, false);
-                riceHolder.ivImageRice = (ImageView) vi.findViewById(R.id.iv_rice);
-                riceHolder.tvName = (TextView) vi.findViewById(R.id.tv_rice_name);
-                riceHolder.tvPrice1 = (TextView) vi.findViewById(R.id.tv_rice_price1);
-                riceHolder.tvPrice2 = (TextView) vi.findViewById(R.id.tv_rice_price2);
+                    vi = layIn.inflate(R.layout.row_rice, parent, false);
+                    riceHolder.ivImageRice = (ImageView) vi.findViewById(R.id.iv_rice);
+                    riceHolder.tvName = (TextView) vi.findViewById(R.id.tv_rice_name);
+                    riceHolder.tvPrice1 = (TextView) vi.findViewById(R.id.tv_rice_price1);
+                    riceHolder.tvPrice2 = (TextView) vi.findViewById(R.id.tv_rice_price2);
 
-                vi.setTag(riceHolder);
+                    vi.setTag(riceHolder);
 
-            } else
-                riceHolder = (RiceViewHolder) vi.getTag();
+                } else
+                    riceHolder = (RiceViewHolder) vi.getTag();
 
                 riceHolder.tvName.setText(oRice.getTitle());
                 riceHolder.tvPrice1.setText(Const.PRICE_PEN + Strings.format(oRice.getPriceTaza(), Strings.FORMAT_MILES));
                 riceHolder.tvPrice2.setText(Const.PRICE_PEN + Strings.format(oRice.getPriceFuente(), Strings.FORMAT_MILES));
 
 
-            if (position % 2 == 0)
-                riceHolder.ivImageRice.setImageResource(R.drawable.plate_1);
-            else
-                riceHolder.ivImageRice.setImageResource(R.drawable.plate_2);
+                if (position % 2 == 0)
+                    riceHolder.ivImageRice.setImageResource(R.drawable.arroz_1);
+                else
+                    riceHolder.ivImageRice.setImageResource(R.drawable.arroz_2);
 
-            vi.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mListener.onItemClick(v, position);
-                }
-            });
+                vi.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mListener.onItemClick(v, position);
+                    }
+                });
 
-            break;
+                break;
 
             case Const.COMMENTS:
 
@@ -216,12 +229,18 @@ public class ListViewAdapter extends BaseAdapter implements View.OnClickListener
 
                     vi.setTag(orderHolder);
 
-                }else
-                    orderHolder = (OrdersViewHolder)vi.getTag();
+                } else
+                    orderHolder = (OrdersViewHolder) vi.getTag();
 
                 orderHolder.tvPrice.setText(Const.PRICE_PEN + String.valueOf(oBanquet.getPrice()));
-                orderHolder.tvName.setText((position+1) + ".- " + oBanquet.getName());//Delete hardcode
-                orderHolder.tvOptions.setText(oBanquet.getOption());
+                orderHolder.tvName.setText((position + 1) + ".- " + oBanquet.getName());//Delete hardcode
+
+                if (oBanquet.isFlagOptions())
+                orderHolder.tvOptions.setText("Las " + oBanquet.getOption() + " que eligió");//Delete hardcode
+                else
+                 orderHolder.tvOptions.setText("La opción elegida.");//Delete hardcode
+
+
                 orderHolder.ivDelete.setOnClickListener(this);
                 orderHolder.ivInfo.setOnClickListener(this);
 
@@ -239,17 +258,22 @@ public class ListViewAdapter extends BaseAdapter implements View.OnClickListener
                     chefHolder.tvName = (TextView) vi.findViewById(R.id.tv_chef_name);
                     chefHolder.tvOptions = (TextView) vi.findViewById(R.id.tv_chef_option);
                     chefHolder.tvPrice = (TextView) vi.findViewById(R.id.tv_chef_price);
+                    chefHolder.ivImage = (ImageView) vi.findViewById(R.id.iv_chef);
 
 
                     vi.setTag(chefHolder);
 
-                }else
-                    chefHolder = (ChefViewHolder)vi.getTag();
+                } else
+                    chefHolder = (ChefViewHolder) vi.getTag();
 
-
-                chefHolder.tvPrice.setText(Const.PRICE_PEN + Strings.format(oChef.getPrice(),Strings.FORMAT_MILES));
+                chefHolder.tvPrice.setText(Const.PRICE_PEN + Strings.format(oChef.getPrice(), Strings.FORMAT_MILES));
                 chefHolder.tvName.setText(oChef.getName());//Delete hardcode
                 chefHolder.tvOptions.setText("Taza " + Const.PRICE_PEN + Strings.format(oChef.getPrice() / 3, Strings.FORMAT_MILES));
+
+                if (position % 2 == 0)
+                    chefHolder.ivImage.setImageResource(R.drawable.chef_1);
+                else
+                    chefHolder.ivImage.setImageResource(R.drawable.chef_2);
 
                 break;
 
@@ -262,10 +286,10 @@ public class ListViewAdapter extends BaseAdapter implements View.OnClickListener
     //Click images
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.iv_order_delete){
-            Toast.makeText(_context,"¡Eliminado!",Toast.LENGTH_SHORT).show();
-        }else if (v.getId() == R.id.iv_order_info){
-            Toast.makeText(_context,"¡Abre info!",Toast.LENGTH_SHORT).show();
+        if (v.getId() == R.id.iv_order_delete) {
+            Toast.makeText(_context, "¡Eliminado!", Toast.LENGTH_SHORT).show();
+        } else if (v.getId() == R.id.iv_order_info) {
+            Toast.makeText(_context, "¡Abre info!", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -279,12 +303,12 @@ public class ListViewAdapter extends BaseAdapter implements View.OnClickListener
 
     static class SoupViewHolder {
         TextView tvName, tvTitle1, tvTitle2, tvTitle3, tvPrice1, tvPrice2, tvPrice3;
-        ImageView ivImageSoup;
+        ImageView ivImageSoup, ivInfo;
         Button btOrder;
     }
 
     static class RiceViewHolder {
-        TextView tvName,tvPrice1, tvPrice2;
+        TextView tvName, tvPrice1, tvPrice2;
         ImageView ivImageRice;
     }
 
@@ -297,16 +321,17 @@ public class ListViewAdapter extends BaseAdapter implements View.OnClickListener
     }
 
     static class ChefViewHolder {
-        TextView tvName,tvPrice,tvOptions;
+        TextView tvName, tvPrice, tvOptions;
         ImageView ivImage;
     }
 
 
     //Interfaces
-    public interface OnItemClickListener{
+    public interface OnItemClickListener {
         void onItemClick(View v, int index);
     }
-    public void setOnItemClickListener(OnItemClickListener listener){
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
         this.mListener = listener;
     }
 
