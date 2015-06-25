@@ -16,6 +16,7 @@ import java.util.List;
 
 import rsantillanc.sanjoylao.R;
 import rsantillanc.sanjoylao.model.BanquetModel;
+import rsantillanc.sanjoylao.model.ChefModel;
 import rsantillanc.sanjoylao.model.CommentModel;
 import rsantillanc.sanjoylao.model.RiceModel;
 import rsantillanc.sanjoylao.model.SoupModel;
@@ -27,14 +28,16 @@ import rsantillanc.sanjoylao.util.Strings;
  */
 public class ListViewAdapter extends BaseAdapter implements View.OnClickListener {
 
-    //Comments
+    //Comment
     private CommentModel oComment;
-    //Soups
+    //Soup
     private SoupModel oSoup;
     //Banquet
     private BanquetModel oBanquet;
     //Rice
     private RiceModel oRice;
+    //Chef
+    private ChefModel oChef;
 
     private List<Object> listObjects;
     private Context _context;
@@ -58,8 +61,7 @@ public class ListViewAdapter extends BaseAdapter implements View.OnClickListener
 
     @Override
     public Object getItem(int position) {
-        Object obj = null;
-        obj = listObjects.get(position);
+        Object obj = listObjects.get(position);
         return obj;
     }
 
@@ -225,6 +227,32 @@ public class ListViewAdapter extends BaseAdapter implements View.OnClickListener
 
                 break;
 
+
+            case Const.CHEF:
+                ChefViewHolder chefHolder;
+                oChef = (ChefModel) getItem(position);
+
+                if (vi == null) {
+                    vi = layIn.inflate(R.layout.row_chef, parent, false);
+
+                    chefHolder = new ChefViewHolder();
+                    chefHolder.tvName = (TextView) vi.findViewById(R.id.tv_chef_name);
+                    chefHolder.tvOptions = (TextView) vi.findViewById(R.id.tv_chef_option);
+                    chefHolder.tvPrice = (TextView) vi.findViewById(R.id.tv_chef_price);
+
+
+                    vi.setTag(chefHolder);
+
+                }else
+                    chefHolder = (ChefViewHolder)vi.getTag();
+
+
+                chefHolder.tvPrice.setText(Const.PRICE_PEN + Strings.format(oChef.getPrice(),Strings.FORMAT_MILES));
+                chefHolder.tvName.setText(oChef.getName());//Delete hardcode
+                chefHolder.tvOptions.setText("Taza " + Const.PRICE_PEN + Strings.format(oChef.getPrice() / 3, Strings.FORMAT_MILES));
+
+                break;
+
         }
 
 
@@ -266,6 +294,11 @@ public class ListViewAdapter extends BaseAdapter implements View.OnClickListener
         TextView tvPrice;
         ImageView ivDelete;
         ImageView ivInfo;
+    }
+
+    static class ChefViewHolder {
+        TextView tvName,tvPrice,tvOptions;
+        ImageView ivImage;
     }
 
 

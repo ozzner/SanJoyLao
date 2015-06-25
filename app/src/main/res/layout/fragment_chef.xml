@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg_main_image"
-    tools:context="rsantillanc.sanjoylao.view.fragment.RiceFragment">
+    tools:context="rsantillanc.sanjoylao.view.fragment.ChefFragment">
 
 
     <LinearLayout
@@ -13,7 +13,7 @@
 
 
         <ListView
-            android:id="@+id/lv_rices"
+            android:id="@+id/lv_chef"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"

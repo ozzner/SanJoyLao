@@ -23,6 +23,7 @@ import rsantillanc.sanjoylao.util.Android;
 import rsantillanc.sanjoylao.util.Const;
 import rsantillanc.sanjoylao.util.SJLPreferences;
 import rsantillanc.sanjoylao.view.fragment.BanquetsFragment;
+import rsantillanc.sanjoylao.view.fragment.ChefFragment;
 import rsantillanc.sanjoylao.view.fragment.DrawerFragment;
 import rsantillanc.sanjoylao.view.fragment.FrontFragment;
 import rsantillanc.sanjoylao.view.fragment.MainFragment;
@@ -160,7 +161,8 @@ public class MainActivity extends ActionBarActivity implements DrawerFragment.Fr
                 title = getString(R.string.item_title_rices);
                 break;
             case CHEF:
-                fragment = MainFragment.newInstance();
+                fragment = ChefFragment.newInstance();
+                title = getString(R.string.item_title_chef);
                 break;
             case CHICKEN_MEAT:
                 fragment = MainFragment.newInstance();
