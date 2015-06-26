@@ -43,7 +43,11 @@ public class RecyclerViewBanquetAdapter extends RecyclerView.Adapter<RecyclerVie
        BanquetModel banquet = (BanquetModel) banquetItems.get(index);
        holder.tvPrice.setText(Const.PRICE_PEN + String.valueOf(banquet.getPrice()));
        holder.tvName.setText(banquet.getName());
+        if (banquet.isFlagOptions())
        holder.tvOptions.setText(banquet.getOption());
+        else
+            holder.tvOptions.setText("No hay opciones");
+
     }
 
     @Override
