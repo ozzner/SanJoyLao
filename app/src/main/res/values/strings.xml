@@ -37,12 +37,6 @@
     <string name="item_title_drinks">Vinos y bebidas</string>
     <string name="item_title_call_center">Central telefónica</string>
 
-    <string name="title_orders">Mis pedidos</string>
-
-
-
-    <string name="title_activity_options">Options Activity</string>
-    <string name="title_activity_details_options_popup">Detalle de opciones</string>
 
 
     <!--Tabs-->
@@ -54,6 +48,7 @@
     <string name="button_send">Enviar</string>
     <string name="button_order">Pedir</string>
     <string name="button_confirm_order">Confirmar</string>
+    <string name="button_send_survey">Enviar</string>
     <string name="title_activity_options_grid">Options</string>
     <string name="title_activity_login">Inicio sesión</string>
 
@@ -70,11 +65,25 @@
     <string name="title_grande">Grande</string>
     <string name="title_taza">Taza</string>
     <string name="title_fuente">Fuente</string>
+    <string name="title_orders">Mis pedidos</string>
+    <string name="title_survey">Queremos asegurarnos de brindarle un mejor servicio. Por favor responda la siguiente encuesta:</string>
+    <string name="title_survey_question_one">¿Le fue útil la información brindada?</string>
+    <string name="title_survey_question_two">¿Cómo calificarías a la aplicación?</string>
+    <string name="title_survey_question_three">¿Qué tal le pareció el servicio ofrecido?</string>
+    <string name="title_activity_options">Options Activity</string>
+    <string name="title_activity_details_options_popup">Detalle de opciones</string>
+
+    <!--Labels-->
+    <string name="label_bad">Malo</string>
+    <string name="label_excellent">Excelente</string>
+    <string name="label_send_comments">Envíanos tus comentarios</string>
 
     <!--Bookings-->
     <string name="booking_table">Servicio a la mesa</string>
     <string name="booking_order">Reservar una orden</string>
     <string name="booking_delivery">Delivery</string>
+    <string name="title_activity_survey">Encuesta</string>
+    <string name="action_settings">Settings</string>
 
     
 </resources>

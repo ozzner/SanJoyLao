@@ -12,42 +12,82 @@
         android:weightSum="1">
 
 
-
-
-
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="20dp"
             android:layout_weight="0.075"
             android:background="@color/colorPrimaryDark"
             android:orientation="horizontal"
-            android:paddingLeft="@dimen/space_16dp"
-            android:paddingRight="@dimen/space_16dp"
+            android:paddingLeft="@dimen/space_8dp"
+            android:paddingRight="@dimen/space_8dp"
             android:weightSum="1">
 
-            <TextView
-                android:id="@+id/tv_number_table"
+            <LinearLayout
                 android:layout_width="@dimen/space_0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="0.5"
-                android:gravity="left|center_vertical"
-                android:text="TOTAL"
-                android:textAllCaps="true"
-                android:textColor="@color/white"
-                android:textSize="@dimen/txt_16sp"
-                android:textStyle="bold" />
+                android:layout_weight="0.65"
+                android:orientation="horizontal"
+                android:weightSum="2">
 
-            <TextView
-                android:id="@+id/tv_order_price_total"
+                <TextView
+                    android:id="@+id/tv_number_table"
+                    android:layout_width="@dimen/space_0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1.0"
+                    android:gravity="left|center_vertical"
+                    android:text="TOTAL"
+                    android:textAllCaps="true"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/txt_14sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_order_percent"
+                    android:layout_width="@dimen/space_0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.8"
+                    android:gravity="center"
+                    android:text="TOTAL"
+                    android:textAllCaps="true"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/txt_14sp"
+                   />
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="@dimen/space_0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="0.5"
-                android:gravity="center_vertical|right"
-                android:text="@string/default_text"
-                android:textAllCaps="true"
-                android:textColor="@color/white"
-                android:textSize="@dimen/txt_20sp"
-                android:textStyle="bold" />
+                android:layout_weight="0.35"
+                android:orientation="vertical"
+                android:gravity="right"
+                android:weightSum="2">
+
+                <TextView
+                    android:id="@+id/tv_order_price_total"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/space_0dp"
+                    android:layout_weight="1"
+                    android:gravity="right|bottom"
+                    android:text="@string/default_text"
+                    android:textAllCaps="true"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/txt_14sp"
+                     />
+
+                <TextView
+                    android:id="@+id/tv_order_price_discount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/space_0dp"
+                    android:layout_weight="1"
+                    android:gravity="right|top"
+                    android:text="@string/default_text"
+                    android:textAllCaps="true"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/txt_18sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
 
         </LinearLayout>
 
@@ -57,24 +97,23 @@
             android:layout_height="0dp"
             android:layout_weight="0.925"
             android:divider="@color/whitesmoke"
-            android:scrollbars="none"
-            android:dividerHeight="0.75dp">
-        </ListView>
+            android:dividerHeight="0.75dp"
+            android:scrollbars="none"></ListView>
 
         <LinearLayout
             android:layout_width="match_parent"
+            android:layout_height="@dimen/editext_height"
             android:gravity="left|center"
-            android:orientation="vertical"
-            android:layout_height="@dimen/editext_height">
+            android:orientation="vertical">
 
             <Button
-                android:background="@drawable/button_inverse_selector"
                 android:id="@+id/bt_confirm_order"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@drawable/button_inverse_selector"
                 android:text="@string/button_confirm_order"
-                android:textSize="@dimen/txt_16sp"
-                android:textColor="@color/white"/>
+                android:textColor="@color/white"
+                android:textSize="@dimen/txt_16sp" />
 
         </LinearLayout>
 

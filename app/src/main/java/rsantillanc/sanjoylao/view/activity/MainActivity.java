@@ -53,6 +53,12 @@ public class MainActivity extends ActionBarActivity implements DrawerFragment.Fr
     private static final int CENTRAL = 9;
     private static final int MAIN = 10;
 
+    /** The id used to identifiy the robodemo "instance" related to this activity. */
+    private final static String DEMO_ACTIVITY_ID = "demo-main-activity";
+    /** A boolean holding the internal state of the activity under RoboDemo, whether or not to display RoboDemo. */
+    private boolean showDemo = true;
+
+    private static final int DEFAULT_FONT_SIZE = 22;
     //Globals vars
     private int typeOfDevice = -1;
     private Context mContext = null;
@@ -78,6 +84,7 @@ public class MainActivity extends ActionBarActivity implements DrawerFragment.Fr
         displayView(MAIN);
 
     }
+
 
     private void setUpOrientation() {
         Android.setScreenOrientation(this);
