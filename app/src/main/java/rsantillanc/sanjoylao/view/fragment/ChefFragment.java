@@ -1,8 +1,11 @@
 package rsantillanc.sanjoylao.view.fragment;
 
 
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +17,7 @@ import rsantillanc.sanjoylao.R;
 import rsantillanc.sanjoylao.custom.adapter.ListViewAdapter;
 import rsantillanc.sanjoylao.model.ChefModel;
 import rsantillanc.sanjoylao.util.Const;
+import rsantillanc.sanjoylao.view.popup.DetailsOptionsPopup;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -58,7 +62,18 @@ public class ChefFragment extends Fragment implements ListViewAdapter.OnItemClic
 
 
     @Override
-    public void onItemClick(View v, int index) {
+    public void onItemClick(View v, int index) {openInfoSoup();  }
 
+    private void openInfoSoup() {
+        Intent in = new Intent(getActivity(), DetailsOptionsPopup.class);
+        startActivity(in);
+    }
+
+    protected void startFragment() {
+        Fragment details = SoupDetailsFragment.getInstance();
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.container_details_soup, details);
+        fragmentTransaction.commit();
     }
 }

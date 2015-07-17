@@ -3,9 +3,6 @@ package rsantillanc.sanjoylao.model;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-/**
- * Created by RenzoD on 11/06/2015.
- */
 public class RiceModel implements Serializable {
 
     private static final long serialVersionUID = 0L;
@@ -65,7 +62,7 @@ public class RiceModel implements Serializable {
 
         ArrayList<Object> model = new ArrayList<>();
         model.add(new RiceModel("Arroz Chaufa con Pollo",12.25,24.25,0));
-        model.add(new RiceModel("Arroz Chaufa especial (Pollo, chanco y langostino)",15.10,30.10,0));
+        model.add(new RiceModel("Arroz Chaufa con Langostinos",15.10,30.10,0));
 
         return model;
     }

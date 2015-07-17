@@ -30,6 +30,7 @@ public class SoupFragment extends Fragment implements View.OnClickListener, List
     private static SoupFragment instance;
     private ListView mListView;
     private Button btOrder;
+    private int typeOfDevice = -1;
 
     private List<Object> soups;
     private ListViewAdapter mListViewAdpter;
@@ -80,18 +81,19 @@ public class SoupFragment extends Fragment implements View.OnClickListener, List
 
     @Override
     public void onItemClick(View v, int index) {
-        int id = v.getId();
-        int dvc = Android.getTypeDevice(getActivity());
+        //int id = v.getId();
+        //int dvc = Android.getTypeDevice(getActivity());
 
-        if (dvc > Const.PHONE_SCREEN) {
-            startFragment();
-        }
+        //if (dvc > Const.PHONE_SCREEN) {
+          //  startFragment();
+        //}
 
-        switch (id){
-            case R.id.iv_soup_info:
-                openInfoSoup();
-                break;
-        }
+        //switch (id){
+          //  case R.id.iv_soup_info:
+            //    openInfoSoup();
+              //  break;
+        //}
+        openInfoSoup();
 
     }
 
@@ -107,4 +109,6 @@ public class SoupFragment extends Fragment implements View.OnClickListener, List
         fragmentTransaction.replace(R.id.container_details_soup, details);
         fragmentTransaction.commit();
     }
+
+
 }
