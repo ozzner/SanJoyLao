@@ -3,9 +3,6 @@ package rsantillanc.sanjoylao.model;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-/**
- * Created by RenzoD on 11/06/2015.
- */
 public class ChefModel implements Serializable {
 
     private static final long serialVersionUID = 0L;
@@ -56,7 +53,7 @@ public class ChefModel implements Serializable {
 
         ArrayList<Object> model = new ArrayList<>();
         model.add(new ChefModel("Pescado \"San Joy Lao\"",70.00,-1));
-        model.add(new ChefModel("Plato asado al estilo Cantonés",90.00,-1));
+        model.add(new ChefModel("Chi Jau Cuy",90.00,-1));
         model.add(new ChefModel("Ap Sum",80.00,-1));
 
         return model;

@@ -45,6 +45,7 @@
                 android:layout_toRightOf="@+id/lay_image_banquet"
                 android:layout_toEndOf="@+id/lay_image_banquet" />
 
+
             <TextView
                 android:id="@+id/tv_banquet_option"
                 android:layout_width="wrap_content"
@@ -55,6 +56,16 @@
                 android:layout_below="@+id/tv_banquet_name"
                 android:layout_alignLeft="@+id/tv_banquet_name"
                 android:layout_alignStart="@+id/tv_banquet_name" />
+
+            <ImageView
+                android:id="@+id/iv_soup_info"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/ic_info_2"
+                android:layout_alignParentBottom="true"
+                android:layout_toLeftOf="@+id/tv_banquet_price"
+                android:layout_marginRight="@dimen/space_10dp"/>
+
 
             <TextView
                 android:id="@+id/tv_banquet_price"

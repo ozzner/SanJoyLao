@@ -29,9 +29,11 @@
             android:id="@+id/lay_logo"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="2.4"
+            android:layout_weight="1.8"
             android:gravity="center"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="@dimen/space_28dp"
+            android:layout_marginTop="@dimen/space_40dp">
 
             <ImageView
                 android:id="@+id/iv_logo_login"
@@ -44,7 +46,7 @@
             android:id="@+id/lay_midde"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.2"
+            android:layout_weight="0.5"
             android:gravity="center"
             android:orientation="vertical">
 
@@ -62,7 +64,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/space_4dp"
                 android:gravity="bottom"
-                android:text="@string/tv_login" />
+                android:text="@string/tv_login"
+                android:textSize="19dp"
+                android:textAllCaps="true"
+                android:textStyle="bold"/>
 
         </LinearLayout>
 
@@ -84,7 +89,7 @@
                     android:id="@+id/iv_google"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:src="@drawable/ic_google" />
+                    android:src="@drawable/ic_google_2" />
             </LinearLayout>
 
             <LinearLayout
@@ -96,7 +101,7 @@
                     android:id="@+id/iv_facebook"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:src="@drawable/ic_facebook" />
+                    android:src="@drawable/ic_facebook_2" />
             </LinearLayout>
 
 

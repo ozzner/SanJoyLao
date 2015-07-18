@@ -44,7 +44,7 @@ public class OptionsListActivity extends ActionBarActivity {
     }
 
     private void setUpActionBar(BanquetModel model) {
-        mToolbar.setTitle(model.getName());
+        mToolbar.setTitle(model.getName() + " (S/. 55.65)");
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
@@ -62,16 +62,13 @@ public class OptionsListActivity extends ActionBarActivity {
         mLinearLayoutManager = new LinearLayoutManager(ctx);
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
 
-        mAdapter.setOnItemClickListener(new RecyclerViewOptionsAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(View v, int index) {
+        mAdapter.setOnItemClickListener((v, index) -> {
 
-                Intent popup = new Intent(getApplicationContext(), DetailsOptionsPopup.class);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable(Const.TAG_DETAILS_OPTIONS,options.get(index));
-                popup.putExtras(bundle);
-                startActivity(popup);
-            }
+            Intent popup = new Intent(getApplicationContext(), DetailsOptionsPopup.class);
+            Bundle bundle = new Bundle();
+            bundle.putSerializable(Const.TAG_DETAILS_OPTIONS,options.get(index));
+            popup.putExtras(bundle);
+            startActivity(popup);
         });
     }
 

@@ -61,24 +61,21 @@ public class OptionsGridActivity extends ActionBarActivity implements GridViewAd
         _context = ctx;
         btOrder = (Button) findViewById(R.id.bt_options_grid_order);
         //Borrar esto luego.
-        btOrder.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        btOrder.setOnClickListener(v -> {
 
 
-                int val = mPreferences.getSaveStoredByKey(SJLPreferences.KEY_ORDER_TYPE);
-                String title = getString(R.string.title_booking_options);
-                if (val == SJLPreferences.INT_DEFAULT_VALUE)
-                    SJLAlertDialog.showTypeBookAlert(OptionsGridActivity.this, title);
-                else {
+            int val = mPreferences.getSaveStoredByKey(SJLPreferences.KEY_ORDER_TYPE);
+            String title = getString(R.string.title_booking_options);
+            if (val == SJLPreferences.INT_DEFAULT_VALUE)
+                SJLAlertDialog.showTypeBookAlert(OptionsGridActivity.this, title);
+            else {
 
-                    Intent popup = new Intent(getApplicationContext(), DetailsOptionsPopup.class);
-                    startActivity(popup);
-                    Toast.makeText(ctx, "¡Agregado!", Toast.LENGTH_LONG).show();
-                }
-
-
+                Intent popup = new Intent(getApplicationContext(), DetailsOptionsPopup.class);
+                startActivity(popup);
+                Toast.makeText(ctx, "¡Agregado!", Toast.LENGTH_LONG).show();
             }
+
+
         });
         mGridView = (GridView) findViewById(R.id.gv_options);
         mToolbar = (Toolbar) findViewById(R.id.toolbar_options);
@@ -94,7 +91,7 @@ public class OptionsGridActivity extends ActionBarActivity implements GridViewAd
     }
 
     private void setUpActionBar(BanquetModel model) {
-        mToolbar.setTitle(Const.PRICE_PEN + String.valueOf(model.getPrice()));
+        mToolbar.setTitle("Banqute de la Amistad (S/. 152.00)");
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
@@ -111,14 +108,21 @@ public class OptionsGridActivity extends ActionBarActivity implements GridViewAd
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+        switch (item.getItemId()) {
+
+            case android.R.id.home:
+                finish();
+                return true;
+        }
+
+        //int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        } else if (id == R.id.home) {
-            finish();
-        }
+        //if (id == R.id.action_settings) {
+          //  return true;
+        //} else if (id == R.id.home) {
+        //    finish();
+       // }
 
         return super.onOptionsItemSelected(item);
     }

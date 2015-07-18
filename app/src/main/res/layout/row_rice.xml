@@ -56,19 +56,26 @@
                     android:layout_height="0dp"
                     android:paddingRight="@dimen/space_8dp"
                     android:layout_weight="1.4"
-                    android:gravity="right|center_vertical"
+                    android:gravity="left|center_vertical"
                     android:orientation="horizontal"
                     android:paddingLeft="@dimen/space_8dp">
 
-                    <TextView
-                        android:id="@+id/tv_rice_name"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:text="Large Text"
-                        android:autoText="true"
-                        android:singleLine="false"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/txt_16sp"/>
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:id="@+id/tv_rice_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Large Text"
+                            android:textSize="16dp"
+                            android:textStyle="bold"
+                            android:maxLength="30"
+                            android:layout_marginRight="@dimen/space_4dp"/>
+
+
+                    </RelativeLayout>
                 </LinearLayout>
 
                 <!--Titles-->
@@ -163,6 +170,14 @@
                     android:orientation="horizontal"
                     android:paddingRight="@dimen/space_8dp">
 
+                    <ImageView
+                        android:id="@+id/iv_soup_info"
+                        android:layout_width="32dp"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/ic_info_2"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginRight="@dimen/space_6dp"/>
+
                     <Button
                         android:id="@+id/bt_rice_order"
                         android:layout_width="65dp"
@@ -172,6 +187,7 @@
                         android:textColor="@drawable/button_textcolor_selector"
                         android:textSize="@dimen/txt_10sp" />
                 </LinearLayout>
+
             </LinearLayout>
         </LinearLayout>
 
