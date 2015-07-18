@@ -3,6 +3,7 @@ package rsantillanc.sanjoylao.view.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -53,15 +54,13 @@ public class MainActivity extends ActionBarActivity implements DrawerFragment.Fr
     private static final int CENTRAL = 9;
     private static final int MAIN = 10;
 
-    /** The id used to identifiy the robodemo "instance" related to this activity. */
-    private final static String DEMO_ACTIVITY_ID = "demo-main-activity";
-    /** A boolean holding the internal state of the activity under RoboDemo, whether or not to display RoboDemo. */
-    private boolean showDemo = true;
 
     private static final int DEFAULT_FONT_SIZE = 22;
+
     //Globals vars
     private int typeOfDevice = -1;
     private Context mContext = null;
+    private boolean backPressedToExitOnce = false;
 
 
     @Override
@@ -235,4 +234,23 @@ public class MainActivity extends ActionBarActivity implements DrawerFragment.Fr
         }
         return super.onMenuOpened(featureId, menu);
     }
+
+
+    @Override
+    public void onBackPressed() {
+        if (backPressedToExitOnce) {
+            super.onBackPressed();
+        } else {
+            this.backPressedToExitOnce = true;
+            Toast.makeText(getApplicationContext(), "Press again to exit", Toast.LENGTH_SHORT).show();
+            new Handler().postDelayed(new Runnable() {
+
+                @Override
+                public void run() {
+                    backPressedToExitOnce = false;
+                }
+            }, 3000);
+        }
+    }
+
 }

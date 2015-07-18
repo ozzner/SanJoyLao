@@ -61,21 +61,22 @@ public class OptionsGridActivity extends ActionBarActivity implements GridViewAd
         _context = ctx;
         btOrder = (Button) findViewById(R.id.bt_options_grid_order);
         //Borrar esto luego.
-        btOrder.setOnClickListener(v -> {
+        btOrder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+                int val = mPreferences.getSaveStoredByKey(SJLPreferences.KEY_ORDER_TYPE);
+                String title = getString(R.string.title_booking_options);
+                if (val == SJLPreferences.INT_DEFAULT_VALUE)
+                    SJLAlertDialog.showTypeBookAlert(OptionsGridActivity.this, title);
+                else {
 
-            int val = mPreferences.getSaveStoredByKey(SJLPreferences.KEY_ORDER_TYPE);
-            String title = getString(R.string.title_booking_options);
-            if (val == SJLPreferences.INT_DEFAULT_VALUE)
-                SJLAlertDialog.showTypeBookAlert(OptionsGridActivity.this, title);
-            else {
+                    Intent popup = new Intent(getApplicationContext(), DetailsOptionsPopup.class);
+                    startActivity(popup);
+                    Toast.makeText(ctx, "¡Agregado!", Toast.LENGTH_LONG).show();
+                }
 
-                Intent popup = new Intent(getApplicationContext(), DetailsOptionsPopup.class);
-                startActivity(popup);
-                Toast.makeText(ctx, "¡Agregado!", Toast.LENGTH_LONG).show();
             }
-
-
         });
         mGridView = (GridView) findViewById(R.id.gv_options);
         mToolbar = (Toolbar) findViewById(R.id.toolbar_options);

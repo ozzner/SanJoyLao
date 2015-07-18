@@ -10,7 +10,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 
 import java.util.ArrayList;
 
@@ -62,13 +61,15 @@ public class OptionsListActivity extends ActionBarActivity {
         mLinearLayoutManager = new LinearLayoutManager(ctx);
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
 
-        mAdapter.setOnItemClickListener((v, index) -> {
-
-            Intent popup = new Intent(getApplicationContext(), DetailsOptionsPopup.class);
-            Bundle bundle = new Bundle();
-            bundle.putSerializable(Const.TAG_DETAILS_OPTIONS,options.get(index));
-            popup.putExtras(bundle);
-            startActivity(popup);
+        mAdapter.setOnItemClickListener(new RecyclerViewOptionsAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View v, int index) {
+                Intent popup = new Intent(getApplicationContext(), DetailsOptionsPopup.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable(Const.TAG_DETAILS_OPTIONS,options.get(index));
+                popup.putExtras(bundle);
+                startActivity(popup);
+            }
         });
     }
 
