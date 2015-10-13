@@ -1,6 +1,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="rsantillanc.sanjoylao.view.activity.OptionsListActivity">
+    tools:context="rsantillanc.sanjoylao.ui.activity.OptionsListActivity">
 
 </menu>

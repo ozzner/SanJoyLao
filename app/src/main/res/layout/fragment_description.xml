@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:padding="@dimen/space_8dp"
     android:background="@color/gray_color_0"
-    tools:context="rsantillanc.sanjoylao.view.fragment.DescriptionFragment">
+    tools:context="rsantillanc.sanjoylao.ui.fragment.DescriptionFragment">
 
     <ScrollView
         android:layout_width="match_parent"
