@@ -10,8 +10,10 @@ import android.view.View;
 import android.widget.ImageView;
 
 import rsantillanc.sanjoylao.R;
+import rsantillanc.sanjoylao.ui.mvp.Login.ILoginView;
+import rsantillanc.sanjoylao.ui.mvp.Login.LoginPresenterImpl;
 
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener,ILoginView {
     private Toolbar mToolbar;
     private ImageView ivFacebook,ivGoogle;
 
@@ -63,6 +65,19 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         Intent main =  new Intent(getApplicationContext(),MainActivity.class);
         startActivity(main);
         finish();
+
+    }
+
+
+    //---------------- Implements callbacks--------------------
+
+    @Override
+    public void showMessage(CharSequence message) {
+
+    }
+
+    @Override
+    public void goToDashboard() {
 
     }
 }

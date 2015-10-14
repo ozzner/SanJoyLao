@@ -82,6 +82,6 @@
         <!--<item name="android:layout_margin">@dimen/space_10dp</item>-->
     <!--</style>-->
 
-    <dimen name="custom_title_size_toolbar">15sp</dimen>
+    <dimen name="custom_title_size_toolbar">16sp</dimen>
     <dimen name="custom_subtitle_size_toolbar">12sp</dimen>
 </resources>

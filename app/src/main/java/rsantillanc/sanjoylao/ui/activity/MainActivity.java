@@ -44,23 +44,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private NavigationView mNavView;
     private ActionBarDrawerToggle mDrawerToggle;
 
-    /*Const*/
+    //Constants
     private static final int INPUT = R.id.nav_main_input;
     private static final int SOUP = R.id.nav_main_soup;
-    private static final int RICE = R.id.iv_rice;
+    private static final int RICE = R.id.nav_main_rice;
     private static final int CHEF = R.id.nav_main_chef;
     private static final int CHICKEN_MEAT = R.id.nav_main_chicken_and_meat;
     private static final int FISH = R.id.nav_main_fish;
     private static final int VEGETARIAN = R.id.nav_main_vegetarian_food;
-    private static final int BANQUETS = R.id.rv_banquets;
+    private static final int BANQUETS = R.id.nav_main_banquets;
     private static final int DRINKS = R.id.nav_main_drinks;
     private static final int CENTRAL = R.id.nav_main_call_center;
     private static final int MAIN = 10;
 
-
     private static final int DEFAULT_FONT_SIZE = 22;
 
-    //Globals vars
+    //Global vars
     private int typeOfDevice = -1;
     private Context mContext = null;
     private boolean backPressedToExitOnce = false;
@@ -106,7 +105,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
 
-
     private void setUpDrawerToggle() {
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.open, R.string.close);
         mDrawerLayout.setDrawerListener(mDrawerToggle);
@@ -149,9 +147,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         } else if (id == R.id.action_about) {
             Toast.makeText(getApplication(), "San Joy Lao App | V.0.9.4", Toast.LENGTH_LONG).show();
-        } else if (id == android.R.id.home){
+        } else if (id == android.R.id.home) {
             mDrawerLayout.openDrawer(GravityCompat.END);
-        }else {
+        } else {
             Intent login = new Intent(mContext, LoginActivity.class);
             startActivity(login);
             finish();
@@ -187,19 +185,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public void onBackPressed() {
         if (backPressedToExitOnce) {
             super.onBackPressed();
-        } else {
-            this.backPressedToExitOnce = true;
-            Toast.makeText(getApplicationContext(), "Press again to exit", Toast.LENGTH_SHORT).show();
-            new Handler().postDelayed(new Runnable() {
 
-                @Override
-                public void run() {
-                    backPressedToExitOnce = false;
-                }
-            }, 3000);
+        } else {
+            if (mDrawerLayout.isDrawerOpen(GravityCompat.END)){
+                mDrawerLayout.closeDrawers();
+            }else{
+
+                this.backPressedToExitOnce = true;
+                Toast.makeText(getApplicationContext(), "Press again to exit", Toast.LENGTH_SHORT).show();
+                new Handler().postDelayed(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        backPressedToExitOnce = false;
+                    }
+                }, 3000);
+            }
         }
     }
-
 
 
     /*------------------------ LISTENERS ---------------------*/
@@ -210,28 +213,34 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Fragment ui;
         CharSequence title = null;
 
-        switch (menuItem.getItemId()){
+        switch (menuItem.getItemId()) {
 
             case INPUT:
                 ui = MainFragment.newInstance();
+                title = getString(R.string.item_title_inputs);
                 break;
             case SOUP:
                 ui = SoupFragment.newInstance();
+                isTransaction = true;
                 title = getString(R.string.item_title_soup);
                 break;
             case RICE:
                 ui = RiceFragment.newInstance();
+                isTransaction = true;
                 title = getString(R.string.item_title_rices);
                 break;
             case CHEF:
                 ui = ChefFragment.newInstance();
+                isTransaction = true;
                 title = getString(R.string.item_title_chef);
                 break;
             case CHICKEN_MEAT:
                 ui = MainFragment.newInstance();
+                title = getString(R.string.item_title_meat_and_chicken);
                 break;
             case FISH:
                 ui = MainFragment.newInstance();
+                title = getString(R.string.item_title_inputs);
                 break;
             case VEGETARIAN:
                 ui = MainFragment.newInstance();
@@ -239,6 +248,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case BANQUETS:
                 ui = BanquetsFragment.newInstance();
                 title = getString(R.string.item_title_banquets);
+                isTransaction = true;
                 break;
             case DRINKS:
                 ui = MainFragment.newInstance();
@@ -255,11 +265,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (isTransaction) {
 
             //Show indicate fragment
-            displayFragment(ui,menuItem.getItemId());
+            displayFragment(ui, menuItem.getItemId());
 
             //Display a title
             if (title != null)
-            getSupportActionBar().setTitle(title);
+                getSupportActionBar().setTitle(title);
 
             //Active row
             menuItem.setChecked(true);
@@ -272,14 +282,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return false;
     }
 
-    private void displayFragment(Fragment ui,int position) {
+    private void displayFragment(Fragment ui, int position) {
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.fragments_content, ui);
         fragmentTransaction.commit();
 
-        if (typeOfDevice > Const.PHONE_SCREEN &&  position == MAIN) {
+        if (typeOfDevice > Const.PHONE_SCREEN && position == MAIN) {
             Fragment details = FrontFragment.getInstance();
             FragmentTransaction secondTransaction = fragmentManager.beginTransaction();
             secondTransaction.replace(R.id.container_details_main, details);
