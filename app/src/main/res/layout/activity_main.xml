@@ -8,41 +8,22 @@
     android:layout_height="match_parent">
 
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <LinearLayout
-            android:id="@+id/container_toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <include
-                android:id="@+id/toolbar"
-                layout="@layout/custom_toolbar" />
-
-        </LinearLayout>
-
-        <FrameLayout
-            android:id="@+id/container_body"
-            android:layout_width="fill_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            />
 
 
-    </LinearLayout>
+    <!-- Layout real de la actividad -->
+    <include layout="@layout/content_main" />
 
-
-    <fragment
-        android:id="@+id/fragment_navigation_drawer"
-        android:name="rsantillanc.sanjoylao.ui.fragment.DrawerFragment"
-        android:layout_width="@dimen/nav_drawer_width"
+    <!-- Layout del menú lateral (Navigation View) -->
+    <android.support.design.widget.NavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        app:layout="@layout/fragment_navigation_drawer"
-        tools:layout="@layout/fragment_navigation_drawer" />
+        android:fitsSystemWindows="true"
+        app:headerLayout="@layout/custom_nav_drawer_profile"
+        app:menu="@menu/menu_nav_main">
+
+    </android.support.design.widget.NavigationView>
+
 
 </android.support.v4.widget.DrawerLayout>

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+
+        <!-- Entradas-->
+        <item
+            android:id="@+id/nav_main_input"
+            android:icon="@drawable/ic_input"
+            android:title="@string/item_title_inputs" />
+
+        <!-- Sopas-->
+        <item
+            android:id="@+id/nav_main_soup"
+            android:icon="@drawable/ic_soup"
+            android:title="@string/item_title_soup" />
+
+        <!-- Pollos y carnes-->
+        <item
+            android:id="@+id/nav_main_chicken_and_meat"
+            android:icon="@drawable/ic_meat_and_chicken"
+            android:title="@string/item_title_meat_and_chicken" />
+
+        <!-- Pescados-->
+        <item
+            android:id="@+id/nav_main_fish"
+            android:icon="@drawable/ic_fish_food"
+            android:title="@string/item_title_fish" />
+
+        <!-- Comida vegetariana-->
+        <item
+            android:id="@+id/nav_main_vegetarian_food"
+            android:icon="@drawable/ic_vegetarian_food"
+            android:title="@string/item_title_vegetarian_food" />
+
+
+    </group>
+
+    <item
+        android:id="@+id/nav_main_submenu"
+        android:title="@string/nav_main_submenu_title">
+        <menu>
+
+            <!-- Recomendaciones del Chef -->
+            <item
+                android:id="@+id/nav_main_chef"
+                android:icon="@drawable/ic_chef"
+                android:title="@string/item_title_chef" />
+
+            <!-- Banquetes -->
+            <item
+                android:id="@+id/nav_main_banquets"
+                android:icon="@drawable/ic_banquet"
+                android:title="@string/item_title_banquets" />
+
+            <!-- Vinos y bebidas -->
+            <item
+                android:id="@+id/nav_main_drinks"
+                android:icon="@drawable/ic_drinks"
+                android:title="@string/item_title_drinks" />
+
+
+        </menu>
+    </item>
+
+    <item
+        android:id="@+id/nav_main_submenu_contacto"
+        android:title="@string/nav_main_submenu_contacto">
+        <menu>
+
+            <!-- Central telefonica -->
+            <item
+                android:id="@+id/nav_main_call_center"
+                android:icon="@drawable/ic_phone_number"
+                android:title="@string/item_title_chef" />
+
+
+        </menu>
+    </item>
+
+
+</menu>

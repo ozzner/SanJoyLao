@@ -25,5 +25,7 @@
     <color name="gray_trans_50">#80dddddd</color>
     <color name="gray_trans_75">#B3dddddd</color>
     <color name="gray_trans_95">#F2dddddd</color>
+    <color name="layer_shadow">#640b0000</color>
+    <color name="nav_text_color_secondary">#dadada</color>
 
 </resources>

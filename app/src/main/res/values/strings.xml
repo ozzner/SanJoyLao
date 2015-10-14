@@ -83,6 +83,12 @@
     <string name="booking_delivery">Delivery</string>
     <string name="title_activity_survey">Encuesta</string>
     <string name="action_settings">Settings</string>
+    <string name="dummy_profile_name">Renzo D. Santillán Ch.</string>
+    <string name="dummy_profile_email">rsantillancgmail.com</string>
+    <string name="nav_main_submenu_title">Adicional</string>
+    <string name="nav_main_submenu_contacto">Contacto</string>
+    <string name="open">Open</string>
+    <string name="close">Close</string>
 
-    
+
 </resources>

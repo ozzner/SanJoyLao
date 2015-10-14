@@ -1,8 +1,8 @@
 package rsantillanc.sanjoylao.ui.activity;
 
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -11,29 +11,30 @@ import android.widget.ImageView;
 
 import rsantillanc.sanjoylao.R;
 
-public class LoginActivity extends ActionBarActivity implements View.OnClickListener {
-    private Toolbar toBa;
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
+    private Toolbar mToolbar;
     private ImageView ivFacebook,ivGoogle;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_login);
+
         ivFacebook = (ImageView)findViewById(R.id.iv_facebook);
         ivGoogle = (ImageView)findViewById(R.id.iv_google);
 
         ivFacebook.setOnClickListener(this);
         ivGoogle.setOnClickListener(this);
+
         setUpActionBar();
 
     }
 
 
     private void setUpActionBar() {
-        toBa = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toBa);
+        mToolbar = (Toolbar) findViewById(R.id.toolbar_login);
+        setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
     }
 
@@ -46,9 +47,6 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
