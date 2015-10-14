@@ -1,14 +1,16 @@
 <android.support.v7.widget.Toolbar
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/app_toolbar"
+    android:id="@+id/toolbar"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:minHeight="?attr/actionBarSize"
     android:background="?attr/colorPrimary"
     android:elevation="1dp"
-    android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-    app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-    app:titleTextAppearance="@style/SJL_toolbar_title"
-    app:subtitleTextAppearance="@style/SJL_toolbal_subtitle" />
+    app:theme="@style/SJLTheme.Base.AppBarOverlay"
+    app:popupTheme="@style/SJLTheme.Base.PopupOverlay"
+    app:titleTextAppearance="@style/SJLToolbarTitle"
+    app:subtitleTextAppearance="@style/SJLToolbarSubtitle">
+
+</android.support.v7.widget.Toolbar>
 

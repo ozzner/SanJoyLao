@@ -9,12 +9,18 @@
 
     </style>
 
+
+    <style name="SJLTheme.Base.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="SJLTheme.Base.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+
     <!-- Toolbar -->
-    <style name="SJL_toolbar_title" parent="@style/TextAppearance.Widget.AppCompat.Toolbar.Title">
+    <style name="SJLToolbarTitle" parent="@style/TextAppearance.Widget.AppCompat.Toolbar.Title">
         <item name="android:textSize">@dimen/custom_title_size_toolbar</item>
     </style>
 
-    <style name="SJL_toolbal_subtitle" parent="@style/TextAppearance.Widget.AppCompat.Toolbar.Subtitle">
+    <style name="SJLToolbarSubtitle" parent="@style/TextAppearance.Widget.AppCompat.Toolbar.Subtitle">
         <item name="android:textSize">@dimen/custom_subtitle_size_toolbar</item>
     </style>
 

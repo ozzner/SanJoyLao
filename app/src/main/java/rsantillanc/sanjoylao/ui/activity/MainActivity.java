@@ -8,6 +8,7 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -113,7 +114,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void initUIComponents() {
-        toolbar = (Toolbar) findViewById(R.id.main_toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         mNavView = (NavigationView) findViewById(R.id.nav_view);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
     }
@@ -121,7 +122,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private void setUpActionBar() {
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
@@ -148,7 +149,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         } else if (id == R.id.action_about) {
             Toast.makeText(getApplication(), "San Joy Lao App | V.0.9.4", Toast.LENGTH_LONG).show();
-        } else {
+        } else if (id == android.R.id.home){
+            mDrawerLayout.openDrawer(GravityCompat.END);
+        }else {
             Intent login = new Intent(mContext, LoginActivity.class);
             startActivity(login);
             finish();
@@ -205,7 +208,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         boolean isTransaction = false;
         Fragment ui;
-        CharSequence title;
+        CharSequence title = null;
 
         switch (menuItem.getItemId()){
 
@@ -255,7 +258,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             displayFragment(ui,menuItem.getItemId());
 
             //Display a title
-//            getSupportActionBar().setTitle(title);
+            if (title != null)
+            getSupportActionBar().setTitle(title);
 
             //Active row
             menuItem.setChecked(true);
