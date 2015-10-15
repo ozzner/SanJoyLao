@@ -1,9 +1,11 @@
 package rsantillanc.sanjoylao.ui.mvp.Login;
 
+import rsantillanc.sanjoylao.interfaces.OnLoginListener;
+
 /**
  * Created by rsantillanc on 14/10/2015.
  */
-public class LoginPresenterImpl implements ILoginPresenter{
+public class LoginPresenterImpl implements ILoginPresenter, OnLoginListener {
 
     private ILoginView mLoginView;
     private ILoginIteractor mLoginIteractor;
@@ -14,16 +16,40 @@ public class LoginPresenterImpl implements ILoginPresenter{
     }
 
 
-
-//-------------------- Callbacks --------------------
+    //-------------------- Callbacks --------------------
     @Override
     public void connectWithFacebook() {
-        mLoginView.showMessage("Login facebook correct!");
+        mLoginView.showLoader();
+        mLoginIteractor.loginUsingFacebook(this);
     }
 
     @Override
     public void connectWithGoogle() {
-        mLoginView.showMessage("Login google correct!");
+        mLoginView.showLoader();
+        mLoginIteractor.loginUsingGoogle(this);
+    }
+
+    @Override
+    public void onFacebookFailed(Object obj) {
+        mLoginView.hideLoader();
+        mLoginView.onError(obj.toString());
+    }
+
+    @Override
+    public void onGoogleFailed(Object obj) {
+        mLoginView.hideLoader();
+        mLoginView.onError(obj.toString());
+    }
+
+    @Override
+    public void onSuccessFacebook(Object obj) {
+        mLoginView.hideLoader();
+        mLoginView.goToDashboard();
+    }
+
+    @Override
+    public void onSuccessGoogle(Object obj) {
+        mLoginView.hideLoader();
         mLoginView.goToDashboard();
     }
 }

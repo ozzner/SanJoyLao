@@ -1,8 +1,8 @@
 package rsantillanc.sanjoylao.ui.activity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -13,9 +13,15 @@ import rsantillanc.sanjoylao.R;
 import rsantillanc.sanjoylao.ui.mvp.Login.ILoginView;
 import rsantillanc.sanjoylao.ui.mvp.Login.LoginPresenterImpl;
 
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener,ILoginView {
+public class LoginActivity extends BaseActivity implements View.OnClickListener, ILoginView {
+
+    //Views
     private Toolbar mToolbar;
-    private ImageView ivFacebook,ivGoogle;
+    private ImageView ivFacebook, ivGoogle;
+    private ProgressDialog mProgersDialog;
+
+    //MVP
+    private LoginPresenterImpl mPresenter;
 
 
     @Override
@@ -23,13 +29,25 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        ivFacebook = (ImageView)findViewById(R.id.iv_facebook);
-        ivGoogle = (ImageView)findViewById(R.id.iv_google);
+        initUIComponents();
+        setUpComponents();
 
+
+    }
+
+    private void setUpComponents() {
+        mPresenter = new LoginPresenterImpl(this);
         ivFacebook.setOnClickListener(this);
         ivGoogle.setOnClickListener(this);
 
         setUpActionBar();
+        setUpProgressDialog();
+    }
+
+    private void initUIComponents() {
+
+        ivFacebook = (ImageView) findViewById(R.id.iv_facebook);
+        ivGoogle = (ImageView) findViewById(R.id.iv_google);
 
     }
 
@@ -39,6 +57,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
     }
+
+    private void setUpProgressDialog(){
+        mProgersDialog = new ProgressDialog(this);
+        mProgersDialog.setMessage("cargando...");
+    };
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -62,22 +85,42 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onClick(View v) {
 
-        Intent main =  new Intent(getApplicationContext(),MainActivity.class);
+        if (v == ivFacebook){
+            mPresenter.connectWithFacebook();
+        }else {
+            mPresenter.connectWithGoogle();
+        }
+
+
+    }
+
+    private void goToMainActivity() {
+        Intent main = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(main);
         finish();
-
     }
 
 
     //---------------- Implements callbacks--------------------
 
     @Override
-    public void showMessage(CharSequence message) {
+    public void showLoader() {
+        mProgersDialog.show();
+    }
 
+    @Override
+    public void hideLoader() {
+        if (mProgersDialog.isShowing())
+            mProgersDialog.cancel();
+    }
+
+    @Override
+    public void onError(CharSequence s) {
+        showToast(s);
     }
 
     @Override
     public void goToDashboard() {
-
+        goToMainActivity();
     }
 }

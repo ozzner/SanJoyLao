@@ -1,58 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="rsantillanc.sanjoylao" >
+    package="rsantillanc.sanjoylao">
 
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_sjl"
         android:label="@string/app_name"
         android:theme="@style/SJLTheme.Base">
-
         <activity
             android:name=".ui.activity.MainActivity"
-            android:screenOrientation="portrait"
-            android:label="@string/ver_carta" >
-        </activity>
-
+            android:label="@string/ver_carta"
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".ui.activity.OptionsListActivity"
             android:label="@string/title_activity_options"
-            android:parentActivityName=".ui.activity.MainActivity" >
+            android:parentActivityName=".ui.activity.MainActivity">
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="rsantillanc.sanjoylao.ui.activity.MainActivity" />
         </activity>
-
         <activity
             android:name=".ui.popup.DetailsOptionsPopup"
             android:label="@string/title_activity_details_options_popup"
             android:theme="@android:style/Theme.Holo.Light.Dialog.NoActionBar.MinWidth"
-            android:windowSoftInputMode="stateHidden|adjustResize" >
-        </activity>
-
+            android:windowSoftInputMode="stateHidden|adjustResize"></activity>
         <activity
             android:name=".ui.activity.OptionsGridActivity"
-            android:label="@string/title_activity_options_grid" >
-        </activity>
-
+            android:label="@string/title_activity_options_grid"></activity>
         <activity
             android:name=".ui.activity.SurveyActivity"
-            android:label="@string/title_activity_options_grid" >
-        </activity>
-
+            android:label="@string/title_activity_options_grid"></activity>
         <activity
             android:name=".ui.activity.LoginActivity"
             android:label="@string/app_name"
-            android:theme="@style/SJLTheme.Base.LoginStyle"
-            >
+            android:theme="@style/SJLTheme.Base.LoginStyle">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
+        <activity android:name=".ui.activity.BaseActivity"></activity>
     </application>
 
 </manifest>
