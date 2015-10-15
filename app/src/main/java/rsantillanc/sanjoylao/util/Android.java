@@ -15,19 +15,18 @@ public class Android {
         DisplayMetrics metrics = new DisplayMetrics();
         ctx.getWindowManager().getDefaultDisplay().getMetrics(metrics);
 
-        double x = Math.pow(metrics.widthPixels/metrics.xdpi,2);
-        double y = Math.pow(metrics.heightPixels/metrics.ydpi,2);
-        double screenInches = Math.sqrt(x+y);
+        double x = Math.pow(metrics.widthPixels / metrics.xdpi, 2);
+        double y = Math.pow(metrics.heightPixels / metrics.ydpi, 2);
+        double screenInches = Math.sqrt(x + y);
 
-        screenInches =  Math.round((double)Math.round(screenInches * 10) / 10) ;
+        screenInches = Math.round((double) Math.round(screenInches * 10) / 10);
 
         if (screenInches >= 10) {
             typeOfDevice = Const.TABLET_10;
-        }
-        else if (screenInches >= 7) {
+        } else if (screenInches >= 7) {
             typeOfDevice = Const.TABLET_7;
 
-        }else {
+        } else {
             typeOfDevice = Const.PHONE_SCREEN;
         }
 
