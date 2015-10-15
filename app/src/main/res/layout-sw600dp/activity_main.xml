@@ -44,7 +44,7 @@
 
     <fragment
         android:id="@+id/fragment_navigation_drawer"
-        android:name="rsantillanc.sanjoylao.view.fragment.DrawerFragment"
+        android:name="rsantillanc.sanjoylao.ui.fragment.DrawerFragment"
         android:layout_width="@dimen/nav_drawer_width"
         android:layout_height="match_parent"
         android:layout_gravity="start"

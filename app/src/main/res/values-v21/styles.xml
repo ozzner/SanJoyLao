@@ -1,13 +1,24 @@
 <resources>
+    <style name="SJLTheme.Base" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
 
-    <!-- Base application theme. -->
-    <style message="SanJoyLaoTheme" parent="MaterialDesign.Base">
-        <item message="android:colorPrimary">@color/colorPrimary</item>
-        <item message="android:colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item message="android:colorAccent">@color/colorAccent</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
 
+    <style name="SJLTheme.Base.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
+    <style name="SJLTheme.Base.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+
+
+    <style name="SJLTheme.Base.LoginStyle" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
 
 
 </resources>

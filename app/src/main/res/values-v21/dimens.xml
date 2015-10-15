@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="height_profile_background">150dp</dimen>
+    <dimen name="height_profile_background">160dp</dimen>
 </resources>

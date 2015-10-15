@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:weightSum="2"
-    tools:context="rsantillanc.sanjoylao.view.popup.DetailsOptionsPopup">
+    tools:context="rsantillanc.sanjoylao.ui.popup.DetailsOptionsPopup">
 
     <!--Plates and rate-->
 <ScrollView
@@ -65,7 +65,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
-            <rsantillanc.sanjoylao.util.SlidingTabLayout
+            <rsantillanc.sanjoylao.ui.custom.view.SlidingTabLayout
                 android:id="@+id/tabs"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

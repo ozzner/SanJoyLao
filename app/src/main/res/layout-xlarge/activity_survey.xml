@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:weightSum="6"
-    tools:context="rsantillanc.sanjoylao.view.activity.SurveyActivity">
+    tools:context="rsantillanc.sanjoylao.ui.activity.SurveyActivity">
 
     <!--Encabezado-->
     <LinearLayout
