@@ -4,6 +4,8 @@ package rsantillanc.sanjoylao.util;
  * Created by RenzoD on 04/06/2015.
  */
 public class Const {
+
+    public static final String BLANK_SPACE = " ";
     public static final String PRICE_USD = "USD ";
     public static final String PRICE_PEN = "S/. ";
     public static final String TAG_BANQUET = "BANQUET";
@@ -37,5 +39,10 @@ public class Const {
     public static final int BOOKING_TABLE = 0;
     public static final int BOOKING_ORDER = 1;
     public static final int BOOKING_DELIVERY = 2;
+
+
+    //[ DEBUG ]
+    public static final String DEBUG_GOOGLE_PLUS = "GOOGLE_PLUS";
+
 
 }

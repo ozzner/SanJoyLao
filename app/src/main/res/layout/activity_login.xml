@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    android:background="@color/white"
-   >
+    android:background="@color/white">
 
 
     <include
@@ -19,15 +19,13 @@
         android:layout_height="match_parent"
         android:layout_below="@id/toolbar_login"
         android:orientation="vertical"
-        android:padding="@dimen/space_8dp"
         android:weightSum="3">
 
         <LinearLayout
             android:id="@+id/lay_logo"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginTop="@dimen/space_40dp"
-            android:layout_weight="1.8"
+            android:layout_weight="2"
             android:gravity="center"
             android:orientation="vertical"
             android:padding="@dimen/space_28dp">
@@ -43,7 +41,7 @@
             android:id="@+id/lay_midde"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.5"
+            android:layout_weight="0.25"
             android:gravity="center"
             android:orientation="vertical">
 
@@ -55,16 +53,16 @@
                 android:layout_marginRight="@dimen/space_16dp"
                 android:background="@color/red" />
 
-            <TextView
-                android:id="@+id/textView4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/space_4dp"
-                android:gravity="bottom"
-                android:text="@string/tv_login"
-                android:textAllCaps="true"
-                android:textSize="19dp"
-                android:textStyle="bold" />
+            <!--<TextView-->
+                <!--android:id="@+id/textView4"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginTop="@dimen/space_4dp"-->
+                <!--android:gravity="bottom"-->
+                <!--android:text="@string/tv_login"-->
+                <!--android:textAllCaps="true"-->
+                <!--android:textSize="19dp"-->
+                <!--android:textStyle="bold" />-->
 
         </LinearLayout>
 
@@ -72,32 +70,36 @@
             android:id="@+id/lay_buttons"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.4"
+            android:layout_weight="0.75"
             android:gravity="center"
-            android:orientation="horizontal"
+            android:padding="@dimen/space_10dp"
+            android:orientation="vertical"
             android:weightSum="2">
 
             <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
                 android:layout_weight="1">
 
-                <ImageView
-                    android:id="@+id/iv_google"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/ic_google_2" />
+                <com.google.android.gms.common.SignInButton
+                    android:id="@+id/sign_in_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:visibility="visible"
+                    tools:visibility="gone"/>
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
                 android:layout_weight="1">
 
                 <ImageView
                     android:id="@+id/iv_facebook"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:visibility="gone"
                     android:src="@drawable/ic_facebook_2" />
             </LinearLayout>
 
