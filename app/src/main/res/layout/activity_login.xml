@@ -83,7 +83,7 @@
 
                 <com.google.android.gms.common.SignInButton
                     android:id="@+id/sign_in_button"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
                     android:visibility="visible"
@@ -95,12 +95,13 @@
                 android:layout_height="0dp"
                 android:layout_weight="1">
 
-                <ImageView
-                    android:id="@+id/iv_facebook"
+                <com.facebook.login.widget.LoginButton
+                    android:id="@+id/login_button"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:visibility="gone"
-                    android:src="@drawable/ic_facebook_2" />
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+ />
+
             </LinearLayout>
 
 

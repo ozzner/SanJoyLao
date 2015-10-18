@@ -43,6 +43,7 @@ public class Const {
 
     //[ DEBUG ]
     public static final String DEBUG_GOOGLE_PLUS = "GOOGLE_PLUS";
+    public static final String DEBUG_FACEBOOK = "FACEBOOK";
 
 
 }

@@ -4,23 +4,39 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentSender;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.HttpMethod;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
+import com.facebook.login.widget.ToolTipPopup;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
-import com.google.android.gms.common.Scopes;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.Scope;
 import com.google.android.gms.plus.Plus;
 import com.google.android.gms.plus.model.people.Person;
+
+import org.json.JSONObject;
+
+import java.security.MessageDigest;
+import java.util.Arrays;
 
 import rsantillanc.sanjoylao.R;
 import rsantillanc.sanjoylao.ui.mvp.Login.ILoginView;
@@ -29,16 +45,18 @@ import rsantillanc.sanjoylao.util.Const;
 
 public class LoginActivity extends BaseActivity implements ILoginView,
         View.OnClickListener,
-        GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+        GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener,
+        FacebookCallback<LoginResult>{
 
     //Generic constants
     private static final String TAG = LoginActivity.class.getSimpleName() + Const.BLANK_SPACE;
 
     //Views
     private Toolbar mToolbar;
-    private ImageView ivFacebook, ivGoogle;
     private ProgressDialog mProgersDialog;
     private SignInButton mSignInButtonG;
+    private LoginButton mLoginButtonF;
+
 
     //MVP
     private LoginPresenterImpl mPresenter;
@@ -53,7 +71,15 @@ public class LoginActivity extends BaseActivity implements ILoginView,
     private boolean mIntentInProgress;
 
     /* Is there a ConnectionResult resolution in progress? */
-    private boolean isResolving;
+    private boolean isResolving = false;
+    private boolean shouldResolve = false;
+
+    //[Facebook SDK]
+    private CallbackManager mCallbackManager;
+    private static final String USER_FRIEND = "user_friends";
+    private static final String PUBLIC_PROFILE = "public_profile";
+    private static final String EMAIL = "email";
+    private boolean isFacebookLoginClick = false;
 
 
     //----------------[ Activity life cycle ]
@@ -61,10 +87,15 @@ public class LoginActivity extends BaseActivity implements ILoginView,
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_login);
 
+        genHashKey();
         initUIComponents();
         setUpComponents();
+
+
+
 
     }
 
@@ -87,17 +118,26 @@ public class LoginActivity extends BaseActivity implements ILoginView,
         super.onActivityResult(requestCode, resultCode, data);
         Log.d(Const.DEBUG_GOOGLE_PLUS, "onActivityResult: " + requestCode + ":" + resultCode + ":" + data);
 
-        //Button login with google plus
-        if (requestCode == RC_SIGN_IN) {
-            // If the error resolution was not successful we should not resolve further.
-            if (resultCode != RESULT_OK) {
-               showToast("Error activity result");
-            }else
-                showToast("Activity result correct!");
+        if (isFacebookLoginClick)
+            mCallbackManager.onActivityResult(requestCode,resultCode,data);
+        else {
+            //Button login with google plus
+            if (requestCode == RC_SIGN_IN) {
 
-//            mIsResolving = false;
-            mGoogleApi.connect();
-    }
+                if (resultCode != RESULT_OK) {
+                    shouldResolve = false;
+                    Log.d(Const.DEBUG_GOOGLE_PLUS, "Activity result error.");
+                    showToast("Error activity result");
+                } else {
+                    Log.d(Const.DEBUG_GOOGLE_PLUS, "Activity result correct!");
+                    showToast("Activity result correct!");
+                }
+
+                isResolving = false;
+                mGoogleApi.connect();
+            }
+        }
+
 
     }
 
@@ -105,7 +145,7 @@ public class LoginActivity extends BaseActivity implements ILoginView,
 
     private void initUIComponents() {
 
-        ivFacebook = (ImageView) findViewById(R.id.iv_facebook);
+        mLoginButtonF = (LoginButton) findViewById(R.id.login_button);
         mSignInButtonG = (SignInButton) findViewById(R.id.sign_in_button);
 
     }
@@ -116,12 +156,23 @@ public class LoginActivity extends BaseActivity implements ILoginView,
     private void setUpComponents() {
         mPresenter = new LoginPresenterImpl(this);
 
-        ivFacebook.setOnClickListener(this);
-        mSignInButtonG.setOnClickListener(this);
-
+        setUpFacebook();
         setUpGooglePlus();
         setUpActionBar();
         setUpProgressDialog();
+    }
+
+    private void setUpFacebook() {
+        mCallbackManager = CallbackManager.Factory.create();
+
+        mLoginButtonF.setReadPermissions(Arrays.asList(PUBLIC_PROFILE, USER_FRIEND,EMAIL));
+        // If using in a fragment
+//        mLoginButtonF.setFragment(this);
+        mLoginButtonF.setToolTipStyle(ToolTipPopup.Style.BLUE);
+        mLoginButtonF.setOnClickListener(this);
+
+        // Callback registration
+        mLoginButtonF.registerCallback(mCallbackManager, this);
     }
 
 
@@ -133,12 +184,15 @@ public class LoginActivity extends BaseActivity implements ILoginView,
 
 
     private void setUpGooglePlus() {
+        mSignInButtonG.setOnClickListener(this);
+        mSignInButtonG.setSize(SignInButton.SIZE_ICON_ONLY);
+
+        //Api
         mGoogleApi = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
                 .addApi(Plus.API)
                 .addScope(Plus.SCOPE_PLUS_LOGIN)
-                .addScope(new Scope(Scopes.PROFILE))
                 .build();
 
     }
@@ -164,7 +218,7 @@ public class LoginActivity extends BaseActivity implements ILoginView,
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_logout) {
             onSignOutClicked();
             return true;
         }
@@ -175,13 +229,33 @@ public class LoginActivity extends BaseActivity implements ILoginView,
 
     //----------------[ Others methods ]
 
+    private void genHashKey() {
+
+        try {
+            PackageInfo info = getPackageManager().getPackageInfo("rsantillanc.sanjoylao",
+                    PackageManager.GET_SIGNATURES);
+            for (Signature signature : info.signatures) {
+                MessageDigest md = MessageDigest.getInstance("SHA");
+                md.update(signature.toByteArray());
+                Log.e("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override
     public void onClick(View v) {
 
-        if (v == ivFacebook) {
-            mPresenter.connectWithFacebook();
+        if (v == mLoginButtonF) {
+            isFacebookLoginClick = true;
+//            mPresenter.connectWithFacebook();
         } else {
-            mPresenter.connectWithGoogle();
+            shouldResolve = true;
+            mGoogleApi.connect();
+            isFacebookLoginClick = false;
+
+//            mPresenter.connectWithGoogle();
         }
     }
 
@@ -213,17 +287,15 @@ public class LoginActivity extends BaseActivity implements ILoginView,
                         new DialogInterface.OnCancelListener() {
                             @Override
                             public void onCancel(DialogInterface dialog) {
-//                                mShouldResolve = false;
-//                                showSignedOutUI();
+                                shouldResolve = false;
+                                showToast("onCancel dialog error");
                             }
                         }).show();
             } else {
                 Log.d(TAG, "Google Play Services Error:" + Result);
                 String errorString = apiAvailability.getErrorString(resultCode);
                 Toast.makeText(this, errorString, Toast.LENGTH_SHORT).show();
-
-//                mShouldResolve = false;
-//                showSignedOutUI();
+                shouldResolve = false;
             }
         }
     }
@@ -257,36 +329,33 @@ public class LoginActivity extends BaseActivity implements ILoginView,
 
     @Override
     public void onConnected(Bundle bundle) {
+        shouldResolve = false;
 
         if (bundle != null)
-        Log.d(Const.DEBUG_GOOGLE_PLUS, TAG + "Bundle " +bundle.toString());
+            Log.d(Const.DEBUG_GOOGLE_PLUS, TAG + "Bundle " + bundle.toString());
 
-        try {
-            Person person = Plus.PeopleApi.getCurrentPerson(mGoogleApi);
+        Person person = Plus.PeopleApi.getCurrentPerson(mGoogleApi);
 
-            if (person!= null) {
+        if (person != null) {
 
-                if (person.hasImage()){
-                 Log.d(Const.DEBUG_GOOGLE_PLUS, TAG + "Person Image getImageUrl" +person.getImage().getUrl());
-                }
-
-                Log.d(Const.DEBUG_GOOGLE_PLUS, TAG + "Person getDisplayName " +person.getDisplayName());
-                Log.d(Const.DEBUG_GOOGLE_PLUS, TAG + "Person getUrl " +person.getUrl());
-                Log.d(Const.DEBUG_GOOGLE_PLUS, TAG + "Person Gender " +person.getGender());
-                Log.d(Const.DEBUG_GOOGLE_PLUS, TAG + "Person Name " +person.getName());
-                Log.d(Const.DEBUG_GOOGLE_PLUS, TAG + "Person Birthday " +person.getBirthday());
-                Log.d(Const.DEBUG_GOOGLE_PLUS, TAG + "Person getAboutMe " +person.getAboutMe());
-                Log.d(Const.DEBUG_GOOGLE_PLUS, TAG + "Person hasTagline " +person.hasTagline());
-                Log.d(Const.DEBUG_GOOGLE_PLUS, TAG + "AccountName email " +  Plus.AccountApi.getAccountName(mGoogleApi));
-
-
-            } else {
-                Toast.makeText(getApplicationContext(),
-                        "Couldnt Get the Person Info", Toast.LENGTH_SHORT).show();
+            if (person.hasImage()) {
+                Log.d(Const.DEBUG_GOOGLE_PLUS, TAG + "Person Image getImageUrl" + person.getImage().getUrl());
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+
+            Log.d(Const.DEBUG_GOOGLE_PLUS, TAG + "Person getDisplayName " + person.getDisplayName());
+            Log.d(Const.DEBUG_GOOGLE_PLUS, TAG + "Person getUrl " + person.getUrl());
+            Log.d(Const.DEBUG_GOOGLE_PLUS, TAG + "Person Gender " + person.getGender());
+            Log.d(Const.DEBUG_GOOGLE_PLUS, TAG + "Person Name " + person.getName());
+            Log.d(Const.DEBUG_GOOGLE_PLUS, TAG + "Person Birthday " + person.getBirthday());
+            Log.d(Const.DEBUG_GOOGLE_PLUS, TAG + "Person getAboutMe " + person.getAboutMe());
+            Log.d(Const.DEBUG_GOOGLE_PLUS, TAG + "Person hasTagline " + person.hasTagline());
+            Log.d(Const.DEBUG_GOOGLE_PLUS, TAG + "AccountName email " + Plus.AccountApi.getAccountName(mGoogleApi));
+
+        } else {
+            Toast.makeText(getApplicationContext(),
+                    "Couldnt Get the Person Info", Toast.LENGTH_SHORT).show();
         }
+
     }
 
     @Override
@@ -297,25 +366,77 @@ public class LoginActivity extends BaseActivity implements ILoginView,
 
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
-        Log.d(Const.DEBUG_GOOGLE_PLUS, TAG + "onConnectionFailed ConnectionResult: " + connectionResult.isSuccess());
-        Log.d(Const.DEBUG_GOOGLE_PLUS, TAG + "onConnectionFailed ConnectionResult: " + connectionResult.isSuccess());
 
-        if (connectionResult.hasResolution()) {
-            try {
-                connectionResult.startResolutionForResult(this, RC_SIGN_IN);
-                isResolving = true;
-            } catch (IntentSender.SendIntentException e) {
-                isResolving = false;
-                mGoogleApi.connect();
-                Log.d(Const.DEBUG_GOOGLE_PLUS, TAG + "SendIntentException ", e);
+        //If need resolve and is not resolving then.
+        if (shouldResolve && !isResolving) {
+
+            if (connectionResult.hasResolution()) {
+                try {
+                    connectionResult.startResolutionForResult(this, RC_SIGN_IN);
+                    isResolving = true;
+                } catch (IntentSender.SendIntentException e) {
+                    isResolving = false;
+                    mGoogleApi.connect();
+                    Log.d(Const.DEBUG_GOOGLE_PLUS, TAG + "SendIntentException ", e);
+                }
+            } else {
+                // Could not resolve the connection result, show the user an
+                // error dialog.
+                showErrorDialog(connectionResult);
             }
+
         } else {
-            // Could not resolve the connection result, show the user an
-            // error dialog.
-            showErrorDialog(connectionResult);
+            //Show again to init login
         }
+
 
     }
 
+    //----------------[Facebook login integration]
 
+    @Override
+    public void onSuccess(LoginResult loginResult) {
+       new GraphRequest(loginResult.getAccessToken(),
+               loginResult.getAccessToken().getUserId(),
+               null,
+               HttpMethod.GET,
+               new GraphRequest.Callback() {
+           @Override
+           public void onCompleted(GraphResponse response) {
+               Log.d(Const.DEBUG_FACEBOOK, TAG + "GraphResponse: "+ response.toString());
+
+
+           }
+       }).executeAsync();
+
+
+        GraphRequest request = GraphRequest.newMeRequest(
+                loginResult.getAccessToken(),
+                new GraphRequest.GraphJSONObjectCallback() {
+                    @Override
+                    public void onCompleted(
+                            JSONObject object,
+                            GraphResponse response) {
+                        Log.d(Const.DEBUG_GOOGLE_PLUS, TAG + "GraphResponse: "+ response.toString());
+                        Log.d(Const.DEBUG_GOOGLE_PLUS, TAG + "JSONObject: "+ object.toString());
+
+                    }
+                });
+        Bundle parameters = new Bundle();
+        parameters.putString("fields", "id,name,link,email,picture");
+        request.setParameters(parameters);
+        request.executeAsync();
+    }
+    @Override
+    public void onCancel() {
+        Log.d(Const.DEBUG_GOOGLE_PLUS, TAG + "onCancel: ");
+
+    }
+
+    @Override
+    public void onError(FacebookException error) {
+        Log.d(Const.DEBUG_GOOGLE_PLUS, TAG + "FacebookException: " + error.getMessage());
+        Log.d(Const.DEBUG_GOOGLE_PLUS, TAG + "FacebookException: " + error.getCause());
+
+    }
 }

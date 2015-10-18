@@ -1,28 +1,24 @@
 package rsantillanc.sanjoylao.ui.fragment;
 
 
-import android.content.Context;
-import android.os.Bundle;
 import android.app.Fragment;
+import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.GestureDetector;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import rsantillanc.sanjoylao.R;
-import rsantillanc.sanjoylao.ui.custom.adapter.NavigationDrawerAdapter;
 import rsantillanc.sanjoylao.model.NavigationDrawerModel;
+import rsantillanc.sanjoylao.ui.custom.adapter.NavigationDrawerAdapter;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -102,19 +98,19 @@ public class DrawerFragment extends Fragment {
         navDraAdp = new NavigationDrawerAdapter(getItems(),getActivity());
         recView.setAdapter(navDraAdp);
         recView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recView.addOnItemTouchListener(new RecyclerTouchListener(getActivity(),recView,new ClickListener() {
-
-            @Override
-            public void onClick(View view, int position) {
-                drawerListener.onDrawerItemSelected(view, position);
-                draLay.closeDrawer(contView);
-            }
-
-            @Override
-            public void onLongClick(View view, int position) {
-                Toast.makeText(getActivity(), "LongClick", Toast.LENGTH_LONG).show();
-            }
-        }));
+//        recView.addOnItemTouchListener(new RecyclerTouchListener(getActivity(),recView,new ClickListener() {
+//
+//            @Override
+//            public void onClick(View view, int position) {
+//                drawerListener.onDrawerItemSelected(view, position);
+//                draLay.closeDrawer(contView);
+//            }
+//
+//            @Override
+//            public void onLongClick(View view, int position) {
+//                Toast.makeText(getActivity(), "LongClick", Toast.LENGTH_LONG).show();
+//            }
+//        }));
 
         return layView;
     }
@@ -152,42 +148,42 @@ public class DrawerFragment extends Fragment {
 
     }
 
-    static class RecyclerTouchListener implements RecyclerView.OnItemTouchListener {
-
-        private GestureDetector gestureDetector;
-        private ClickListener clickListener;
-
-        public RecyclerTouchListener(Context context, final RecyclerView recyclerView, final ClickListener clickListener) {
-            this.clickListener = clickListener;
-            gestureDetector = new GestureDetector(context, new GestureDetector.SimpleOnGestureListener() {
-                @Override
-                public boolean onSingleTapUp(MotionEvent e) {
-                    return true;
-                }
-
-                @Override
-                public void onLongPress(MotionEvent e) {
-                    View child = recyclerView.findChildViewUnder(e.getX(), e.getY());
-                    if (child != null && clickListener != null) {
-                        clickListener.onLongClick(child, recyclerView.getChildPosition(child));
-                    }
-                }
-            });
-        }
-
-        @Override
-        public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
-
-            View child = rv.findChildViewUnder(e.getX(), e.getY());
-            if (child != null && clickListener != null && gestureDetector.onTouchEvent(e)) {
-                clickListener.onClick(child, rv.getChildPosition(child));
-            }
-            return false;
-        }
-
-        @Override
-        public void onTouchEvent(RecyclerView rv, MotionEvent e) {
-
-        }
-    }
+//    static class RecyclerTouchListener implements RecyclerView.OnItemTouchListener {
+//
+//        private GestureDetector gestureDetector;
+//        private ClickListener clickListener;
+//
+//        public RecyclerTouchListener(Context context, final RecyclerView recyclerView, final ClickListener clickListener) {
+//            this.clickListener = clickListener;
+//            gestureDetector = new GestureDetector(context, new GestureDetector.SimpleOnGestureListener() {
+//                @Override
+//                public boolean onSingleTapUp(MotionEvent e) {
+//                    return true;
+//                }
+//
+//                @Override
+//                public void onLongPress(MotionEvent e) {
+//                    View child = recyclerView.findChildViewUnder(e.getX(), e.getY());
+//                    if (child != null && clickListener != null) {
+//                        clickListener.onLongClick(child, recyclerView.getChildPosition(child));
+//                    }
+//                }
+//            });
+//        }
+//
+//        @Override
+//        public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
+//
+//            View child = rv.findChildViewUnder(e.getX(), e.getY());
+//            if (child != null && clickListener != null && gestureDetector.onTouchEvent(e)) {
+//                clickListener.onClick(child, rv.getChildPosition(child));
+//            }
+//            return false;
+//        }
+//
+//        @Override
+//        public void onTouchEvent(RecyclerView rv, MotionEvent e) {
+//
+//        }
+//    }
 }
