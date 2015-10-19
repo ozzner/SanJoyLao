@@ -82,6 +82,10 @@ public class LoginPresenterImpl implements ILoginPresenter, OnLoginListener {
 
     }
 
+    /**
+     * Build profile from google data.
+     * @param person Object google
+     */
     private void buildUserProfile(Person person) {
 
         if (person.hasImage()) {
@@ -90,18 +94,20 @@ public class LoginPresenterImpl implements ILoginPresenter, OnLoginListener {
 
         Bundle bundle = new Bundle();
         bundle.putCharSequence("name", person.getDisplayName());
-        bundle.putCharSequence("email",Plus.AccountApi.getAccountName(mGoogleApi));
+        bundle.putCharSequence("email", Plus.AccountApi.getAccountName(mGoogleApi));
+
+
+//        Log.d(Const.DEBUG_GOOGLE_PLUS, TAG + "Person getDisplayName " + person.getDisplayName());
+//        Log.d(Const.DEBUG_GOOGLE_PLUS, TAG + "Person getUrl " + person.getUrl());
+//        Log.d(Const.DEBUG_GOOGLE_PLUS, TAG + "Person Gender " + person.getGender());
+//        Log.d(Const.DEBUG_GOOGLE_PLUS, TAG + "Person Name " + person.getName());
+//        Log.d(Const.DEBUG_GOOGLE_PLUS, TAG + "Person Birthday " + person.getBirthday());
+//        Log.d(Const.DEBUG_GOOGLE_PLUS, TAG + "Person getAboutMe " + person.getAboutMe());
+//        Log.d(Const.DEBUG_GOOGLE_PLUS, TAG + "Person hasTagline " + person.hasTagline());
+//        Log.d(Const.DEBUG_GOOGLE_PLUS, TAG + "AccountName email " + Plus.AccountApi.getAccountName(mGoogleApi));
+
+        mLoginView.closeGoogleConnection();
         mLoginView.goToDashboard(bundle);
-
-        Log.d(Const.DEBUG_GOOGLE_PLUS, TAG + "Person getDisplayName " + person.getDisplayName());
-        Log.d(Const.DEBUG_GOOGLE_PLUS, TAG + "Person getUrl " + person.getUrl());
-        Log.d(Const.DEBUG_GOOGLE_PLUS, TAG + "Person Gender " + person.getGender());
-        Log.d(Const.DEBUG_GOOGLE_PLUS, TAG + "Person Name " + person.getName());
-        Log.d(Const.DEBUG_GOOGLE_PLUS, TAG + "Person Birthday " + person.getBirthday());
-        Log.d(Const.DEBUG_GOOGLE_PLUS, TAG + "Person getAboutMe " + person.getAboutMe());
-        Log.d(Const.DEBUG_GOOGLE_PLUS, TAG + "Person hasTagline " + person.hasTagline());
-        Log.d(Const.DEBUG_GOOGLE_PLUS, TAG + "AccountName email " + Plus.AccountApi.getAccountName(mGoogleApi));
-
     }
 
     private void buildUserProfile(JSONObject object) {
@@ -111,6 +117,7 @@ public class LoginPresenterImpl implements ILoginPresenter, OnLoginListener {
             Bundle bundle = new Bundle();
             bundle.putCharSequence("name",name);
             bundle.putCharSequence("email",email);
+            mLoginView.closeGoogleConnection();
             mLoginView.goToDashboard(bundle);
         } catch (JSONException e) {
             e.printStackTrace();

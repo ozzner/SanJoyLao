@@ -10,17 +10,17 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
+import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
-import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
-import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.plus.Plus;
 import com.google.android.gms.plus.model.people.Person;
@@ -30,7 +30,9 @@ import java.util.Arrays;
 import rsantillanc.sanjoylao.R;
 import rsantillanc.sanjoylao.ui.mvp.Login.ILoginView;
 import rsantillanc.sanjoylao.ui.mvp.Login.LoginPresenterImpl;
+import rsantillanc.sanjoylao.util.Android;
 import rsantillanc.sanjoylao.util.Const;
+import rsantillanc.sanjoylao.util.MenuColorizer;
 
 public class LoginActivity extends BaseActivity implements ILoginView,
         View.OnClickListener,
@@ -43,8 +45,8 @@ public class LoginActivity extends BaseActivity implements ILoginView,
     //Views
     private Toolbar mToolbar;
     private ProgressDialog mProgersDialog;
-    private SignInButton mSignInButtonG;
-    private LoginButton mLoginButtonF;
+    private Button mButtonGoogle;
+    private Button mButtonFacebook;
 
 
     //MVP
@@ -60,6 +62,7 @@ public class LoginActivity extends BaseActivity implements ILoginView,
 
     //[Facebook SDK]
     private CallbackManager mCallbackManager;
+    private LoginManager mLoginManager;
     private static final String USER_FRIEND = "user_friends";
     private static final String PUBLIC_PROFILE = "public_profile";
     private static final String EMAIL = "email";
@@ -73,7 +76,7 @@ public class LoginActivity extends BaseActivity implements ILoginView,
         super.onCreate(savedInstanceState);
         FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_login);
-
+        Android.genHashKey(this);
         initUIComponents();
         setUpComponents();
 
@@ -89,9 +92,11 @@ public class LoginActivity extends BaseActivity implements ILoginView,
     @Override
     protected void onStop() {
         super.onStop();
+        if (mGoogleApi != null)
         if (mGoogleApi.isConnected())
             mGoogleApi.disconnect();
     }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -121,12 +126,9 @@ public class LoginActivity extends BaseActivity implements ILoginView,
     //----------------[ Init views ]
 
     private void initUIComponents() {
-
-        mLoginButtonF = (LoginButton) findViewById(R.id.login_button);
-        mSignInButtonG = (SignInButton) findViewById(R.id.sign_in_button);
-
+        mButtonFacebook = (Button) findViewById(R.id.bt_login_facebook);
+        mButtonGoogle = (Button) findViewById(R.id.bt_login_google);
     }
-
 
 
     //----------------[ Setups components ]
@@ -141,11 +143,14 @@ public class LoginActivity extends BaseActivity implements ILoginView,
     }
 
     private void setUpFacebook() {
-        mCallbackManager = CallbackManager.Factory.create();
+        mLoginManager = LoginManager.getInstance();
+        mButtonFacebook.setOnClickListener(this);
+    }
 
-        mLoginButtonF.setReadPermissions(Arrays.asList(PUBLIC_PROFILE, USER_FRIEND, EMAIL));
-        mLoginButtonF.setOnClickListener(this);
-        mLoginButtonF.registerCallback(mCallbackManager, this);
+    private void loginUsingFacebook() {
+        mCallbackManager = CallbackManager.Factory.create();
+        mLoginManager.logInWithReadPermissions(this, Arrays.asList(PUBLIC_PROFILE, USER_FRIEND, EMAIL));
+        mLoginManager.registerCallback(mCallbackManager, this);
     }
 
 
@@ -157,8 +162,7 @@ public class LoginActivity extends BaseActivity implements ILoginView,
 
 
     private void setUpGooglePlus() {
-        mSignInButtonG.setOnClickListener(this);
-        mSignInButtonG.setSize(SignInButton.SIZE_ICON_ONLY);
+        mButtonGoogle.setOnClickListener(this);
 
         //Api
         mGoogleApi = new GoogleApiClient.Builder(this)
@@ -175,13 +179,14 @@ public class LoginActivity extends BaseActivity implements ILoginView,
     }
 
 
-
     //----------------[ Menu handler ]
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
+
         getMenuInflater().inflate(R.menu.menu_login, menu);
+        int color = getResources().getColor(R.color.white);
+        MenuColorizer.colorMenu(this,menu,color);
         return true;
     }
 
@@ -190,8 +195,8 @@ public class LoginActivity extends BaseActivity implements ILoginView,
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_logout) {
-            onSignOutClicked();
+        if (id == R.id.action_login_info) {
+            showToast("San Joy Lao V"+Android.getAppVersion(this));
             return true;
         }
 
@@ -205,23 +210,14 @@ public class LoginActivity extends BaseActivity implements ILoginView,
     @Override
     public void onClick(View v) {
 
-        if (v == mLoginButtonF) {
+        if (v == mButtonFacebook) {
+            loginUsingFacebook();
             isFacebookLoginClick = true;
         } else {
             shouldResolve = true;
             mGoogleApi.connect();
             isFacebookLoginClick = false;
         }
-    }
-
-    private void onSignOutClicked() {
-        // Clear the default account so that GoogleApiClient will not automatically
-        // connect in the future.
-        if (mGoogleApi.isConnected()) {
-            Plus.AccountApi.clearDefaultAccount(mGoogleApi);
-            mGoogleApi.disconnect();
-        }
-
     }
 
     private void goToMainActivity(Object obj) {
@@ -278,6 +274,34 @@ public class LoginActivity extends BaseActivity implements ILoginView,
         goToMainActivity(obj);
     }
 
+    @Override
+    public void closeGoogleConnection() {
+        if (mGoogleApi != null){
+            // Clear the default account so that GoogleApiClient will not automatically
+            // connect in the future.
+            if (mGoogleApi.isConnected()) {
+                Plus.AccountApi.clearDefaultAccount(mGoogleApi);
+                mGoogleApi.disconnect();
+                mGoogleApi.unregisterConnectionCallbacks(this);
+                mGoogleApi.unregisterConnectionFailedListener(this);
+                mGoogleApi = null;
+            }
+
+        }
+
+    }
+
+    @Override
+    public void closeFacebookConection() {
+        if (mLoginManager != null){
+            mLoginManager.logOut();
+            mButtonFacebook = null;
+            mLoginManager = null;
+        }
+
+
+    }
+
 
     //----------------[Google plus integration]
 
@@ -325,14 +349,14 @@ public class LoginActivity extends BaseActivity implements ILoginView,
             //Show again to init login
         }
 
-
     }
+
 
     //----------------[Facebook login integration]
 
     @Override
     public void onSuccess(LoginResult loginResult) {
-            mPresenter.onSuccessFacebook(loginResult);
+        mPresenter.onSuccessFacebook(loginResult);
     }
 
     @Override

@@ -7,5 +7,6 @@ import android.app.Application;
  */
 public class SJLApplication extends Application{
 
-    //TODO Here goes the persistence data to all app
+
+
 }

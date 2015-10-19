@@ -8,4 +8,6 @@ public interface ILoginView {
     void hideLoader();
     void onError(CharSequence s);
     void goToDashboard(Object obj);
+    void closeGoogleConnection();
+    void closeFacebookConection();
 }
