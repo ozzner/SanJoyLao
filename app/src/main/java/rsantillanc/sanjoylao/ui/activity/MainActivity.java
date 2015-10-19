@@ -17,6 +17,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.lang.reflect.Method;
@@ -43,6 +44,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private DrawerLayout mDrawerLayout;
     private NavigationView mNavView;
     private ActionBarDrawerToggle mDrawerToggle;
+    private TextView username;
+    private TextView email;
+
 
     //Constants
     private static final int INPUT = R.id.nav_main_input;
@@ -63,6 +67,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private int typeOfDevice = -1;
     private Context mContext = null;
     private boolean backPressedToExitOnce = false;
+    private Bundle mBundle = null;
 
 
     @Override
@@ -76,6 +81,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         //Get context
         mContext = getApplicationContext();
+        mBundle = getIntent().getExtras();
 
         //Init Views
         initUIComponents();
@@ -93,6 +99,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setUpNavView();
         setUpDrawerToggle();
         setUpOrientation();
+        setUpProfile();
+    }
+
+    private void setUpProfile() {
+        if (mBundle!= null){
+            username.setText(mBundle.getString("name"));
+            email.setText(mBundle.getString("email"));
+        }
     }
 
     private void setUpNavView() {
@@ -115,6 +129,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         mNavView = (NavigationView) findViewById(R.id.nav_view);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        username = (TextView)findViewById(R.id.username);
+        email = (TextView)findViewById(R.id.email);
     }
 
 
@@ -187,9 +203,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             super.onBackPressed();
 
         } else {
-            if (mDrawerLayout.isDrawerOpen(GravityCompat.END)){
+            if (mDrawerLayout.isDrawerOpen(GravityCompat.END)) {
                 mDrawerLayout.closeDrawers();
-            }else{
+            } else {
 
                 this.backPressedToExitOnce = true;
                 Toast.makeText(getApplicationContext(), "Press again to exit", Toast.LENGTH_SHORT).show();

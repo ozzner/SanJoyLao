@@ -4,12 +4,8 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentSender;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.Signature;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,12 +16,8 @@ import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
-import com.facebook.GraphRequest;
-import com.facebook.GraphResponse;
-import com.facebook.HttpMethod;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
-import com.facebook.login.widget.ToolTipPopup;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.SignInButton;
@@ -33,9 +25,6 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.plus.Plus;
 import com.google.android.gms.plus.model.people.Person;
 
-import org.json.JSONObject;
-
-import java.security.MessageDigest;
 import java.util.Arrays;
 
 import rsantillanc.sanjoylao.R;
@@ -46,7 +35,7 @@ import rsantillanc.sanjoylao.util.Const;
 public class LoginActivity extends BaseActivity implements ILoginView,
         View.OnClickListener,
         GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener,
-        FacebookCallback<LoginResult>{
+        FacebookCallback<LoginResult> {
 
     //Generic constants
     private static final String TAG = LoginActivity.class.getSimpleName() + Const.BLANK_SPACE;
@@ -63,12 +52,7 @@ public class LoginActivity extends BaseActivity implements ILoginView,
 
     //[Google Plus]
     private GoogleApiClient mGoogleApi = null;
-
-    /* Request code used to invoke sign in user interactions. */
     private static final int RC_SIGN_IN = 0;
-
-    /*prevents us from starting further intents.*/
-    private boolean mIntentInProgress;
 
     /* Is there a ConnectionResult resolution in progress? */
     private boolean isResolving = false;
@@ -90,12 +74,8 @@ public class LoginActivity extends BaseActivity implements ILoginView,
         FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_login);
 
-        genHashKey();
         initUIComponents();
         setUpComponents();
-
-
-
 
     }
 
@@ -119,7 +99,7 @@ public class LoginActivity extends BaseActivity implements ILoginView,
         Log.d(Const.DEBUG_GOOGLE_PLUS, "onActivityResult: " + requestCode + ":" + resultCode + ":" + data);
 
         if (isFacebookLoginClick)
-            mCallbackManager.onActivityResult(requestCode,resultCode,data);
+            mCallbackManager.onActivityResult(requestCode, resultCode, data);
         else {
             //Button login with google plus
             if (requestCode == RC_SIGN_IN) {
@@ -127,19 +107,16 @@ public class LoginActivity extends BaseActivity implements ILoginView,
                 if (resultCode != RESULT_OK) {
                     shouldResolve = false;
                     Log.d(Const.DEBUG_GOOGLE_PLUS, "Activity result error.");
-                    showToast("Error activity result");
                 } else {
                     Log.d(Const.DEBUG_GOOGLE_PLUS, "Activity result correct!");
-                    showToast("Activity result correct!");
                 }
 
                 isResolving = false;
                 mGoogleApi.connect();
             }
         }
-
-
     }
+
 
     //----------------[ Init views ]
 
@@ -149,6 +126,7 @@ public class LoginActivity extends BaseActivity implements ILoginView,
         mSignInButtonG = (SignInButton) findViewById(R.id.sign_in_button);
 
     }
+
 
 
     //----------------[ Setups components ]
@@ -165,13 +143,8 @@ public class LoginActivity extends BaseActivity implements ILoginView,
     private void setUpFacebook() {
         mCallbackManager = CallbackManager.Factory.create();
 
-        mLoginButtonF.setReadPermissions(Arrays.asList(PUBLIC_PROFILE, USER_FRIEND,EMAIL));
-        // If using in a fragment
-//        mLoginButtonF.setFragment(this);
-        mLoginButtonF.setToolTipStyle(ToolTipPopup.Style.BLUE);
+        mLoginButtonF.setReadPermissions(Arrays.asList(PUBLIC_PROFILE, USER_FRIEND, EMAIL));
         mLoginButtonF.setOnClickListener(this);
-
-        // Callback registration
         mLoginButtonF.registerCallback(mCallbackManager, this);
     }
 
@@ -194,14 +167,13 @@ public class LoginActivity extends BaseActivity implements ILoginView,
                 .addApi(Plus.API)
                 .addScope(Plus.SCOPE_PLUS_LOGIN)
                 .build();
-
     }
-
 
     private void setUpProgressDialog() {
         mProgersDialog = new ProgressDialog(this);
         mProgersDialog.setMessage("cargando...");
     }
+
 
 
     //----------------[ Menu handler ]
@@ -229,50 +201,32 @@ public class LoginActivity extends BaseActivity implements ILoginView,
 
     //----------------[ Others methods ]
 
-    private void genHashKey() {
-
-        try {
-            PackageInfo info = getPackageManager().getPackageInfo("rsantillanc.sanjoylao",
-                    PackageManager.GET_SIGNATURES);
-            for (Signature signature : info.signatures) {
-                MessageDigest md = MessageDigest.getInstance("SHA");
-                md.update(signature.toByteArray());
-                Log.e("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
     @Override
     public void onClick(View v) {
 
         if (v == mLoginButtonF) {
             isFacebookLoginClick = true;
-//            mPresenter.connectWithFacebook();
         } else {
             shouldResolve = true;
             mGoogleApi.connect();
             isFacebookLoginClick = false;
-
-//            mPresenter.connectWithGoogle();
         }
     }
 
     private void onSignOutClicked() {
         // Clear the default account so that GoogleApiClient will not automatically
         // connect in the future.
-        showToast("Bye.");
         if (mGoogleApi.isConnected()) {
             Plus.AccountApi.clearDefaultAccount(mGoogleApi);
             mGoogleApi.disconnect();
         }
 
-//        showSignedOutUI();
     }
 
-    private void goToMainActivity() {
+    private void goToMainActivity(Object obj) {
         Intent main = new Intent(getApplicationContext(), MainActivity.class);
+        main.putExtras(((Bundle) obj));
         startActivity(main);
         finish();
     }
@@ -320,8 +274,8 @@ public class LoginActivity extends BaseActivity implements ILoginView,
     }
 
     @Override
-    public void goToDashboard() {
-        goToMainActivity();
+    public void goToDashboard(Object obj) {
+        goToMainActivity(obj);
     }
 
 
@@ -331,29 +285,11 @@ public class LoginActivity extends BaseActivity implements ILoginView,
     public void onConnected(Bundle bundle) {
         shouldResolve = false;
 
-        if (bundle != null)
-            Log.d(Const.DEBUG_GOOGLE_PLUS, TAG + "Bundle " + bundle.toString());
-
         Person person = Plus.PeopleApi.getCurrentPerson(mGoogleApi);
-
         if (person != null) {
-
-            if (person.hasImage()) {
-                Log.d(Const.DEBUG_GOOGLE_PLUS, TAG + "Person Image getImageUrl" + person.getImage().getUrl());
-            }
-
-            Log.d(Const.DEBUG_GOOGLE_PLUS, TAG + "Person getDisplayName " + person.getDisplayName());
-            Log.d(Const.DEBUG_GOOGLE_PLUS, TAG + "Person getUrl " + person.getUrl());
-            Log.d(Const.DEBUG_GOOGLE_PLUS, TAG + "Person Gender " + person.getGender());
-            Log.d(Const.DEBUG_GOOGLE_PLUS, TAG + "Person Name " + person.getName());
-            Log.d(Const.DEBUG_GOOGLE_PLUS, TAG + "Person Birthday " + person.getBirthday());
-            Log.d(Const.DEBUG_GOOGLE_PLUS, TAG + "Person getAboutMe " + person.getAboutMe());
-            Log.d(Const.DEBUG_GOOGLE_PLUS, TAG + "Person hasTagline " + person.hasTagline());
-            Log.d(Const.DEBUG_GOOGLE_PLUS, TAG + "AccountName email " + Plus.AccountApi.getAccountName(mGoogleApi));
-
+            mPresenter.onSuccessGoogle(person, mGoogleApi);
         } else {
-            Toast.makeText(getApplicationContext(),
-                    "Couldnt Get the Person Info", Toast.LENGTH_SHORT).show();
+            mPresenter.onGoogleFailed(person);
         }
 
     }
@@ -396,41 +332,12 @@ public class LoginActivity extends BaseActivity implements ILoginView,
 
     @Override
     public void onSuccess(LoginResult loginResult) {
-       new GraphRequest(loginResult.getAccessToken(),
-               loginResult.getAccessToken().getUserId(),
-               null,
-               HttpMethod.GET,
-               new GraphRequest.Callback() {
-           @Override
-           public void onCompleted(GraphResponse response) {
-               Log.d(Const.DEBUG_FACEBOOK, TAG + "GraphResponse: "+ response.toString());
-
-
-           }
-       }).executeAsync();
-
-
-        GraphRequest request = GraphRequest.newMeRequest(
-                loginResult.getAccessToken(),
-                new GraphRequest.GraphJSONObjectCallback() {
-                    @Override
-                    public void onCompleted(
-                            JSONObject object,
-                            GraphResponse response) {
-                        Log.d(Const.DEBUG_GOOGLE_PLUS, TAG + "GraphResponse: "+ response.toString());
-                        Log.d(Const.DEBUG_GOOGLE_PLUS, TAG + "JSONObject: "+ object.toString());
-
-                    }
-                });
-        Bundle parameters = new Bundle();
-        parameters.putString("fields", "id,name,link,email,picture");
-        request.setParameters(parameters);
-        request.executeAsync();
+            mPresenter.onSuccessFacebook(loginResult);
     }
+
     @Override
     public void onCancel() {
         Log.d(Const.DEBUG_GOOGLE_PLUS, TAG + "onCancel: ");
-
     }
 
     @Override

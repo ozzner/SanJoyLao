@@ -7,5 +7,5 @@ public interface ILoginView {
     void showLoader();
     void hideLoader();
     void onError(CharSequence s);
-    void goToDashboard();
+    void goToDashboard(Object obj);
 }

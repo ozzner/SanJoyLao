@@ -22,10 +22,10 @@ public class LoginIteractorImpl implements ILoginIteractor {
     @Override
     public void loginUsingGoogle(final OnLoginListener listener) {
 // Mock login. I'm creating a handler to delay the answer a couple of seconds
-        new Handler().postDelayed(new Runnable() {
-            @Override public void run() {
-                listener.onSuccessGoogle("Correct google!");
-            }
-        }, 2500);
+//        new Handler().postDelayed(new Runnable() {
+//            @Override public void run() {
+//                listener.onSuccessGoogle("Correct google!", mGoogleApi);
+//            }
+//        }, 2500);
     }
 }
