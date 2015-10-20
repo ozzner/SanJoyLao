@@ -10,6 +10,8 @@ import java.util.Locale;
 public class SJLStrings {
 
     public static final String FORMAT_MILES = "##,##0.00";
+    public static final String PARSE_DATE_FORMAT = "YYYY-MM-DDTHH:MM:SS.MMMZ";
+
 
     /**
      * @param input  Cadena a formatear

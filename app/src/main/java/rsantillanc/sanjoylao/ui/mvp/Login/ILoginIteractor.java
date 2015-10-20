@@ -1,6 +1,5 @@
 package rsantillanc.sanjoylao.ui.mvp.Login;
 
-import rsantillanc.sanjoylao.interfaces.OnLoginListener;
 import rsantillanc.sanjoylao.model.UserModel;
 
 /**

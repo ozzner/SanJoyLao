@@ -12,7 +12,6 @@ import com.google.android.gms.plus.model.people.Person;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import rsantillanc.sanjoylao.interfaces.OnLoginListener;
 import rsantillanc.sanjoylao.model.UserModel;
 import rsantillanc.sanjoylao.util.Const;
 

@@ -1,33 +1,91 @@
 package rsantillanc.sanjoylao.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 
 /**
  * Created by rsantillanc on 19/10/2015.
  */
-public class UserModel implements Serializable{
+public class UserModel implements Serializable {
 
     private static final long serialVersionUID = 0L;
 
+    @SerializedName("objectId")
     private String objectId;
+
+    @SerializedName("username")
     private String username;
+
+    @SerializedName("emailVerified")
     private boolean emailVerified;
+
+    @SerializedName("email")
     private String email;
+
+    @SerializedName("socialLogin")
     private int socialLogin;
+
+    @SerializedName("createdAt")
     private String createdAt;
+
+    @SerializedName("updatedAt")
     private String updatedAt;
+
+    @SerializedName("haveProfileImage")
     private boolean haveProfileImage;
+
+    @SerializedName("urlProfileImage")
     private String urlProfileImage;
+
+    @SerializedName("profileImage")
     private Object profileImage;
+
+    @SerializedName("fullName")
     private String fullName;
+
+    @SerializedName("lastLogin")
     private String lastLogin;
+
+    @SerializedName("phoneNumber")
     private long phoneNumber;
+
+    @SerializedName("isEnabled")
     private boolean isEnabled;
+
+    @SerializedName("sessionToken")
     private String sessionToken;
 
     //-------------[ Constructors ]
 
     public UserModel() {
+    }
+
+
+    //-------------[ Custom methods ]
+
+    @Override
+    public String toString() {
+
+        String output = "\n\n";
+        output += "+-------------------- UserModel --------------------\n";
+        output += "| objectId: " + objectId + "\n";
+        output += "| username: " + username + "\n";
+        output += "| emailVerified: " + emailVerified + "\n";
+        output += "| email: " + email + "\n";
+        output += "| socialLogin: " + socialLogin + "\n";
+        output += "| createdAt: " + createdAt + "\n";
+        output += "| updatedAt: " + updatedAt + "\n";
+        output += "| haveProfileImage: " + haveProfileImage + "\n";
+        output += "| urlProfileImage: " + urlProfileImage + "\n";
+        output += "| profileImage: " + profileImage + "\n";
+        output += "| fullName: " + fullName + "\n";
+        output += "| lastLogin: " + lastLogin + "\n";
+        output += "| phoneNumber: " + phoneNumber + "\n";
+        output += "| isEnabled: " + isEnabled + "\n";
+        output += "| sessionToken: " + sessionToken + "\n";
+        output += "+-------------------- UserModel --------------------\n";
+        return output;
     }
 
 
