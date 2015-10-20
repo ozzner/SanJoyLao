@@ -69,6 +69,7 @@ public class LoginPresenterImpl implements ILoginPresenter, OnLoginListener {
                             GraphResponse response) {
 
                         buildUserProfile(object);
+                        mLoginIteractor.loginUsingFacebook(LoginPresenterImpl.this);
                         Log.d(Const.DEBUG_GOOGLE_PLUS, TAG + "JSONObject: " + object.toString());
 
                     }
