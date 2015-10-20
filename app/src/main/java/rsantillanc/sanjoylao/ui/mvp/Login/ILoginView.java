@@ -6,6 +6,9 @@ package rsantillanc.sanjoylao.ui.mvp.Login;
 public interface ILoginView {
     void showLoader();
     void hideLoader();
+    void updateLoader(CharSequence sequence);
     void onError(CharSequence s);
     void goToDashboard(Object obj);
+    void closeGoogleConnection();
+    void closeFacebookConection();
 }

@@ -4,9 +4,9 @@
     tools:context="rsantillanc.sanjoylao.ui.activity.LoginActivity">
 
     <item
-        android:id="@+id/action_logout"
-        android:title="Logout"
-        android:icon="@drawable/ic_logout"
+        android:id="@+id/action_login_info"
+        android:title="@string/action_login_info"
+        android:icon="@drawable/ic_info"
         android:orderInCategory="100"
         app:showAsAction="always" />
 

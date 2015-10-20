@@ -1,8 +1,7 @@
 package rsantillanc.sanjoylao.ui.mvp.Login;
 
-import android.os.Handler;
-
 import rsantillanc.sanjoylao.interfaces.OnLoginListener;
+import rsantillanc.sanjoylao.model.UserModel;
 
 /**
  * Created by rsantillanc on 14/10/2015.
@@ -10,22 +9,19 @@ import rsantillanc.sanjoylao.interfaces.OnLoginListener;
 public class LoginIteractorImpl implements ILoginIteractor {
 
     @Override
-    public void loginUsingFacebook(final OnLoginListener listener) {
-        // Mock login. I'm creating a handler to delay the answer a couple of seconds
-        new Handler().postDelayed(new Runnable() {
-            @Override public void run() {
-                listener.onSuccessFacebook("Correct facebook!");
+    public void registerUserOnBackend(final UserModel oUser, final OnLoginListener listener) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(2500);
+                    listener.onSuccess(oUser);
+                } catch (InterruptedException e) {
+                    listener.onError(e.getMessage());
+                    e.printStackTrace();
+                }
             }
-        }, 2000);
+        }).start();
     }
 
-    @Override
-    public void loginUsingGoogle(final OnLoginListener listener) {
-// Mock login. I'm creating a handler to delay the answer a couple of seconds
-//        new Handler().postDelayed(new Runnable() {
-//            @Override public void run() {
-//                listener.onSuccessGoogle("Correct google!", mGoogleApi);
-//            }
-//        }, 2500);
-    }
 }

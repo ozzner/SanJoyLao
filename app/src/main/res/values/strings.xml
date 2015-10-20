@@ -92,5 +92,10 @@
 
     <!-- Keys -->
     <string name="facebook_app_id">630010387139153</string>
+    <string name="login_with_facebook">Facebook...</string>
+    <string name="login_with_google">Google...</string>
+    <string name="action_login_info">Information</string>
+    <string name="toast_error_null">Objecto nulo</string>
+    <string name="progress_message_connecting">Registrando...</string>
 
 </resources>

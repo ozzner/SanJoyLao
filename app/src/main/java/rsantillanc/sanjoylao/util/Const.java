@@ -6,6 +6,7 @@ package rsantillanc.sanjoylao.util;
 public class Const {
 
     public static final String BLANK_SPACE = " ";
+    public static final String EMPTY = "";
     public static final String PRICE_USD = "USD ";
     public static final String PRICE_PEN = "S/. ";
     public static final String TAG_BANQUET = "BANQUET";
@@ -45,5 +46,9 @@ public class Const {
     public static final String DEBUG_GOOGLE_PLUS = "GOOGLE_PLUS";
     public static final String DEBUG_FACEBOOK = "FACEBOOK";
 
-
+    //[ OAUTH ]
+    public static final int LOGIN_GOOGLE = 0;
+    public static final int LOGIN_FACEBOOK = 1;
+    public static final int LOGIN_FORM = -1;
+    public static final String EXTRA_USER = "user";
 }

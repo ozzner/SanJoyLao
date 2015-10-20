@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    android:background="@color/white">
+    xmlns:facebook="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
+    android:fitsSystemWindows="true">
 
 
     <include
@@ -54,15 +54,15 @@
                 android:background="@color/red" />
 
             <!--<TextView-->
-                <!--android:id="@+id/textView4"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_marginTop="@dimen/space_4dp"-->
-                <!--android:gravity="bottom"-->
-                <!--android:text="@string/tv_login"-->
-                <!--android:textAllCaps="true"-->
-                <!--android:textSize="19dp"-->
-                <!--android:textStyle="bold" />-->
+            <!--android:id="@+id/textView4"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginTop="@dimen/space_4dp"-->
+            <!--android:gravity="bottom"-->
+            <!--android:text="@string/tv_login"-->
+            <!--android:textAllCaps="true"-->
+            <!--android:textSize="19dp"-->
+            <!--android:textStyle="bold" />-->
 
         </LinearLayout>
 
@@ -72,8 +72,8 @@
             android:layout_height="0dp"
             android:layout_weight="0.75"
             android:gravity="center"
-            android:padding="@dimen/space_10dp"
             android:orientation="vertical"
+            android:padding="@dimen/space_10dp"
             android:weightSum="2">
 
             <LinearLayout
@@ -81,26 +81,32 @@
                 android:layout_height="0dp"
                 android:layout_weight="1">
 
-                <com.google.android.gms.common.SignInButton
-                    android:id="@+id/sign_in_button"
+                <Button
+                    android:id="@+id/bt_login_google"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:visibility="visible"
-                    tools:visibility="gone"/>
+                    android:layout_height="match_parent"
+                    android:text="@string/login_with_google"
+                    android:textColor="@color/white"
+                    android:background="@drawable/common_signin_btn_text_normal_dark"/>
+
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
+                android:gravity="center"
+                android:padding="@dimen/space_4dp"
                 android:layout_weight="1">
 
-                <com.facebook.login.widget.LoginButton
-                    android:id="@+id/login_button"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
- />
+               <Button
+                   android:id="@+id/bt_login_facebook"
+                   android:layout_width="match_parent"
+                   android:layout_height="match_parent"
+                   android:text="@string/login_with_facebook"
+                   android:textColor="@color/white"
+                   android:paddingLeft="@dimen/space_14dp"
+                   android:drawableLeft="@drawable/com_facebook_button_icon"
+                   android:background="@drawable/com_facebook_button_background"/>
 
             </LinearLayout>
 

@@ -16,13 +16,13 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.Window;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.lang.reflect.Method;
 
 import rsantillanc.sanjoylao.R;
+import rsantillanc.sanjoylao.model.UserModel;
 import rsantillanc.sanjoylao.storage.sp.SJLPreferences;
 import rsantillanc.sanjoylao.ui.fragment.BanquetsFragment;
 import rsantillanc.sanjoylao.ui.fragment.ChefFragment;
@@ -104,8 +104,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private void setUpProfile() {
         if (mBundle!= null){
-            username.setText(mBundle.getString("name"));
-            email.setText(mBundle.getString("email"));
+            UserModel user = ((UserModel) mBundle.getSerializable(Const.EXTRA_USER));
+            username.setText(user.getFullName());
+            email.setText(user.getEmail());
         }
     }
 
@@ -141,7 +142,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
+        if (menu != null) {
+
+            if (menu.getClass().getSimpleName().equals("MenuBuilder")) {
+                try {
+                    Method m = menu.getClass().getDeclaredMethod(
+                            "setOptionalIconsVisible", Boolean.TYPE);
+                    m.setAccessible(true);
+                    m.invoke(menu, true);
+                } catch (NoSuchMethodException e) {
+                    Log.e(TAG, "onMenuOpened", e);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
@@ -162,39 +177,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             return true;
 
         } else if (id == R.id.action_about) {
-            Toast.makeText(getApplication(), "San Joy Lao App | V.0.9.4", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplication(), "San Joy Lao App | V."+Android.getAppVersion(this), Toast.LENGTH_LONG).show();
         } else if (id == android.R.id.home) {
             mDrawerLayout.openDrawer(GravityCompat.END);
         } else {
             Intent login = new Intent(mContext, LoginActivity.class);
             startActivity(login);
             finish();
-            Toast.makeText(getApplication(), "Closing...", Toast.LENGTH_LONG).show();
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-
-    @Override
-    public boolean onMenuOpened(int featureId, Menu menu) {
-        if (featureId == Window.FEATURE_ACTION_BAR && menu != null) {
-
-            if (menu.getClass().getSimpleName().equals("MenuBuilder")) {
-                try {
-                    Method m = menu.getClass().getDeclaredMethod(
-                            "setOptionalIconsVisible", Boolean.TYPE);
-                    m.setAccessible(true);
-                    m.invoke(menu, true);
-                } catch (NoSuchMethodException e) {
-                    Log.e(TAG, "onMenuOpened", e);
-                } catch (Exception e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        }
-        return super.onMenuOpened(featureId, menu);
-    }
 
 
     @Override

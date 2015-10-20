@@ -1,6 +1,5 @@
 package rsantillanc.sanjoylao.model;
 
-import java.io.File;
 import java.io.Serializable;
 
 /**
@@ -19,7 +18,7 @@ public class UserModel implements Serializable{
     private String updatedAt;
     private boolean haveProfileImage;
     private String urlProfileImage;
-    private File profileImage;
+    private Object profileImage;
     private String fullName;
     private String lastLogin;
     private long phoneNumber;
@@ -106,11 +105,11 @@ public class UserModel implements Serializable{
         this.urlProfileImage = urlProfileImage;
     }
 
-    public File getProfileImage() {
+    public Object getProfileImage() {
         return profileImage;
     }
 
-    public void setProfileImage(File profileImage) {
+    public void setProfileImage(Object profileImage) {
         this.profileImage = profileImage;
     }
 
