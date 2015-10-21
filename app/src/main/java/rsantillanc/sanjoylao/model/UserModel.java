@@ -1,68 +1,65 @@
 package rsantillanc.sanjoylao.model;
 
-import com.google.gson.annotations.SerializedName;
-
-import java.io.Serializable;
-
 /**
  * Created by rsantillanc on 19/10/2015.
  */
-public class UserModel implements Serializable {
+public class UserModel  {
 
-    private static final long serialVersionUID = 0L;
+//    private static final long serialVersionUID = 0L;
 
-    @SerializedName("objectId")
     private String objectId;
 
-    @SerializedName("username")
     private String username;
 
-    @SerializedName("emailVerified")
     private boolean emailVerified;
 
-    @SerializedName("email")
     private String email;
 
-    @SerializedName("socialLogin")
     private int socialLogin;
 
-    @SerializedName("createdAt")
     private String createdAt;
 
-    @SerializedName("updatedAt")
     private String updatedAt;
 
-    @SerializedName("haveProfileImage")
     private boolean haveProfileImage;
 
-    @SerializedName("urlProfileImage")
     private String urlProfileImage;
 
-    @SerializedName("profileImage")
-    private Object profileImage;
-
-    @SerializedName("fullName")
     private String fullName;
 
-    @SerializedName("lastLogin")
-    private String lastLogin;
-
-    @SerializedName("phoneNumber")
     private long phoneNumber;
 
-    @SerializedName("isEnabled")
     private boolean isEnabled;
 
-    @SerializedName("sessionToken")
     private String sessionToken;
+
+    private String password;
+
+
 
     //-------------[ Constructors ]
 
     public UserModel() {
     }
 
+    public UserModel(String objectId, String username, boolean emailVerified, String email, int socialLogin, String createdAt, String updatedAt, boolean haveProfileImage, String urlProfileImage, String fullName, long phoneNumber, boolean isEnabled, String sessionToken, String password) {
+        this.objectId = objectId;
+        this.username = username;
+        this.emailVerified = emailVerified;
+        this.email = email;
+        this.socialLogin = socialLogin;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+        this.haveProfileImage = haveProfileImage;
+        this.urlProfileImage = urlProfileImage;
+        this.fullName = fullName;
+        this.phoneNumber = phoneNumber;
+        this.isEnabled = isEnabled;
+        this.sessionToken = sessionToken;
+        this.password = password;
+    }
 
-    //-------------[ Custom methods ]
+//-------------[ Custom methods ]
 
     @Override
     public String toString() {
@@ -78,12 +75,11 @@ public class UserModel implements Serializable {
         output += "| updatedAt: " + updatedAt + "\n";
         output += "| haveProfileImage: " + haveProfileImage + "\n";
         output += "| urlProfileImage: " + urlProfileImage + "\n";
-        output += "| profileImage: " + profileImage + "\n";
         output += "| fullName: " + fullName + "\n";
-        output += "| lastLogin: " + lastLogin + "\n";
         output += "| phoneNumber: " + phoneNumber + "\n";
         output += "| isEnabled: " + isEnabled + "\n";
         output += "| sessionToken: " + sessionToken + "\n";
+        output += "| password: " + password + "\n";
         output += "+-------------------- UserModel --------------------\n";
         return output;
     }
@@ -163,28 +159,12 @@ public class UserModel implements Serializable {
         this.urlProfileImage = urlProfileImage;
     }
 
-    public Object getProfileImage() {
-        return profileImage;
-    }
-
-    public void setProfileImage(Object profileImage) {
-        this.profileImage = profileImage;
-    }
-
     public String getFullName() {
         return fullName;
     }
 
     public void setFullName(String fullName) {
         this.fullName = fullName;
-    }
-
-    public String getLastLogin() {
-        return lastLogin;
-    }
-
-    public void setLastLogin(String lastLogin) {
-        this.lastLogin = lastLogin;
     }
 
     public long getPhoneNumber() {
@@ -209,5 +189,13 @@ public class UserModel implements Serializable {
 
     public void setSessionToken(String sessionToken) {
         this.sessionToken = sessionToken;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

@@ -6,5 +6,6 @@ import rsantillanc.sanjoylao.model.UserModel;
  * Created by rsantillanc on 14/10/2015.
  */
 public interface ILoginIteractor {
-    void registerUserOnBackend(UserModel oUser, OnLoginListener listener);
+    void doSignin(UserModel oUser, OnRegisterListener listener);
+    void doLogin(Object obj,OnLoginListener listener);
 }

@@ -1,6 +1,8 @@
 package rsantillanc.sanjoylao.ui.mvp.Login;
 
+import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
@@ -12,22 +14,25 @@ import com.google.android.gms.plus.model.people.Person;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import rsantillanc.sanjoylao.R;
 import rsantillanc.sanjoylao.model.UserModel;
 import rsantillanc.sanjoylao.util.Const;
 
 /**
  * Created by rsantillanc on 14/10/2015.
  */
-public class LoginPresenterImpl implements ILoginPresenter, OnLoginListener {
+public class LoginPresenterImpl implements ILoginPresenter, OnRegisterListener, OnLoginListener {
 
     private static final String TAG = LoginPresenterImpl.class.getSimpleName() + Const.BLANK_SPACE;
     private ILoginView mLoginView;
     private ILoginIteractor mLoginIteractor;
     private GoogleApiClient mGoogleApi;
     private boolean flagOauthGoogle;
+    private Activity mActivity;
 
-    public LoginPresenterImpl(ILoginView loginView) {
+    public LoginPresenterImpl(ILoginView loginView, Activity activity) {
         this.mLoginView = loginView;
+        this.mActivity = activity;
         this.mLoginIteractor = new LoginIteractorImpl();
     }
 
@@ -66,23 +71,6 @@ public class LoginPresenterImpl implements ILoginPresenter, OnLoginListener {
 
 
 
-    @Override
-    public void onSuccess(Object obj) {
-        mLoginView.hideLoader();
-        mLoginView.goToDashboard(obj);
-        if (flagOauthGoogle)
-            mLoginView.closeGoogleConnection();
-        else
-            mLoginView.closeFacebookConection();
-
-    }
-
-    @Override
-    public void onError(CharSequence sequence) {
-        mLoginView.hideLoader();
-        mLoginView.onError(sequence);
-    }
-
     /**
      * Build profile from google data.
      *
@@ -93,33 +81,28 @@ public class LoginPresenterImpl implements ILoginPresenter, OnLoginListener {
 
         if (person.hasImage()) {
             oUser.setUrlProfileImage(person.getImage().getUrl());
-//            oUser.setProfileImage(person.getImage());
             oUser.setHaveProfileImage(true);
         }
         oUser.setFullName(person.getDisplayName());
+        oUser.setUsername(person.getDisplayName());
+        oUser.setPassword(person.getId());
+        oUser.setSocialLogin(Const.LOGIN_GOOGLE);
         oUser.setEmail(Plus.AccountApi.getAccountName(mGoogleApi));
-        mLoginIteractor.registerUserOnBackend(oUser, LoginPresenterImpl.this);
+        oUser.setIsEnabled(true);
 
-//        Log.d(Const.DEBUG_GOOGLE_PLUS, TAG + "Person getDisplayName " + person.getDisplayName());
-//        Log.d(Const.DEBUG_GOOGLE_PLUS, TAG + "Person getUrl " + person.getUrl());
-//        Log.d(Const.DEBUG_GOOGLE_PLUS, TAG + "Person Gender " + person.getGender());
-//        Log.d(Const.DEBUG_GOOGLE_PLUS, TAG + "Person Name " + person.getName());
-//        Log.d(Const.DEBUG_GOOGLE_PLUS, TAG + "Person Birthday " + person.getBirthday());
-//        Log.d(Const.DEBUG_GOOGLE_PLUS, TAG + "Person getAboutMe " + person.getAboutMe());
-//        Log.d(Const.DEBUG_GOOGLE_PLUS, TAG + "Person hasTagline " + person.hasTagline());
-//        Log.d(Const.DEBUG_GOOGLE_PLUS, TAG + "AccountName email " + Plus.AccountApi.getAccountName(mGoogleApi));
-
-//        mLoginView.closeGoogleConnection();
-//        mLoginView.goToDashboard();
+        Log.e("CURRENT_USER", oUser.toString());
+        mLoginIteractor.doSignin(oUser, LoginPresenterImpl.this);
     }
 
     private void buildUserProfile(JSONObject response) {
         try {
             UserModel user = new UserModel();
 
-            user.setFullName(response.getString("name"));
+            user.setPassword(response.getString("id"));
+            user.setUsername(response.getString("name"));
             user.setEmail(response.getString("email"));
             user.setObjectId(response.getString("id"));
+            user.setFullName(response.getString("name"));
 
             JSONObject pictureObject = response.getJSONObject("picture");
             JSONObject pictureData = pictureObject.getJSONObject("data");
@@ -127,14 +110,12 @@ public class LoginPresenterImpl implements ILoginPresenter, OnLoginListener {
             if (url.equals(Const.EMPTY)) {
                 user.setUrlProfileImage(url);
                 user.setHaveProfileImage(true);
-                user.setProfileImage(null);
             }
 
             user.setIsEnabled(true);
             user.setSocialLogin(Const.LOGIN_FACEBOOK);
-            mLoginIteractor.registerUserOnBackend(user, this);
-//            mLoginView.closeGoogleConnection();
-//            mLoginView.goToDashboard(bundle);
+            Log.e("CURRENT_USER",user.toString());
+            mLoginIteractor.doSignin(user, this);
 
         } catch (JSONException e) {
             mLoginView.onError(e.getMessage());
@@ -143,4 +124,39 @@ public class LoginPresenterImpl implements ILoginPresenter, OnLoginListener {
         }
     }
 
+
+
+//----------------- [ OnRegisterListener]
+
+    @Override
+    public void onRegisterSuccess(Object obj) {
+        mLoginView.updateLoader(mActivity.getString(R.string.progress_message_connecting));
+        mLoginIteractor.doLogin(obj, this);
+    }
+
+    @Override
+    public void onError(CharSequence sequence) {
+        mLoginView.hideLoader();
+        mLoginView.onError(sequence);
+    }
+
+
+
+
+//----------------- [ OnLoginListener]
+    @Override
+    public void onLoginSuccess(Object currentUser) {
+        mLoginView.hideLoader();
+        mLoginView.goToDashboard(currentUser);
+        if (flagOauthGoogle)
+            mLoginView.closeGoogleConnection();
+        else
+            mLoginView.closeFacebookConection();
+    }
+
+    @Override
+    public void onLoginError(CharSequence message) {
+        mLoginView.hideLoader();
+        mLoginView.onError(message);
+    }
 }

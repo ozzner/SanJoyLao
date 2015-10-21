@@ -24,6 +24,7 @@ import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.plus.Plus;
 import com.google.android.gms.plus.model.people.Person;
+import com.google.gson.Gson;
 
 import java.util.Arrays;
 
@@ -135,7 +136,7 @@ public class LoginActivity extends BaseActivity implements ILoginView,
     //----------------[ Setups components ]
 
     private void setUpComponents() {
-        mPresenter = new LoginPresenterImpl(this);
+        mPresenter = new LoginPresenterImpl(this,this);
 
         setUpFacebook();
         setUpGooglePlus();
@@ -224,8 +225,7 @@ public class LoginActivity extends BaseActivity implements ILoginView,
     private void goToMainActivity(Object obj) {
         UserModel user = ((UserModel) obj);
         Bundle bundle = new Bundle();
-        bundle.putSerializable(Const.EXTRA_USER, user);
-
+        bundle.putString(Const.EXTRA_USER, new Gson().toJson(user));
         Intent main = new Intent(getApplicationContext(), MainActivity.class);
         main.putExtras(bundle);
         startActivity(main);
@@ -262,7 +262,7 @@ public class LoginActivity extends BaseActivity implements ILoginView,
     @Override
     public void showLoader() {
         mProgersDialog = new ProgressDialog(this);
-        mProgersDialog.setMessage(getString(R.string.progress_message_connecting));
+        mProgersDialog.setMessage(getString(R.string.progress_message_registering));
         mProgersDialog.show();
     }
 
