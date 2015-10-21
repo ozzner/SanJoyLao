@@ -1,5 +1,11 @@
 package rsantillanc.sanjoylao.ui.mvp.Login;
 
+import android.content.Context;
+import android.util.Log;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import retrofit.Call;
 import retrofit.Callback;
 import retrofit.GsonConverterFactory;
@@ -7,35 +13,40 @@ import retrofit.Response;
 import retrofit.Retrofit;
 import rsantillanc.sanjoylao.api.ConstAPI;
 import rsantillanc.sanjoylao.api.ParseAPIService;
-import rsantillanc.sanjoylao.model.APISignInModel;
-import rsantillanc.sanjoylao.model.APIUserCreatedModel;
+import rsantillanc.sanjoylao.model.UserCreatedModel;
 import rsantillanc.sanjoylao.model.UserModel;
+import rsantillanc.sanjoylao.model.UserSignInModel;
+import rsantillanc.sanjoylao.storage.dao.UserDao;
+import rsantillanc.sanjoylao.util.Const;
+import rsantillanc.sanjoylao.util.SJLStrings;
 
 /**
  * Created by rsantillanc on 14/10/2015.
  */
 public class LoginIteractorImpl implements ILoginIteractor {
 
+    /**
+     * Metodo para registrar un usuario en el backend.
+     * @param signin Objeto modelo que contiene los datos.
+     * @param listener Para recibir los eventos de error o éxito.
+     */
     @Override
-    public void doSignin(final UserModel oUser, final OnRegisterListener listener) {
+    public void doSignin(final UserSignInModel signin, final OnRegisterListener listener) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(ConstAPI.PARSE_URL_BASE)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
+        Call<UserCreatedModel> call = retrofit.create(ParseAPIService.class).signUp(signin);
+        call.enqueue(new Callback<UserCreatedModel>() {
 
-        Call<APIUserCreatedModel> call = retrofit.create(ParseAPIService.class).signUp(new APISignInModel("prueba3","",2,"abc@abc.com"));
-        call.enqueue(new Callback<APIUserCreatedModel>() {
             @Override
-            public void onResponse(Response<APIUserCreatedModel> response, Retrofit retrofit) {
+            public void onResponse(Response<UserCreatedModel> response, Retrofit retrofit) {
                 if (response.body() != null) {
-                    oUser.setObjectId(response.body().getObjectId());
-                    oUser.setCreatedAt(response.body().getCreatedAt());
-                    oUser.setUpdatedAt(response.body().getCreatedAt());
-                    oUser.setSessionToken(response.body().getSessionToken());
-                    listener.onRegisterSuccess(oUser);
+                 listener.onRegisterSuccess(signin);
                 }else
-                    listener.onError("Error vuelva a intentarlo.");
+                    listener.onError("No se pudo registrar.");
+
             }
 
             @Override
@@ -52,20 +63,29 @@ public class LoginIteractorImpl implements ILoginIteractor {
      * @param listener eventos en caso sea exitoso o haya algún error.
      */
     @Override
-    public void doLogin(Object obj, final OnLoginListener listener) {
+    public void doLogin(final Context context,Object obj, final OnLoginListener listener) {
+        Gson custom = new GsonBuilder()
+                .setDateFormat(SJLStrings.MAIN_DATE_FORMAT)
+                .create();
+
         Retrofit login = new Retrofit.Builder()
                 .baseUrl(ConstAPI.PARSE_URL_BASE)
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(custom))
                 .build();
 
-        UserModel userBuided = ((UserModel) obj);
+        UserSignInModel userBuided = ((UserSignInModel) obj);
         Call<UserModel> call = login.create(ParseAPIService.class).login(userBuided.getUsername(), userBuided.getPassword());
         call.enqueue(new Callback<UserModel>() {
             @Override
-            public void onResponse(Response<UserModel> currentUser, Retrofit retrofit) {
-                if (currentUser.body() != null)
-                    listener.onLoginSuccess(currentUser);
-
+            public void onResponse(Response<UserModel> response, Retrofit retrofit) {
+                if (response.body() != null){
+                    listener.onLoginSuccess(response.body());
+                    //Save local
+                    long rows = new UserDao(context).saveUser(response.body());
+                    Log.e(Const.DEBUG,"row: " + rows);
+                }
+                else
+                    listener.onLoginError("No pudo iniciar sesión.");
             }
 
             @Override

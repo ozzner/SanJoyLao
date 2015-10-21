@@ -3,6 +3,8 @@ package rsantillanc.sanjoylao.storage.sp;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import rsantillanc.sanjoylao.util.Const;
+
 /**
  * Created by RenzoD on 20/06/2015.
  */
@@ -13,8 +15,9 @@ public class SJLPreferences {
     private static final String SJL_PREFERENCES = "ItyPreferences";
 
     public static final int INT_DEFAULT_VALUE = -19;//My birthday negative :D on July
-    //Keys
-    public  static final String KEY_ORDER_TYPE = "sjl_my_order";
+    public static final boolean INSTALLATION = true;
+
+
     //Global vars
     private SharedPreferences.Editor mEditor;
     private SharedPreferences mPreferences;
@@ -22,35 +25,51 @@ public class SJLPreferences {
 
 
     /**
-     * @see <p>Método que inicia las preferencias.</p>
      * @param _context Contexto de la aplicación.
+     * @see <p>Método que inicia las preferencias.</p>
      */
     public SJLPreferences(Context _context) {
         this._context = _context;
-        mPreferences = _context.getSharedPreferences(SJL_PREFERENCES,MODE_PRIVATE);
+        mPreferences = _context.getSharedPreferences(SJL_PREFERENCES, MODE_PRIVATE);
         mEditor = mPreferences.edit();
     }
 
-    public int saveOrderType(int type){
+    public int saveOrderType(int type) {
         try {
-            mEditor.putInt(KEY_ORDER_TYPE,type);
+            mEditor.putInt(Const.KEY_ORDER_TYPE, type);
             mEditor.commit();
             return 1;
-        }catch (Exception ex){
+        } catch (Exception ex) {
             return 0;
         }
     }
 
-    public int getSaveStoredByKey(String key){
-        return   mPreferences.getInt(key, INT_DEFAULT_VALUE);
+    public int getSaveStoredByKey(String key) {
+        return mPreferences.getInt(key, INT_DEFAULT_VALUE);
     }
 
-    public void run(){
+    public void run() {
         try {
-            mEditor.putInt(KEY_ORDER_TYPE,INT_DEFAULT_VALUE);
+            mEditor.putInt(Const.KEY_ORDER_TYPE, INT_DEFAULT_VALUE);
             mEditor.commit();
-        }catch (Exception ex){
+        } catch (Exception ex) {
         }
     }
 
+    /**
+     * Set Installation
+     */
+    public void install() {
+        mEditor.putBoolean(Const.KEY_INSTALLATION, INSTALLATION);
+        mEditor.commit();
+    }
+
+    /**
+     * Get installation value.
+     *
+     * @return boolean value.
+     */
+    public boolean isInstallation() {
+        return mPreferences.getBoolean(Const.KEY_INSTALLATION, true);
+    }
 }

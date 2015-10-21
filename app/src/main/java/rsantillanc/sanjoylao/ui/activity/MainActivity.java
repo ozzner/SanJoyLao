@@ -19,8 +19,6 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
-
 import java.lang.reflect.Method;
 
 import rsantillanc.sanjoylao.R;
@@ -106,9 +104,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private void setUpProfile() {
         if (mBundle!= null){
-            UserModel user = new Gson().fromJson(getIntent().getExtras().getString(Const.EXTRA_USER),UserModel.class);
+            UserModel user = ((UserModel) getIntent().getExtras().getSerializable(Const.EXTRA_USER));
             username.setText(user.getFullName());
             email.setText(user.getEmail());
+            Log.e(TAG, user.getSessionToken());
+            Log.e(TAG, user.getCreatedAt());
+            Log.e(TAG, user.toString());
         }
     }
 

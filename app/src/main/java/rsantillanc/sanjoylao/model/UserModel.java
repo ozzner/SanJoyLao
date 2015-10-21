@@ -1,38 +1,58 @@
 package rsantillanc.sanjoylao.model;
 
+import com.google.gson.annotations.SerializedName;
+
+import java.io.Serializable;
+
+import rsantillanc.sanjoylao.util.Const;
+
 /**
  * Created by rsantillanc on 19/10/2015.
  */
-public class UserModel  {
+public class UserModel implements Serializable {
 
-//    private static final long serialVersionUID = 0L;
+    private static final long serialVersionUID = 0L;
 
+    @SerializedName("objectId")
     private String objectId;
 
+    @SerializedName("username")
     private String username;
 
+    @SerializedName("emailVerified")
     private boolean emailVerified;
 
+    @SerializedName("email")
     private String email;
 
+    @SerializedName("socialLogin")
     private int socialLogin;
 
+    @SerializedName("createdAt")
     private String createdAt;
 
+    @SerializedName("updatedAt")
     private String updatedAt;
 
+    @SerializedName("haveProfileImage")
     private boolean haveProfileImage;
 
+    @SerializedName("urlProfileImage")
     private String urlProfileImage;
 
+    @SerializedName("fullName")
     private String fullName;
 
+    @SerializedName("phoneNumber")
     private long phoneNumber;
 
+    @SerializedName("isEnabled")
     private boolean isEnabled;
 
+    @SerializedName("sessionToken")
     private String sessionToken;
 
+    @SerializedName("password")
     private String password;
 
 
@@ -40,6 +60,20 @@ public class UserModel  {
     //-------------[ Constructors ]
 
     public UserModel() {
+        this.objectId = Const.EMPTY;
+        this.username = Const.EMPTY;
+        this.emailVerified = false;
+        this.email = Const.EMPTY;
+        this.socialLogin = Const.LOGIN_FORM;
+        this.createdAt = Const.EMPTY;
+        this.updatedAt = Const.EMPTY;
+        this.haveProfileImage = false;
+        this.urlProfileImage = Const.EMPTY;
+        this.fullName = Const.EMPTY;
+        this.phoneNumber = Const.PHONE_DEFAULT;
+        this.isEnabled = true;
+        this.sessionToken = Const.EMPTY;
+        this.password = Const.EMPTY;
     }
 
     public UserModel(String objectId, String username, boolean emailVerified, String email, int socialLogin, String createdAt, String updatedAt, boolean haveProfileImage, String urlProfileImage, String fullName, long phoneNumber, boolean isEnabled, String sessionToken, String password) {
@@ -64,8 +98,8 @@ public class UserModel  {
     @Override
     public String toString() {
 
-        String output = "\n\n";
-        output += "+-------------------- UserModel --------------------\n";
+        String output = "";
+        output += "\n+-------------------- UserModel --------------------\n";
         output += "| objectId: " + objectId + "\n";
         output += "| username: " + username + "\n";
         output += "| emailVerified: " + emailVerified + "\n";
@@ -198,4 +232,30 @@ public class UserModel  {
     public void setPassword(String password) {
         this.password = password;
     }
+
+
+    //------------[ Innet class ]
+
+
+//    public class ParseDate {
+//        private String type;
+//        private String iso;
+//
+//        public ParseDate(String type, String iso) {
+//            this.type = type;
+//            this.iso = iso;
+//        }
+//
+//        public ParseDate() {
+//            this.iso = Const.PARSE_DATE;
+//        }
+//
+//        public String getIso() {
+//            return iso;
+//        }
+//
+//        public void setIso(String iso) {
+//            this.iso = iso;
+//        }
+//    }
 }

@@ -45,10 +45,18 @@ public class Const {
     //[ DEBUG ]
     public static final String DEBUG_GOOGLE_PLUS = "GOOGLE_PLUS";
     public static final String DEBUG_FACEBOOK = "FACEBOOK";
+    public static final String DEBUG = "DEBUGGING";
 
     //[ OAUTH ]
     public static final int LOGIN_GOOGLE = 0;
     public static final int LOGIN_FACEBOOK = 1;
     public static final int LOGIN_FORM = -1;
     public static final String EXTRA_USER = "user";
+    public static final long PHONE_DEFAULT = 999999999;
+    public static final String PARSE_DATE = "Date";
+
+
+    //Keys sharedPreferences
+    public  static final String KEY_ORDER_TYPE = "sjl_my_order";
+    public  static final String KEY_INSTALLATION = "first_time";
 }

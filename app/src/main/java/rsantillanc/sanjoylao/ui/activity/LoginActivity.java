@@ -24,7 +24,6 @@ import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.plus.Plus;
 import com.google.android.gms.plus.model.people.Person;
-import com.google.gson.Gson;
 
 import java.util.Arrays;
 
@@ -78,7 +77,7 @@ public class LoginActivity extends BaseActivity implements ILoginView,
         super.onCreate(savedInstanceState);
         FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_login);
-        Android.genHashKey(this);
+//        Android.genHashKey(this);
         initUIComponents();
         setUpComponents();
 
@@ -185,7 +184,6 @@ public class LoginActivity extends BaseActivity implements ILoginView,
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-
         getMenuInflater().inflate(R.menu.menu_login, menu);
         int color = getResources().getColor(R.color.white);
         MenuColorizer.colorMenu(this,menu,color);
@@ -198,7 +196,7 @@ public class LoginActivity extends BaseActivity implements ILoginView,
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_login_info) {
-            showToast("San Joy Lao V"+Android.getAppVersion(this));
+            showToast("San Joy Lao | V."+Android.getAppVersion(this));
             return true;
         }
 
@@ -223,12 +221,18 @@ public class LoginActivity extends BaseActivity implements ILoginView,
     }
 
     private void goToMainActivity(Object obj) {
+
+        //Build data to send
         UserModel user = ((UserModel) obj);
         Bundle bundle = new Bundle();
-        bundle.putString(Const.EXTRA_USER, new Gson().toJson(user));
+        bundle.putSerializable(Const.EXTRA_USER,user);
+
+        //Go to main
         Intent main = new Intent(getApplicationContext(), MainActivity.class);
         main.putExtras(bundle);
         startActivity(main);
+
+        //End login
         finish();
 
     }

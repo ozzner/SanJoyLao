@@ -2,7 +2,6 @@ package rsantillanc.sanjoylao.ui.mvp.Login;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.util.Log;
 
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
@@ -15,7 +14,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import rsantillanc.sanjoylao.R;
-import rsantillanc.sanjoylao.model.UserModel;
+import rsantillanc.sanjoylao.model.UserSignInModel;
 import rsantillanc.sanjoylao.util.Const;
 
 /**
@@ -48,7 +47,6 @@ public class LoginPresenterImpl implements ILoginPresenter, OnRegisterListener, 
                     public void onCompleted(
                             JSONObject object,
                             GraphResponse response) {
-
                         buildUserProfile(object);
                     }
                 });
@@ -77,45 +75,43 @@ public class LoginPresenterImpl implements ILoginPresenter, OnRegisterListener, 
      * @param person Object google
      */
     private void buildUserProfile(Person person) {
-        UserModel oUser = new UserModel();
+        UserSignInModel signin = new UserSignInModel();
+
+        signin.setFullName(person.getDisplayName());
+        signin.setUsername(person.getName().getGivenName());
+        signin.setSocialLogin(Const.LOGIN_GOOGLE);
+        signin.setEmail(Plus.AccountApi.getAccountName(mGoogleApi));
 
         if (person.hasImage()) {
-            oUser.setUrlProfileImage(person.getImage().getUrl());
-            oUser.setHaveProfileImage(true);
+            signin.setUrlProfileImage(person.getImage().getUrl());
+            signin.setHaveProfileImage(true);
         }
-        oUser.setFullName(person.getDisplayName());
-        oUser.setUsername(person.getDisplayName());
-        oUser.setPassword(person.getId());
-        oUser.setSocialLogin(Const.LOGIN_GOOGLE);
-        oUser.setEmail(Plus.AccountApi.getAccountName(mGoogleApi));
-        oUser.setIsEnabled(true);
-
-        Log.e("CURRENT_USER", oUser.toString());
-        mLoginIteractor.doSignin(oUser, LoginPresenterImpl.this);
+        mLoginIteractor.doSignin(signin, LoginPresenterImpl.this);
     }
 
+
+    /**
+     * Contruye el perfil desde los datos de facebook
+     * @param response datos de la respuesta.
+     */
     private void buildUserProfile(JSONObject response) {
         try {
-            UserModel user = new UserModel();
+            UserSignInModel signin = new UserSignInModel();
 
-            user.setPassword(response.getString("id"));
-            user.setUsername(response.getString("name"));
-            user.setEmail(response.getString("email"));
-            user.setObjectId(response.getString("id"));
-            user.setFullName(response.getString("name"));
+            signin.setUsername(response.getString("name"));
+            signin.setEmail(response.getString("email"));
+            signin.setFullName(response.getString("name"));
+            signin.setSocialLogin(Const.LOGIN_FACEBOOK);
 
             JSONObject pictureObject = response.getJSONObject("picture");
             JSONObject pictureData = pictureObject.getJSONObject("data");
             String url = pictureData.getString("url");
-            if (url.equals(Const.EMPTY)) {
-                user.setUrlProfileImage(url);
-                user.setHaveProfileImage(true);
-            }
 
-            user.setIsEnabled(true);
-            user.setSocialLogin(Const.LOGIN_FACEBOOK);
-            Log.e("CURRENT_USER",user.toString());
-            mLoginIteractor.doSignin(user, this);
+            if (!url.equals(Const.EMPTY)) {
+                signin.setUrlProfileImage(url);
+                signin.setHaveProfileImage(true);
+            }
+            mLoginIteractor.doSignin(signin, this);
 
         } catch (JSONException e) {
             mLoginView.onError(e.getMessage());
@@ -125,13 +121,23 @@ public class LoginPresenterImpl implements ILoginPresenter, OnRegisterListener, 
     }
 
 
+    /**
+     * Cierra la sesión ya sea de google o de facebook
+     */
+    private void closeOauthSession(){
+        if (flagOauthGoogle)
+            mLoginView.closeGoogleConnection();
+        else
+            mLoginView.closeFacebookConection();
+    }
+
 
 //----------------- [ OnRegisterListener]
 
     @Override
     public void onRegisterSuccess(Object obj) {
         mLoginView.updateLoader(mActivity.getString(R.string.progress_message_connecting));
-        mLoginIteractor.doLogin(obj, this);
+        mLoginIteractor.doLogin(mActivity,obj, this);
     }
 
     @Override
@@ -141,17 +147,12 @@ public class LoginPresenterImpl implements ILoginPresenter, OnRegisterListener, 
     }
 
 
-
-
 //----------------- [ OnLoginListener]
     @Override
     public void onLoginSuccess(Object currentUser) {
         mLoginView.hideLoader();
         mLoginView.goToDashboard(currentUser);
-        if (flagOauthGoogle)
-            mLoginView.closeGoogleConnection();
-        else
-            mLoginView.closeFacebookConection();
+        closeOauthSession();
     }
 
     @Override
