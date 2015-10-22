@@ -25,9 +25,12 @@ import rsantillanc.sanjoylao.util.SJLStrings;
  */
 public class LoginIteractorImpl implements ILoginIteractor {
 
+    private UserSignInModel oUserSignin;
+
     /**
      * Metodo para registrar un usuario en el backend.
-     * @param signin Objeto modelo que contiene los datos.
+     *
+     * @param signin   Objeto modelo que contiene los datos.
      * @param listener Para recibir los eventos de error o éxito.
      */
     @Override
@@ -43,8 +46,8 @@ public class LoginIteractorImpl implements ILoginIteractor {
             @Override
             public void onResponse(Response<UserCreatedModel> response, Retrofit retrofit) {
                 if (response.body() != null) {
-                 listener.onRegisterSuccess(signin);
-                }else
+                    listener.onRegisterSuccess(signin);
+                } else
                     listener.onError("No se pudo registrar.");
 
             }
@@ -58,12 +61,15 @@ public class LoginIteractorImpl implements ILoginIteractor {
 
 
     /**
-     * Método para loguerse en el servidor
-     * @param obj usuario a loguearse
+     * Método para loguerse en el servidor parse
+     *
+     * @param context  Contexto de la aplicación.
+     * @param username Correo electronico.
+     * @param password string
      * @param listener eventos en caso sea exitoso o haya algún error.
      */
     @Override
-    public void doLogin(final Context context,Object obj, final OnLoginListener listener) {
+    public void doLogin(final Context context, String username, String password, final OnLoginListener listener) {
         Gson custom = new GsonBuilder()
                 .setDateFormat(SJLStrings.MAIN_DATE_FORMAT)
                 .create();
@@ -73,18 +79,16 @@ public class LoginIteractorImpl implements ILoginIteractor {
                 .addConverterFactory(GsonConverterFactory.create(custom))
                 .build();
 
-        UserSignInModel userBuided = ((UserSignInModel) obj);
-        Call<UserModel> call = login.create(ParseAPIService.class).login(userBuided.getUsername(), userBuided.getPassword());
+        Call<UserModel> call = login.create(ParseAPIService.class).login(username, password);
         call.enqueue(new Callback<UserModel>() {
             @Override
             public void onResponse(Response<UserModel> response, Retrofit retrofit) {
-                if (response.body() != null){
+                if (response.body() != null) {
                     listener.onLoginSuccess(response.body());
                     //Save local
                     long rows = new UserDao(context).saveUser(response.body());
-                    Log.e(Const.DEBUG,"row: " + rows);
-                }
-                else
+                    Log.e(Const.DEBUG, "row: " + rows);
+                } else
                     listener.onLoginError("No pudo iniciar sesión.");
             }
 
@@ -97,4 +101,45 @@ public class LoginIteractorImpl implements ILoginIteractor {
 
     }
 
+    @Override
+    public void basicAuthentication(String username, String password, final OnLoginListener listener) {
+        Gson custom = new GsonBuilder()
+                .setDateFormat(SJLStrings.MAIN_DATE_FORMAT)
+                .create();
+
+        Retrofit login = new Retrofit.Builder()
+                .baseUrl(ConstAPI.PARSE_URL_BASE)
+                .addConverterFactory(GsonConverterFactory.create(custom))
+                .build();
+
+        Call<UserModel> call = login.create(ParseAPIService.class).login(username, password);
+        call.enqueue(new Callback<UserModel>() {
+            @Override
+            public void onResponse(Response<UserModel> response, Retrofit retrofit) {
+                    if (response.body() != null){
+                        listener.onBasicAuthenticationSuccess(response.body());
+                    }else
+                        listener.onBasicAuthenticationError(getoUserSignin());
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                listener.onBasicAuthenticationError(null);
+            }
+        });
+    }
+
+    /**
+     * Metodo para setear el usuario para dar de alta.
+     *
+     * @param signin Objecto con los datos.
+     */
+    @Override
+    public void setSignInUserModel(UserSignInModel signin) {
+        this.oUserSignin = signin;
+    }
+
+    public UserSignInModel getoUserSignin() {
+        return oUserSignin;
+    }
 }

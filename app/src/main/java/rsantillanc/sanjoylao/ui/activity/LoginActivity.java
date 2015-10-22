@@ -43,12 +43,13 @@ public class LoginActivity extends BaseActivity implements ILoginView,
     //Generic constants
     private static final String TAG = LoginActivity.class.getSimpleName() + Const.BLANK_SPACE;
 
+    //Runtime
+
     //Views
     private Toolbar mToolbar;
     private ProgressDialog mProgersDialog;
     private Button mButtonGoogle;
     private Button mButtonFacebook;
-
 
     //MVP
     private LoginPresenterImpl mPresenter;
@@ -75,13 +76,17 @@ public class LoginActivity extends BaseActivity implements ILoginView,
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         FacebookSdk.sdkInitialize(getApplicationContext());
+        verifyUserActive();
+
         setContentView(R.layout.activity_login);
-//        Android.genHashKey(this);
+
         initUIComponents();
         setUpComponents();
 
     }
+
 
     @Override
     protected void onStart() {
@@ -135,8 +140,6 @@ public class LoginActivity extends BaseActivity implements ILoginView,
     //----------------[ Setups components ]
 
     private void setUpComponents() {
-        mPresenter = new LoginPresenterImpl(this,this);
-
         setUpFacebook();
         setUpGooglePlus();
         setUpActionBar();
@@ -176,7 +179,8 @@ public class LoginActivity extends BaseActivity implements ILoginView,
 
     private void setUpProgressDialog() {
         mProgersDialog = new ProgressDialog(this);
-        mProgersDialog.setMessage("cargando...");
+        mProgersDialog.setMessage(getString(R.string.progress_message_connecting));
+
     }
 
 
@@ -206,7 +210,6 @@ public class LoginActivity extends BaseActivity implements ILoginView,
 
     //----------------[ Others methods ]
 
-
     @Override
     public void onClick(View v) {
 
@@ -218,14 +221,19 @@ public class LoginActivity extends BaseActivity implements ILoginView,
             mGoogleApi.connect();
             isFacebookLoginClick = false;
         }
+
+    }
+
+    public void verifyUserActive(){
+        mPresenter = new LoginPresenterImpl(this,this);
+        mPresenter.getActiveUser();
     }
 
     private void goToMainActivity(Object obj) {
 
         //Build data to send
-        UserModel user = ((UserModel) obj);
         Bundle bundle = new Bundle();
-        bundle.putSerializable(Const.EXTRA_USER,user);
+        bundle.putSerializable(Const.EXTRA_USER,((UserModel) obj));
 
         //Go to main
         Intent main = new Intent(getApplicationContext(), MainActivity.class);
@@ -265,14 +273,13 @@ public class LoginActivity extends BaseActivity implements ILoginView,
 
     @Override
     public void showLoader() {
-        mProgersDialog = new ProgressDialog(this);
-        mProgersDialog.setMessage(getString(R.string.progress_message_registering));
-        mProgersDialog.show();
+        if (!mProgersDialog.isShowing())
+            mProgersDialog.show();
     }
 
     @Override
     public void hideLoader() {
-        if (mProgersDialog.isShowing())
+            mProgersDialog.hide();
             mProgersDialog.cancel();
     }
 
@@ -285,6 +292,7 @@ public class LoginActivity extends BaseActivity implements ILoginView,
 
     @Override
     public void onError(CharSequence s) {
+        hideLoader();
         showToast(s);
     }
 

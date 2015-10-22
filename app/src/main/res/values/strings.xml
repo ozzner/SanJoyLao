@@ -97,6 +97,7 @@
     <string name="action_login_info">Information</string>
     <string name="toast_error_null">Objecto nulo</string>
     <string name="progress_message_registering">Registrando...</string>
-    <string name="progress_message_connecting">Iniciando...</string>
+    <string name="progress_message_connecting">Conectando...</string>
+    <string name="progress_message_starting">Iniciando...</string>
 
 </resources>

@@ -9,5 +9,7 @@ import rsantillanc.sanjoylao.model.UserSignInModel;
  */
 public interface ILoginIteractor {
     void doSignin(UserSignInModel oUser, OnRegisterListener listener);
-    void doLogin(Context context,Object obj,OnLoginListener listener);
+    void doLogin(Context context, String username, String password, OnLoginListener listener);
+    void basicAuthentication(String username, String password, OnLoginListener listener);
+    void setSignInUserModel(UserSignInModel signin);
 }

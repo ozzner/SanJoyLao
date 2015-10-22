@@ -23,6 +23,7 @@ import java.lang.reflect.Method;
 
 import rsantillanc.sanjoylao.R;
 import rsantillanc.sanjoylao.model.UserModel;
+import rsantillanc.sanjoylao.storage.dao.UserDao;
 import rsantillanc.sanjoylao.storage.sp.SJLPreferences;
 import rsantillanc.sanjoylao.ui.fragment.BanquetsFragment;
 import rsantillanc.sanjoylao.ui.fragment.ChefFragment;
@@ -187,6 +188,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Intent login = new Intent(mContext, LoginActivity.class);
             startActivity(login);
             finish();
+            new UserDao(this).logout();
         }
 
         return super.onOptionsItemSelected(item);

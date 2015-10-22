@@ -32,4 +32,6 @@ public interface ParseAPIService {
     Call<UserModel> login(@Query("username") String username,@Query("password") String password);
 
 
+
+
 }

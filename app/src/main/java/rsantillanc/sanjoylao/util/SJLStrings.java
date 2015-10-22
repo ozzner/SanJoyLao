@@ -10,7 +10,7 @@ import java.util.Locale;
 public class SJLStrings {
 
     public static final String FORMAT_MILES = "##,##0.00";
-    public static final String PARSE_DATE_FORMAT = "yyyy-MM-DDTHH:MM:SS.MMMZ";
+    public static final String PARSE_DATE_FORMAT = "yyyy-MM-DD'T'HH:MM:SS.MMMZ";
     public static final String MAIN_DATE_FORMAT = "yyyy/MM/dd'T'HH:mm:ssZ";
 
 

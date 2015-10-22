@@ -59,4 +59,8 @@ public class Const {
     //Keys sharedPreferences
     public  static final String KEY_ORDER_TYPE = "sjl_my_order";
     public  static final String KEY_INSTALLATION = "first_time";
+
+    //[ USER ]
+    public static final int USER_ENABLED = 1;
+    public static final int USER_DISABLED = 0;
 }
