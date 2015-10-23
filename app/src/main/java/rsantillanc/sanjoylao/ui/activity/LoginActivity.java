@@ -76,12 +76,16 @@ public class LoginActivity extends BaseActivity implements ILoginView,
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        FacebookSdk.sdkInitialize(getApplicationContext());
+        //Check if can go to main activity
         verifyUserActive();
 
+        //Facebook SDK
+        FacebookSdk.sdkInitialize(getApplicationContext());
+
+        //Set content
         setContentView(R.layout.activity_login);
 
+        //Starting components
         initUIComponents();
         setUpComponents();
 
