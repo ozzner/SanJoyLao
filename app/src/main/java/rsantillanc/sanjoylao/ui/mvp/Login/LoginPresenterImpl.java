@@ -43,6 +43,10 @@ public class LoginPresenterImpl implements ILoginPresenter, OnRegisterListener, 
     }
 
 
+    /**
+     * Método que es llamado luego de ser exitoso el acceso a traves de la API de facebook.
+     * @param loginResult Objecto propio de Facebook que contiene el Acceso para RESTFull
+     */
     @Override
     public void startRequestWithFacebookData(LoginResult loginResult) {
         flagOauthGoogle = false;
@@ -65,7 +69,11 @@ public class LoginPresenterImpl implements ILoginPresenter, OnRegisterListener, 
         request.executeAsync();
     }
 
-
+    /**
+     * Metodo que se manda a llamar cuando el proceso de google+ ha sido exitoso.
+     * @param person Objecto google plus que contiene los datos de el usuario
+     * @param mGoogleApi Cliente para iniciar o cerrar la conexion en google. (Cliente)
+     */
     @Override
     public void startRequestWithGoogleData(Person person, GoogleApiClient mGoogleApi) {
         mLoginView.showLoader();
@@ -77,7 +85,6 @@ public class LoginPresenterImpl implements ILoginPresenter, OnRegisterListener, 
 
     /**
      * Build profile from google data.
-     *
      * @param person Object google
      */
     private void buildUserProfile(Person person) {
@@ -108,7 +115,6 @@ public class LoginPresenterImpl implements ILoginPresenter, OnRegisterListener, 
 
     /**
      * Contruye el perfil desde los datos de facebook
-     *
      * @param response datos de la respuesta.
      */
     private void buildUserProfile(JSONObject response) {
@@ -131,7 +137,6 @@ public class LoginPresenterImpl implements ILoginPresenter, OnRegisterListener, 
 
             if (checkIfUserExist(signin.getEmail())) {
                 mLoginView.goToDashboard(getUser(signin.getEmail()).get(0));
-                enabledUser(signin.getEmail());
                 closeOauthSession();
             } else {
                 mLoginView.updateLoader(mActivity.getString(R.string.progress_message_starting));
@@ -157,10 +162,21 @@ public class LoginPresenterImpl implements ILoginPresenter, OnRegisterListener, 
             mLoginView.closeFacebookConection();
     }
 
+    /**
+     * Método que sirve para verificar la existencia de un contacto a traves de su email.
+     * @param email String para hacer filtro
+     * @return Booleano, si es true existe.
+     */
     private boolean checkIfUserExist(String email) {
         return new UserDao(mActivity).checkUserByEmail(email);
     }
 
+
+    /**
+     * Obtiene un usuario por su email.
+     * @param email String que sirva como clave de busqueda.
+     * @return Lista de usuarios (Solamente un usuario)
+     */
     private List<Object> getUser(String email) {
         return new UserDao(mActivity).getUserByEmail(email);
     }
@@ -180,9 +196,16 @@ public class LoginPresenterImpl implements ILoginPresenter, OnRegisterListener, 
         }
     }
 
+    /**
+     * Método que sirve para activar el flas isEnabled para un próximo inicio de sesión rápido
+     * @param email
+     */
     public void enabledUser(String email){
         new UserDao(mActivity).login(email);
     }
+
+
+
 
 //----------------- [ OnRegisterListener]
 

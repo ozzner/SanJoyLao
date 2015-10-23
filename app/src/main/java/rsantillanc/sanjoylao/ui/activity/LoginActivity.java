@@ -244,6 +244,9 @@ public class LoginActivity extends BaseActivity implements ILoginView,
         main.putExtras(bundle);
         startActivity(main);
 
+        //save status active
+        mPresenter.enabledUser(((UserModel) obj).getEmail());
+
         //End login
         finish();
 
