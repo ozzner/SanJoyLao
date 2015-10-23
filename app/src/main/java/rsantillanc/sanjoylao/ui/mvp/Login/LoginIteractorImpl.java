@@ -26,6 +26,7 @@ import rsantillanc.sanjoylao.util.SJLStrings;
 public class LoginIteractorImpl implements ILoginIteractor {
 
     private UserSignInModel oUserSignin;
+    private Context _context;
 
     /**
      * Metodo para registrar un usuario en el backend.
@@ -117,7 +118,10 @@ public class LoginIteractorImpl implements ILoginIteractor {
             @Override
             public void onResponse(Response<UserModel> response, Retrofit retrofit) {
                     if (response.body() != null){
+                        //Send callback
                         listener.onBasicAuthenticationSuccess(response.body());
+                        //Store user
+                        new UserDao(get_context()).saveUser(response.body());
                     }else
                         listener.onBasicAuthenticationError(getoUserSignin());
             }
@@ -139,7 +143,18 @@ public class LoginIteractorImpl implements ILoginIteractor {
         this.oUserSignin = signin;
     }
 
+    @Override
+    public void sendContext(Context context) {
+        this._context = context;
+    }
+
     public UserSignInModel getoUserSignin() {
         return oUserSignin;
     }
+
+    public Context get_context() {
+        return _context;
+    }
+
+
 }

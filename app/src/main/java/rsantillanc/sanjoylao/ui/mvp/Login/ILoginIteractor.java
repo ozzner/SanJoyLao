@@ -12,4 +12,5 @@ public interface ILoginIteractor {
     void doLogin(Context context, String username, String password, OnLoginListener listener);
     void basicAuthentication(String username, String password, OnLoginListener listener);
     void setSignInUserModel(UserSignInModel signin);
+    void sendContext(Context context);
 }

@@ -142,6 +142,7 @@ public class UserDao implements BaseColumns {
     public void login(String email) {
         ContentValues cv = new ContentValues();
         cv.put(isEnabled, Const.USER_ENABLED);
-        db.update(Tables.USER, cv, this.email + "=?", new String[]{email});
+        int row =  db.update(Tables.USER, cv, this.email + "=?", new String[]{email});
+
     }
 }

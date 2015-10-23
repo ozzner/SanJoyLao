@@ -19,7 +19,6 @@ import java.util.List;
 import rsantillanc.sanjoylao.R;
 import rsantillanc.sanjoylao.model.UserSignInModel;
 import rsantillanc.sanjoylao.storage.dao.UserDao;
-import rsantillanc.sanjoylao.storage.sp.SJLPreferences;
 import rsantillanc.sanjoylao.util.Const;
 
 /**
@@ -33,13 +32,14 @@ public class LoginPresenterImpl implements ILoginPresenter, OnRegisterListener, 
     private GoogleApiClient mGoogleApi;
     private boolean flagOauthGoogle;
     private Activity mActivity;
-    private SJLPreferences sp;
+
 
 
     public LoginPresenterImpl(ILoginView loginView, Activity activity) {
         this.mLoginView = loginView;
         this.mActivity = activity;
         this.mLoginIteractor = new LoginIteractorImpl();
+        this.mLoginIteractor.sendContext(mActivity.getApplicationContext());
     }
 
 
@@ -207,7 +207,8 @@ public class LoginPresenterImpl implements ILoginPresenter, OnRegisterListener, 
 
 
 
-//----------------- [ OnRegisterListener]
+    //----------------- [OnRegisterListener]
+
 
     @Override
     public void onRegisterSuccess(Object obj) {
