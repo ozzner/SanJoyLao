@@ -10,7 +10,7 @@ import rsantillanc.sanjoylao.storage.sp.SJLPreferences;
  * Created by RenzoD on 21/10/2015.
  */
 public class SJLDatabase extends SQLiteOpenHelper {
-    private static final int VERSION = 2;
+    private static final int VERSION = 3;
     private static final String DATABSE = "SJLDatabase.db";
 
     public SJLDatabase(Context context) {

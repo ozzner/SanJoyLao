@@ -96,7 +96,7 @@ public class ChefFragment extends Fragment implements ListViewAdapter.OnItemClic
                     Fragment gotToFront = MainFragment.newInstance();
                     FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                    fragmentTransaction.replace(R.id.container_body, gotToFront);
+                    fragmentTransaction.replace(R.id.fragments_content, gotToFront);
                     fragmentTransaction.commit();
 
                     return true;

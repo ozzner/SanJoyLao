@@ -20,7 +20,10 @@ public class Tables {
             "\t`phoneNumber`\tNUMERIC,\n" +
             "\t`isEnabled`\tINTEGER DEFAULT 1,\n" +
             "\t`sessionToken`\tTEXT UNIQUE,\n" +
+            "\t`birthday`\tTEXT,\n" +
+            "\t`identificationDocument`\tINTEGER\n" +
             "\tPRIMARY KEY(objectId)\n" +
+
             ");";
 
     //Drop

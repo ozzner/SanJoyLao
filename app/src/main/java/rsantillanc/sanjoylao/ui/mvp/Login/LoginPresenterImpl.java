@@ -3,19 +3,15 @@ package rsantillanc.sanjoylao.ui.mvp.Login;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
-
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.login.LoginResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.plus.Plus;
 import com.google.android.gms.plus.model.people.Person;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.List;
-
 import rsantillanc.sanjoylao.R;
 import rsantillanc.sanjoylao.model.UserSignInModel;
 import rsantillanc.sanjoylao.storage.dao.UserDao;

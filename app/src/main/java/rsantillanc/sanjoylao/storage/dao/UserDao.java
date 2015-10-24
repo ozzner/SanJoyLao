@@ -22,6 +22,7 @@ public class UserDao implements BaseColumns {
     private static final String SELECT_BY_EMAIL = "SELECT * FROM " + Tables.USER + " WHERE email = ?";
     private static final String SELECT_BY_IS_ENABLED = "SELECT * FROM " + Tables.USER + " WHERE isEnabled = ?";
 
+    //Database
     private SQLiteDatabase db;
 
     //Columns
@@ -38,6 +39,8 @@ public class UserDao implements BaseColumns {
     private String phoneNumber = "phoneNumber";
     private String isEnabled = "isEnabled";
     private String sessionToken = "sessionToken";
+    private String birthday = "birthday";
+    private String identificationDocument = "identificationDocument";
 
     //Constructor
     public UserDao(Context c) {
@@ -68,6 +71,8 @@ public class UserDao implements BaseColumns {
         cv.put(phoneNumber, user.getPhoneNumber());
         cv.put(isEnabled, user.isEnabled());
         cv.put(sessionToken, user.getSessionToken());
+        cv.put(birthday, user.getBirthday());
+        cv.put(identificationDocument, user.getIdentificationDocument());
 
         long rows = db.insert(Tables.USER, null, cv);
         cv.clear();
@@ -109,6 +114,7 @@ public class UserDao implements BaseColumns {
 
         if (cur.moveToFirst())
             do {
+
                 UserModel user = new UserModel();
                 user.setEmailVerified((cur.getInt(cur.getColumnIndex(emailVerified))) == 1 ? true : false);
                 user.setEmail(cur.getString(cur.getColumnIndex(this.email)));
@@ -123,6 +129,8 @@ public class UserDao implements BaseColumns {
                 user.setUpdatedAt(cur.getString(cur.getColumnIndex(updatedAt)));
                 user.setPhoneNumber(cur.getLong(cur.getColumnIndex(phoneNumber)));
                 user.setSocialLogin(cur.getInt(cur.getColumnIndex(socialLogin)));
+                user.setBirthday(cur.getString(cur.getColumnIndex(birthday)));
+                user.setIdentificationDocument(cur.getLong(cur.getColumnIndex(identificationDocument)));
                 listObjects.add(user);
 
             } while (cur.moveToNext());

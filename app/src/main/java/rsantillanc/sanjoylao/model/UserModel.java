@@ -55,6 +55,12 @@ public class UserModel implements Serializable {
     @SerializedName("password")
     private String password;
 
+    @SerializedName("birthday")
+    private String birthday;
+
+    @SerializedName("identificationDocument")
+    private long identificationDocument;
+
 
 
     //-------------[ Constructors ]
@@ -76,22 +82,7 @@ public class UserModel implements Serializable {
         this.password = Const.EMPTY;
     }
 
-    public UserModel(String objectId, String username, boolean emailVerified, String email, int socialLogin, String createdAt, String updatedAt, boolean haveProfileImage, String urlProfileImage, String fullName, long phoneNumber, boolean isEnabled, String sessionToken, String password) {
-        this.objectId = objectId;
-        this.username = username;
-        this.emailVerified = emailVerified;
-        this.email = email;
-        this.socialLogin = socialLogin;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
-        this.haveProfileImage = haveProfileImage;
-        this.urlProfileImage = urlProfileImage;
-        this.fullName = fullName;
-        this.phoneNumber = phoneNumber;
-        this.isEnabled = isEnabled;
-        this.sessionToken = sessionToken;
-        this.password = password;
-    }
+
 
 //-------------[ Custom methods ]
 
@@ -233,6 +224,21 @@ public class UserModel implements Serializable {
         this.password = password;
     }
 
+    public String getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
+    }
+
+    public long getIdentificationDocument() {
+        return identificationDocument;
+    }
+
+    public void setIdentificationDocument(long identificationDocument) {
+        this.identificationDocument = identificationDocument;
+    }
 
     //------------[ Innet class ]
 
