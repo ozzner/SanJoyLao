@@ -1,7 +1,7 @@
 <resources>
     <!--Created by android studio-->
     <string name="app_name">San Joy Lao</string>
-    <string name="ver_carta">Ver Carta</string>
+    <string name="ver_carta">Ver carta</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_logout">Cerrar sesión</string>
     <string name="action_about">Acerca de</string>
@@ -99,5 +99,6 @@
     <string name="progress_message_registering">Registrando...</string>
     <string name="progress_message_connecting">Conectando...</string>
     <string name="progress_message_starting">Iniciando...</string>
+    <string name="action_profile">Perfil</string>
 
 </resources>

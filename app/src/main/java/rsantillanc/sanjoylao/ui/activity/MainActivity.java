@@ -11,7 +11,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -34,9 +33,10 @@ import rsantillanc.sanjoylao.ui.fragment.RiceFragment;
 import rsantillanc.sanjoylao.ui.fragment.SoupFragment;
 import rsantillanc.sanjoylao.util.Android;
 import rsantillanc.sanjoylao.util.Const;
+import rsantillanc.sanjoylao.util.MenuColorizer;
 
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
     //Debug var
     private static final String TAG = MainActivity.class.getSimpleName();
 
@@ -104,7 +104,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void setUpProfile() {
-        if (mBundle!= null){
+        if (mBundle != null) {
             UserModel user = ((UserModel) getIntent().getExtras().getSerializable(Const.EXTRA_USER));
             username.setText(user.getFullName());
             email.setText(user.getEmail());
@@ -134,8 +134,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         mNavView = (NavigationView) findViewById(R.id.nav_view);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        username = (TextView)findViewById(R.id.username);
-        email = (TextView)findViewById(R.id.email);
+        username = (TextView) findViewById(R.id.username);
+        email = (TextView) findViewById(R.id.email);
     }
 
 
@@ -146,8 +146,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        int gray = getResources().getColor(R.color.gray);
+        int white = getResources().getColor(R.color.white);
+        MenuColorizer.colorMenu(this, menu, gray);
         if (menu != null) {
-
             if (menu.getClass().getSimpleName().equals("MenuBuilder")) {
                 try {
                     Method m = menu.getClass().getDeclaredMethod(
@@ -161,7 +164,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 }
             }
         }
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        MenuItem item = menu.findItem(R.id.action_orders);
+        MenuColorizer.colorMenuItem(item, white);
+
+
         return true;
     }
 
@@ -181,19 +187,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             return true;
 
         } else if (id == R.id.action_about) {
-            Toast.makeText(getApplication(), "San Joy Lao App | V."+Android.getAppVersion(this), Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplication(), "San Joy Lao App | V." + Android.getAppVersion(this), Toast.LENGTH_LONG).show();
         } else if (id == android.R.id.home) {
             mDrawerLayout.openDrawer(GravityCompat.END);
-        } else {
+        } else if (id == R.id.action_logout) {
             Intent login = new Intent(mContext, LoginActivity.class);
             startActivity(login);
             finish();
             new UserDao(this).logout();
+        } else {
+            showToast("View profile");
         }
 
         return super.onOptionsItemSelected(item);
     }
-
 
 
     @Override

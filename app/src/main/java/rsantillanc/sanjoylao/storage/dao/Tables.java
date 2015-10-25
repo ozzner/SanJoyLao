@@ -21,9 +21,8 @@ public class Tables {
             "\t`isEnabled`\tINTEGER DEFAULT 1,\n" +
             "\t`sessionToken`\tTEXT UNIQUE,\n" +
             "\t`birthday`\tTEXT,\n" +
-            "\t`identificationDocument`\tINTEGER\n" +
-            "\tPRIMARY KEY(objectId)\n" +
-
+            "\t`identificationDocument`\tINTEGER,\n" +
+            "\tPRIMARY KEY(objectId)\t" +
             ");";
 
     //Drop
