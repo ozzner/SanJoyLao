@@ -28,7 +28,6 @@ import rsantillanc.sanjoylao.ui.fragment.BanquetsFragment;
 import rsantillanc.sanjoylao.ui.fragment.ChefFragment;
 import rsantillanc.sanjoylao.ui.fragment.FrontFragment;
 import rsantillanc.sanjoylao.ui.fragment.MainFragment;
-import rsantillanc.sanjoylao.ui.fragment.OrdersFragment;
 import rsantillanc.sanjoylao.ui.fragment.RiceFragment;
 import rsantillanc.sanjoylao.ui.fragment.SoupFragment;
 import rsantillanc.sanjoylao.util.Android;
@@ -147,9 +146,12 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
+
         int gray = getResources().getColor(R.color.gray);
         int white = getResources().getColor(R.color.white);
+
         MenuColorizer.colorMenu(this, menu, gray);
+
         if (menu != null) {
             if (menu.getClass().getSimpleName().equals("MenuBuilder")) {
                 try {
@@ -164,9 +166,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 }
             }
         }
+
         MenuItem item = menu.findItem(R.id.action_orders);
         MenuColorizer.colorMenuItem(item, white);
-
 
         return true;
     }
@@ -176,30 +178,38 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_orders) {
-
-            Fragment fragment = OrdersFragment.newInstance();
-            FragmentManager man = getSupportFragmentManager();
-            FragmentTransaction tran = man.beginTransaction();
-            tran.replace(R.id.fragments_content, fragment).commit();
-
-            getSupportActionBar().setTitle(getString(R.string.title_orders));
-            return true;
-
-        } else if (id == R.id.action_about) {
-            Toast.makeText(getApplication(), "San Joy Lao App | V." + Android.getAppVersion(this), Toast.LENGTH_LONG).show();
-        } else if (id == android.R.id.home) {
+        if (id == android.R.id.home){
             mDrawerLayout.openDrawer(GravityCompat.END);
+        } else if (id == R.id.action_orders) {
+            goToOrderActivity();
+        } else if (id == R.id.action_profile) {
+            goToProfileActivity();
+        } else if (id == R.id.action_about) {
+            showToast("San Joy Lao App | V." + Android.getAppVersion(this));
         } else if (id == R.id.action_logout) {
-            Intent login = new Intent(mContext, LoginActivity.class);
-            startActivity(login);
-            finish();
-            new UserDao(this).logout();
+            goToLoginActivity();
         } else {
             showToast("View profile");
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void goToProfileActivity() {
+        Intent profile = new Intent(mContext, ProfileActivity.class);
+        startActivity(profile);
+    }
+
+    private void goToLoginActivity() {
+        Intent login = new Intent(mContext, LoginActivity.class);
+        startActivity(login);
+        finish();
+        new UserDao(this).logout();
+    }
+
+    private void goToOrderActivity() {
+        Intent order = new Intent(mContext, OrderActivity.class);
+        startActivity(order);
     }
 
 

@@ -52,5 +52,6 @@
     <dimen name="height_rice_image">145dp</dimen>
     <dimen name="height_title_rice">35dp</dimen>
     <dimen name="nav_text_secondary">12sp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
 
 </resources>

@@ -100,5 +100,7 @@
     <string name="progress_message_connecting">Conectando...</string>
     <string name="progress_message_starting">Iniciando...</string>
     <string name="action_profile">Perfil</string>
+    <string name="title_activity_order">Mis pedidos</string>
+    <string name="title_activity_profile">Renzo Santillán Ch.</string>
 
 </resources>

@@ -2,7 +2,7 @@ package rsantillanc.sanjoylao.ui.fragment;
 
 
 import android.content.Context;
-import android.content.Intent;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -11,7 +11,6 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -21,11 +20,10 @@ import java.util.List;
 import java.util.Locale;
 
 import rsantillanc.sanjoylao.R;
-import rsantillanc.sanjoylao.ui.custom.adapter.ListViewAdapter;
 import rsantillanc.sanjoylao.model.BanquetModel;
+import rsantillanc.sanjoylao.ui.custom.adapter.ListViewAdapter;
 import rsantillanc.sanjoylao.util.Const;
 import rsantillanc.sanjoylao.util.SJLStrings;
-import rsantillanc.sanjoylao.ui.activity.SurveyActivity;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -35,7 +33,6 @@ public class OrdersFragment extends Fragment {
     private static OrdersFragment instance;
     private ListView mListView;
     private TextView tvPriceTotal,tvNumTable;
-    private Button btConfirm;
     private double total = 0.0;
     private List<Object> orders;
     private Context _context;
@@ -67,19 +64,9 @@ public class OrdersFragment extends Fragment {
         mListView = (ListView) v.findViewById(R.id.lv_orders);
         tvNumTable = (TextView) v.findViewById(R.id.tv_number_table);
         tvPriceTotal = (TextView) v.findViewById(R.id.tv_order_price_total);
-        btConfirm = (Button)v.findViewById(R.id.bt_confirm_order);
         tvPercent = (TextView)v.findViewById(R.id.tv_order_percent);
         tvDiscount = (TextView)v.findViewById(R.id.tv_order_price_discount);
 
-
-        //Delete after this
-        btConfirm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent survey = new Intent(_context, SurveyActivity.class);
-                startActivity(survey);
-            }
-        });
 
         /*Setup*/
         BanquetModel oModel = new BanquetModel();
@@ -95,6 +82,7 @@ public class OrdersFragment extends Fragment {
         String output = myFormatter.format(total);
 //        tvPriceTotal.setText(Const.PRICE_PEN + String.format(Locale.US,"%.2f", total));
         tvPriceTotal.setText(Const.PRICE_PEN + output);
+        tvPriceTotal.setPaintFlags(tvPriceTotal.getPaintFlags()| Paint.STRIKE_THRU_TEXT_FLAG);
         tvPercent.setText("Dscto. 15%");
         tvDiscount.setText(Const.PRICE_PEN + SJLStrings.format(total * 0.85, SJLStrings.FORMAT_MILES));
     }
@@ -113,13 +101,11 @@ public class OrdersFragment extends Fragment {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
-
                     Fragment gotToFront = MainFragment.newInstance();
                     FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                     fragmentTransaction.replace(R.id.fragments_content, gotToFront);
                     fragmentTransaction.commit();
-
                     return true;
                 }
                 return false;

@@ -20,8 +20,6 @@
             android:src="@drawable/logo"
              />
 
-
-
     </RelativeLayout>
 
 </RelativeLayout>
