@@ -95,7 +95,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     }
 
     private void setUpsUIComponents() {
-        setUpActionBar();
+        setUpToolbar();
         setUpNavView();
         setUpDrawerToggle();
         setUpOrientation();
@@ -107,9 +107,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             UserModel user = ((UserModel) getIntent().getExtras().getSerializable(Const.EXTRA_USER));
             username.setText(user.getFullName());
             email.setText(user.getEmail());
-            Log.e(TAG, user.getSessionToken());
-            Log.e(TAG, user.getCreatedAt());
-            Log.e(TAG, user.toString());
         }
     }
 
@@ -138,7 +135,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     }
 
 
-    private void setUpActionBar() {
+    private void setUpToolbar() {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
@@ -203,8 +200,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private void goToLoginActivity() {
         Intent login = new Intent(mContext, LoginActivity.class);
         startActivity(login);
-        finish();
         new UserDao(this).logout();
+        finish();
     }
 
     private void goToOrderActivity() {
