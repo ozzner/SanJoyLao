@@ -2,10 +2,16 @@
 <resources>
 
     <!--Material design colors-->
-    <color name="colorPrimary">#E53935</color>
-    <color name="colorPrimaryDark">#C62828</color>
-    <color name="colorAccent">#00B0FF</color>
+    <color name="colorPrimary">#F44336</color>
+    <color name="colorPrimaryDark">#D32F2F</color>
+    <color name="colorAccent">#607D8B</color>
     <color name="colorPrimary_trans_35">#59E53935</color>
+
+    <!--<color name="colorPrimary">#E53935</color>-->
+    <!--<color name="colorPrimaryDark">#C62828</color>-->
+    <!--<color name="colorAccent">#00B0FF</color>-->
+    <!--<color name="colorPrimary_trans_35">#59E53935</color>-->
+
     <!--General colors-->
     <color name="red">#FF0000</color>
     <color name="black">#000000</color>
@@ -30,6 +36,12 @@
 
     <!-- Background transparen -->
     <color name="transparent_black">#96000000</color>
+
+    <!-- my colors-->
+    <color name="my_green">#02A902</color>
+    <color name="my_green_dark">#33691E</color>
+    <color name="my_red">#EE2C2C</color>
+    <color name="my_red_dark">#B71C1C</color>
 
 
 </resources>

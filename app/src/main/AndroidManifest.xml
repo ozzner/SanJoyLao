@@ -74,6 +74,7 @@
         <activity
             android:name=".ui.activity.ProfileActivity"
             android:label="@string/title_activity_profile"
+            android:windowSoftInputMode="stateAlwaysHidden"
             android:parentActivityName=".ui.activity.MainActivity"
             android:theme="@style/SJLTheme.Base">
             <meta-data

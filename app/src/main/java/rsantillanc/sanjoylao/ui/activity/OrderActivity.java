@@ -18,11 +18,13 @@ import java.util.ArrayList;
 import rsantillanc.sanjoylao.R;
 import rsantillanc.sanjoylao.model.BanquetModel;
 import rsantillanc.sanjoylao.ui.custom.adapter.RecyclerViewOrderAdapter;
+import rsantillanc.sanjoylao.ui.mvp.Order.IOrderView;
 import rsantillanc.sanjoylao.util.Android;
 import rsantillanc.sanjoylao.util.Const;
 import rsantillanc.sanjoylao.util.SJLStrings;
 
-public class OrderActivity extends BaseActivity implements View.OnClickListener {
+public class OrderActivity extends BaseActivity
+        implements View.OnClickListener,IOrderView {
 
     //Views
     private Toolbar toolbar;
@@ -149,10 +151,49 @@ public class OrderActivity extends BaseActivity implements View.OnClickListener 
 
 
     //---------------------- [CALLBAKCS]
+
+    //Onclik
     @Override
     public void onClick(View v) {
         if (v == mFloatingActionButton) {
             showSnackbar("snack", v);
         }
+    }
+
+
+    // IOrderView
+    @Override
+    public void showLoader() {
+
+    }
+
+    @Override
+    public void hideLoader() {
+
+    }
+
+    @Override
+    public void openItem(Object item) {
+
+    }
+
+    @Override
+    public void upPrice() {
+
+    }
+
+    @Override
+    public void downPrice() {
+
+    }
+
+    @Override
+    public void deleteItem(int position) {
+
+    }
+
+    @Override
+    public void showPaymentMethod() {
+
     }
 }

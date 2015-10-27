@@ -13,6 +13,7 @@
     <dimen name="space_12dp">12dp</dimen>
     <dimen name="space_14dp">14dp</dimen>
     <dimen name="space_16dp">16dp</dimen>
+    <dimen name="space_20dp">20dp</dimen>
     <dimen name="space_24dp">24dp</dimen>
     <dimen name="space_28dp">28dp</dimen>
     <dimen name="space_40dp">40dp</dimen>
@@ -54,5 +55,7 @@
     <dimen name="nav_text_secondary">12sp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="height_appbar">192dp</dimen>
+    <dimen name="height_title_cardview">38dp</dimen>
+    <dimen name="height_icons_cardview">32dp</dimen>
 
 </resources>

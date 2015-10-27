@@ -40,7 +40,8 @@
     <!--Tabs-->
     <string name="tab_description">Descrip.</string>
     <string name="tab_comments">Coment.</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="tab_account">Account</string>
+    <string name="tab_favorite">Favorite</string>
 
     <!--Buttons-->
     <string name="button_send">Enviar</string>
@@ -75,6 +76,10 @@
     <string name="label_bad">Malo</string>
     <string name="label_excellent">Excelente</string>
     <string name="label_send_comments">Envíanos tus comentarios</string>
+    <string name="label_title_access">Datos de acceso</string>
+    <string name="label_title_reserve">Para reservas</string>
+    <string name="label_title_status">Estado</string>
+
 
     <!--Bookings-->
     <string name="booking_table">Servicio a la mesa</string>

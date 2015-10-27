@@ -8,7 +8,6 @@ import android.view.MenuItem;
 import android.widget.RatingBar;
 
 import rsantillanc.sanjoylao.R;
-import rsantillanc.sanjoylao.ui.custom.adapter.ViewPagerAdapter;
 import rsantillanc.sanjoylao.ui.custom.view.SlidingTabLayout;
 
 public class DetailsOptionsPopup extends FragmentActivity {
@@ -51,13 +50,13 @@ public class DetailsOptionsPopup extends FragmentActivity {
     private void setUpViewPager() {
         CharSequence[] titles = getResources().getStringArray(R.array.tabs_names);
 
-        ViewPagerAdapter mAdapter = new ViewPagerAdapter(
-                getSupportFragmentManager(),
-                getApplicationContext(),
-                titles,
-                titles.length);
+//        ViewPagerAdapter mAdapter = new ViewPagerAdapter(
+//                getSupportFragmentManager(),
+//                getApplicationContext(),
+//                titles,
+//                titles.length);
 
-        mViewPager.setAdapter(mAdapter);
+//        mViewPager.setAdapter(mAdapter);
     }
 
     protected void setUpSlindingTab(){
