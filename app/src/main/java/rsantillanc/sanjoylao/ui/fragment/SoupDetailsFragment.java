@@ -76,10 +76,10 @@ public class SoupDetailsFragment extends Fragment {
 
     private void setUpViewPager() {
 
-        mAdapter = new ViewPagerAdapter(getFragmentManager(),
-                getActivity(),
-                titles,
-                titles.length);
+//        mAdapter = new ViewPagerAdapter(getFragmentManager(),
+//                getActivity(),
+//                titles,
+//                titles.length);
 
         mViewPager.setAdapter(mAdapter);
     }

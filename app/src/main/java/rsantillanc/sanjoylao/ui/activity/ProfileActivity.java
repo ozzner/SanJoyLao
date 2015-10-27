@@ -2,18 +2,28 @@ package rsantillanc.sanjoylao.ui.activity;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
 import rsantillanc.sanjoylao.R;
+import rsantillanc.sanjoylao.ui.custom.adapter.ViewPagerAdapter;
 import rsantillanc.sanjoylao.util.Android;
 
 public class ProfileActivity extends BaseActivity implements View.OnClickListener {
 
+    //Views
     private FloatingActionButton mFloatingActionButton;
     private Toolbar toolbar;
+    private ViewPager mViewPager;
+    private TabLayout mTabLayout;
+    private int[] tabIcons = {
+            R.drawable.ic_account,
+            R.drawable.ic_favorite
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,17 +40,38 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
 
 
 
-
-
     //---------------------- [INIT  COMPONENTS]
     private void initUIComponents() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         mFloatingActionButton = (FloatingActionButton) findViewById(R.id.fab_profile_save);
+        mViewPager = (ViewPager) findViewById(R.id.viewpager);
+        mTabLayout = (TabLayout) findViewById(R.id.tbl_profile);
+
     }
 
+    private void setUpTabLayout() {
+        mTabLayout.setupWithViewPager(mViewPager);
+        setupTabIcons();
+    }
 
+    private void setUpViewPager() {
+        ViewPagerAdapter pager = new ViewPagerAdapter(getSupportFragmentManager(),loadTitles());
+        mViewPager.setAdapter(pager);
+    }
+
+    private void setupTabIcons() {
+        mTabLayout.getTabAt(0).setIcon(tabIcons[0]);
+        mTabLayout.getTabAt(1).setIcon(tabIcons[1]);
+    }
+
+    private String [] loadTitles(){
+        String[] titles = getResources().getStringArray(R.array.tabs_profile);
+        return titles;
+    }
     //---------------------- [SETUPS COMPONENTS]
     private void setUpUIComponents() {
+        setUpViewPager();
+        setUpTabLayout();
         setUpToolbar();
         setUpFloatingButton();
     }

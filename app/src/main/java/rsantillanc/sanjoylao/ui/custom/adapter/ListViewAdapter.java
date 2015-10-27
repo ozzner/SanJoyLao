@@ -171,8 +171,8 @@ public class ListViewAdapter extends BaseAdapter implements View.OnClickListener
                     riceHolder = (RiceViewHolder) vi.getTag();
 
                 riceHolder.tvName.setText(oRice.getTitle());
-                riceHolder.tvPrice1.setText(Const.PRICE_PEN + SJLStrings.format(oRice.getPriceTaza(), SJLStrings.FORMAT_MILES_ES));
-                riceHolder.tvPrice2.setText(Const.PRICE_PEN + SJLStrings.format(oRice.getPriceFuente(), SJLStrings.FORMAT_MILES_ES));
+                riceHolder.tvPrice1.setText(Const.PRICE_PEN + SJLStrings.format(oRice.getPriceTaza(), SJLStrings.FORMAT_MILES_EN));
+                riceHolder.tvPrice2.setText(Const.PRICE_PEN + SJLStrings.format(oRice.getPriceFuente(), SJLStrings.FORMAT_MILES_EN));
 
 
                 if (position % 2 == 0)
