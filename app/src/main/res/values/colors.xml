@@ -28,4 +28,8 @@
     <color name="layer_shadow">#640b0000</color>
     <color name="nav_text_color_secondary">#dadada</color>
 
+    <!-- Background transparen -->
+    <color name="transparent_black">#96000000</color>
+
+
 </resources>

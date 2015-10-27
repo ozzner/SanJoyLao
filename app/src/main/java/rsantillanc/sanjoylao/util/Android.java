@@ -11,6 +11,7 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 
 import java.security.MessageDigest;
+import java.util.Locale;
 
 /**
  * Created by RenzoD on 20/06/2015.
@@ -109,5 +110,10 @@ public class Android {
             return Character.toUpperCase(first) + s.substring(1);
         }
     }
+
+    public static String getLocalLanguage() {
+        return  Locale.getDefault().getLanguage();
+    }
+
 
 }

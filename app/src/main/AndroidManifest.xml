@@ -48,7 +48,7 @@
         <activity
             android:name=".ui.activity.LoginActivity"
             android:label="@string/app_name"
-            android:theme="@style/SJLTheme.Base.LoginStyle">
+            android:theme="@style/SJLTheme.Base.Standar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -65,7 +65,8 @@
             android:name=".ui.activity.OrderActivity"
             android:label="@string/title_activity_order"
             android:parentActivityName=".ui.activity.MainActivity"
-            android:theme="@style/SJLTheme.Base">
+            android:theme="@style/SJLTheme.Base.Standar"
+            >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="rsantillanc.sanjoylao.ui.activity.MainActivity" />

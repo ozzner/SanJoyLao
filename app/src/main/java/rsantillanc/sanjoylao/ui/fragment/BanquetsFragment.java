@@ -59,7 +59,7 @@ public class BanquetsFragment extends Fragment {
 
         /*Setup*/
         BanquetModel model = new BanquetModel();
-        banquets = model.testData();
+        banquets = model.dummyBanquets();
         mAdapter = new RecyclerViewBanquetAdapter(banquets, activity);
         mAdapter.setOnItemClickListener(new RecyclerViewBanquetAdapter.OnItemClickListener() {
             @Override

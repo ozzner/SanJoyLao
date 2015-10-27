@@ -51,7 +51,6 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
             case 0:
                 page = DescriptionFragment.newInstance(null,null);
                 break;
-
             case 1:
                 page = CommentsFragment.newInstance(null,null);
                 break;

@@ -63,4 +63,6 @@ public class Const {
     //[ USER ]
     public static final int USER_ENABLED = 1;
     public static final int USER_DISABLED = 0;
+    public static final char CHAR_COMMA = ',';
+    public static final char CHAR_DOT = '.';
 }

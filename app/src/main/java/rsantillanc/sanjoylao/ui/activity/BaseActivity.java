@@ -2,7 +2,9 @@ package rsantillanc.sanjoylao.ui.activity;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.Toast;
 
 public class BaseActivity extends AppCompatActivity {
@@ -16,5 +18,10 @@ public class BaseActivity extends AppCompatActivity {
 
     protected void showToast(CharSequence sequence){
         Toast.makeText(_context,sequence,Toast.LENGTH_LONG).show();
+    }
+
+    protected void showSnackbar(CharSequence message, View view){
+        Snackbar.make(view,message, Snackbar.LENGTH_LONG)
+                .setAction("Action", null).show();
     }
 }

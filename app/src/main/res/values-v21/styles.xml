@@ -14,7 +14,7 @@
     <style name="SJLTheme.Base.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 
-    <style name="SJLTheme.Base.LoginStyle" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="SJLTheme.Base.Standar" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>

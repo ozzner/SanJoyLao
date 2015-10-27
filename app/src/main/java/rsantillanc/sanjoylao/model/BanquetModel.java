@@ -32,7 +32,7 @@ public class BanquetModel implements Serializable {
         this.flagOptions = true;
     }
 
-    public ArrayList<Object> testData(){
+    public ArrayList<Object> dummyBanquets(){
 
         ArrayList<Object> model = new ArrayList<>();
         model.add(new BanquetModel(55.65,"Banquete para 2 personas","6 opciones",true));

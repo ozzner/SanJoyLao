@@ -103,9 +103,9 @@ public class ListViewAdapter extends BaseAdapter implements View.OnClickListener
                     soupHolder = (SoupViewHolder) vi.getTag();
 
                 final String[] array = {
-                        "Personal " + Const.PRICE_PEN + SJLStrings.format(oSoup.getPricePersonal(), SJLStrings.FORMAT_MILES),
-                        "Mediana " + Const.PRICE_PEN + SJLStrings.format(oSoup.getPriceMedium(), SJLStrings.FORMAT_MILES),
-                        "Grande " + Const.PRICE_PEN + SJLStrings.format(oSoup.getPriceBig(), SJLStrings.FORMAT_MILES)};
+                        "Personal " + Const.PRICE_PEN + SJLStrings.format(oSoup.getPricePersonal(), SJLStrings.FORMAT_MILES_ES),
+                        "Mediana " + Const.PRICE_PEN + SJLStrings.format(oSoup.getPriceMedium(), SJLStrings.FORMAT_MILES_ES),
+                        "Grande " + Const.PRICE_PEN + SJLStrings.format(oSoup.getPriceBig(), SJLStrings.FORMAT_MILES_ES)};
 
 
 
@@ -135,9 +135,9 @@ public class ListViewAdapter extends BaseAdapter implements View.OnClickListener
                     }
                 });
                 soupHolder.tvName.setText(oSoup.getTitle());
-                soupHolder.tvPrice1.setText(Const.PRICE_PEN + SJLStrings.format(oSoup.getPricePersonal(), SJLStrings.FORMAT_MILES));
-                soupHolder.tvPrice2.setText(Const.PRICE_PEN + SJLStrings.format(oSoup.getPriceMedium(), SJLStrings.FORMAT_MILES));
-                soupHolder.tvPrice3.setText(Const.PRICE_PEN + SJLStrings.format(oSoup.getPriceBig(), SJLStrings.FORMAT_MILES));
+                soupHolder.tvPrice1.setText(Const.PRICE_PEN + SJLStrings.format(oSoup.getPricePersonal(), SJLStrings.FORMAT_MILES_ES));
+                soupHolder.tvPrice2.setText(Const.PRICE_PEN + SJLStrings.format(oSoup.getPriceMedium(), SJLStrings.FORMAT_MILES_ES));
+                soupHolder.tvPrice3.setText(Const.PRICE_PEN + SJLStrings.format(oSoup.getPriceBig(), SJLStrings.FORMAT_MILES_ES));
 
                 if (position % 2 == 0)
                     soupHolder.ivImageSoup.setImageResource(R.drawable.plate_3);
@@ -171,8 +171,8 @@ public class ListViewAdapter extends BaseAdapter implements View.OnClickListener
                     riceHolder = (RiceViewHolder) vi.getTag();
 
                 riceHolder.tvName.setText(oRice.getTitle());
-                riceHolder.tvPrice1.setText(Const.PRICE_PEN + SJLStrings.format(oRice.getPriceTaza(), SJLStrings.FORMAT_MILES));
-                riceHolder.tvPrice2.setText(Const.PRICE_PEN + SJLStrings.format(oRice.getPriceFuente(), SJLStrings.FORMAT_MILES));
+                riceHolder.tvPrice1.setText(Const.PRICE_PEN + SJLStrings.format(oRice.getPriceTaza(), SJLStrings.FORMAT_MILES_ES));
+                riceHolder.tvPrice2.setText(Const.PRICE_PEN + SJLStrings.format(oRice.getPriceFuente(), SJLStrings.FORMAT_MILES_ES));
 
 
                 if (position % 2 == 0)
@@ -266,9 +266,9 @@ public class ListViewAdapter extends BaseAdapter implements View.OnClickListener
                 } else
                     chefHolder = (ChefViewHolder) vi.getTag();
 
-                chefHolder.tvPrice.setText(Const.PRICE_PEN + SJLStrings.format(oChef.getPrice(), SJLStrings.FORMAT_MILES));
+                chefHolder.tvPrice.setText(Const.PRICE_PEN + SJLStrings.format(oChef.getPrice(), SJLStrings.FORMAT_MILES_ES));
                 chefHolder.tvName.setText(oChef.getName());//Delete hardcode
-                chefHolder.tvOptions.setText("Taza " + Const.PRICE_PEN + SJLStrings.format(oChef.getPrice() / 3, SJLStrings.FORMAT_MILES));
+                chefHolder.tvOptions.setText("Taza " + Const.PRICE_PEN + SJLStrings.format(oChef.getPrice() / 3, SJLStrings.FORMAT_MILES_ES));
 
                 if (position % 2 == 0)
                     chefHolder.ivImage.setImageResource(R.drawable.chef_1);
