@@ -138,11 +138,22 @@
 
     </android.support.design.widget.AppBarLayout>
 
+
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rcv_orders"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+    <!-- progress show here-->
+    <ProgressBar
+        android:id="@+id/pbLoader"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        style="?android:attr/progressBarStyle">
+    </ProgressBar>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_order_payment"
