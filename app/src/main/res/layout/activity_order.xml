@@ -70,6 +70,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="0.8"
                         android:gravity="center"
+                        android:visibility="gone"
                         android:text="11% desc."
                         android:textAllCaps="true"
                         android:textColor="@color/white"
@@ -93,6 +94,7 @@
                         android:gravity="right|center"
                         android:text="S/. 2,370.00"
                         android:textAllCaps="true"
+                        android:visibility="invisible"
                         android:textColor="@color/white"
                         android:textSize="@dimen/txt_14sp" />
 
@@ -103,6 +105,7 @@
                         android:layout_weight="1"
                         android:gravity="right|top"
                         android:text="S/. 2,100.00"
+                        android:visibility="invisible"
                         android:textAllCaps="true"
                         android:textColor="@color/white"
                         android:textSize="@dimen/txt_18sp"
@@ -148,10 +151,12 @@
 
     <!-- progress show here-->
     <ProgressBar
-        android:id="@+id/pbLoader"
+        android:id="@+id/pb_orders"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_centerInParent="true"
+        app:layout_anchor="@id/rcv_orders"
+        app:layout_anchorGravity="center"
         style="?android:attr/progressBarStyle">
     </ProgressBar>
 

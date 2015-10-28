@@ -19,7 +19,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_height="170dp"
             android:padding="@dimen/space_20dp"
            >
 
@@ -119,10 +119,10 @@
                 android:layout_alignParentEnd="true" />
 
             <TextView
-                android:id="@+id/textView3"
+                android:id="@+id/tv_order_count_item"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="(x2)"
+                android:text="x1"
                 android:textColor="@color/red"
                 android:textSize="@dimen/txt_12sp"
                 android:textStyle="bold"

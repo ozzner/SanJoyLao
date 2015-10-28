@@ -14,6 +14,10 @@ public class Const {
     public static final String TAG_EMPTY = "Empty";
     public static final String TAG_OPTIONS = "Opcion";
     public static final float GRID_PADDING = 4;
+    public static final String TAG_POR = "x";
+    public static final String TAG_FACEBOOK = "facebook";
+    public static final String TAG_GOOGLE = "google plus";
+
 
     /*Items menu*/
     public static final int INPUT = 0;
@@ -65,4 +69,5 @@ public class Const {
     public static final int USER_DISABLED = 0;
     public static final char CHAR_COMMA = ',';
     public static final char CHAR_DOT = '.';
+
 }

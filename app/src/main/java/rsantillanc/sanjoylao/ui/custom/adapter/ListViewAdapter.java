@@ -164,6 +164,7 @@ public class ListViewAdapter extends BaseAdapter implements View.OnClickListener
                     riceHolder.tvName = (TextView) vi.findViewById(R.id.tv_rice_name);
                     riceHolder.tvPrice1 = (TextView) vi.findViewById(R.id.tv_rice_price1);
                     riceHolder.tvPrice2 = (TextView) vi.findViewById(R.id.tv_rice_price2);
+                    riceHolder.btOrder = (Button) vi.findViewById(R.id.bt_rice_order);
 
                     vi.setTag(riceHolder);
 
@@ -180,10 +181,24 @@ public class ListViewAdapter extends BaseAdapter implements View.OnClickListener
                 else
                     riceHolder.ivImageRice.setImageResource(R.drawable.arroz_2);
 
+                riceHolder.ivImageRice.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        mListener.onItemClick(view,position);
+                    }
+                });
+
                 vi.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         mListener.onItemClick(v, position);
+                    }
+                });
+
+                riceHolder.btOrder.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        mListener.onItemClick(view,position);
                     }
                 });
 
@@ -310,6 +325,7 @@ public class ListViewAdapter extends BaseAdapter implements View.OnClickListener
     static class RiceViewHolder {
         TextView tvName, tvPrice1, tvPrice2;
         ImageView ivImageRice;
+        Button btOrder;
     }
 
     static class OrdersViewHolder {

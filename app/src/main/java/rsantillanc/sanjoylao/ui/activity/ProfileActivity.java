@@ -10,8 +10,12 @@ import android.view.MenuItem;
 import android.view.View;
 
 import rsantillanc.sanjoylao.R;
+import rsantillanc.sanjoylao.model.UserModel;
 import rsantillanc.sanjoylao.ui.custom.adapter.ViewPagerAdapter;
 import rsantillanc.sanjoylao.util.Android;
+import rsantillanc.sanjoylao.util.Const;
+import rsantillanc.sanjoylao.util.SJLDates;
+import rsantillanc.sanjoylao.util.SJLStrings;
 
 public class ProfileActivity extends BaseActivity implements View.OnClickListener {
 
@@ -20,15 +24,20 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
     private Toolbar toolbar;
     private ViewPager mViewPager;
     private TabLayout mTabLayout;
+
+    //Globals
     private int[] tabIcons = {
             R.drawable.ic_account,
             R.drawable.ic_favorite
     };
+    private UserModel currentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+
+        currentUser = (UserModel) getIntent().getExtras().getSerializable(Const.EXTRA_USER);
 
         //Init views
         initUIComponents();
@@ -39,13 +48,13 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
     }
 
 
-
     //---------------------- [INIT  COMPONENTS]
     private void initUIComponents() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         mFloatingActionButton = (FloatingActionButton) findViewById(R.id.fab_profile_save);
         mViewPager = (ViewPager) findViewById(R.id.viewpager);
         mTabLayout = (TabLayout) findViewById(R.id.tbl_profile);
+
 
     }
 
@@ -55,7 +64,7 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
     }
 
     private void setUpViewPager() {
-        ViewPagerAdapter pager = new ViewPagerAdapter(getSupportFragmentManager(),loadTitles());
+        ViewPagerAdapter pager = new ViewPagerAdapter(getSupportFragmentManager(), loadTitles(),currentUser);
         mViewPager.setAdapter(pager);
     }
 
@@ -64,10 +73,11 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
         mTabLayout.getTabAt(1).setIcon(tabIcons[1]);
     }
 
-    private String [] loadTitles(){
+    private String[] loadTitles() {
         String[] titles = getResources().getStringArray(R.array.tabs_profile);
         return titles;
     }
+
     //---------------------- [SETUPS COMPONENTS]
     private void setUpUIComponents() {
         setUpViewPager();
@@ -83,8 +93,9 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
     private void setUpToolbar() {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Renzo santillan");
-        getSupportActionBar().setSubtitle("created: 2015-Jul-19 19:35");
+        getSupportActionBar().setTitle(currentUser.getFullName());
+        getSupportActionBar().setSubtitle(getString(R.string.label_profile_created) +
+                SJLDates.customDateConverter(currentUser.getCreatedAt(), SJLStrings.PARSE_DATE_FORMAT,SJLDates.FORMAT_DATE_GENERAL));
     }
 
 
@@ -102,13 +113,12 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_orders_history) {
-            showToast("San Joy Lao | V."+ Android.getAppVersion(this));
+            showToast("San Joy Lao | V." + Android.getAppVersion(this));
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
-
 
 
     //---------------------- [CALLBAKCS]

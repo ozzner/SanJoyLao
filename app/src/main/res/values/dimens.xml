@@ -57,5 +57,6 @@
     <dimen name="height_appbar">192dp</dimen>
     <dimen name="height_title_cardview">38dp</dimen>
     <dimen name="height_icons_cardview">32dp</dimen>
+    <dimen name="height_row_plate">150dp</dimen>
 
 </resources>

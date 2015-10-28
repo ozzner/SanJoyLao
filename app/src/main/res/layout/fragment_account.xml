@@ -25,6 +25,7 @@
             <!--Card1-->
             <android.support.v7.widget.CardView
                 android:id="@+id/card1"
+                android:layout_marginTop="@dimen/space_10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 >
@@ -103,7 +104,7 @@
                             android:layout_toEndOf="@+id/iv_email" />
 
                         <TextView
-                            android:id="@+id/textView5"
+                            android:id="@+id/tv_account_email"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="rsantillanc@gmail.com"
@@ -145,7 +146,7 @@
                             android:layout_toEndOf="@+id/iv_profile_sociallogin" />
 
                         <TextView
-                            android:id="@+id/tv_profile_sociallogin"
+                            android:id="@+id/tv_account_sociallogin"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Facebook"
@@ -188,7 +189,7 @@
                             android:layout_toEndOf="@+id/iv_profile_lastlogin" />
 
                         <TextView
-                            android:id="@+id/tv_profile_lastlogin"
+                            android:id="@+id/tv_account_lastlogin"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="04-Oct-2015 14:25"

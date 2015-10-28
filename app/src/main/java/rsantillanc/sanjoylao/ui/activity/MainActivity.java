@@ -104,7 +104,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     private void setUpProfile() {
         if (mBundle != null) {
-            UserModel user = ((UserModel) getIntent().getExtras().getSerializable(Const.EXTRA_USER));
+            UserModel user = ((UserModel) mBundle.getSerializable(Const.EXTRA_USER));
             username.setText(user.getFullName());
             email.setText(user.getEmail());
         }
@@ -194,6 +194,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     private void goToProfileActivity() {
         Intent profile = new Intent(mContext, ProfileActivity.class);
+        profile.putExtras(mBundle);
         startActivity(profile);
     }
 
