@@ -2,6 +2,7 @@ package rsantillanc.sanjoylao.ui.activity;
 
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -29,9 +30,10 @@ public class OrderActivity extends BaseActivity
     private Toolbar toolbar;
     private FloatingActionButton mFloatingActionButton;
     private RecyclerView mRecyclerView;
-    private TextView tvPriceTotal;
+    private TextView tvTotalPrice;
     private TextView tvPercent;
     private TextView tvDiscount;
+    private ProgressBar mProgressBar;
 
     //Globals
 
@@ -41,13 +43,14 @@ public class OrderActivity extends BaseActivity
 
     //MVP
     private OrderPresenterImpl mPresenter;
+    private CollapsingToolbarLayout mCollapsiong;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order);
-        mPresenter = new OrderPresenterImpl(this);
+        mPresenter = new OrderPresenterImpl(this,OrderActivity.this);
 
         //Init views
         initUIComponents();
@@ -63,10 +66,12 @@ public class OrderActivity extends BaseActivity
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         mFloatingActionButton = (FloatingActionButton) findViewById(R.id.fab_order_payment);
         mRecyclerView = (RecyclerView) findViewById(R.id.rcv_orders);
+        mProgressBar = (ProgressBar) findViewById(R.id.pb_orders);
+        mCollapsiong = (CollapsingToolbarLayout) findViewById(R.id.ctlLayout);
 
         //Price
         tvDiscount = (TextView) findViewById(R.id.tv_order_price_discount);
-        tvPriceTotal = (TextView) findViewById(R.id.tv_order_price_total);
+        tvTotalPrice = (TextView) findViewById(R.id.tv_order_price_total);
         tvPercent = (TextView) findViewById(R.id.tv_order_percent);
     }
 
@@ -85,6 +90,9 @@ public class OrderActivity extends BaseActivity
         mLinearLayoutManager = new LinearLayoutManager(_context);
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
         mRecyclerView.setHasFixedSize(false);
+
+        //Load data
+        mPresenter.loadOrdersByUserId("ozzner");
     }
 
 
@@ -120,11 +128,17 @@ public class OrderActivity extends BaseActivity
     private void setUpToolbar() {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
     }
 
-    private void enableDiscountView() {
+    private void enableAllPriceViews() {
         tvPercent.setVisibility(View.VISIBLE);
         tvDiscount.setVisibility(View.VISIBLE);
+        tvTotalPrice.setVisibility(View.VISIBLE);
+    }
+
+    private void enableTotalPrice() {
+        tvTotalPrice.setVisibility(View.VISIBLE);
     }
 
 
@@ -147,6 +161,7 @@ public class OrderActivity extends BaseActivity
 
     @Override
     public void hideLoader() {
+        mProgressBar.setVisibility(View.GONE);
 
     }
 
@@ -184,17 +199,19 @@ public class OrderActivity extends BaseActivity
 
     @Override
     public void printAmount(double amount) {
-
-        tvPriceTotal.setText(Const.PRICE_PEN + SJLStrings.format(total, SJLStrings.FORMAT_MILES_EN));
-        tvPriceTotal.setPaintFlags(tvPriceTotal.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+        total = amount;
+        tvTotalPrice.setText(Const.PRICE_PEN + SJLStrings.format(total, SJLStrings.FORMAT_MILES_EN));
+        tvTotalPrice.setPaintFlags(tvTotalPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+        mCollapsiong.setTitle(tvTotalPrice.getText().toString());
+        enableTotalPrice();
     }
 
     @Override
     public void printDiscount(double amount) {
-        enableDiscountView();
         tvPercent.setText(15 + "%" + "\ndesc.");
-        tvDiscount.setText(Const.PRICE_PEN + SJLStrings.format((total * 0.85), SJLStrings.FORMAT_MILES_EN));
-        getSupportActionBar().setTitle(tvDiscount.getText().toString());
+        tvDiscount.setText(Const.PRICE_PEN + SJLStrings.format((amount * 0.85), SJLStrings.FORMAT_MILES_EN));
+        mCollapsiong.setTitle(tvDiscount.getText().toString());
+        enableAllPriceViews();
     }
 
 

@@ -34,20 +34,19 @@ public class RecyclerViewBanquetAdapter extends RecyclerView.Adapter<RecyclerVie
 
     @Override
     public BanquetViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View banquet = layIn.inflate(R.layout.row_banquet,parent,false);
+        View banquet = layIn.inflate(R.layout.row_banquet, parent, false);
         return new BanquetViewHolder(banquet);
     }
 
     @Override
     public void onBindViewHolder(BanquetViewHolder holder, int index) {
-       BanquetModel banquet = (BanquetModel) banquetItems.get(index);
-       holder.tvPrice.setText(Const.PRICE_PEN + String.valueOf(banquet.getPrice()));
-       holder.tvName.setText(banquet.getName());
+        BanquetModel banquet = (BanquetModel) banquetItems.get(index);
+        holder.tvPrice.setText(Const.PRICE_PEN + String.valueOf(banquet.getPrice()));
+        holder.tvName.setText(banquet.getName());
         if (banquet.isFlagOptions())
-       holder.tvOptions.setText(banquet.getOption());
+            holder.tvOptions.setText(banquet.getOption());
         else
             holder.tvOptions.setText("No hay opciones");
-
     }
 
     @Override
@@ -75,20 +74,18 @@ public class RecyclerViewBanquetAdapter extends RecyclerView.Adapter<RecyclerVie
         @Override
         public void onClick(View v) {
             if (mItemClickListener != null)
-                mItemClickListener.onItemClick(v,getPosition());
+                mItemClickListener.onItemClick(v, getPosition());
         }
     }
 
 
-    public void setOnItemClickListener(OnItemClickListener mListener){
+    public void setOnItemClickListener(OnItemClickListener mListener) {
         this.mItemClickListener = mListener;
     }
 
-    public interface OnItemClickListener{
-       void onItemClick(View v , int index);
+    public interface OnItemClickListener {
+        void onItemClick(View v, int index);
     }
-
-
 
 
 }

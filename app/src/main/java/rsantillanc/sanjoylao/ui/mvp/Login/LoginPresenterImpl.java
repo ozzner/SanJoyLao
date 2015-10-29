@@ -13,7 +13,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.List;
 import rsantillanc.sanjoylao.R;
-import rsantillanc.sanjoylao.model.UserSignInModel;
+import rsantillanc.sanjoylao.model.APISignInModel;
 import rsantillanc.sanjoylao.storage.dao.UserDao;
 import rsantillanc.sanjoylao.util.Const;
 
@@ -84,7 +84,7 @@ public class LoginPresenterImpl implements ILoginPresenter, OnRegisterListener, 
      * @param person Object google
      */
     private void buildUserProfile(Person person) {
-        UserSignInModel signin = new UserSignInModel();
+        APISignInModel signin = new APISignInModel();
 
         signin.setFullName(person.getDisplayName());
         signin.setUsername(Plus.AccountApi.getAccountName(mGoogleApi));
@@ -115,7 +115,7 @@ public class LoginPresenterImpl implements ILoginPresenter, OnRegisterListener, 
      */
     private void buildUserProfile(JSONObject response) {
         try {
-            UserSignInModel signin = new UserSignInModel();
+            APISignInModel signin = new APISignInModel();
 
             signin.setUsername(response.getString("email"));
             signin.setEmail(response.getString("email"));
@@ -209,7 +209,7 @@ public class LoginPresenterImpl implements ILoginPresenter, OnRegisterListener, 
     @Override
     public void onRegisterSuccess(Object obj) {
         mLoginView.updateLoader(mActivity.getString(R.string.progress_message_starting));
-        mLoginIteractor.doLogin(mActivity, ((UserSignInModel) obj).getUsername(), ((UserSignInModel) obj).getPassword(), this);
+        mLoginIteractor.doLogin(mActivity, ((APISignInModel) obj).getUsername(), ((APISignInModel) obj).getPassword(), this);
     }
 
     @Override
@@ -243,7 +243,7 @@ public class LoginPresenterImpl implements ILoginPresenter, OnRegisterListener, 
     }
 
     @Override
-    public void onBasicAuthenticationError(UserSignInModel signin) {
+    public void onBasicAuthenticationError(APISignInModel signin) {
         if (signin != null) {
             mLoginView.updateLoader(mActivity.getString(R.string.progress_message_registering));
             mLoginIteractor.doSignin(signin, this);

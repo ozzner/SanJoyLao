@@ -34,15 +34,16 @@ public class RecyclerViewOrderAdapter extends RecyclerView.Adapter<RecyclerViewO
 
     @Override
     public BanquetViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new BanquetViewHolder(layIn.inflate(R.layout.row_orders,parent,false));
+        return new BanquetViewHolder(layIn.inflate(R.layout.row_orders, parent, false));
     }
 
     @Override
     public void onBindViewHolder(BanquetViewHolder orderHolder, int index) {
-       BanquetModel banquet = (BanquetModel) banquetItems.get(index);
+        BanquetModel banquet = (BanquetModel) banquetItems.get(index);
 
         orderHolder.tvPrice.setText(Const.PRICE_PEN + String.valueOf(banquet.getPrice()));
         orderHolder.tvName.setText((index + 1) + ".- " + banquet.getName());//Delete hardcode
+        orderHolder.tvCount.setText(Const.TAG_POR + (index + 1) );
 
         if (banquet.isFlagOptions())
             orderHolder.tvOptions.setText("Las " + banquet.getOption() + " que eligió");//Delete hardcode
@@ -63,6 +64,7 @@ public class RecyclerViewOrderAdapter extends RecyclerView.Adapter<RecyclerViewO
         private final TextView tvName;
         private final TextView tvOptions;
         private final TextView tvPrice;
+        private final TextView tvCount;
 
         public BanquetViewHolder(View vi) {
             super(vi);
@@ -72,6 +74,7 @@ public class RecyclerViewOrderAdapter extends RecyclerView.Adapter<RecyclerViewO
             tvPrice = (TextView) vi.findViewById(R.id.tv_order_price);
             ivInfo = (ImageView) vi.findViewById(R.id.iv_order_info);
             ivDelete = (ImageView) vi.findViewById(R.id.iv_order_delete);
+            tvCount = (TextView) vi.findViewById(R.id.tv_order_count_item);
 
             vi.setOnClickListener(this);
         }
@@ -79,17 +82,17 @@ public class RecyclerViewOrderAdapter extends RecyclerView.Adapter<RecyclerViewO
         @Override
         public void onClick(View v) {
             if (mItemClickListener != null)
-                mItemClickListener.onItemClick(v,getPosition());
+                mItemClickListener.onItemClick(v, getPosition());
         }
     }
 
 
-    public void setOnItemClickListener(OnItemClickListener mListener){
+    public void setOnItemClickListener(OnItemClickListener mListener) {
         this.mItemClickListener = mListener;
     }
 
-    public interface OnItemClickListener{
-       void onItemClick(View v, int index);
+    public interface OnItemClickListener {
+        void onItemClick(View v, int index);
     }
 
 }

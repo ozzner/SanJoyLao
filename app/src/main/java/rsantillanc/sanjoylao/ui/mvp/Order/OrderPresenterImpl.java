@@ -1,5 +1,7 @@
 package rsantillanc.sanjoylao.ui.mvp.Order;
 
+import android.app.Activity;
+
 import java.util.List;
 
 import rsantillanc.sanjoylao.model.BanquetModel;
@@ -11,10 +13,12 @@ public class OrderPresenterImpl implements IOrderPresenter, OnOrdersListener {
 
     private OrderIteractorImpl mIterator;
     private IOrderView mView;
+    private Activity mActivity;
 
-    public OrderPresenterImpl(IOrderView view) {
+    public OrderPresenterImpl(IOrderView view, Activity actitvity) {
         this.mIterator = new OrderIteractorImpl();
         this.mView = view;
+        this.mActivity = actitvity;
     }
 
     private double getTotalPrice(Iterable<? extends Object> orders) {
@@ -32,15 +36,24 @@ public class OrderPresenterImpl implements IOrderPresenter, OnOrdersListener {
     }
 
     @Override
-    public void onOrdersSuccess(List<Object> orders) {
-        double totalPrice = getTotalPrice(orders);
+    public void onOrdersSuccess(final List<Object> orders) {
+        final double totalPrice = getTotalPrice(orders);
 
-        if (totalPrice > 1500)
-            mView.printDiscount(totalPrice);
+        mActivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
 
-        //Pass
-        mView.printAmount(totalPrice);
-        mView.onDataLoaded(orders);
+                if (totalPrice > 1500)
+                    mView.printDiscount(totalPrice);
+
+                //Pass
+                mView.printAmount(totalPrice);
+                mView.onDataLoaded(orders);
+                mView.hideLoader();
+            }
+
+        });
+
     }
 
     @Override

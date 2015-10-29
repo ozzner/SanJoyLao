@@ -11,7 +11,7 @@ public class SJLStrings {
 
     public static final String FORMAT_MILES_EN = "##,##0.00";
     public static final String FORMAT_MILES_ES = "##.##0,00";
-    public static final String PARSE_DATE_FORMAT = "yyyy-MM-DD'T'HH:MM:SS.MMMZ";
+    public static final String PARSE_DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss";
     public static final String MAIN_DATE_FORMAT = "yyyy/MM/dd'T'HH:mm:ssZ";
 
 

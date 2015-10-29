@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -59,6 +60,7 @@ public class RiceFragment extends Fragment implements ListViewAdapter.OnItemClic
         /*Setup*/
         RiceModel oModel = new RiceModel();
         rices = oModel.testData();
+
         mListViewAdpter = new ListViewAdapter(getActivity(), rices, Const.RICE);
         mListViewAdpter.setOnItemClickListener(this);
         mListView.setAdapter(mListViewAdpter);
@@ -66,7 +68,14 @@ public class RiceFragment extends Fragment implements ListViewAdapter.OnItemClic
 
 
     public void onItemClick(View v, int index) {
-        openInfoSoup();
+        if (v.getId() == R.id.iv_rice){
+            Toast.makeText(getActivity(),"Amplia imagen.",Toast.LENGTH_LONG).show();
+        }else if (v.getId() == R.id.bt_rice_order){
+            Toast.makeText(getActivity(),"Pedido realizado!.",Toast.LENGTH_LONG).show();
+        }else{
+            Toast.makeText(getActivity(),"Abre detalles!.",Toast.LENGTH_LONG).show();;
+        }
+//        openInfoSoup();
     }
 
     private void openInfoSoup() {

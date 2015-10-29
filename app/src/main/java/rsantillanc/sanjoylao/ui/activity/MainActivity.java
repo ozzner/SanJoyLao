@@ -28,7 +28,6 @@ import rsantillanc.sanjoylao.ui.fragment.BanquetsFragment;
 import rsantillanc.sanjoylao.ui.fragment.ChefFragment;
 import rsantillanc.sanjoylao.ui.fragment.FrontFragment;
 import rsantillanc.sanjoylao.ui.fragment.MainFragment;
-import rsantillanc.sanjoylao.ui.fragment.RiceFragment;
 import rsantillanc.sanjoylao.ui.fragment.SoupFragment;
 import rsantillanc.sanjoylao.util.Android;
 import rsantillanc.sanjoylao.util.Const;
@@ -51,11 +50,11 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     //Constants
     private static final int INPUT = R.id.nav_main_input;
     private static final int SOUP = R.id.nav_main_soup;
-    private static final int RICE = R.id.nav_main_rice;
+//    private static final int RICE = R.id.nav_main_rice;
     private static final int CHEF = R.id.nav_main_chef;
-    private static final int CHICKEN_MEAT = R.id.nav_main_chicken_and_meat;
-    private static final int FISH = R.id.nav_main_fish;
-    private static final int VEGETARIAN = R.id.nav_main_vegetarian_food;
+//    private static final int CHICKEN_MEAT = R.id.nav_main_chicken_and_meat;
+//    private static final int FISH = R.id.nav_main_fish;
+//    private static final int VEGETARIAN = R.id.nav_main_vegetarian_food;
     private static final int BANQUETS = R.id.nav_main_banquets;
     private static final int DRINKS = R.id.nav_main_drinks;
     private static final int CENTRAL = R.id.nav_main_call_center;
@@ -104,7 +103,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     private void setUpProfile() {
         if (mBundle != null) {
-            UserModel user = ((UserModel) getIntent().getExtras().getSerializable(Const.EXTRA_USER));
+            UserModel user = ((UserModel) mBundle.getSerializable(Const.EXTRA_USER));
             username.setText(user.getFullName());
             email.setText(user.getEmail());
         }
@@ -194,6 +193,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     private void goToProfileActivity() {
         Intent profile = new Intent(mContext, ProfileActivity.class);
+        profile.putExtras(mBundle);
         startActivity(profile);
     }
 
@@ -253,27 +253,27 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 isTransaction = true;
                 title = getString(R.string.item_title_soup);
                 break;
-            case RICE:
-                ui = RiceFragment.newInstance();
-                isTransaction = true;
-                title = getString(R.string.item_title_rices);
-                break;
+//            case RICE:
+//                ui = RiceFragment.newInstance();
+//                isTransaction = true;
+//                title = getString(R.string.item_title_rices);
+//                break;
             case CHEF:
                 ui = ChefFragment.newInstance();
                 isTransaction = true;
                 title = getString(R.string.item_title_chef);
                 break;
-            case CHICKEN_MEAT:
-                ui = MainFragment.newInstance();
-                title = getString(R.string.item_title_meat_and_chicken);
-                break;
-            case FISH:
-                ui = MainFragment.newInstance();
-                title = getString(R.string.item_title_inputs);
-                break;
-            case VEGETARIAN:
-                ui = MainFragment.newInstance();
-                break;
+//            case CHICKEN_MEAT:
+//                ui = MainFragment.newInstance();
+//                title = getString(R.string.item_title_meat_and_chicken);
+//                break;
+//            case FISH:
+//                ui = MainFragment.newInstance();
+//                title = getString(R.string.item_title_inputs);
+//                break;
+//            case VEGETARIAN:
+//                ui = MainFragment.newInstance();
+//                break;
             case BANQUETS:
                 ui = BanquetsFragment.newInstance();
                 title = getString(R.string.item_title_banquets);
