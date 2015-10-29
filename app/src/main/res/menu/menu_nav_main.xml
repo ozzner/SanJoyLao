@@ -5,14 +5,14 @@
         <!-- Entradas-->
         <item
             android:id="@+id/nav_main_input"
-            android:icon="@drawable/ic_input"
+            android:icon="@drawable/ic_entree"
             android:title="@string/item_title_inputs" />
 
-        <!--&lt;!&ndash; Arroces&ndash;&gt;-->
-        <!--<item-->
-        <!--android:id="@+id/nav_main_rice"-->
-        <!--android:icon="@drawable/ic_rice"-->
-        <!--android:title="@string/item_title_rices" />-->
+        <!-- Arroces-->
+        <item
+        android:id="@+id/nav_main_plates"
+        android:icon="@drawable/ic_rice"
+        android:title="@string/item_title_plates" />
 
         <!-- Sopas-->
         <item
@@ -46,7 +46,7 @@
         <!-- Vinos y bebidas -->
         <item
             android:id="@+id/nav_main_drinks"
-            android:icon="@drawable/ic_drinks"
+            android:icon="@drawable/ic_wine_and_drinks"
             android:title="@string/item_title_drinks" />
 
         <!-- Recomendaciones del Chef -->

@@ -28,6 +28,7 @@ import rsantillanc.sanjoylao.ui.fragment.BanquetsFragment;
 import rsantillanc.sanjoylao.ui.fragment.ChefFragment;
 import rsantillanc.sanjoylao.ui.fragment.FrontFragment;
 import rsantillanc.sanjoylao.ui.fragment.MainFragment;
+import rsantillanc.sanjoylao.ui.fragment.RiceFragment;
 import rsantillanc.sanjoylao.ui.fragment.SoupFragment;
 import rsantillanc.sanjoylao.util.Android;
 import rsantillanc.sanjoylao.util.Const;
@@ -50,7 +51,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     //Constants
     private static final int INPUT = R.id.nav_main_input;
     private static final int SOUP = R.id.nav_main_soup;
-//    private static final int RICE = R.id.nav_main_rice;
+    private static final int RICE = R.id.nav_main_plates;
     private static final int CHEF = R.id.nav_main_chef;
 //    private static final int CHICKEN_MEAT = R.id.nav_main_chicken_and_meat;
 //    private static final int FISH = R.id.nav_main_fish;
@@ -253,11 +254,11 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 isTransaction = true;
                 title = getString(R.string.item_title_soup);
                 break;
-//            case RICE:
-//                ui = RiceFragment.newInstance();
-//                isTransaction = true;
-//                title = getString(R.string.item_title_rices);
-//                break;
+            case RICE:
+                ui = RiceFragment.newInstance();
+                isTransaction = true;
+                title = getString(R.string.item_title_plates);
+                break;
             case CHEF:
                 ui = ChefFragment.newInstance();
                 isTransaction = true;
