@@ -1,10 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="48dp"
-    android:textSize="12sp"
-    android:textStyle="bold"
-    android:background="?android:selectableItemBackground"
-    android:gravity="center"
-    android:id="@+id/tv_span"
-    />
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/custom_titles_toolbar"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+     >
+
+    <TextView
+        android:id="@+id/tv_custom_toolbar_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/txt_15sp"
+        android:textStyle="bold"
+        android:background="?android:selectableItemBackground"
+        android:gravity="left"
+        android:paddingLeft="@dimen/space_4dp"
+        android:text="Title"
+        style="@style/SJLToolbarTitle"
+        />
+
+    <TextView
+        android:id="@+id/tv_custom_toolbar_subtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        android:background="?android:selectableItemBackground"
+        android:gravity="left"
+        android:paddingLeft="@dimen/space_4dp"
+        android:text="Subtitle"
+        style="@style/SJLToolbarSubtitle"
+        />
+</LinearLayout>
+
+

@@ -18,12 +18,13 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import rsantillanc.sanjoylao.R;
-import rsantillanc.sanjoylao.ui.custom.adapter.RecyclerViewBanquetAdapter;
 import rsantillanc.sanjoylao.model.BanquetModel;
-import rsantillanc.sanjoylao.util.Android;
-import rsantillanc.sanjoylao.util.Const;
+import rsantillanc.sanjoylao.ui.activity.MainActivity;
 import rsantillanc.sanjoylao.ui.activity.OptionsGridActivity;
 import rsantillanc.sanjoylao.ui.activity.OptionsListActivity;
+import rsantillanc.sanjoylao.ui.custom.adapter.RecyclerViewBanquetAdapter;
+import rsantillanc.sanjoylao.util.Android;
+import rsantillanc.sanjoylao.util.Const;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -75,7 +76,7 @@ public class BanquetsFragment extends Fragment {
                     details.setArguments(bundle);
                     FragmentManager manager = getFragmentManager();
                     FragmentTransaction first = manager.beginTransaction();
-                    first.replace(R.id.container_details_banquet,details);
+                    first.replace(R.id.container_details_banquet, details);
                     first.commit();
                 } else {
 
@@ -101,14 +102,11 @@ public class BanquetsFragment extends Fragment {
     }
 
 
+    public static BanquetsFragment newInstance() {
+        instance = new BanquetsFragment();
 
-
-        public static BanquetsFragment newInstance() {
-                instance =  new BanquetsFragment();
-
-            return instance;
-        }
-
+        return instance;
+    }
 
 
     @Override
@@ -125,8 +123,12 @@ public class BanquetsFragment extends Fragment {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
-
-                    Fragment gotToFront = MainFragment.newInstance();
+                    Fragment gotToFront = new MainFragment(new MainFragment.OnLoadSuccess() {
+                        @Override
+                        public void viewloaded() {
+                            MainActivity.collapseAppBarLayout();
+                        }
+                    },true);
                     FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                     fragmentTransaction.replace(R.id.fragments_content, gotToFront);

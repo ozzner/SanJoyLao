@@ -27,13 +27,13 @@
 
     <string name="item_title_inputs">Entradas</string>
     <string name="item_title_soup">Sopas</string>
-    <string name="item_title_rices">Arroces</string>
+    <string name="item_title_plates">Platos</string>
     <string name="item_title_chef">Recomendaciones del chef</string>
     <string name="item_title_meat_and_chicken">Pollos y carnes</string>
     <string name="item_title_fish">Pescados</string>
     <string name="item_title_vegetarian_food">Comida vegetariana</string>
     <string name="item_title_banquets">Banquetes</string>
-    <string name="item_title_drinks">Vinos y bebidas</string>
+    <string name="item_title_drinks">Vinos &amp; bebidas</string>
     <string name="item_title_call_center">Central telefónica</string>
 
 
@@ -108,5 +108,6 @@
     <string name="title_activity_order">Mis pedidos</string>
     <string name="title_activity_profile">Renzo Santillán Ch.</string>
     <string name="label_profile_created">"Created: "</string>
+    <string name="view_card">Ver carta</string>
 
 </resources>

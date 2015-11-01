@@ -1,6 +1,7 @@
 package rsantillanc.sanjoylao.ui.fragment;
 
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -12,19 +13,24 @@ import rsantillanc.sanjoylao.R;
 /**
  * A simple {@link Fragment} subclass.
  */
+@SuppressLint("ValidFragment")
 public class MainFragment extends Fragment {
 
     private static MainFragment instance;
+    private OnLoadSuccess load;
+    private boolean isLoad = false;
 
     public static MainFragment newInstance() {
         if (instance == null)
-            instance =  new MainFragment();
+            instance =  new MainFragment(null,false);
 
         return instance;
     }
 
-    public MainFragment() {
-        // Required empty public constructor
+    @SuppressLint("ValidFragment")
+    public MainFragment(OnLoadSuccess success,boolean flag) {
+       this.load = success;
+        this.isLoad = flag;
     }
 
 
@@ -35,5 +41,15 @@ public class MainFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_main, container, false);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (isLoad)
+            load.viewloaded();
+    }
+
+    public interface OnLoadSuccess{
+        void viewloaded();
+    }
 
 }

@@ -6,48 +6,50 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.List;
 
 import rsantillanc.sanjoylao.R;
+import rsantillanc.sanjoylao.model.BanquetModel;
 import rsantillanc.sanjoylao.ui.custom.adapter.ListViewAdapter;
-import rsantillanc.sanjoylao.model.RiceModel;
-import rsantillanc.sanjoylao.util.Const;
+import rsantillanc.sanjoylao.ui.custom.adapter.RecyclerViewBanquetAdapter;
 import rsantillanc.sanjoylao.ui.popup.DetailsOptionsPopup;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class RiceFragment extends Fragment implements ListViewAdapter.OnItemClickListener{
+public class PlateFragment extends Fragment implements ListViewAdapter.OnItemClickListener{
 
 
-    private static RiceFragment instance;
-    private ListView mListView;
-    private List<Object> rices;
+    private static PlateFragment instance;
+    private RecyclerView mRecycler;
+    private List<Object> banquets;
     private ListViewAdapter mListViewAdpter;
+    private RecyclerViewBanquetAdapter adapter;
 
 
-
-    public RiceFragment() {
+    public PlateFragment() {
 
     }
 
 
-    public static RiceFragment newInstance() {
-            instance =  new RiceFragment();
+    public static PlateFragment newInstance() {
+            instance =  new PlateFragment();
         return instance;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View vi = inflater.inflate(R.layout.fragment_rice, container, false);
+        View vi = inflater.inflate(R.layout.fragment_plate, container, false);
         initComponents(vi);
         return vi;
     }
@@ -55,15 +57,20 @@ public class RiceFragment extends Fragment implements ListViewAdapter.OnItemClic
 
     private void initComponents(View vi) {
          /*Get views*/
-        mListView = (ListView) vi.findViewById(R.id.lv_rices);
+        mRecycler = (RecyclerView) vi.findViewById(R.id.rv_plates);
 
         /*Setup*/
-        RiceModel oModel = new RiceModel();
-        rices = oModel.testData();
+        banquets = new BanquetModel().dummyBanquets();
+        adapter =  new RecyclerViewBanquetAdapter(banquets, getActivity());
+        mRecycler.setAdapter(adapter);
+        mRecycler.setLayoutManager(new GridLayoutManager(getActivity(),3));
 
-        mListViewAdpter = new ListViewAdapter(getActivity(), rices, Const.RICE);
-        mListViewAdpter.setOnItemClickListener(this);
-        mListView.setAdapter(mListViewAdpter);
+
+
+//       mRecycler.setHasFixedSize(true);
+
+
+
     }
 
 
@@ -97,6 +104,7 @@ public class RiceFragment extends Fragment implements ListViewAdapter.OnItemClic
         backToFrontPage();
     }
 
+
     private void backToFrontPage() {
 
         getView().setFocusableInTouchMode(true);
@@ -106,11 +114,24 @@ public class RiceFragment extends Fragment implements ListViewAdapter.OnItemClic
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
 
-                    Fragment gotToFront = MainFragment.newInstance();
-                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                    fragmentTransaction.replace(R.id.fragments_content, gotToFront);
-                    fragmentTransaction.commit();
+                    FragmentManager fm = getFragmentManager();
+                    if (fm.getBackStackEntryCount() > 0) {
+                        Log.i("MainActivity", "popping backstack");
+                        fm.popBackStack();
+                    } else {
+
+                    }
+
+//                    Fragment gotToFront = new MainFragment(new MainFragment.OnLoadSuccess() {
+//                        @Override
+//                        public void viewloaded() {
+//
+//                        }
+//                    },true);
+//                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+//                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//                    fragmentTransaction.replace(R.id.fragments_content, gotToFront);
+//                    fragmentTransaction.commit();
 
                     return true;
                 }

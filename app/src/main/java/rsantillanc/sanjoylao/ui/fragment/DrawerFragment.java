@@ -34,8 +34,8 @@ public class DrawerFragment extends Fragment {
     private View contView;
     private TextView tvUsername;
     private static String[] titles = null;
-    private static int[] icons = {R.drawable.ic_input
-                                 ,R.drawable.ic_soup
+    private static int[] icons = {
+                                 R.drawable.ic_soup
                                  ,R.drawable.ic_rice
                                  ,R.drawable.ic_chef
                                  ,R.drawable.ic_meat_and_chicken

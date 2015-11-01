@@ -70,4 +70,6 @@ public class Const {
     public static final char CHAR_COMMA = ',';
     public static final char CHAR_DOT = '.';
 
+    //[ PARSE ]
+    public static final String PARSE_TYPE_FILE = "File";
 }

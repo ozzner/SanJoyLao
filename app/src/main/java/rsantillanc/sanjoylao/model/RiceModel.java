@@ -58,7 +58,7 @@ public class RiceModel implements Serializable {
 
     //******************************** hardcode
 
-    public ArrayList<Object> testData(){
+    public ArrayList<Object> dummyRice(){
 
         ArrayList<Object> model = new ArrayList<>();
         model.add(new RiceModel("Arroz Chaufa con Pollo",12.25,24.25,0));

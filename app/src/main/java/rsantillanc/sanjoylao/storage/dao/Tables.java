@@ -25,9 +25,19 @@ public class Tables {
             "\tPRIMARY KEY(objectId)\t" +
             ");";
 
+
+        public static final String CREATE_CATEGORY = "CREATE TABLE `CATEGORY` (\n"+
+                "\t`objectId`\tTEXT NOT NULL,\n"+
+                "\t`name`\tTEXT NOT NULL UNIQUE,\n"+
+                "\t`createdAt`\tTEXT,\n"+
+                "\t`updatedAt`\tTEXT,\n"+
+                "\tPRIMARY KEY(objectId)\n"+
+                ");";
+
     //Drop
     public static final String DROP_TABLE = "DROP TABLE IF EXISTS ";
 
     //Tables name
     public static final String USER = "USER";
+    public static final String CATEGORY = "CATEGORY";
 }

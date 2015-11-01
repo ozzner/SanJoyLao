@@ -21,11 +21,14 @@ public class SJLDatabase extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
             db.execSQL(Tables.CREATE_USER);
+            db.execSQL(Tables.CREATE_CATEGORY);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int i, int i1) {
         db.execSQL(Tables.DROP_TABLE + Tables.USER);
+        db.execSQL(Tables.DROP_TABLE + Tables.CATEGORY);
+        onCreate(db);
     }
 
     private void installApp(Context c) {

@@ -2,7 +2,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
- >
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!--app:layout_behavior="@string/appbar_scrolling_view_behavior"-->
+    <!--app:behavior_overlapTop="64dp"-->
 
     <android.support.v7.widget.CardView
         android:id="@+id/cv_item_banquet"
@@ -10,12 +13,13 @@
         android:layout_height="wrap_content"
         android:foreground="@drawable/list_selector"
         android:background="@color/transparent"
-        android:padding="@dimen/space_16dp">
+        app:cardCornerRadius="@dimen/space_4dp"
+        app:cardElevation="@dimen/space_4dp"
+        app:cardUseCompatPadding="true">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:padding="@dimen/space_8dp"
+            android:layout_height="160dp"
             android:background="@color/transparent"
             >
 
@@ -57,29 +61,31 @@
                 android:layout_alignLeft="@+id/tv_banquet_name"
                 android:layout_alignStart="@+id/tv_banquet_name" />
 
-            <ImageView
-                android:id="@+id/iv_soup_info"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:src="@drawable/ic_info_2"
-                android:layout_alignParentBottom="true"
-                android:layout_toLeftOf="@+id/tv_banquet_price"
-                android:layout_marginRight="@dimen/space_10dp"/>
+            <!--<ImageView-->
+                <!--android:id="@+id/iv_soup_info"-->
+                <!--android:layout_width="32dp"-->
+                <!--android:layout_height="32dp"-->
+                <!--android:src="@drawable/ic_info_2"-->
+                <!--android:layout_alignParentBottom="true"-->
+                <!--android:layout_toLeftOf="@+id/tv_banquet_price"-->
+                <!--android:layout_marginRight="@dimen/space_10dp"/>-->
 
 
             <TextView
                 android:id="@+id/tv_banquet_price"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/price_width"
+                android:layout_height="@dimen/price_height"
                 android:text="25.00"
-                android:textSize="@dimen/txt_14sp"
+                android:textSize="@dimen/txt_price"
                 android:textStyle="bold"
+                android:gravity="center"
                 android:layout_marginRight="@dimen/space_8dp"
                 android:layout_marginBottom="@dimen/space_8dp"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
-                android:textColor="@color/red"/>
+                android:background="@drawable/price_oval_shape"
+                android:textColor="@color/white"/>
 
         </RelativeLayout>
 

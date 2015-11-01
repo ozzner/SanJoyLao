@@ -20,12 +20,15 @@ import android.app.Activity;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SubMenu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+
+import java.lang.reflect.Method;
 
 /**
  * Helper class to set the color and transparency for menu icons in an ActionBar/Toolbar.</p>
@@ -153,4 +156,20 @@ public class MenuColorizer {
         return overflow;
     }
 
+    public static void showIcons(Menu menu) {
+        if (menu != null) {
+            if (menu.getClass().getSimpleName().equals("MenuBuilder")) {
+                try {
+                    Method m = menu.getClass().getDeclaredMethod(
+                            "setOptionalIconsVisible", Boolean.TYPE);
+                    m.setAccessible(true);
+                    m.invoke(menu, true);
+                } catch (NoSuchMethodException e) {
+                    Log.e(menu.getClass().getCanonicalName(), "onMenuOpened", e);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+    }
 }

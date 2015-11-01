@@ -103,9 +103,9 @@ public class ListViewAdapter extends BaseAdapter implements View.OnClickListener
                     soupHolder = (SoupViewHolder) vi.getTag();
 
                 final String[] array = {
-                        "Personal " + Const.PRICE_PEN + SJLStrings.format(oSoup.getPricePersonal(), SJLStrings.FORMAT_MILES_ES),
-                        "Mediana " + Const.PRICE_PEN + SJLStrings.format(oSoup.getPriceMedium(), SJLStrings.FORMAT_MILES_ES),
-                        "Grande " + Const.PRICE_PEN + SJLStrings.format(oSoup.getPriceBig(), SJLStrings.FORMAT_MILES_ES)};
+                        "Personal " + Const.PRICE_PEN + SJLStrings.format(oSoup.getPricePersonal(), SJLStrings.FORMAT_MILES_EN),
+                        "Mediana " + Const.PRICE_PEN + SJLStrings.format(oSoup.getPriceMedium(), SJLStrings.FORMAT_MILES_EN),
+                        "Grande " + Const.PRICE_PEN + SJLStrings.format(oSoup.getPriceBig(), SJLStrings.FORMAT_MILES_EN)};
 
 
 
@@ -135,9 +135,9 @@ public class ListViewAdapter extends BaseAdapter implements View.OnClickListener
                     }
                 });
                 soupHolder.tvName.setText(oSoup.getTitle());
-                soupHolder.tvPrice1.setText(Const.PRICE_PEN + SJLStrings.format(oSoup.getPricePersonal(), SJLStrings.FORMAT_MILES_ES));
-                soupHolder.tvPrice2.setText(Const.PRICE_PEN + SJLStrings.format(oSoup.getPriceMedium(), SJLStrings.FORMAT_MILES_ES));
-                soupHolder.tvPrice3.setText(Const.PRICE_PEN + SJLStrings.format(oSoup.getPriceBig(), SJLStrings.FORMAT_MILES_ES));
+                soupHolder.tvPrice1.setText(Const.PRICE_PEN + SJLStrings.format(oSoup.getPricePersonal(), SJLStrings.FORMAT_MILES_EN));
+                soupHolder.tvPrice2.setText(Const.PRICE_PEN + SJLStrings.format(oSoup.getPriceMedium(), SJLStrings.FORMAT_MILES_EN));
+                soupHolder.tvPrice3.setText(Const.PRICE_PEN + SJLStrings.format(oSoup.getPriceBig(), SJLStrings.FORMAT_MILES_EN));
 
                 if (position % 2 == 0)
                     soupHolder.ivImageSoup.setImageResource(R.drawable.plate_3);
