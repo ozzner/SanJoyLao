@@ -21,14 +21,15 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import rsantillanc.sanjoylao.R;
 import rsantillanc.sanjoylao.model.UserModel;
 import rsantillanc.sanjoylao.storage.dao.UserDao;
 import rsantillanc.sanjoylao.ui.fragment.BanquetsFragment;
+import rsantillanc.sanjoylao.ui.fragment.CategoryFragment;
 import rsantillanc.sanjoylao.ui.fragment.ChefFragment;
 import rsantillanc.sanjoylao.ui.fragment.FrontFragment;
 import rsantillanc.sanjoylao.ui.fragment.MainFragment;
-import rsantillanc.sanjoylao.ui.fragment.PlateFragment;
 import rsantillanc.sanjoylao.ui.fragment.SoupFragment;
 import rsantillanc.sanjoylao.ui.mvp.Main.IMainView;
 import rsantillanc.sanjoylao.ui.mvp.Main.MainPresenterImpl;
@@ -56,6 +57,7 @@ public class MainActivity extends BaseActivity
     private ActionBarDrawerToggle mDrawerToggle;
     private TextView username;
     private TextView email;
+    private CircleImageView profileImage;
 
 
     //Constants
@@ -117,11 +119,10 @@ public class MainActivity extends BaseActivity
     }
 
 
-
     private void initContextAndData(Bundle bundle) {
 
         mContext = getApplicationContext();
-        mPresenter = new MainPresenterImpl(MainActivity.this,this);
+        mPresenter = new MainPresenterImpl(MainActivity.this, this);
 
         if (bundle == null)
             mBundle = getIntent().getExtras();
@@ -153,6 +154,7 @@ public class MainActivity extends BaseActivity
             currentUser = ((UserModel) mBundle.getSerializable(Const.EXTRA_USER));
             username.setText(currentUser.getFullName());
             email.setText(currentUser.getEmail());
+            mPresenter.loadProfileImage(currentUser.getUrlProfileImage(), profileImage);
         }
     }
 
@@ -189,6 +191,7 @@ public class MainActivity extends BaseActivity
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         username = (TextView) findViewById(R.id.username);
         email = (TextView) findViewById(R.id.email);
+        profileImage = (CircleImageView) findViewById(R.id.circle_image);
         mAppbarLayout = (AppBarLayout) findViewById(R.id.appbarLayout);
     }
 
@@ -233,7 +236,6 @@ public class MainActivity extends BaseActivity
 
         return super.onOptionsItemSelected(item);
     }
-
 
 
     //-----------------------[GoTo]
@@ -355,7 +357,7 @@ public class MainActivity extends BaseActivity
                 setCollapseAppBarLayout(true);
                 break;
             case PLATES:
-                ui = PlateFragment.newInstance();
+                ui = CategoryFragment.newInstance();
                 isTransaction = true;
                 title = getString(R.string.item_title_plates);
                 setCollapseAppBarLayout(false);
@@ -422,8 +424,6 @@ public class MainActivity extends BaseActivity
 
         return false;
     }
-
-
 
 
     //----------------------[IMainView]

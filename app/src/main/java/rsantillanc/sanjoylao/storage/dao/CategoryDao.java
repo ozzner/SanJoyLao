@@ -6,6 +6,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.provider.BaseColumns;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import rsantillanc.sanjoylao.model.CategoryModel;
 
 /**
@@ -37,7 +40,7 @@ public class CategoryDao implements BaseColumns{
      * @param category Modelo con los datos a insertar
      * @return numero de rows afected.
      */
-    public long insertCategory(CategoryModel category){
+    public long insert(CategoryModel category){
         ContentValues cv = new ContentValues();
         cv.put(objectId,category.getObjectId());
         cv.put(name,category.getName());
@@ -52,4 +55,31 @@ public class CategoryDao implements BaseColumns{
         return cur.getCount();
     }
 
+    public List<CategoryModel> list() {
+        Cursor cur = db.rawQuery(SELECT, null);
+        return loopCategories(cur,new ArrayList<CategoryModel>());
+    }
+
+
+    private List<CategoryModel> loopCategories(Cursor cur, List<CategoryModel> categories) {
+
+        if (cur.moveToFirst())
+            do {
+
+                CategoryModel category = new CategoryModel();
+                category.setObjectId(cur.getString(cur.getColumnIndex(objectId)));
+                category.setName(cur.getString(cur.getColumnIndex(name)));
+                category.setCreatedAt(cur.getString(cur.getColumnIndex(createdAt)));
+                category.setUpdatedAt(cur.getString(cur.getColumnIndex(updatedAt)));
+                categories.add(category);
+
+            } while (cur.moveToNext());
+
+
+        if (!cur.isClosed()) {
+            cur.close();
+        }
+
+        return categories;
+    }
 }

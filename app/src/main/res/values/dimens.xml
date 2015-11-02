@@ -6,6 +6,7 @@
 
     <!--Spaces-->
     <dimen name="space_0dp">0dp</dimen>
+    <dimen name="space_2dp">2dp</dimen>
     <dimen name="space_4dp">4dp</dimen>
     <dimen name="space_8dp">8dp</dimen>
     <dimen name="space_6dp">6dp</dimen>
@@ -30,6 +31,7 @@
     <dimen name="txt_18sp">18sp</dimen>
     <dimen name="txt_20sp">20sp</dimen>
     <dimen name="txt_24sp">24sp</dimen>
+    <dimen name="txt_price">12sp</dimen>
 
     <!--Navigation drawer-->
     <dimen name="nav_drawer_width">305dp</dimen>
@@ -57,11 +59,11 @@
     <dimen name="height_appbar">192dp</dimen>
     <dimen name="height_title_cardview">38dp</dimen>
     <dimen name="height_icons_cardview">32dp</dimen>
-    <dimen name="height_row_plate">150dp</dimen>
+    <dimen name="height_row_category">160dp</dimen>
+    <dimen name="height_appbar_default">192dp</dimen>
+    <dimen name="height_title_category">65dp</dimen>
+
     <dimen name="price_width">85dp</dimen>
     <dimen name="price_height">30dp</dimen>
-    <dimen name="txt_price">12sp</dimen>
-    <dimen name="height_appbar_default">192dp</dimen>
-    <dimen name="space_2dp">2dp</dimen>
-
+    <dimen name="height_overlap_top">84dp</dimen>
 </resources>

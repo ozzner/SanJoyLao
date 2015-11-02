@@ -23,6 +23,7 @@ import rsantillanc.sanjoylao.util.Const;
 public class LoginPresenterImpl implements ILoginPresenter, OnRegisterListener, OnLoginListener {
 
     private static final String TAG = LoginPresenterImpl.class.getSimpleName() + Const.BLANK_SPACE;
+    private static final int SIZE = 200;
     private ILoginView mLoginView;
     private ILoginIteractor mLoginIteractor;
     private GoogleApiClient mGoogleApi;
@@ -92,7 +93,7 @@ public class LoginPresenterImpl implements ILoginPresenter, OnRegisterListener, 
         signin.setEmail(Plus.AccountApi.getAccountName(mGoogleApi));
 
         if (person.hasImage()) {
-            signin.setUrlProfileImage(person.getImage().getUrl());
+            signin.setUrlProfileImage(customSizeURLGooglePlus(person.getImage().getUrl()));
             signin.setHaveProfileImage(true);
         }
 
@@ -107,6 +108,7 @@ public class LoginPresenterImpl implements ILoginPresenter, OnRegisterListener, 
         }
 
     }
+
 
 
     /**
@@ -127,7 +129,7 @@ public class LoginPresenterImpl implements ILoginPresenter, OnRegisterListener, 
             String url = pictureData.getString("url");
 
             if (!url.equals(Const.EMPTY)) {
-                signin.setUrlProfileImage(url);
+                signin.setUrlProfileImage(customSizeURLFacebook(response.getString("id")));
                 signin.setHaveProfileImage(true);
             }
 
@@ -145,6 +147,28 @@ public class LoginPresenterImpl implements ILoginPresenter, OnRegisterListener, 
             mLoginView.hideLoader();
             e.printStackTrace();
         }
+    }
+
+
+
+    /**
+     * Por defecto el tamaño de la imagen es de 50x50, este metodo permite
+     * obtener una imagen con un tamaño typo=large
+     * @param userID id que te otorga facebook y lo concatenas con graph de facebook.
+     * @return String con imagen a tamaño deseado.
+     */
+    private String customSizeURLFacebook(String userID) {
+        return "https://graph.facebook.com/" + userID + "/picture?type=large";
+    }
+
+    /**
+     * Por defecto el tamaño de la imagen es de 50x50, este metodo permite
+     * obtener una imagen con un tamaño deseado.
+     * @param url String que contiene la dirección de la imagen.
+     * @return String con imagen a tamaño deseado.
+     */
+    private String customSizeURLGooglePlus(String url) {
+        return url.substring(0,url.length()-2) + SIZE;
     }
 
 

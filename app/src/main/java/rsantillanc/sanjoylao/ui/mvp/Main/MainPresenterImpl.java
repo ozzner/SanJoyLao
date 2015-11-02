@@ -1,6 +1,7 @@
 package rsantillanc.sanjoylao.ui.mvp.Main;
 
 import android.app.Activity;
+import android.widget.ImageView;
 
 import rsantillanc.sanjoylao.storage.sp.SJLPreferences;
 
@@ -32,5 +33,9 @@ public class MainPresenterImpl {
         //delete this and paste in splash activity
         SJLPreferences preferences = new SJLPreferences(mainActivity);
         preferences.run();
+    }
+
+    public void loadProfileImage(String urlProfileImage, ImageView imageView) {
+        iteractor.getProfileImage(mainActivity,imageView,urlProfileImage);
     }
 }

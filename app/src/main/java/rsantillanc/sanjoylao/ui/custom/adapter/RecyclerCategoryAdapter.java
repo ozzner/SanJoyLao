@@ -12,62 +12,61 @@ import java.util.Collections;
 import java.util.List;
 
 import rsantillanc.sanjoylao.R;
-import rsantillanc.sanjoylao.model.BanquetModel;
-import rsantillanc.sanjoylao.util.Const;
+import rsantillanc.sanjoylao.model.CategoryModel;
 
 /**
  * Created by RenzoD on 03/06/2015.
  */
-public class RecyclerViewBanquetAdapter extends RecyclerView.Adapter<RecyclerViewBanquetAdapter.BanquetViewHolder> {
+public class RecyclerCategoryAdapter extends RecyclerView.Adapter<RecyclerCategoryAdapter.BanquetViewHolder> {
 
     private LayoutInflater layIn;
-    private List<Object> banquetItems = Collections.EMPTY_LIST;
-    private Context ctx;
+    private List<CategoryModel> categories = Collections.EMPTY_LIST;
     private OnItemClickListener mItemClickListener;
+    private Context _context;
 
 
-    public RecyclerViewBanquetAdapter(List<Object> banquetItems, Context ctx) {
+    public RecyclerCategoryAdapter(List<CategoryModel> items, Context ctx) {
         this.layIn = LayoutInflater.from(ctx);
-        this.banquetItems = banquetItems;
-        this.ctx = ctx;
+        this.categories = items;
+        this._context = ctx;
     }
 
     @Override
     public BanquetViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View banquet = layIn.inflate(R.layout.item_banquet, parent, false);
-        return new BanquetViewHolder(banquet);
+        View ui = layIn.inflate(R.layout.item_category, parent, false);
+        return new BanquetViewHolder(ui);
     }
 
     @Override
     public void onBindViewHolder(BanquetViewHolder holder, int index) {
-        BanquetModel banquet = (BanquetModel) banquetItems.get(index);
-        holder.tvPrice.setText(Const.PRICE_PEN + String.valueOf(banquet.getPrice()));
-        holder.tvName.setText(banquet.getName());
-        if (banquet.isFlagOptions())
-            holder.tvOptions.setText(banquet.getOption());
+        holder.tvName.setText(categories.get(index).getName());
+        if (index % 2 == 0)
+            holder.ivImage.setImageDrawable(_context.getResources().getDrawable(R.drawable.plate_3));
+        else if (index % 2 ==1)
+            holder.ivImage.setImageDrawable(_context.getResources().getDrawable(R.drawable.arroz_2));
         else
-            holder.tvOptions.setText("No hay opciones");
+            holder.ivImage.setImageDrawable(_context.getResources().getDrawable(R.drawable.plate_1));
+
+
     }
 
     @Override
     public int getItemCount() {
-        return banquetItems.size();
+        return categories.size();
     }
 
 
     class BanquetViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         TextView tvName;
-        TextView tvOptions;
-        TextView tvPrice;
-        ImageView ivBanquet;
+        ImageView ivImage;
+        ImageView ivIcon;
 
         public BanquetViewHolder(View itemView) {
             super(itemView);
-            tvName = (TextView) itemView.findViewById(R.id.tv_banquet_name);
-            tvOptions = (TextView) itemView.findViewById(R.id.tv_banquet_option);
-            tvPrice = (TextView) itemView.findViewById(R.id.tv_banquet_price);
-            ivBanquet = (ImageView) itemView.findViewById(R.id.iv_banquet);
+            tvName = (TextView) itemView.findViewById(R.id.tv_category_name);
+            ivImage = (ImageView) itemView.findViewById(R.id.iv_category_image);
+            ivIcon = (ImageView) itemView.findViewById(R.id.iv_category_icon);
             itemView.setOnClickListener(this);
         }
 

@@ -2,12 +2,16 @@ package rsantillanc.sanjoylao.ui.mvp.Main;
 
 import android.content.Context;
 import android.util.Log;
+import android.widget.ImageView;
+
+import com.squareup.picasso.Picasso;
 
 import retrofit.Call;
 import retrofit.Callback;
 import retrofit.GsonConverterFactory;
 import retrofit.Response;
 import retrofit.Retrofit;
+import rsantillanc.sanjoylao.R;
 import rsantillanc.sanjoylao.api.ConstAPI;
 import rsantillanc.sanjoylao.api.ParseAPIService;
 import rsantillanc.sanjoylao.model.APIResultCategoryModel;
@@ -35,7 +39,7 @@ public class MainIteractorImpl {
                     if (response.isSuccess()) {
                         long rows = 0;
                         for (CategoryModel categoryModel : response.body().getResultArray()) {
-                             rows = new CategoryDao(c).insertCategory(categoryModel);
+                             rows = new CategoryDao(c).insert(categoryModel);
                         }
                         Log.e(Const.DEBUG, "Response rows inserted: " + rows);
 
@@ -60,6 +64,14 @@ public class MainIteractorImpl {
 
     protected int countCategories(Context c) {
         return new CategoryDao(c).count();
+    }
+
+    public void getProfileImage(Context c,ImageView imageView,String url) {
+        Picasso.with(c)
+                .load(url)
+                .placeholder(R.drawable.ic_profile)
+                .error(R.drawable.ic_profile)
+                .into(imageView);
     }
 
 //    public GsonConverterFactory buildAPIGsonConverter(){

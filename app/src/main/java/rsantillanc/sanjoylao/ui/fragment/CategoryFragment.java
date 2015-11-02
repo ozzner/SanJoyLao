@@ -18,31 +18,37 @@ import android.widget.Toast;
 import java.util.List;
 
 import rsantillanc.sanjoylao.R;
-import rsantillanc.sanjoylao.model.BanquetModel;
+import rsantillanc.sanjoylao.model.CategoryModel;
 import rsantillanc.sanjoylao.ui.custom.adapter.ListViewAdapter;
-import rsantillanc.sanjoylao.ui.custom.adapter.RecyclerViewBanquetAdapter;
+import rsantillanc.sanjoylao.ui.custom.adapter.RecyclerCategoryAdapter;
+import rsantillanc.sanjoylao.ui.mvp.Category.CategoryPresenterImpl;
+import rsantillanc.sanjoylao.ui.mvp.Category.ICategoryView;
 import rsantillanc.sanjoylao.ui.popup.DetailsOptionsPopup;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class PlateFragment extends Fragment implements ListViewAdapter.OnItemClickListener{
+public class CategoryFragment extends Fragment implements
+        ListViewAdapter.OnItemClickListener, ICategoryView{
 
-
-    private static PlateFragment instance;
+    //View
     private RecyclerView mRecycler;
-    private List<Object> banquets;
-    private ListViewAdapter mListViewAdpter;
-    private RecyclerViewBanquetAdapter adapter;
+    private RecyclerCategoryAdapter adapter;
+
+    //Object
+    private List<CategoryModel> categories;
+    private static CategoryFragment instance;
+    private CategoryPresenterImpl mPresenter;
 
 
-    public PlateFragment() {
+    public CategoryFragment() {
 
     }
 
 
-    public static PlateFragment newInstance() {
-            instance =  new PlateFragment();
+    public static CategoryFragment newInstance() {
+            instance =  new CategoryFragment();
+
         return instance;
     }
 
@@ -58,19 +64,22 @@ public class PlateFragment extends Fragment implements ListViewAdapter.OnItemCli
     private void initComponents(View vi) {
          /*Get views*/
         mRecycler = (RecyclerView) vi.findViewById(R.id.rv_plates);
+        mPresenter = new CategoryPresenterImpl(this, getActivity());
 
         /*Setup*/
-        banquets = new BanquetModel().dummyBanquets();
-        adapter =  new RecyclerViewBanquetAdapter(banquets, getActivity());
+        categories =  mPresenter.getCategoryList();
+        adapter =  new RecyclerCategoryAdapter(categories,getActivity());
         mRecycler.setAdapter(adapter);
-        mRecycler.setLayoutManager(new GridLayoutManager(getActivity(),3));
-
-
+        mRecycler.setLayoutManager(new GridLayoutManager(getActivity(), 3));
 
 //       mRecycler.setHasFixedSize(true);
 
 
+    }
 
+    private List<Object> getCategories() {
+
+        return null;
     }
 
 
@@ -138,5 +147,16 @@ public class PlateFragment extends Fragment implements ListViewAdapter.OnItemCli
                 return false;
             }
         });
+    }
+
+    @Override
+    public void loadImage() {
+
+
+    }
+
+    @Override
+    public void loadData() {
+
     }
 }
