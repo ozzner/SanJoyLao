@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import rsantillanc.sanjoylao.model.CategoryModel;
+import rsantillanc.sanjoylao.model.ParseFileModel;
 
 /**
  * Created by RenzoD on 31/10/2015.
@@ -21,6 +22,7 @@ public class CategoryDao implements BaseColumns{
     //Columns
     private String objectId = "objectId";
     private String name = "name";
+    private String urlImage = "urlImage";
     private String createdAt = "createdAt";
     private String updatedAt = "updatedAt";
 
@@ -44,6 +46,7 @@ public class CategoryDao implements BaseColumns{
         ContentValues cv = new ContentValues();
         cv.put(objectId,category.getObjectId());
         cv.put(name,category.getName());
+        cv.put(urlImage,category.getImage().getUrl());
         cv.put(createdAt,category.getCreatedAt());
         cv.put(updatedAt,category.getUpdatedAt());
         return db.insert(Tables.CATEGORY,null,cv);
@@ -57,7 +60,7 @@ public class CategoryDao implements BaseColumns{
 
     public List<CategoryModel> list() {
         Cursor cur = db.rawQuery(SELECT, null);
-        return loopCategories(cur,new ArrayList<CategoryModel>());
+        return loopCategories(cur, new ArrayList<CategoryModel>());
     }
 
 
@@ -69,17 +72,23 @@ public class CategoryDao implements BaseColumns{
                 CategoryModel category = new CategoryModel();
                 category.setObjectId(cur.getString(cur.getColumnIndex(objectId)));
                 category.setName(cur.getString(cur.getColumnIndex(name)));
+                category.setImage(getFile(cur));
                 category.setCreatedAt(cur.getString(cur.getColumnIndex(createdAt)));
                 category.setUpdatedAt(cur.getString(cur.getColumnIndex(updatedAt)));
                 categories.add(category);
 
             } while (cur.moveToNext());
 
-
         if (!cur.isClosed()) {
             cur.close();
         }
 
         return categories;
+    }
+
+    private ParseFileModel getFile(Cursor cur) {
+        ParseFileModel file = new ParseFileModel();
+        file.setUrl(cur.getString(cur.getColumnIndex(urlImage)));
+        return file;
     }
 }

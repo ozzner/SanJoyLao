@@ -23,6 +23,9 @@ public class ParseFileModel {
         this.__type = Const.PARSE_TYPE_FILE;
     }
 
+    public ParseFileModel() {
+    }
+
     public String getName() {
         return name;
     }

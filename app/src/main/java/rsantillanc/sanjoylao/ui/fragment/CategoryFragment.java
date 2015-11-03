@@ -13,23 +13,23 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import java.util.List;
 
 import rsantillanc.sanjoylao.R;
 import rsantillanc.sanjoylao.model.CategoryModel;
-import rsantillanc.sanjoylao.ui.custom.adapter.ListViewAdapter;
+import rsantillanc.sanjoylao.ui.activity.PlateActivity;
 import rsantillanc.sanjoylao.ui.custom.adapter.RecyclerCategoryAdapter;
 import rsantillanc.sanjoylao.ui.mvp.Category.CategoryPresenterImpl;
 import rsantillanc.sanjoylao.ui.mvp.Category.ICategoryView;
 import rsantillanc.sanjoylao.ui.popup.DetailsOptionsPopup;
+import rsantillanc.sanjoylao.util.Const;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class CategoryFragment extends Fragment implements
-        ListViewAdapter.OnItemClickListener, ICategoryView{
+public class CategoryFragment extends Fragment implements RecyclerCategoryAdapter.OnItemClickListener,
+        ICategoryView {
 
     //View
     private RecyclerView mRecycler;
@@ -47,8 +47,7 @@ public class CategoryFragment extends Fragment implements
 
 
     public static CategoryFragment newInstance() {
-            instance =  new CategoryFragment();
-
+        instance = new CategoryFragment();
         return instance;
     }
 
@@ -67,8 +66,9 @@ public class CategoryFragment extends Fragment implements
         mPresenter = new CategoryPresenterImpl(this, getActivity());
 
         /*Setup*/
-        categories =  mPresenter.getCategoryList();
-        adapter =  new RecyclerCategoryAdapter(categories,getActivity());
+        categories = mPresenter.getCategoryList();
+        adapter = new RecyclerCategoryAdapter(categories, getActivity());
+        adapter.setOnItemClickListener(this);
         mRecycler.setAdapter(adapter);
         mRecycler.setLayoutManager(new GridLayoutManager(getActivity(), 3));
 
@@ -83,16 +83,6 @@ public class CategoryFragment extends Fragment implements
     }
 
 
-    public void onItemClick(View v, int index) {
-        if (v.getId() == R.id.iv_rice){
-            Toast.makeText(getActivity(),"Amplia imagen.",Toast.LENGTH_LONG).show();
-        }else if (v.getId() == R.id.bt_rice_order){
-            Toast.makeText(getActivity(),"Pedido realizado!.",Toast.LENGTH_LONG).show();
-        }else{
-            Toast.makeText(getActivity(),"Abre detalles!.",Toast.LENGTH_LONG).show();;
-        }
-//        openInfoSoup();
-    }
 
     private void openInfoSoup() {
         Intent in = new Intent(getActivity(), DetailsOptionsPopup.class);
@@ -158,5 +148,17 @@ public class CategoryFragment extends Fragment implements
     @Override
     public void loadData() {
 
+    }
+
+
+    @Override
+    public void onItemClick(CategoryModel category) {
+        goToPlateActivity(category.getObjectId());
+    }
+
+    private void goToPlateActivity(String categoryID) {
+        Intent plate = new Intent(getActivity(), PlateActivity.class);
+        plate.putExtra(Const.EXTRA_CATEGORY_ID,categoryID);
+        startActivity(plate);
     }
 }

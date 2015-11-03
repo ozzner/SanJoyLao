@@ -29,6 +29,7 @@ public class Tables {
         public static final String CREATE_CATEGORY = "CREATE TABLE `CATEGORY` (\n"+
                 "\t`objectId`\tTEXT NOT NULL,\n"+
                 "\t`name`\tTEXT NOT NULL UNIQUE,\n"+
+                "\t`urlImage`\tTEXT,\n"+
                 "\t`createdAt`\tTEXT,\n"+
                 "\t`updatedAt`\tTEXT,\n"+
                 "\tPRIMARY KEY(objectId)\n"+

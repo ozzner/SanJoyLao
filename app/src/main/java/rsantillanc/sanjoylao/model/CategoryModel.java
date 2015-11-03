@@ -10,6 +10,7 @@ public class CategoryModel implements Serializable {
 
     private String objectId;
     private String name;
+    private ParseFileModel image;
     private String createdAt;
     private String updatedAt;
 
@@ -17,13 +18,21 @@ public class CategoryModel implements Serializable {
     public CategoryModel() {
     }
 
-    public CategoryModel(String updatedAt, String createdAt, String name, String objectId) {
+    public CategoryModel(String updatedAt, String createdAt, ParseFileModel image, String name, String objectId) {
         this.updatedAt = updatedAt;
         this.createdAt = createdAt;
+        this.image = image;
         this.name = name;
         this.objectId = objectId;
     }
 
+    public ParseFileModel getImage() {
+        return image;
+    }
+
+    public void setImage(ParseFileModel image) {
+        this.image = image;
+    }
 
     public String getUpdatedAt() {
         return updatedAt;

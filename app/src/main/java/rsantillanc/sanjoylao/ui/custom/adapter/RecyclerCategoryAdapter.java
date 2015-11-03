@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -40,12 +42,12 @@ public class RecyclerCategoryAdapter extends RecyclerView.Adapter<RecyclerCatego
     @Override
     public void onBindViewHolder(BanquetViewHolder holder, int index) {
         holder.tvName.setText(categories.get(index).getName());
-        if (index % 2 == 0)
-            holder.ivImage.setImageDrawable(_context.getResources().getDrawable(R.drawable.plate_3));
-        else if (index % 2 ==1)
-            holder.ivImage.setImageDrawable(_context.getResources().getDrawable(R.drawable.arroz_2));
-        else
-            holder.ivImage.setImageDrawable(_context.getResources().getDrawable(R.drawable.plate_1));
+
+        if (categories.get(index).getImage() != null){
+            Picasso.with(_context)
+                    .load(categories.get(index).getImage().getUrl())
+                    .into(holder.ivImage);
+        }
 
 
     }
@@ -73,7 +75,7 @@ public class RecyclerCategoryAdapter extends RecyclerView.Adapter<RecyclerCatego
         @Override
         public void onClick(View v) {
             if (mItemClickListener != null)
-                mItemClickListener.onItemClick(v, getPosition());
+                mItemClickListener.onItemClick(categories.get(getPosition()));
         }
     }
 
@@ -83,7 +85,7 @@ public class RecyclerCategoryAdapter extends RecyclerView.Adapter<RecyclerCatego
     }
 
     public interface OnItemClickListener {
-        void onItemClick(View v, int index);
+        void onItemClick(CategoryModel category);
     }
 
 

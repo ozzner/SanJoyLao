@@ -65,8 +65,7 @@
             android:name=".ui.activity.OrderActivity"
             android:label="@string/title_activity_order"
             android:parentActivityName=".ui.activity.MainActivity"
-            android:theme="@style/SJLTheme.Base.Standar"
-            >
+            android:theme="@style/SJLTheme.Base.Standar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="rsantillanc.sanjoylao.ui.activity.MainActivity" />
@@ -74,13 +73,14 @@
         <activity
             android:name=".ui.activity.ProfileActivity"
             android:label="@string/title_activity_profile"
-            android:windowSoftInputMode="stateAlwaysHidden"
             android:parentActivityName=".ui.activity.MainActivity"
-            android:theme="@style/SJLTheme.Base">
+            android:theme="@style/SJLTheme.Base"
+            android:windowSoftInputMode="stateAlwaysHidden">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="rsantillanc.sanjoylao.ui.activity.MainActivity" />
         </activity>
+        <activity android:name=".ui.activity.PlateActivity"></activity>
     </application>
 
 </manifest>
