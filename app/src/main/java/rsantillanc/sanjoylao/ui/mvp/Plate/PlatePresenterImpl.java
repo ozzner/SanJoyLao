@@ -2,9 +2,6 @@ package rsantillanc.sanjoylao.ui.mvp.Plate;
 
 import android.app.Activity;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import rsantillanc.sanjoylao.model.PlateModel;
 
 /**
@@ -34,13 +31,7 @@ public class PlatePresenterImpl implements IPlatePresenter {
     }
 
     private String makeJson(CharSequence categoryID) {
-        JSONObject json = null;
-        try {
-            json = new JSONObject("{\"idCategory\":{\"__type\":\"Pointer\",\"className\":\"Category\",\"objectId\":" + categoryID + "\"}}");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        return json.toString();
+        String s = "{\"idCategory\":{\"__type\":\"Pointer\",\"className\":\"Category\",\"objectId\":\"" + categoryID + "\"}}";
+        return s;
     }
 }

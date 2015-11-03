@@ -2,7 +2,8 @@ package rsantillanc.sanjoylao.ui.mvp.Plate;
 
 import android.util.Log;
 
-import java.util.List;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 
 import retrofit.Call;
 import retrofit.Callback;
@@ -19,27 +20,37 @@ import rsantillanc.sanjoylao.util.Const;
  */
 public class PlateIteractorImpl {
 
-    public void findPlatesByCategory(CharSequence jsonFilter) {
+    public void findPlatesByCategory(String jsonFilter) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(ConstAPI.PARSE_URL_BASE)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-        Call<List<APIResultPlateModel>> plates = retrofit.create(ParseAPIService.class).getPlatesWhereClausule(jsonFilter);
-        plates.enqueue(new Callback<List<APIResultPlateModel>>() {
+        Call<APIResultPlateModel> plates = retrofit.create(ParseAPIService.class).getPlatesWhereClausule(getUrlEncoded(jsonFilter));
+        plates.enqueue(new Callback<APIResultPlateModel>() {
             @Override
-            public void onResponse(Response<List<APIResultPlateModel>> response, Retrofit retrofit) {
-                if (response.isSuccess()){
-                    Log.e(Const.DEBUG,"onResponse SIZE: " + response.body().size());
-                }else {
+            public void onResponse(Response<APIResultPlateModel> response, Retrofit retrofit) {
+                if (response.isSuccess()) {
+                    Log.e(Const.DEBUG, "onResponse SIZE: " + response.body().getResultArray().size());
+                } else {
 
                 }
             }
 
             @Override
             public void onFailure(Throwable t) {
-                Log.e(Const.DEBUG,"onFailure Throwable: " + t.getMessage());
+                Log.e(Const.DEBUG, "onFailure Throwable: " + t.getMessage());
             }
         });
+    }
+
+    private String getUrlEncoded(String jsonFilter) {
+        String encodedData = null;
+        try {
+            encodedData = URLEncoder.encode(jsonFilter, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return encodedData;
     }
 }

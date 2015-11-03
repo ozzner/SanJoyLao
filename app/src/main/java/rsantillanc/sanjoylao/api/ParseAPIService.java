@@ -1,7 +1,5 @@
 package rsantillanc.sanjoylao.api;
 
-import java.util.List;
-
 import retrofit.Call;
 import retrofit.http.Body;
 import retrofit.http.GET;
@@ -43,7 +41,7 @@ public interface ParseAPIService {
 
     })
     @GET("classes/Plate?include=idCategory")
-    Call<List<APIResultPlateModel>> getPlatesWhereClausule(@Query("where") CharSequence jsonWhere);
+    Call<APIResultPlateModel> getPlatesWhereClausule(@Query(value = "where",encoded = true) String jsonWhere);
 
 
 
