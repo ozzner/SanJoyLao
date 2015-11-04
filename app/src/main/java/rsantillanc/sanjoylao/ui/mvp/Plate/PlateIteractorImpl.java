@@ -10,11 +10,11 @@ import retrofit.Callback;
 import retrofit.GsonConverterFactory;
 import retrofit.Response;
 import retrofit.Retrofit;
-import rsantillanc.sanjoylao.util.ConstAPI;
 import rsantillanc.sanjoylao.api.service.ParseAPIService;
 import rsantillanc.sanjoylao.model.APIResultPlateModel;
 import rsantillanc.sanjoylao.storage.dao.PlateDao;
 import rsantillanc.sanjoylao.util.Const;
+import rsantillanc.sanjoylao.util.ConstAPI;
 
 /**
  * Created by RenzoD on 29/10/2015.
@@ -36,7 +36,9 @@ public class PlateIteractorImpl {
             @Override
             public void onResponse(Response<APIResultPlateModel> response, Retrofit retrofit) {
                 if (response.isSuccess()) {
-                    Log.e(Const.DEBUG, "onResponse SIZE: " + response.body().getResultArray().size());
+//                    makePlateWithPrice(response.body().);
+
+
                 } else {
 
                 }
@@ -47,6 +49,10 @@ public class PlateIteractorImpl {
                 Log.e(Const.DEBUG, "onFailure Throwable: " + t.getMessage());
             }
         });
+    }
+
+    private void makePlateWithPrice() {
+
     }
 
     private String getUrlEncoded(String jsonFilter) {

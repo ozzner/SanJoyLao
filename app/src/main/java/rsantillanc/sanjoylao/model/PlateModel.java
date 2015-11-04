@@ -24,13 +24,13 @@ public class PlateModel implements Serializable {
     private String ingredients;
     private JSONObject qualification;
     private boolean recommendet;
-    private PlateSize plateSize;
+    private PlateSizeModel plateSize;
 
 
     public PlateModel() {
     }
 
-    public PlateModel(PlateSize plateSize) {
+    public PlateModel(PlateSizeModel plateSize) {
         this.plateSize = plateSize;
     }
 
@@ -123,11 +123,11 @@ public class PlateModel implements Serializable {
         this.recommendet = recommendet;
     }
 
-    public PlateSize getPlateSize() {
+    public PlateSizeModel getPlateSize() {
         return plateSize;
     }
 
-    public void setPlateSize(PlateSize plateSize) {
+    public void setPlateSize(PlateSizeModel plateSize) {
         this.plateSize = plateSize;
     }
 }

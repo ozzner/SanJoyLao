@@ -11,13 +11,13 @@ import retrofit.Callback;
 import retrofit.GsonConverterFactory;
 import retrofit.Response;
 import retrofit.Retrofit;
-import rsantillanc.sanjoylao.util.ConstAPI;
 import rsantillanc.sanjoylao.api.service.ParseAPIService;
+import rsantillanc.sanjoylao.model.APISignInModel;
 import rsantillanc.sanjoylao.model.APIUserCreatedModel;
 import rsantillanc.sanjoylao.model.UserModel;
-import rsantillanc.sanjoylao.model.APISignInModel;
 import rsantillanc.sanjoylao.storage.dao.UserDao;
 import rsantillanc.sanjoylao.util.Const;
+import rsantillanc.sanjoylao.util.ConstAPI;
 import rsantillanc.sanjoylao.util.SJLStrings;
 
 /**

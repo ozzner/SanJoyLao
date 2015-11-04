@@ -44,4 +44,7 @@ public class MainPresenterImpl {
     }
 
 
+    public void loadPlatesSize() {
+        iteractor.syncPlateSize(mainActivity.getApplicationContext());
+    }
 }

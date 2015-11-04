@@ -7,7 +7,7 @@ import java.io.Serializable;
 /**
  * Created by rsantillanc on 03/11/2015.
  */
-public class PlateSize implements Serializable {
+public class PlateSizeModel implements Serializable {
     private static final long serialVersionUID = 0L;
 
     private String objectId;
@@ -18,10 +18,10 @@ public class PlateSize implements Serializable {
     private int timeOfPreparation;
 
 
-    public PlateSize() {
+    public PlateSizeModel() {
     }
 
-    public PlateSize(String objectId, ParsePointerModel idPlate, SizeModel size, int price, int timeOfPreparation) {
+    public PlateSizeModel(String objectId, ParsePointerModel idPlate, SizeModel size, int price, int timeOfPreparation) {
         this.objectId = objectId;
         this.idPlate = idPlate;
         this.size = size;
