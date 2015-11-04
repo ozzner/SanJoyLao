@@ -26,14 +26,47 @@ public class Tables {
             ");";
 
 
-        public static final String CREATE_CATEGORY = "CREATE TABLE `CATEGORY` (\n"+
-                "\t`objectId`\tTEXT NOT NULL,\n"+
-                "\t`name`\tTEXT NOT NULL UNIQUE,\n"+
-                "\t`urlImage`\tTEXT,\n"+
-                "\t`createdAt`\tTEXT,\n"+
-                "\t`updatedAt`\tTEXT,\n"+
-                "\tPRIMARY KEY(objectId)\n"+
-                ");";
+    public static final String CREATE_CATEGORY = "CREATE TABLE `CATEGORY` (\n" +
+            "\t`objectId`\tTEXT NOT NULL,\n" +
+            "\t`name`\tTEXT NOT NULL UNIQUE,\n" +
+            "\t`urlImage`\tTEXT,\n" +
+            "\t`createdAt`\tTEXT,\n" +
+            "\t`updatedAt`\tTEXT,\n" +
+            "\tPRIMARY KEY(objectId)\n" +
+            ");";
+
+
+    public static final String CREATE_PLATE_SIZE = "CREATE TABLE `PLATE_SIZE` (\n" +
+            "\t`objectId`\tTEXT NOT NULL,\n" +
+            "\t`idPlate`\tTEXT NOT NULL,\n" +
+            "\t`idSize`\tTEXT NOT NULL,\n" +
+            "\t`price`\tINTEGER DEFAULT 0,\n" +
+            "\t`timeOfPreparation`\tINTEGER DEFAULT 5,\n" +
+            "\tPRIMARY KEY(objectId)\n" +
+            ");";
+
+
+    public static final String CREATE_SIZE = "CREATE TABLE `SIZE` (\n" +
+            "\t`objectId`\tTEXT NOT NULL,\n" +
+            "\t`name`\tTEXT NOT NULL DEFAULT 'Normal',\n" +
+            "\tPRIMARY KEY(objectId)\n" +
+            ");";
+
+
+    public static final String CREATE_PLATE = "CREATE TABLE `PLATE` (\n" +
+            "\t`objectId`\tTEXT NOT NULL,\n" +
+            "\t`idCategory`\tTEXT NOT NULL,\n" +
+            "\t`image`\tTEXT,\n" +
+            "\t`name`\tTEXT NOT NULL,\n" +
+            "\t`atFeast`\tINTEGER NOT NULL DEFAULT 0,\n" +
+            "\t`available`\tINTEGER NOT NULL DEFAULT 1,\n" +
+            "\t`ingredients`\tTEXT,\n" +
+            "\t`qualification`\tTEXT NOT NULL DEFAULT '{}',\n" +
+            "\t`recomended`\tINTEGER NOT NULL DEFAULT 0,\n" +
+            "\tPRIMARY KEY(objectId)\n" +
+            ");";
+
+
 
     //Drop
     public static final String DROP_TABLE = "DROP TABLE IF EXISTS ";
@@ -41,4 +74,7 @@ public class Tables {
     //Tables name
     public static final String USER = "USER";
     public static final String CATEGORY = "CATEGORY";
+    public static final String PLATE_SIZE = "PLATE_SIZE";
+    public static final String SIZE = "SIZE";
+    public static final String PLATE = "PLATE";
 }

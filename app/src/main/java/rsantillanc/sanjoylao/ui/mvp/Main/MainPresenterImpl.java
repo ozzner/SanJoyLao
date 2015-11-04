@@ -29,6 +29,10 @@ public class MainPresenterImpl {
         iteractor.syncCategories(mainActivity.getApplicationContext());
     }
 
+    public void loadSizes() {
+        iteractor.syncSizes(mainActivity.getApplicationContext());
+    }
+
     public void savePreferences() {
         //delete this and paste in splash activity
         SJLPreferences preferences = new SJLPreferences(mainActivity);
@@ -36,6 +40,8 @@ public class MainPresenterImpl {
     }
 
     public void loadProfileImage(String urlProfileImage, ImageView imageView) {
-        iteractor.getProfileImage(mainActivity,imageView,urlProfileImage);
+        iteractor.getProfileImage(mainActivity, imageView, urlProfileImage);
     }
+
+
 }

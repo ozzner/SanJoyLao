@@ -262,6 +262,7 @@ public class MainActivity extends BaseActivity
 
     private void sync() {
         mPresenter.loadCategories();
+        mPresenter.loadSizes();
         mPresenter.savePreferences();
     }
 

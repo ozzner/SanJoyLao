@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 
-import rsantillanc.sanjoylao.api.ConstAPI;
+import rsantillanc.sanjoylao.util.ConstAPI;
 
 /**
  * Created by RenzoD on 01/11/2015.
