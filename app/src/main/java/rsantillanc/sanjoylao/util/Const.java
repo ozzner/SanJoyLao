@@ -73,4 +73,6 @@ public class Const {
     //[ PARSE ]
     public static final String PARSE_TYPE_FILE = "File";
     public static final String EXTRA_CATEGORY_ID = "category_id";
+    public static final String EXTRA_CATEGORY_NAME = "category_name";
+    public static final String KEY_POINTER = "Pointer";
 }

@@ -10,9 +10,10 @@ import retrofit.Callback;
 import retrofit.GsonConverterFactory;
 import retrofit.Response;
 import retrofit.Retrofit;
-import rsantillanc.sanjoylao.api.ConstAPI;
-import rsantillanc.sanjoylao.api.ParseAPIService;
+import rsantillanc.sanjoylao.util.ConstAPI;
+import rsantillanc.sanjoylao.api.service.ParseAPIService;
 import rsantillanc.sanjoylao.model.APIResultPlateModel;
+import rsantillanc.sanjoylao.storage.dao.PlateDao;
 import rsantillanc.sanjoylao.util.Const;
 
 /**
@@ -20,7 +21,11 @@ import rsantillanc.sanjoylao.util.Const;
  */
 public class PlateIteractorImpl {
 
+    PlateDao plateDao;
+
     public void findPlatesByCategory(String jsonFilter) {
+        plateDao = new PlateDao();
+
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(ConstAPI.PARSE_URL_BASE)
                 .addConverterFactory(GsonConverterFactory.create())

@@ -153,12 +153,13 @@ public class CategoryFragment extends Fragment implements RecyclerCategoryAdapte
 
     @Override
     public void onItemClick(CategoryModel category) {
-        goToPlateActivity(category.getObjectId());
+        goToPlateActivity(category);
     }
 
-    private void goToPlateActivity(String categoryID) {
+    private void goToPlateActivity(CategoryModel category) {
         Intent plate = new Intent(getActivity(), PlateActivity.class);
-        plate.putExtra(Const.EXTRA_CATEGORY_ID,categoryID);
+        plate.putExtra(Const.EXTRA_CATEGORY_ID,category.getObjectId());
+        plate.putExtra(Const.EXTRA_CATEGORY_NAME,category.getName());
         startActivity(plate);
     }
 }

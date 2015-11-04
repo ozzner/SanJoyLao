@@ -1,4 +1,4 @@
-package rsantillanc.sanjoylao.api;
+package rsantillanc.sanjoylao.util;
 
 /**
  * Created by rsantillanc on 20/10/2015.
