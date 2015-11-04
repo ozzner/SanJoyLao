@@ -264,6 +264,7 @@ public class MainActivity extends BaseActivity
         mPresenter.loadCategories();
         mPresenter.loadSizes();
         mPresenter.loadPlatesSize();
+        mPresenter.loadPlate();
         mPresenter.savePreferences();
     }
 

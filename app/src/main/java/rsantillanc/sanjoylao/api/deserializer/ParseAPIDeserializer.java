@@ -11,6 +11,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
+import rsantillanc.sanjoylao.model.PlateModel;
 import rsantillanc.sanjoylao.model.PlateSizeModel;
 import rsantillanc.sanjoylao.model.SizeModel;
 import rsantillanc.sanjoylao.util.ConstAPI;
@@ -23,15 +24,24 @@ public class ParseAPIDeserializer<T> implements JsonDeserializer<T> {
     @Override
     public T deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
         JsonArray array;
+
+        //SizeModel
         if (typeOfT.equals(SizeModel.class)) {
 
             array = json.getAsJsonObject().getAsJsonArray(ConstAPI.PARSE_KEY_RESULT);
             return ((T) getModelsFromJsonArray(array, SizeModel.class));
 
+        //PlateSizeModel
         } else if (typeOfT.equals(PlateSizeModel.class)) {
 
             array = json.getAsJsonObject().getAsJsonArray(ConstAPI.PARSE_KEY_RESULT);
             return ((T) getModelsFromJsonArray(array, PlateSizeModel.class));
+
+        //PlateModel
+        } else if (typeOfT.equals(PlateModel.class)) {
+
+            array = json.getAsJsonObject().getAsJsonArray(ConstAPI.PARSE_KEY_RESULT);
+            return ((T) getModelsFromJsonArray(array, PlateModel.class));
 
         } else
             return null;

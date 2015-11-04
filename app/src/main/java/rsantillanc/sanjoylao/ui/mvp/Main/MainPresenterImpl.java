@@ -20,6 +20,11 @@ public class MainPresenterImpl {
         this.mainActivity = activity;
     }
 
+    public void savePreferences() {
+        //delete this and paste in splash activity
+        SJLPreferences preferences = new SJLPreferences(mainActivity);
+        preferences.run();
+    }
 
     /**
      * Carga las categorias desde el servidor y
@@ -33,18 +38,15 @@ public class MainPresenterImpl {
         iteractor.syncSizes(mainActivity.getApplicationContext());
     }
 
-    public void savePreferences() {
-        //delete this and paste in splash activity
-        SJLPreferences preferences = new SJLPreferences(mainActivity);
-        preferences.run();
-    }
-
     public void loadProfileImage(String urlProfileImage, ImageView imageView) {
         iteractor.getProfileImage(mainActivity, imageView, urlProfileImage);
     }
 
-
     public void loadPlatesSize() {
         iteractor.syncPlateSize(mainActivity.getApplicationContext());
+    }
+
+    public void loadPlate() {
+        iteractor.syncPlates(mainActivity.getApplicationContext());
     }
 }

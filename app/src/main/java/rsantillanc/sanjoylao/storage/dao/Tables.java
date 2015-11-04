@@ -62,7 +62,7 @@ public class Tables {
             "\t`available`\tINTEGER NOT NULL DEFAULT 1,\n" +
             "\t`ingredients`\tTEXT,\n" +
             "\t`qualification`\tTEXT NOT NULL DEFAULT '{}',\n" +
-            "\t`recomended`\tINTEGER NOT NULL DEFAULT 0,\n" +
+            "\t`recommended`\tINTEGER NOT NULL DEFAULT 0,\n" +
             "\tPRIMARY KEY(objectId)\n" +
             ");";
 

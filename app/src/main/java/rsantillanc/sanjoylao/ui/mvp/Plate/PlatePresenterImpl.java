@@ -14,7 +14,7 @@ public class PlatePresenterImpl implements IPlatePresenter {
     IPlateView mView;
 
     public PlatePresenterImpl(Activity activity, IPlateView mView) {
-        this.iteractor = new PlateIteractorImpl();
+        this.iteractor = new PlateIteractorImpl(activity);
         this.mView = mView;
         this.mActivity = activity;
     }

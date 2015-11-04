@@ -1,9 +1,11 @@
 package rsantillanc.sanjoylao.ui.mvp.Plate;
 
+import android.app.Activity;
 import android.util.Log;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 
 import retrofit.Call;
 import retrofit.Callback;
@@ -12,6 +14,7 @@ import retrofit.Response;
 import retrofit.Retrofit;
 import rsantillanc.sanjoylao.api.service.ParseAPIService;
 import rsantillanc.sanjoylao.model.APIResultPlateModel;
+import rsantillanc.sanjoylao.model.PlateModel;
 import rsantillanc.sanjoylao.storage.dao.PlateDao;
 import rsantillanc.sanjoylao.util.Const;
 import rsantillanc.sanjoylao.util.ConstAPI;
@@ -21,34 +24,57 @@ import rsantillanc.sanjoylao.util.ConstAPI;
  */
 public class PlateIteractorImpl {
 
+    private final Activity mActivity;
     PlateDao plateDao;
 
+    public PlateIteractorImpl(Activity activity) {
+        this.plateDao = new PlateDao(activity);
+        this.mActivity = activity;
+    }
+
     public void findPlatesByCategory(String jsonFilter) {
-        plateDao = new PlateDao();
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(ConstAPI.PARSE_URL_BASE)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
+        if (countPlates() == 0) {
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl(ConstAPI.PARSE_URL_BASE)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
 
-        Call<APIResultPlateModel> plates = retrofit.create(ParseAPIService.class).getPlatesWhereClausule(getUrlEncoded(jsonFilter));
-        plates.enqueue(new Callback<APIResultPlateModel>() {
-            @Override
-            public void onResponse(Response<APIResultPlateModel> response, Retrofit retrofit) {
-                if (response.isSuccess()) {
-//                    makePlateWithPrice(response.body().);
-
-
-                } else {
-
+            Call<APIResultPlateModel> plates = retrofit.create(ParseAPIService.class).getPlatesWhereClausule(getUrlEncoded(jsonFilter));
+            plates.enqueue(new Callback<APIResultPlateModel>() {
+                @Override
+                public void onResponse(Response<APIResultPlateModel> response, Retrofit retrofit) {
+                    if (response.isSuccess()) {
+                        long count = storePlates(response.body().getResultArray());
+                        Log.e(Const.DEBUG, "oonResponse plates stored: " + count);
+                    } else {
+                        Log.e(Const.DEBUG, "oonResponse Error: " + response.message());
+                    }
                 }
-            }
 
-            @Override
-            public void onFailure(Throwable t) {
-                Log.e(Const.DEBUG, "onFailure Throwable: " + t.getMessage());
-            }
-        });
+                @Override
+                public void onFailure(Throwable t) {
+                    Log.e(Const.DEBUG, "onFailure Throwable: " + t.getMessage());
+                }
+            });
+
+        } else {
+
+        }
+
+    }
+
+    private long storePlates(ArrayList<PlateModel> resultArray) {
+        long rows = 0;
+        for (PlateModel plate : resultArray) {
+            rows = new PlateDao(mActivity).insert(plate);
+        }
+        return rows;
+    }
+
+
+    private int countPlates() {
+        return new PlateDao(mActivity.getApplicationContext()).count();
     }
 
     private void makePlateWithPrice() {

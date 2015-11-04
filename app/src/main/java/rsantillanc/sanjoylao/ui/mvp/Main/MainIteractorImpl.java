@@ -24,9 +24,11 @@ import rsantillanc.sanjoylao.api.deserializer.ParseAPIDeserializer;
 import rsantillanc.sanjoylao.api.service.ParseAPIService;
 import rsantillanc.sanjoylao.model.APIResultCategoryModel;
 import rsantillanc.sanjoylao.model.CategoryModel;
+import rsantillanc.sanjoylao.model.PlateModel;
 import rsantillanc.sanjoylao.model.PlateSizeModel;
 import rsantillanc.sanjoylao.model.SizeModel;
 import rsantillanc.sanjoylao.storage.dao.CategoryDao;
+import rsantillanc.sanjoylao.storage.dao.PlateDao;
 import rsantillanc.sanjoylao.storage.dao.PlateSizeDao;
 import rsantillanc.sanjoylao.storage.dao.SizeDao;
 import rsantillanc.sanjoylao.util.Const;
@@ -146,6 +148,47 @@ public class MainIteractorImpl {
     }
 
 
+    public void syncPlates(final Context c) {
+
+        if (countPlates(c) == 0) {
+
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl(ConstAPI.PARSE_URL_BASE)
+                    .addConverterFactory(myConverter(PlateModel.class))
+                    .build();
+
+            Call<PlateModel> request = retrofit.create(ParseAPIService.class).getAllPlates();
+            request.enqueue(new Callback<PlateModel>() {
+                @Override
+                public void onResponse(Response<PlateModel> response, Retrofit retrofit) {
+
+                    if (response.isSuccess()) {
+                        List<PlateModel> list = new ArrayList();
+                        list.addAll((Collection<? extends PlateModel>) response.body());
+
+                        long rows = 0;
+                        for (PlateModel plate : list) {
+                            rows = new PlateDao(c).insert(plate);
+                        }
+                        Log.e(Const.DEBUG, "rows affected: " + rows);
+                    }
+                }
+
+                @Override
+                public void onFailure(Throwable t) {
+                    Log.e(Const.DEBUG, "onFailure: ", t);
+                }
+            });
+        } else {
+            Log.e(Const.DEBUG, "Ya hay platos ");
+        }
+    }
+
+    private int countPlates(Context c) {
+        return new PlateDao(c).count();
+    }
+
+
     public Converter.Factory myConverter(Type type) {
 
         Gson build = new GsonBuilder()
@@ -175,6 +218,7 @@ public class MainIteractorImpl {
                 .error(R.drawable.ic_profile)
                 .into(imageView);
     }
+
 
 
 }

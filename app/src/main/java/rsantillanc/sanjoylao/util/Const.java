@@ -7,6 +7,7 @@ public class Const {
 
     public static final String BLANK_SPACE = " ";
     public static final String EMPTY = "";
+    public static final String EMPTY_JSON = "{}";
     public static final String PRICE_USD = "USD ";
     public static final String PRICE_PEN = "S/. ";
     public static final String TAG_BANQUET = "BANQUET";
