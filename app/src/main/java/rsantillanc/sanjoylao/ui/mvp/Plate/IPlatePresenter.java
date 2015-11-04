@@ -7,5 +7,5 @@ import rsantillanc.sanjoylao.model.PlateModel;
  */
 public interface IPlatePresenter {
     void onPlateClick(PlateModel plate);
-    void loadPlatesByCategory(CharSequence categoryID);
+    void loadPlatesByCategory(String categoryID);
 }

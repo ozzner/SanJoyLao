@@ -6,6 +6,7 @@ import android.util.Log;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.List;
 
 import retrofit.Call;
 import retrofit.Callback;
@@ -32,7 +33,7 @@ public class PlateIteractorImpl {
         this.mActivity = activity;
     }
 
-    public void findPlatesByCategory(String jsonFilter) {
+    public void findPlatesByCategory(String categoryID, final OnPlateListener listener) {
 
         if (countPlates() == 0) {
             Retrofit retrofit = new Retrofit.Builder()
@@ -40,12 +41,14 @@ public class PlateIteractorImpl {
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
 
-            Call<APIResultPlateModel> plates = retrofit.create(ParseAPIService.class).getPlatesWhereClausule(getUrlEncoded(jsonFilter));
+            Call<APIResultPlateModel> plates = retrofit.create(ParseAPIService.class).getPlatesWhereClausule(getUrlEncoded(makeJson(categoryID)));
             plates.enqueue(new Callback<APIResultPlateModel>() {
                 @Override
                 public void onResponse(Response<APIResultPlateModel> response, Retrofit retrofit) {
                     if (response.isSuccess()) {
                         long count = storePlates(response.body().getResultArray());
+                         listener.onListFilterSuccess(response.body().getResultArray());
+
                         Log.e(Const.DEBUG, "oonResponse plates stored: " + count);
                     } else {
                         Log.e(Const.DEBUG, "oonResponse Error: " + response.message());
@@ -59,7 +62,8 @@ public class PlateIteractorImpl {
             });
 
         } else {
-
+            List<PlateModel> platesFilter = new PlateDao(mActivity).listByCategory(categoryID);
+            listener.onListFilterSuccess(platesFilter);
         }
 
     }
@@ -79,6 +83,11 @@ public class PlateIteractorImpl {
 
     private void makePlateWithPrice() {
 
+    }
+
+    private String makeJson(CharSequence categoryID) {
+        String s = "{\"idCategory\":{\"__type\":\"Pointer\",\"className\":\"Category\",\"objectId\":\"" + categoryID + "\"}}";
+        return s;
     }
 
     private String getUrlEncoded(String jsonFilter) {
