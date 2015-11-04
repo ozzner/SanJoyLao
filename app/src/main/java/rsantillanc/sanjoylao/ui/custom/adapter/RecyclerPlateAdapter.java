@@ -84,6 +84,7 @@ public class RecyclerPlateAdapter extends RecyclerView.Adapter<RecyclerPlateAdap
 
         public PlateHolder(View itemView) {
             super(itemView);
+
             tvPlateName = (TextView) itemView.findViewById(R.id.tv_plate_name);
             tvPrice1 = (TextView) itemView.findViewById(R.id.tv_plate_price1);
             tvPrice2 = (TextView) itemView.findViewById(R.id.tv_plate_price2);
