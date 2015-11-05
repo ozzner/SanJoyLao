@@ -13,7 +13,6 @@ import rsantillanc.sanjoylao.model.SizeModel;
 public class SizeDao {
 
     private static final String SELECT = "Select * from " + Tables.SIZE;
-    private static final String SELECT_WHERE = "Select * from where ";
     private static final String COMPARE = "=?";
 
     //Columns

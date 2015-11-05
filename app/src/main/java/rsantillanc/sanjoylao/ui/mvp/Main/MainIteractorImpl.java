@@ -24,10 +24,12 @@ import rsantillanc.sanjoylao.api.deserializer.ParseAPIDeserializer;
 import rsantillanc.sanjoylao.api.service.ParseAPIService;
 import rsantillanc.sanjoylao.model.APIResultCategoryModel;
 import rsantillanc.sanjoylao.model.CategoryModel;
+import rsantillanc.sanjoylao.model.OrderTypeModel;
 import rsantillanc.sanjoylao.model.PlateModel;
 import rsantillanc.sanjoylao.model.PlateSizeModel;
 import rsantillanc.sanjoylao.model.SizeModel;
 import rsantillanc.sanjoylao.storage.dao.CategoryDao;
+import rsantillanc.sanjoylao.storage.dao.OrderTypeDao;
 import rsantillanc.sanjoylao.storage.dao.PlateDao;
 import rsantillanc.sanjoylao.storage.dao.PlateSizeDao;
 import rsantillanc.sanjoylao.storage.dao.SizeDao;
@@ -170,7 +172,7 @@ public class MainIteractorImpl {
                         for (PlateModel plate : list) {
                             rows = new PlateDao(c).insert(plate);
                         }
-                        Log.e(Const.DEBUG, "rows affected: " + rows);
+                        Log.e(Const.DEBUG, "plate rows affected: " + rows);
                     }
                 }
 
@@ -183,6 +185,52 @@ public class MainIteractorImpl {
             Log.e(Const.DEBUG, "Ya hay platos ");
         }
     }
+
+    public void syncOrderType(final Context c) {
+
+        if (countOrderType(c) == 0) {
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl(ConstAPI.PARSE_URL_BASE)
+                    .addConverterFactory(myConverter(OrderTypeModel.class))
+                    .build();
+
+            //Make call
+            Call<OrderTypeModel> call = retrofit.create(ParseAPIService.class).getAllOrderTypes();
+            call.enqueue(new Callback<OrderTypeModel>() {
+                @Override
+                public void onResponse(Response<OrderTypeModel> response, Retrofit retrofit) {
+                    if (response.isSuccess()){
+                        List<OrderTypeModel> list = new ArrayList();
+                        list.addAll((Collection<? extends OrderTypeModel>) response.body());
+
+                        long rows = 0;
+                        for (OrderTypeModel orderType : list) {
+                             rows = new OrderTypeDao(c).insert(orderType);
+                        }
+                        Log.e(Const.DEBUG, "orderType rows affected: " + rows);
+                    }
+                }
+
+                @Override
+                public void onFailure(Throwable t) {
+
+                }
+            });
+
+
+        }else{
+            //TODO PUEDE SACAR DESDE LA BASE DE DATOS LOCAL.
+        }
+    }
+
+
+
+    //--------------------{COUNTERS}--------------------
+
+    private int countOrderType(Context c) {
+        return new OrderTypeDao(c).count();
+    }
+
 
     private int countPlates(Context c) {
         return new PlateDao(c).count();

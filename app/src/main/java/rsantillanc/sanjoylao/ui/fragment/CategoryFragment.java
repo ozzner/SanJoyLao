@@ -121,7 +121,7 @@ public class CategoryFragment extends Fragment implements RecyclerCategoryAdapte
 
                     }
 
-//                    Fragment gotToFront = new MainFragment(new MainFragment.OnLoadSuccess() {
+//                    Fragment gotToFront = new HomeFragment(new HomeFragment.OnLoadSuccess() {
 //                        @Override
 //                        public void viewloaded() {
 //
