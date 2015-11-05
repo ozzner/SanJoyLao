@@ -67,6 +67,26 @@ public class Tables {
             ");";
 
 
+    public static final String CREATE_ORDER_TYPE = "CREATE TABLE `ORDER_TYPE` (\n" +
+            "\t`objectId`\tTEXT NOT NULL,\n" +
+            "\t`name`\tTEXT NOT NULL,\n" +
+            "\tPRIMARY KEY(objectId)\n" +
+            ");";
+
+    public static final String CREATE_ORDER = "CREATE TABLE `ORDER` (\n" +
+            "\t`objectId`\tTEXT NOT NULL,\n" +
+            "\t`idLocationDelivery`\tTEXT NOT NULL,\n" +
+            "\t`idOrderType`\tTEXT,\n" +
+            "\t`idPago`\tTEXT UNIQUE,\n" +
+            "\t`idStatus`\tTEXT,\n" +
+            "\t`idUser`\tREAL NOT NULL,\n" +
+            "\t`Price`\tNUMERIC NOT NULL DEFAULT 0.0,\n" +
+            "\t`createdAt`\tTEXT NOT NULL,\n" +
+            "\t`updatedAt`\tINTEGER NOT NULL,\n" +
+            "\tPRIMARY KEY(objectId)\n" +
+            ");";
+
+
 
     //Drop
     public static final String DROP_TABLE = "DROP TABLE IF EXISTS ";
@@ -77,4 +97,6 @@ public class Tables {
     public static final String PLATE_SIZE = "PLATE_SIZE";
     public static final String SIZE = "SIZE";
     public static final String PLATE = "PLATE";
+    public static final String ORDER_TYPE = "ORDER_TYPE";
+    public static final String ORDER = "ORDER";
 }

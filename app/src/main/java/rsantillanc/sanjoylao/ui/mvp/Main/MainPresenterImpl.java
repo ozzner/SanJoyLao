@@ -49,4 +49,8 @@ public class MainPresenterImpl {
     public void loadPlate() {
         iteractor.syncPlates(mainActivity.getApplicationContext());
     }
+
+    public void loadOrderType() {
+        iteractor.syncOrderType(mainActivity.getApplicationContext());
+    }
 }

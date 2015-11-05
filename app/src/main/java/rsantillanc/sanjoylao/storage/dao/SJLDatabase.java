@@ -10,7 +10,7 @@ import rsantillanc.sanjoylao.storage.sp.SJLPreferences;
  * Created by RenzoD on 21/10/2015.
  */
 public class SJLDatabase extends SQLiteOpenHelper {
-    private static final int VERSION = 3;
+    private static final int VERSION = 4;
     private static final String DATABSE = "SJLDatabase.db";
 
     public SJLDatabase(Context context) {
@@ -25,6 +25,8 @@ public class SJLDatabase extends SQLiteOpenHelper {
             db.execSQL(Tables.CREATE_PLATE);
             db.execSQL(Tables.CREATE_SIZE);
             db.execSQL(Tables.CREATE_PLATE_SIZE);
+            db.execSQL(Tables.CREATE_ORDER_TYPE);
+            db.execSQL(Tables.CREATE_ORDER);
     }
 
     @Override
@@ -34,6 +36,8 @@ public class SJLDatabase extends SQLiteOpenHelper {
         db.execSQL(Tables.DROP_TABLE + Tables.SIZE);
         db.execSQL(Tables.DROP_TABLE + Tables.PLATE);
         db.execSQL(Tables.DROP_TABLE + Tables.PLATE_SIZE);
+        db.execSQL(Tables.DROP_TABLE + Tables.ORDER_TYPE);
+        db.execSQL(Tables.DROP_TABLE + Tables.ORDER);
         onCreate(db);
     }
 

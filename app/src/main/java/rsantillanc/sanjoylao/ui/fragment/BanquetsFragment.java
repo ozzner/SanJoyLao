@@ -123,7 +123,7 @@ public class BanquetsFragment extends Fragment {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
-                    Fragment gotToFront = new MainFragment(new MainFragment.OnLoadSuccess() {
+                    Fragment gotToFront = new HomeFragment(new HomeFragment.OnLoadSuccess() {
                         @Override
                         public void viewloaded() {
                             MainActivity.collapseAppBarLayout();

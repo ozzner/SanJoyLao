@@ -29,7 +29,7 @@ import rsantillanc.sanjoylao.ui.fragment.BanquetsFragment;
 import rsantillanc.sanjoylao.ui.fragment.CategoryFragment;
 import rsantillanc.sanjoylao.ui.fragment.ChefFragment;
 import rsantillanc.sanjoylao.ui.fragment.FrontFragment;
-import rsantillanc.sanjoylao.ui.fragment.MainFragment;
+import rsantillanc.sanjoylao.ui.fragment.HomeFragment;
 import rsantillanc.sanjoylao.ui.fragment.SoupFragment;
 import rsantillanc.sanjoylao.ui.mvp.Main.IMainView;
 import rsantillanc.sanjoylao.ui.mvp.Main.MainPresenterImpl;
@@ -41,7 +41,7 @@ import rsantillanc.sanjoylao.util.MenuColorizer;
 public class MainActivity extends BaseActivity
         implements
         NavigationView.OnNavigationItemSelectedListener,
-        MainFragment.OnLoadSuccess,
+        HomeFragment.OnLoadSuccess,
         IMainView {
 
 
@@ -99,7 +99,7 @@ public class MainActivity extends BaseActivity
         setUpsUIComponents();
 
         //Show fragment
-        displayFragment(new MainFragment(this, true), MAIN, true);
+        displayFragment(new HomeFragment(this, true), MAIN, true);
 
         //Synchronizing
         sync();
@@ -265,6 +265,7 @@ public class MainActivity extends BaseActivity
         mPresenter.loadSizes();
         mPresenter.loadPlatesSize();
         mPresenter.loadPlate();
+        mPresenter.loadOrderType();
         mPresenter.savePreferences();
     }
 
@@ -347,7 +348,7 @@ public class MainActivity extends BaseActivity
         switch (menuItem.getItemId()) {
 
             case INPUT:
-                ui = MainFragment.newInstance();
+                ui = HomeFragment.newInstance();
                 title = getString(R.string.item_title_inputs);
                 isTransaction = true;
                 setCollapseAppBarLayout(true);
@@ -372,15 +373,15 @@ public class MainActivity extends BaseActivity
                 setCollapseAppBarLayout(true);
                 break;
 //            case CHICKEN_MEAT:
-//                ui = MainFragment.newInstance();
+//                ui = HomeFragment.newInstance();
 //                title = getString(R.string.item_title_meat_and_chicken);
 //                break;
 //            case FISH:
-//                ui = MainFragment.newInstance();
+//                ui = HomeFragment.newInstance();
 //                title = getString(R.string.item_title_inputs);
 //                break;
 //            case VEGETARIAN:
-//                ui = MainFragment.newInstance();
+//                ui = HomeFragment.newInstance();
 //                break;
             case BANQUETS:
                 ui = BanquetsFragment.newInstance();
@@ -390,19 +391,19 @@ public class MainActivity extends BaseActivity
 
                 break;
             case DRINKS:
-                ui = MainFragment.newInstance();
+                ui = HomeFragment.newInstance();
                 isTransaction = true;
                 setCollapseAppBarLayout(true);
 
                 break;
             case CENTRAL:
-                ui = MainFragment.newInstance();
+                ui = HomeFragment.newInstance();
                 isTransaction = true;
                 setCollapseAppBarLayout(true);
 
                 break;
             default:
-                ui = MainFragment.newInstance();
+                ui = HomeFragment.newInstance();
                 typeOfDevice = Android.getTypeDevice(this);
                 isTransaction = true;
                 setCollapseAppBarLayout(true);

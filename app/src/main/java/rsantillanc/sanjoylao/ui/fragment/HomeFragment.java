@@ -14,21 +14,21 @@ import rsantillanc.sanjoylao.R;
  * A simple {@link Fragment} subclass.
  */
 @SuppressLint("ValidFragment")
-public class MainFragment extends Fragment {
+public class HomeFragment extends Fragment {
 
-    private static MainFragment instance;
+    private static HomeFragment instance;
     private OnLoadSuccess load;
     private boolean isLoad = false;
 
-    public static MainFragment newInstance() {
+    public static HomeFragment newInstance() {
         if (instance == null)
-            instance =  new MainFragment(null,false);
+            instance =  new HomeFragment(null,false);
 
         return instance;
     }
 
     @SuppressLint("ValidFragment")
-    public MainFragment(OnLoadSuccess success,boolean flag) {
+    public HomeFragment(OnLoadSuccess success, boolean flag) {
        this.load = success;
         this.isLoad = flag;
     }
