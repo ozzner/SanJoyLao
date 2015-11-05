@@ -202,7 +202,7 @@ public class OrderActivity extends BaseActivity
         total = amount;
         tvTotalPrice.setText(Const.PRICE_PEN + SJLStrings.format(total, SJLStrings.FORMAT_MILES_EN));
         tvTotalPrice.setPaintFlags(tvTotalPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-        mCollapsiong.setTitle(tvTotalPrice.getText().toString());
+        mCollapsiong.setTitle(getString(R.string.title_my_orders));
         enableTotalPrice();
     }
 
@@ -210,7 +210,7 @@ public class OrderActivity extends BaseActivity
     public void printDiscount(double amount) {
         tvPercent.setText(15 + "%" + "\ndesc.");
         tvDiscount.setText(Const.PRICE_PEN + SJLStrings.format((amount * 0.85), SJLStrings.FORMAT_MILES_EN));
-        mCollapsiong.setTitle(tvDiscount.getText().toString());
+        mCollapsiong.setTitle(getString(R.string.title_my_orders));
         enableAllPriceViews();
     }
 

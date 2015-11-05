@@ -14,7 +14,7 @@ public class PlateSizeModel implements Serializable {
     private ParsePointerModel idPlate;
     @SerializedName("idSize")
     private SizeModel size;
-    private int price;
+    private double price;
     private int timeOfPreparation;
 
 
@@ -53,11 +53,11 @@ public class PlateSizeModel implements Serializable {
         this.size = size;
     }
 
-    public int getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 

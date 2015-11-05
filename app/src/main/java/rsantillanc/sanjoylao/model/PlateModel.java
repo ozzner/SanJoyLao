@@ -5,6 +5,7 @@ import com.google.gson.annotations.SerializedName;
 import org.json.JSONObject;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created by rsantillanc on 29/10/2015.
@@ -24,15 +25,13 @@ public class PlateModel implements Serializable {
     private String ingredients;
     private JSONObject qualification;
     private boolean recommendet;
-    private PlateSizeModel plateSize;
+    private List<PlateSizeModel>  plateSize;
 
 
     public PlateModel() {
     }
 
-    public PlateModel(PlateSizeModel plateSize) {
-        this.plateSize = plateSize;
-    }
+
 
 
     public String getObjectId() {
@@ -123,11 +122,11 @@ public class PlateModel implements Serializable {
         this.recommendet = recommendet;
     }
 
-    public PlateSizeModel getPlateSize() {
+    public List<PlateSizeModel> getPlateSize() {
         return plateSize;
     }
 
-    public void setPlateSize(PlateSizeModel plateSize) {
+    public void setPlateSize(List<PlateSizeModel> plateSize) {
         this.plateSize = plateSize;
     }
 }

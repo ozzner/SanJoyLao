@@ -2,12 +2,14 @@ package rsantillanc.sanjoylao.ui.mvp.Plate;
 
 import android.app.Activity;
 
+import java.util.List;
+
 import rsantillanc.sanjoylao.model.PlateModel;
 
 /**
  * Created by RenzoD on 29/10/2015.
  */
-public class PlatePresenterImpl implements IPlatePresenter {
+public class PlatePresenterImpl implements IPlatePresenter,OnPlateListener {
 
     private final Activity mActivity;
     PlateIteractorImpl iteractor;
@@ -26,12 +28,19 @@ public class PlatePresenterImpl implements IPlatePresenter {
     }
 
     @Override
-    public void loadPlatesByCategory(CharSequence categoryID) {
-        iteractor.findPlatesByCategory(makeJson(categoryID));
+    public void loadPlatesByCategory(String categoryID) {
+        iteractor.findPlatesByCategory(categoryID, this);
     }
 
-    private String makeJson(CharSequence categoryID) {
-        String s = "{\"idCategory\":{\"__type\":\"Pointer\",\"className\":\"Category\",\"objectId\":\"" + categoryID + "\"}}";
-        return s;
+
+    //{ON_PLATE_LISTENER}
+    @Override
+    public void onListFilterSuccess(List<PlateModel> platesFilter) {
+        mView.onPlatesLoadSuccess(platesFilter);
+    }
+
+    @Override
+    public void onListFilterError(CharSequence error) {
+        mView.onError(error);
     }
 }

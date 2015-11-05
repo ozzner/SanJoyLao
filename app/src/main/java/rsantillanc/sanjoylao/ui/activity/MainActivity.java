@@ -152,7 +152,7 @@ public class MainActivity extends BaseActivity
     private void setUpProfile() {
         if (mBundle != null) {
             currentUser = ((UserModel) mBundle.getSerializable(Const.EXTRA_USER));
-            username.setText(currentUser.getFullName());
+            username.setText(currentUser.getFullName());//Se cayo aqui por nullpointerEx
             email.setText(currentUser.getEmail());
             mPresenter.loadProfileImage(currentUser.getUrlProfileImage(), profileImage);
         }

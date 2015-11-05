@@ -109,5 +109,6 @@
     <string name="title_activity_profile">Renzo Santillán Ch.</string>
     <string name="label_profile_created">"Created: "</string>
     <string name="view_card">Ver carta</string>
+    <string name="title_my_orders">Mis pedidos</string>
 
 </resources>

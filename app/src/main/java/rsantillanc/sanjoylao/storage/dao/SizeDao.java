@@ -13,6 +13,8 @@ import rsantillanc.sanjoylao.model.SizeModel;
 public class SizeDao {
 
     private static final String SELECT = "Select * from " + Tables.SIZE;
+    private static final String SELECT_WHERE = "Select * from where ";
+    private static final String COMPARE = "=?";
 
     //Columns
     private String objectId = "objectId";
@@ -34,8 +36,20 @@ public class SizeDao {
 
     public long insert(SizeModel sizeModel) {
         ContentValues cv = new ContentValues();
-        cv.put(objectId,sizeModel.getObjectId());
-        cv.put(name,sizeModel.getName());
-        return db.insert(Tables.SIZE,null,cv);
+        cv.put(objectId, sizeModel.getObjectId());
+        cv.put(name, sizeModel.getName());
+        return db.insert(Tables.SIZE, null, cv);
+    }
+
+    public SizeModel getSizeByID(String sizeID) {
+        SizeModel size = new SizeModel();
+        Cursor cur = db.query(Tables.SIZE, null, objectId + COMPARE, new String[]{sizeID}, null, null, null);
+
+        if (cur.moveToFirst()) {
+            size.setObjectId(cur.getString(cur.getColumnIndex(objectId)));
+            size.setName(cur.getString(cur.getColumnIndex(name)));
+        }
+
+        return size;
     }
 }
