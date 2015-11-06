@@ -38,10 +38,10 @@ public class StatusDao {
 
     public long insert(StatusModel status) {
         ContentValues cv = new ContentValues();
-        cv.put(objectId, status.getObjectId());
-        cv.put(code, status.getCode());
-        cv.put(description, status.getDescription());
-        cv.put(name, status.getName());
+            cv.put(objectId, status.getObjectId());
+            cv.put(code, status.getCode());
+            cv.put(description, status.getDescription());
+            cv.put(name, status.getName());
         return db.insert(Tables.STATUS, null, cv);
     }
 
