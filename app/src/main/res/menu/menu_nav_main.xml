@@ -11,13 +11,13 @@
         <!-- Arroces-->
         <item
         android:id="@+id/nav_main_plates"
-        android:icon="@drawable/ic_rice"
+        android:icon="@drawable/vec_plate"
         android:title="@string/item_title_plates" />
 
         <!-- Sopas-->
         <item
             android:id="@+id/nav_main_soup"
-            android:icon="@drawable/ic_soup"
+            android:icon="@drawable/vec_soup"
             android:title="@string/item_title_soup" />
 
         <!--&lt;!&ndash; Pollos y carnes&ndash;&gt;-->
@@ -68,7 +68,7 @@
                 <!-- Central telefonica -->
                 <item
                     android:id="@+id/nav_main_call_center"
-                    android:icon="@drawable/ic_phone_number"
+                    android:icon="@drawable/vec_call_center"
                     android:title="@string/item_title_call_center" />
 
             </group>

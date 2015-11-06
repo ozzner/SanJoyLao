@@ -73,11 +73,11 @@ public class Tables {
             "\tPRIMARY KEY(objectId)\n" +
             ");";
 
-    public static final String CREATE_ORDER = "CREATE TABLE `ORDER` (\n" +
+    public static final String CREATE_ORDER = "CREATE TABLE `ORDERS` (\n" +
             "\t`objectId`\tTEXT NOT NULL,\n" +
             "\t`idLocationDelivery`\tTEXT NOT NULL,\n" +
             "\t`idOrderType`\tTEXT,\n" +
-            "\t`idPago`\tTEXT UNIQUE,\n" +
+            "\t`idPayment`\tTEXT UNIQUE,\n" +
             "\t`idStatus`\tTEXT,\n" +
             "\t`idUser`\tREAL NOT NULL,\n" +
             "\t`Price`\tNUMERIC NOT NULL DEFAULT 0.0,\n" +
@@ -191,6 +191,7 @@ public class Tables {
           "\t`objectId`\tTEXT NOT NULL,\n" +
           "\t`code`\tINTEGER DEFAULT 0,\n" +
           "\t`name`\tINTEGER,\n" +
+          "\t`description`\tINTEGER,\n" +
           "\tPRIMARY KEY(objectId)\n" +
           ");";
 
@@ -216,7 +217,7 @@ public class Tables {
     public static final String SIZE = "SIZE";
     public static final String PLATE = "PLATE";
     public static final String ORDER_TYPE = "ORDER_TYPE";
-    public static final String ORDER = "ORDER";
+    public static final String ORDERS = "ORDERS";
     public static final String ORDER_DETAIL = "ORDER_DETAIL";
     public static final String CALCULATION_TIME = "CALCULATION_TIME";
     public static final String FEAST = "FEAST";

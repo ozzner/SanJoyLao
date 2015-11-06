@@ -99,4 +99,8 @@ public class PlateIteractorImpl {
         }
         return encodedData;
     }
+
+    public void addPlate() {
+
+    }
 }

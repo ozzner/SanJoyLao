@@ -233,7 +233,7 @@ public class ListViewAdapter extends BaseAdapter implements View.OnClickListener
                 oBanquet = (BanquetModel) getItem(position);
 
                 if (vi == null) {
-                    vi = layIn.inflate(R.layout.row_orders, parent, false);
+                    vi = layIn.inflate(R.layout.item_orders, parent, false);
 
                     orderHolder = new OrdersViewHolder();
                     orderHolder.tvName = (TextView) vi.findViewById(R.id.tv_order_name);

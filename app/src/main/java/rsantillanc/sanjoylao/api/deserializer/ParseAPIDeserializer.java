@@ -15,6 +15,7 @@ import rsantillanc.sanjoylao.model.OrderTypeModel;
 import rsantillanc.sanjoylao.model.PlateModel;
 import rsantillanc.sanjoylao.model.PlateSizeModel;
 import rsantillanc.sanjoylao.model.SizeModel;
+import rsantillanc.sanjoylao.model.StatusModel;
 import rsantillanc.sanjoylao.util.ConstAPI;
 
 /**
@@ -44,15 +45,20 @@ public class ParseAPIDeserializer<T> implements JsonDeserializer<T> {
             array = json.getAsJsonObject().getAsJsonArray(ConstAPI.PARSE_KEY_RESULT);
             return ((T) getModelsFromJsonArray(array, PlateModel.class));
 
-        //OrderType
+        //OrderTypeModel
         } else if (typeOfT.equals(OrderTypeModel.class)) {
 
             array = json.getAsJsonObject().getAsJsonArray(ConstAPI.PARSE_KEY_RESULT);
             return ((T) getModelsFromJsonArray(array, OrderTypeModel.class));
 
+        //StatusModel
+        } else if (typeOfT.equals(StatusModel.class)) {
+
+            array = json.getAsJsonObject().getAsJsonArray(ConstAPI.PARSE_KEY_RESULT);
+            return ((T) getModelsFromJsonArray(array, StatusModel.class));
+
         }else
             return null;
-
     }
 
     private List<Object> getModelsFromJsonArray(JsonArray array, Type type) {

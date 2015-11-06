@@ -6,10 +6,12 @@
 
     <!--Spaces-->
     <dimen name="space_0dp">0dp</dimen>
+    <dimen name="space_1dp">1dp</dimen>
     <dimen name="space_2dp">2dp</dimen>
     <dimen name="space_4dp">4dp</dimen>
-    <dimen name="space_8dp">8dp</dimen>
+    <dimen name="space_5dp">5dp</dimen>
     <dimen name="space_6dp">6dp</dimen>
+    <dimen name="space_8dp">8dp</dimen>
     <dimen name="space_10dp">10dp</dimen>
     <dimen name="space_12dp">12dp</dimen>
     <dimen name="space_14dp">14dp</dimen>
@@ -67,4 +69,6 @@
     <dimen name="price_height">30dp</dimen>
     <dimen name="height_overlap_top">84dp</dimen>
     <dimen name="height_title_plate">50dp</dimen>
+    <dimen name="width_order_count">28dp</dimen>
+    <dimen name="space_30dp">30dp</dimen>
 </resources>

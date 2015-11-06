@@ -17,7 +17,7 @@ public class SJLDatabase extends SQLiteOpenHelper {
     private static final String TAG = SJLDatabase.class.getSimpleName();
 
     //Database
-    private static final int VERSION = 8;
+    private static final int VERSION = 1;
     private static final String DATABASE = "SJLDatabase.db";
 
     //Runtime
@@ -28,7 +28,7 @@ public class SJLDatabase extends SQLiteOpenHelper {
             Tables.PLATE,
             Tables.PLATE_SIZE,
             Tables.ORDER_TYPE,
-            Tables.ORDER,
+            Tables.ORDERS,
             Tables.ORDER_DETAIL,
             Tables.CALCULATION_TIME,
             Tables.FEAST,

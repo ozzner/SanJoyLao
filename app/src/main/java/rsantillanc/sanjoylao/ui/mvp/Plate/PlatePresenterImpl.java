@@ -43,4 +43,8 @@ public class PlatePresenterImpl implements IPlatePresenter,OnPlateListener {
     public void onListFilterError(CharSequence error) {
         mView.onError(error);
     }
+
+    public void addPlateToOrder() {
+
+    }
 }

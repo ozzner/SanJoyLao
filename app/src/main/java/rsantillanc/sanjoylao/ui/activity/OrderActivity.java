@@ -24,7 +24,7 @@ import rsantillanc.sanjoylao.util.Const;
 import rsantillanc.sanjoylao.util.SJLStrings;
 
 public class OrderActivity extends BaseActivity
-        implements View.OnClickListener, IOrderView {
+        implements View.OnClickListener, IOrderView,RecyclerOrderAdapter.OnOrderItemClickListener {
 
     //Views
     private Toolbar toolbar;
@@ -150,7 +150,8 @@ public class OrderActivity extends BaseActivity
     @Override
     public void onClick(View v) {
         if (v == mFloatingActionButton) {
-            showSnackbar("snack", v);
+            showToast("Open payment methods!");
+//            showSnackbar("snack", v);
         }
     }
 
@@ -196,6 +197,7 @@ public class OrderActivity extends BaseActivity
     public void onDataLoaded(List<Object> orders) {
         //Set adapter
         mOrderAdapter = new RecyclerOrderAdapter(orders, _context);
+        mOrderAdapter.setOnItemClickListener(this);
         mRecyclerView.setAdapter(mOrderAdapter);
     }
 
@@ -217,4 +219,35 @@ public class OrderActivity extends BaseActivity
     }
 
 
+    //{ON ORDERS ITEM LISTENER}
+
+    @Override
+    public void onItemClick(View v, int index) {
+        showToast("onItemClick");
+    }
+
+    @Override
+    public void onOpenImage() {
+        showToast("onOpenImage");
+    }
+
+    @Override
+    public void onOpenIngredients() {
+        showToast("onOpenIngredients");
+    }
+
+    @Override
+    public void onAddCount() {
+        showToast("onAddCount");
+    }
+
+    @Override
+    public void onRemoveCount() {
+        showToast("onRemoveCount");
+    }
+
+    @Override
+    public void onDeleteItem() {
+        showToast("onDeleteItem");
+    }
 }

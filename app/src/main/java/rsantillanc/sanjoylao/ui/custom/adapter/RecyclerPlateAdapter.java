@@ -57,6 +57,13 @@ public class RecyclerPlateAdapter extends RecyclerView.Adapter<RecyclerPlateAdap
         TextView[] prices = {holder.tvPrice1, holder.tvPrice2, holder.tvPrice3};
 
         holder.tvPlateName.setText(plate.getName());
+
+        //Hide all
+        for (int i = 0; i < names.length; i++) {
+            hideVisibility(names[i],prices[i]);
+        }
+
+        //Show only with values
         for (int i = 0; i < plate.getPlateSize().size(); i++) {
             printValues(names[i], prices[i], plate.getPlateSize().get(i));
         }
@@ -73,6 +80,12 @@ public class RecyclerPlateAdapter extends RecyclerView.Adapter<RecyclerPlateAdap
         name.setText(plateSize.getSize().getName());
         price.setText(Const.PRICE_PEN + SJLStrings.format(plateSize.getPrice(), SJLStrings.FORMAT_MILES_EN));
 
+    }
+
+    private void hideVisibility(TextView name, TextView price) {
+        //Enabled visibility
+        name.setVisibility(View.INVISIBLE);
+        price.setVisibility(View.INVISIBLE);
     }
 
     @Override

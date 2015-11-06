@@ -41,7 +41,25 @@ public class RecyclerCategoryAdapter extends RecyclerView.Adapter<RecyclerCatego
 
     @Override
     public void onBindViewHolder(BanquetViewHolder holder, int index) {
-        holder.tvName.setText(categories.get(index).getName());
+        int[] icons ={
+
+                R.drawable.vec_meal_circle,
+                R.drawable.vec_noodles_circle,
+                R.drawable.vec_vegetable_circle,
+                R.drawable.vec_rice_circle,
+                R.drawable.vec_fish_circle,
+                R.drawable.vec_rice_circle,
+                R.drawable.vec_langoustine_circle,
+                R.drawable.vec_pig_circle,
+                R.drawable.vec_pancake_circle,
+                R.drawable.vec_duck_circle,
+                R.drawable.vec_chicken_circle,
+                R.drawable.vec_dimsum_circle
+        };
+
+        holder.ivIcon.setImageDrawable(_context.getResources().getDrawable(icons[index]));
+        CategoryModel category = categories.get(index);
+        holder.tvName.setText(category.getName());
 
         if (categories.get(index).getImage() != null){
             Picasso.with(_context)

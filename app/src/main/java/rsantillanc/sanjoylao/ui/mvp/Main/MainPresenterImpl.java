@@ -53,4 +53,8 @@ public class MainPresenterImpl {
     public void loadOrderType() {
         iteractor.syncOrderType(mainActivity.getApplicationContext());
     }
+
+    public void loadStatus() {
+        iteractor.syncStatus(mainActivity.getApplicationContext());
+    }
 }

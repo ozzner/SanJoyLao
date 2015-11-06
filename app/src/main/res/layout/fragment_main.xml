@@ -14,7 +14,7 @@
         android:padding="@dimen/space_14dp">
 
          <ImageView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/iv_logo_main"
             android:layout_gravity="center"

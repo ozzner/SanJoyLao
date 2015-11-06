@@ -73,12 +73,9 @@ public class CategoryFragment extends Fragment implements RecyclerCategoryAdapte
         mRecycler.setLayoutManager(new GridLayoutManager(getActivity(), 3));
 
 //       mRecycler.setHasFixedSize(true);
-
-
     }
 
     private List<Object> getCategories() {
-
         return null;
     }
 

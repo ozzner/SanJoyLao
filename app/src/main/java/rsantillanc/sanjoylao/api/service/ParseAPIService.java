@@ -14,6 +14,7 @@ import rsantillanc.sanjoylao.model.OrderTypeModel;
 import rsantillanc.sanjoylao.model.PlateModel;
 import rsantillanc.sanjoylao.model.PlateSizeModel;
 import rsantillanc.sanjoylao.model.SizeModel;
+import rsantillanc.sanjoylao.model.StatusModel;
 import rsantillanc.sanjoylao.model.UserModel;
 
 /**
@@ -87,4 +88,12 @@ public interface ParseAPIService {
     })
     @GET("classes/OrderType")
     Call<OrderTypeModel> getAllOrderTypes();
+
+
+    @Headers({
+            "X-Parse-Application-Id: RTM3ioKCBgaAJjXmDRr493sb13uYzGrMnePLhzhm",
+            "X-Parse-REST-API-Key: 6xr428CvfJT8WMGByPUhfvJWmFaxjozudaPy9bUB",
+    })
+    @GET("classes/Status")
+    Call<StatusModel> getAllStatus();
 }

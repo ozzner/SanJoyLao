@@ -28,11 +28,13 @@ import rsantillanc.sanjoylao.model.OrderTypeModel;
 import rsantillanc.sanjoylao.model.PlateModel;
 import rsantillanc.sanjoylao.model.PlateSizeModel;
 import rsantillanc.sanjoylao.model.SizeModel;
+import rsantillanc.sanjoylao.model.StatusModel;
 import rsantillanc.sanjoylao.storage.dao.CategoryDao;
 import rsantillanc.sanjoylao.storage.dao.OrderTypeDao;
 import rsantillanc.sanjoylao.storage.dao.PlateDao;
 import rsantillanc.sanjoylao.storage.dao.PlateSizeDao;
 import rsantillanc.sanjoylao.storage.dao.SizeDao;
+import rsantillanc.sanjoylao.storage.dao.StatusDao;
 import rsantillanc.sanjoylao.util.Const;
 import rsantillanc.sanjoylao.util.ConstAPI;
 
@@ -225,7 +227,51 @@ public class MainIteractorImpl {
 
 
 
+    public void syncStatus(final Context c) {
+
+        if (countStatus(c) == 0) {
+
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl(ConstAPI.PARSE_URL_BASE)
+                    .addConverterFactory(myConverter(StatusModel.class))
+                    .build();
+
+            Call<StatusModel> call = retrofit.create(ParseAPIService.class).getAllStatus();
+            call.enqueue(new Callback<StatusModel>() {
+                @Override
+                public void onResponse(Response<StatusModel> response, Retrofit retrofit) {
+                    if (response.isSuccess()){
+                        List<StatusModel> list = new ArrayList();
+                        list.addAll((Collection<? extends StatusModel>) response.body());
+
+                        long rows = 0;
+                        for (StatusModel status : list) {
+                            rows = new StatusDao(c).insert(status);
+                        }
+
+                        Log.e(Const.DEBUG, "status rows affected: " + rows);
+                    }
+                }
+
+                @Override
+                public void onFailure(Throwable t) {
+
+                }
+            });
+
+        }else{
+            //TODO PUEDE SACAR DESDE LA BASE DE DATOS LOCAL.
+        }
+    }
+
+
+
+
     //--------------------{COUNTERS}--------------------
+
+    private int countStatus(Context c) {
+        return new StatusDao(c).count();
+    }
 
     private int countOrderType(Context c) {
         return new OrderTypeDao(c).count();
@@ -244,8 +290,6 @@ public class MainIteractorImpl {
                 .create();
         return GsonConverterFactory.create(build);
     }
-//    }
-
 
     protected int countCategories(Context c) {
         return new CategoryDao(c).count();
@@ -266,7 +310,6 @@ public class MainIteractorImpl {
                 .error(R.drawable.ic_profile)
                 .into(imageView);
     }
-
 
 
 }

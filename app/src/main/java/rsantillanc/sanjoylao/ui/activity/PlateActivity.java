@@ -144,7 +144,7 @@ public class PlateActivity extends BaseActivity implements IPlateView, RecyclerP
     // {POPUP ITEM}
     @Override
     public void onPopupItemClick(MenuItem item) {
-        showToast("Añadido" + item.getTitle());
+        mpresenter.addPlateToOrder();
     }
 
 

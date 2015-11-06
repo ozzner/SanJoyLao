@@ -106,17 +106,17 @@ public class MainActivity extends BaseActivity
 
     }
 
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        outState = mBundle;
-        super.onSaveInstanceState(outState);
-    }
+//    @Override
+//    protected void onSaveInstanceState(Bundle outState) {
+//        outState = mBundle;
+//        super.onSaveInstanceState(outState);
+//    }
 
-    @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-        mBundle = savedInstanceState;
-    }
+//    @Override
+//    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+//        super.onRestoreInstanceState(savedInstanceState);
+//        mBundle = savedInstanceState;
+//    }
 
 
     private void initContextAndData(Bundle bundle) {
@@ -266,6 +266,7 @@ public class MainActivity extends BaseActivity
         mPresenter.loadPlatesSize();
         mPresenter.loadPlate();
         mPresenter.loadOrderType();
+        mPresenter.loadStatus();
         mPresenter.savePreferences();
     }
 

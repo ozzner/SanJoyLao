@@ -55,7 +55,6 @@
                 android:layout_alignLeft="@+id/tv_order_name"
                 android:layout_alignStart="@+id/tv_order_name"
                 android:layout_below="@+id/tv_order_name"
-                android:layout_marginLeft="@dimen/space_4dp"
                 android:text="6 Opciones a elegir"
                 android:textColor="@color/gray"
                 android:textSize="@dimen/txt_16sp" />
@@ -65,21 +64,30 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:id="@+id/linearLayout2"
+                android:layout_marginBottom="@dimen/space_8dp"
                 android:layout_above="@+id/iv_order_delete"
                 android:layout_alignLeft="@+id/tv_order_option"
                 android:layout_alignStart="@+id/tv_order_option">
 
                 <ImageView
+                    android:id="@+id/iv_order_count_add"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
-                    android:src="@drawable/ic_add" />
+                    android:src="@drawable/ic_add"
+                    android:background="@drawable/icon_order_selector"
+                   />
+
                 <Space
-                    android:layout_width="@dimen/space_28dp"
+                    android:layout_width="@dimen/space_30dp"
                     android:layout_height="match_parent" />
+
                 <ImageView
+                    android:id="@+id/iv_order_count_delete"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
-                    android:src="@drawable/ic_remove" />
+                    android:src="@drawable/ic_remove"
+                    android:background="@drawable/icon_order_selector"
+                   />
             </LinearLayout>
 
 
@@ -119,18 +127,47 @@
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true" />
 
+
+            <ImageView
+                android:id="@+id/iv_order_open_image"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:scaleType="fitCenter"
+                android:padding="@dimen/space_6dp"
+                android:layout_marginRight="@dimen/space_4dp"
+                android:src="@drawable/ic_no_image"
+                android:layout_alignTop="@+id/iv_order_delete"
+                android:layout_toLeftOf="@+id/iv_order_delete"
+                android:layout_toStartOf="@+id/iv_order_delete" />
+
+
             <TextView
                 android:id="@+id/tv_order_count_item"
-                android:layout_width="wrap_content"
+                android:layout_width="@dimen/width_order_count"
                 android:layout_height="wrap_content"
-                android:text="x1"
-                android:textColor="@color/red"
-                android:textSize="@dimen/txt_12sp"
+                android:text="x5"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textSize="@dimen/txt_10sp"
                 android:textStyle="bold"
-                android:layout_marginLeft="@dimen/space_4dp"
+                android:paddingLeft="@dimen/space_2dp"
+                android:paddingRight="@dimen/space_2dp"
                 android:layout_toRightOf="@+id/tv_order_price"
                 android:layout_toEndOf="@+id/tv_order_price"
-                android:layout_alignTop="@+id/tv_order_price" />
+                android:layout_alignTop="@+id/tv_order_price"
+                android:background="@drawable/price_oval_shape"/>
+
+            <ImageView
+                android:id="@+id/iv_order_open_ingredients"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:scaleType="fitCenter"
+                android:layout_marginRight="@dimen/space_4dp"
+                android:src="@drawable/vec_ingredients"
+                android:tint="@color/gray"
+                android:layout_alignParentBottom="true"
+                android:layout_toLeftOf="@+id/iv_order_open_image"
+                android:layout_toStartOf="@+id/iv_order_open_image" />
 
         </RelativeLayout>
 
