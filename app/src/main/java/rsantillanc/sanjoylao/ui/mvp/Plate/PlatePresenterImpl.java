@@ -45,6 +45,6 @@ public class PlatePresenterImpl implements IPlatePresenter,OnPlateListener {
     }
 
     public void addPlateToOrder() {
-
+        iteractor.makeOrder();
     }
 }

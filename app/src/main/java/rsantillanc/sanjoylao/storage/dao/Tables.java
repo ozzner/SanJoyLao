@@ -206,9 +206,9 @@ public class Tables {
           ");";
 
 
-
     //Drop
     public static final String DROP_TABLE = "DROP TABLE IF EXISTS ";
+
 
     //Tables name
     public static final String USER = "USER";

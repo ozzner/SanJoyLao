@@ -15,8 +15,12 @@ import retrofit.Response;
 import retrofit.Retrofit;
 import rsantillanc.sanjoylao.api.service.ParseAPIService;
 import rsantillanc.sanjoylao.model.APIResultPlateModel;
+import rsantillanc.sanjoylao.model.OrderModel;
 import rsantillanc.sanjoylao.model.PlateModel;
+import rsantillanc.sanjoylao.storage.dao.OrderDao;
 import rsantillanc.sanjoylao.storage.dao.PlateDao;
+import rsantillanc.sanjoylao.storage.dao.StatusDao;
+import rsantillanc.sanjoylao.ui.mvp.Order.OrderIteractorImpl;
 import rsantillanc.sanjoylao.util.Const;
 import rsantillanc.sanjoylao.util.ConstAPI;
 
@@ -102,5 +106,26 @@ public class PlateIteractorImpl {
 
     public void addPlate() {
 
+    }
+
+
+    public void makeOrder() {
+        OrderModel order = getActiveOrder();
+        if (order != null){
+
+       }else{
+           createOrder();
+       }
+
+    }
+
+    private void createOrder() {
+        OrderIteractorImpl orderIter = new OrderIteractorImpl();
+        orderIter.createOrder();
+    }
+
+    private OrderModel getActiveOrder() {
+        String id = new StatusDao(mActivity.getApplicationContext()).getStatusIdByCode(Const.STATUS_TEMPORAL);
+        return new OrderDao(mActivity).getActiveOrderIfExist(id);
     }
 }
