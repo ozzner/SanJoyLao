@@ -1,5 +1,7 @@
 package rsantillanc.sanjoylao.api.service;
 
+import com.google.gson.JsonObject;
+
 import retrofit.Call;
 import retrofit.http.Body;
 import retrofit.http.GET;
@@ -10,6 +12,7 @@ import rsantillanc.sanjoylao.model.APIResultCategoryModel;
 import rsantillanc.sanjoylao.model.APIResultPlateModel;
 import rsantillanc.sanjoylao.model.APISignInModel;
 import rsantillanc.sanjoylao.model.APIUserCreatedModel;
+import rsantillanc.sanjoylao.model.OrderModel;
 import rsantillanc.sanjoylao.model.OrderTypeModel;
 import rsantillanc.sanjoylao.model.PlateModel;
 import rsantillanc.sanjoylao.model.PlateSizeModel;
@@ -96,4 +99,13 @@ public interface ParseAPIService {
     })
     @GET("classes/Status")
     Call<StatusModel> getAllStatus();
+
+
+    @Headers({
+            "X-Parse-Application-Id: RTM3ioKCBgaAJjXmDRr493sb13uYzGrMnePLhzhm",
+            "X-Parse-REST-API-Key: 6xr428CvfJT8WMGByPUhfvJWmFaxjozudaPy9bUB",
+            "Content-Type: application/json"
+    })
+    @POST("classes/Order")
+    Call<JsonObject> createOrder(@Body OrderModel neworder);
 }

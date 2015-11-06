@@ -17,7 +17,7 @@ public class OrderModel implements Serializable {
     @SerializedName("idOrderType")
     private OrderTypeModel orderType;
     @SerializedName("idPayment")
-    private PaymenModel pyment;
+    private PaymentModel payment;
     @SerializedName("idStatus")
     private StatusModel status;
     @SerializedName("idUser")
@@ -30,11 +30,11 @@ public class OrderModel implements Serializable {
     public OrderModel() {
     }
 
-    public OrderModel(String objectId, LocationDeliveryModel locationDelivery, OrderTypeModel orderType, PaymenModel pyment, StatusModel status, UserModel user, double price, String createdAt, String updatedAt) {
+    public OrderModel(String objectId, LocationDeliveryModel locationDelivery, OrderTypeModel orderType, PaymentModel pyment, StatusModel status, UserModel user, double price, String createdAt, String updatedAt) {
         this.objectId = objectId;
         this.locationDelivery = locationDelivery;
         this.orderType = orderType;
-        this.pyment = pyment;
+        this.payment = pyment;
         this.status = status;
         this.user = user;
         this.price = price;
@@ -66,12 +66,12 @@ public class OrderModel implements Serializable {
         this.orderType = orderType;
     }
 
-    public PaymenModel getPyment() {
-        return pyment;
+    public PaymentModel getPyment() {
+        return payment;
     }
 
-    public void setPyment(PaymenModel pyment) {
-        this.pyment = pyment;
+    public void setPyment(PaymentModel pyment) {
+        this.payment = pyment;
     }
 
     public StatusModel getStatus() {

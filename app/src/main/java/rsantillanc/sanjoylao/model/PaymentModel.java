@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * Created by RenzoD on 06/11/2015.
  */
-public class PaymenModel implements Serializable {
+public class PaymentModel implements Serializable {
 
     private static final long serialVersionUID = 0L;
 
@@ -16,7 +16,7 @@ public class PaymenModel implements Serializable {
     private String createdAt;
     private String updatedAt;
 
-    public PaymenModel(String objectId, String banco, String transactionCode, String type, String createdAt, String updatedAt) {
+    public PaymentModel(String objectId, String banco, String transactionCode, String type, String createdAt, String updatedAt) {
         this.objectId = objectId;
         this.banco = banco;
         this.transactionCode = transactionCode;
@@ -25,7 +25,7 @@ public class PaymenModel implements Serializable {
         this.updatedAt = updatedAt;
     }
 
-    public PaymenModel() {
+    public PaymentModel() {
     }
 
     public String getObjectId() {

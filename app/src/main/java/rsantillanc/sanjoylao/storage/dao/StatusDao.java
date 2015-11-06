@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import rsantillanc.sanjoylao.model.StatusModel;
+import rsantillanc.sanjoylao.util.Const;
 
 /**
  * Created by RenzoD on 06/11/2015.
@@ -46,6 +47,12 @@ public class StatusDao {
     }
 
 
+    public String getStatusIdByCode(int iCode) {
+        Cursor cur = db.query(Tables.STATUS, null, code + COMPARE, new String[]{String.valueOf(iCode)}, null, null, null);
+        if (cur.moveToFirst()) {
+            return cur.getString(cur.getColumnIndex(objectId));
+        }else
+            return Const.EMPTY;
 
-
+    }
 }

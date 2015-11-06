@@ -10,4 +10,5 @@ import rsantillanc.sanjoylao.model.PlateModel;
 public interface OnPlateListener {
     void onListFilterSuccess(List<PlateModel> platesFilter);
     void onListFilterError(CharSequence error);
+
 }

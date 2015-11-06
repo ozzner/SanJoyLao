@@ -77,4 +77,12 @@ public class Const {
     public static final String EXTRA_CATEGORY_NAME = "category_name";
     public static final String KEY_POINTER = "Pointer";
     public static final String CLASS_PLATE = "Plate";
+
+    //[ STATUS ]
+    public static final int STATUS_TEMPORAL = 1;
+    public static final int STATUS_RECEIVED = 2;
+    public static final int STATUS_CONFIRMED= 3;
+    public static final int STATUS_ON_ROAD = 4;
+    public static final int STATUS_DELIVERED = 5;
+    public static final int STATUS_CANCELLED = 6;
 }
