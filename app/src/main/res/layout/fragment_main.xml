@@ -18,17 +18,15 @@
             android:layout_height="match_parent"
             android:id="@+id/iv_logo_main"
             android:layout_gravity="center"
-            android:src="@drawable/logo"
-             />
+            android:src="@drawable/logo" />
 
     </RelativeLayout>
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab_profile_save"
+        android:id="@+id/map_id"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        android:src="@drawable/ic_location"
-        />
+        android:src="@drawable/ic_location"/>
 
 </android.support.design.widget.CoordinatorLayout >
