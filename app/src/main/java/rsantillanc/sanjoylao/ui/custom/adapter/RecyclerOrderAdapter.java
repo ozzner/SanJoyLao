@@ -2,23 +2,29 @@ package rsantillanc.sanjoylao.ui.custom.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 
+import java.lang.reflect.Field;
 import java.util.Collections;
 import java.util.List;
 
 import rsantillanc.sanjoylao.R;
 import rsantillanc.sanjoylao.model.BanquetModel;
 import rsantillanc.sanjoylao.util.Const;
+import rsantillanc.sanjoylao.util.SJLStrings;
 
 /**
  * Created by RenzoD on 03/06/2015.
  */
-public class RecyclerViewOrderAdapter extends RecyclerView.Adapter<RecyclerViewOrderAdapter.BanquetViewHolder> {
+public class RecyclerOrderAdapter extends RecyclerView.Adapter<RecyclerOrderAdapter.BanquetViewHolder> {
 
     private LayoutInflater layIn;
     private List<Object> banquetItems = Collections.EMPTY_LIST;
@@ -26,7 +32,7 @@ public class RecyclerViewOrderAdapter extends RecyclerView.Adapter<RecyclerViewO
     private OnItemClickListener mItemClickListener;
 
 
-    public RecyclerViewOrderAdapter(List<Object> banquetItems, Context ctx) {
+    public RecyclerOrderAdapter(List<Object> banquetItems, Context ctx) {
         this.layIn = LayoutInflater.from(ctx);
         this.banquetItems = banquetItems;
         this.ctx = ctx;
@@ -41,7 +47,8 @@ public class RecyclerViewOrderAdapter extends RecyclerView.Adapter<RecyclerViewO
     public void onBindViewHolder(BanquetViewHolder orderHolder, int index) {
         BanquetModel banquet = (BanquetModel) banquetItems.get(index);
 
-        orderHolder.tvPrice.setText(Const.PRICE_PEN + String.valueOf(banquet.getPrice()));
+        orderHolder.tvPrice.setText(Const.PRICE_PEN + SJLStrings.format(banquet.getPrice(),SJLStrings.FORMAT_MILES_EN));
+        orderHolder.tvPrice.setTypeface(SJLStrings.getSJLFont(ctx));
         orderHolder.tvName.setText((index + 1) + ".- " + banquet.getName());//Delete hardcode
         orderHolder.tvCount.setText(Const.TAG_POR + (index + 1) );
 
@@ -49,12 +56,15 @@ public class RecyclerViewOrderAdapter extends RecyclerView.Adapter<RecyclerViewO
             orderHolder.tvOptions.setText("Las " + banquet.getOption() + " que eligió");//Delete hardcode
         else
             orderHolder.tvOptions.setText("La opción elegida.");//Delete hardcode
+
+
     }
 
     @Override
     public int getItemCount() {
         return banquetItems.size();
     }
+
 
 
     class BanquetViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

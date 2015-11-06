@@ -6,7 +6,6 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-
     </style>
 
 
@@ -27,6 +26,13 @@
     </style>
 
 
+    <!-- popup menu theme. -->
+    <style name="PopupMenu"  parent="SJLTheme.Base.PopupOverlay">
+        <!--<item name="android:background">@color/transparent_black</item>-->
+        <item name="android:textColor">@color/gray</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:tint">@color/colorAccent</item>
+    </style>
     <!--&lt;!&ndash; DIALOG &ndash;&gt;-->
     <!--<style name="AppDialog" parent="android:style/Theme.Dialog">-->
 

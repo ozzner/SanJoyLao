@@ -110,5 +110,6 @@
     <string name="label_profile_created">"Created: "</string>
     <string name="view_card">Ver carta</string>
     <string name="title_my_orders">Mis pedidos</string>
+    <string name="action_size_popup_title">tamaño</string>
 
 </resources>

@@ -1,13 +1,19 @@
 package rsantillanc.sanjoylao.ui.custom.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 
+import java.lang.reflect.Field;
 import java.util.Collections;
 import java.util.List;
 
@@ -22,16 +28,19 @@ import rsantillanc.sanjoylao.util.SJLStrings;
  */
 public class RecyclerPlateAdapter extends RecyclerView.Adapter<RecyclerPlateAdapter.PlateHolder> {
 
+    private final Activity mActivity;
     private LayoutInflater layIn;
     private List<PlateModel> plates = Collections.EMPTY_LIST;
     private OnItemPlateClickListener mItemClickListener;
     private Context _context;
+    private int currentIndex;
 
 
-    public RecyclerPlateAdapter(List<PlateModel> items, Context ctx) {
-        this.layIn = LayoutInflater.from(ctx);
+    public RecyclerPlateAdapter(List<PlateModel> items, Activity activity) {
+        this.layIn = LayoutInflater.from(activity);
         this.plates = items;
-        this._context = ctx;
+        this._context = activity;
+        this.mActivity = activity;
     }
 
     @Override
@@ -42,6 +51,7 @@ public class RecyclerPlateAdapter extends RecyclerView.Adapter<RecyclerPlateAdap
 
     @Override
     public void onBindViewHolder(PlateHolder holder, int index) {
+
         PlateModel plate = plates.get(index);
         TextView[] names = {holder.tvName1, holder.tvName2, holder.tvName3};
         TextView[] prices = {holder.tvPrice1, holder.tvPrice2, holder.tvPrice3};
@@ -61,13 +71,87 @@ public class RecyclerPlateAdapter extends RecyclerView.Adapter<RecyclerPlateAdap
 
         //Set values
         name.setText(plateSize.getSize().getName());
-        price.setText(Const.PRICE_PEN +SJLStrings.format(plateSize.getPrice(), SJLStrings.FORMAT_MILES_EN));
+        price.setText(Const.PRICE_PEN + SJLStrings.format(plateSize.getPrice(), SJLStrings.FORMAT_MILES_EN));
 
     }
 
     @Override
     public int getItemCount() {
         return plates.size();
+    }
+
+
+    private void showPopupMenu(View v, int position) {
+        Context wrapper = new ContextThemeWrapper(_context, R.style.PopupMenu);
+        final PopupMenu popup = new PopupMenu(wrapper, v);
+        popup.getMenuInflater().inflate(R.menu.menu_size_popup, popup.getMenu());
+
+        int index = 0;
+        popup.getMenu().clear();
+        for (PlateSizeModel plateSize : plates.get(position).getPlateSize()) {
+            popup.getMenu().add(Menu.NONE, index, Menu.NONE, plateSize.getSize().getName())
+                    .setIcon(_context.getResources().getDrawable(R.drawable.ic_info_plate));
+            index++;
+        }
+        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+
+                mItemClickListener.onPopupItemClick(item);
+                return false;
+            }
+        });
+
+        // Force icons to show
+        Object menuHelper;
+        Class[] argTypes;
+
+        try {
+            Field fMenuHelper = PopupMenu.class.getDeclaredField("mPopup");
+            fMenuHelper.setAccessible(true);
+            menuHelper = fMenuHelper.get(popup);
+            argTypes = new Class[]{boolean.class};
+            menuHelper.getClass().getDeclaredMethod("setForceShowIcon", argTypes).invoke(menuHelper, true);
+        } catch (Exception e) {
+            // Possible exceptions are NoSuchMethodError and NoSuchFieldError
+            //
+            // In either case, an exception indicates something is wrong with the reflection code, or the
+            // structure of the PopupMenu class or its dependencies has changed.
+            //
+            // These exceptions should never happen since we're shipping the AppCompat library in our own apk,
+            // but in the case that they do, we simply can't force icons to display, so log the error and
+            // show the menu normally.
+            popup.show();
+            return;
+        }
+
+        popup.show();
+
+        moveToLeftPopupMenu(menuHelper, argTypes);
+    }
+
+    private void moveToLeftPopupMenu(Object menuHelper, Class[] argTypes) {
+
+        // Try to force some horizontal offset
+        try {
+            Field fListPopup = menuHelper.getClass().getDeclaredField("mPopup");
+            fListPopup.setAccessible(true);
+            Object listPopup = fListPopup.get(menuHelper);
+            argTypes = new Class[]{int.class};
+            Class listPopupClass = listPopup.getClass();
+
+            // Get the width of the popup window
+            int width = (Integer) listPopupClass.getDeclaredMethod("getWidth").invoke(listPopup);
+
+            // Invoke setHorizontalOffset() with the negative width to move left by that distance
+            listPopupClass.getDeclaredMethod("setHorizontalOffset", argTypes).invoke(listPopup, -width);
+
+            // Invoke show() to update the window's position
+            listPopupClass.getDeclaredMethod("show").invoke(listPopup);
+        } catch (Exception e) {
+            // Again, an exception here indicates a programming error rather than an exceptional condition
+            // at runtime
+        }
     }
 
 
@@ -104,7 +188,7 @@ public class RecyclerPlateAdapter extends RecyclerView.Adapter<RecyclerPlateAdap
             if (mItemClickListener != null) {
 
                 if (v instanceof ImageView)
-                    mItemClickListener.onAddPlateClick(v);
+                    showPopupMenu(v, getPosition());
                 else
                     mItemClickListener.onItemClick(plates.get(getPosition()));
 
@@ -121,6 +205,8 @@ public class RecyclerPlateAdapter extends RecyclerView.Adapter<RecyclerPlateAdap
         void onItemClick(PlateModel plate);
 
         void onAddPlateClick(View v);
+
+        void onPopupItemClick(MenuItem item);
     }
 
 

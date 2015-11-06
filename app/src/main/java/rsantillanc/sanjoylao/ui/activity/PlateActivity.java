@@ -3,9 +3,9 @@ package rsantillanc.sanjoylao.ui.activity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import java.util.List;
@@ -65,6 +65,8 @@ public class PlateActivity extends BaseActivity implements IPlateView, RecyclerP
         if (id == R.id.action_plate_info) {
             showToast("San Joy Lao | V." + Android.getAppVersion(this));
             return true;
+        }else {
+            finish();
         }
 
         return super.onOptionsItemSelected(item);
@@ -101,7 +103,7 @@ public class PlateActivity extends BaseActivity implements IPlateView, RecyclerP
     }
 
     private void setUpAdapter(List<PlateModel> plates) {
-        RecyclerPlateAdapter ap = new RecyclerPlateAdapter(plates, getApplicationContext());
+        RecyclerPlateAdapter ap = new RecyclerPlateAdapter(plates, this);
         ap.setOnItemPlateClickListener(this);
         mRecycler.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         mRecycler.setHasFixedSize(true);
@@ -109,7 +111,7 @@ public class PlateActivity extends BaseActivity implements IPlateView, RecyclerP
     }
 
 
-    // [IView]
+    // {IView}
 
     @Override
     public void onPlatesLoadSuccess(List<PlateModel> plates) {
@@ -136,6 +138,13 @@ public class PlateActivity extends BaseActivity implements IPlateView, RecyclerP
     @Override
     public void onAddPlateClick(View v) {
         showToast("Added!");
+    }
+
+
+    // {POPUP ITEM}
+    @Override
+    public void onPopupItemClick(MenuItem item) {
+        showToast("Añadido" + item.getTitle());
     }
 
 

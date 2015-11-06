@@ -31,7 +31,7 @@
     <dimen name="txt_18sp">18sp</dimen>
     <dimen name="txt_20sp">20sp</dimen>
     <dimen name="txt_24sp">24sp</dimen>
-    <dimen name="txt_price">12sp</dimen>
+    <dimen name="txt_price">14sp</dimen>
 
     <!--Navigation drawer-->
     <dimen name="nav_drawer_width">305dp</dimen>
@@ -44,7 +44,7 @@
 
     <dimen name="input_comment_height">45dp</dimen>
     <dimen name="button_height">25dp</dimen>
-    <dimen name="item_soup_height">140dp</dimen>
+    <dimen name="item_soup_height">160dp</dimen>
     <dimen name="item_rice_height">150dp</dimen>
     <dimen name="height_profile_background">160dp</dimen>
     <dimen name="width_image_row_nav_drawer">42dp</dimen>
@@ -66,5 +66,5 @@
     <dimen name="price_width">85dp</dimen>
     <dimen name="price_height">30dp</dimen>
     <dimen name="height_overlap_top">84dp</dimen>
-    <dimen name="height_title_plate">45dp</dimen>
+    <dimen name="height_title_plate">50dp</dimen>
 </resources>

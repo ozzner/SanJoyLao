@@ -16,7 +16,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import rsantillanc.sanjoylao.R;
-import rsantillanc.sanjoylao.ui.custom.adapter.RecyclerViewOrderAdapter;
+import rsantillanc.sanjoylao.ui.custom.adapter.RecyclerOrderAdapter;
 import rsantillanc.sanjoylao.ui.mvp.Order.IOrderView;
 import rsantillanc.sanjoylao.ui.mvp.Order.OrderPresenterImpl;
 import rsantillanc.sanjoylao.util.Android;
@@ -38,7 +38,7 @@ public class OrderActivity extends BaseActivity
     //Globals
 
     private LinearLayoutManager mLinearLayoutManager;
-    private RecyclerViewOrderAdapter mOrderAdapter;
+    private RecyclerOrderAdapter mOrderAdapter;
     private double total = 0.0;
 
     //MVP
@@ -63,6 +63,7 @@ public class OrderActivity extends BaseActivity
 
     //---------------------- [INIT  COMPONENTS]
     private void initUIComponents() {
+
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         mFloatingActionButton = (FloatingActionButton) findViewById(R.id.fab_order_payment);
         mRecyclerView = (RecyclerView) findViewById(R.id.rcv_orders);
@@ -94,6 +95,7 @@ public class OrderActivity extends BaseActivity
         //Load data
         mPresenter.loadOrdersByUserId("ozzner");
     }
+
 
 
     private void setUpFloatingButton() {
@@ -193,7 +195,7 @@ public class OrderActivity extends BaseActivity
     @Override
     public void onDataLoaded(List<Object> orders) {
         //Set adapter
-        mOrderAdapter = new RecyclerViewOrderAdapter(orders, _context);
+        mOrderAdapter = new RecyclerOrderAdapter(orders, _context);
         mRecyclerView.setAdapter(mOrderAdapter);
     }
 
