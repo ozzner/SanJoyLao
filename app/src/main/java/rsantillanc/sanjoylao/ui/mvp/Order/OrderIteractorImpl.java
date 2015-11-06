@@ -36,6 +36,7 @@ public class OrderIteractorImpl implements IOrderIteractor {
         }).start();
     }
 
+
     public void createOrder() {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(ConstAPI.PARSE_URL_BASE)
@@ -49,7 +50,6 @@ public class OrderIteractorImpl implements IOrderIteractor {
                     Log.e(Const.DEBUG, "Order created: " + response.body().toString());
                 else
                     Log.e(Const.DEBUG, "Order error: " + response.body().toString());
-
             }
 
             @Override
