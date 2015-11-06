@@ -7,6 +7,7 @@ public class Const {
 
     public static final String BLANK_SPACE = " ";
     public static final String EMPTY = "";
+    public static final String EMPTY_JSON = "{}";
     public static final String PRICE_USD = "USD ";
     public static final String PRICE_PEN = "S/. ";
     public static final String TAG_BANQUET = "BANQUET";
@@ -70,4 +71,10 @@ public class Const {
     public static final char CHAR_COMMA = ',';
     public static final char CHAR_DOT = '.';
 
+    //[ PARSE ]
+    public static final String PARSE_TYPE_FILE = "File";
+    public static final String EXTRA_CATEGORY_ID = "category_id";
+    public static final String EXTRA_CATEGORY_NAME = "category_name";
+    public static final String KEY_POINTER = "Pointer";
+    public static final String CLASS_PLATE = "Plate";
 }

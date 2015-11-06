@@ -54,7 +54,7 @@ public class UserDao implements BaseColumns {
      * @param user Modelo de datos para el usuario.
      * @return long con el número de filas insertadas.
      */
-    public long saveUser(UserModel user) {
+    public long insertUser(UserModel user) {
         disabledAllUsers();
 
         ContentValues cv = new ContentValues();
@@ -150,7 +150,6 @@ public class UserDao implements BaseColumns {
     public void login(String email) {
         ContentValues cv = new ContentValues();
         cv.put(isEnabled, Const.USER_ENABLED);
-        int row =  db.update(Tables.USER, cv, this.email + "=?", new String[]{email});
-
+        db.update(Tables.USER, cv, this.email + "=?", new String[]{email});
     }
 }

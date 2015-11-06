@@ -17,7 +17,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import rsantillanc.sanjoylao.R;
-import rsantillanc.sanjoylao.ui.custom.adapter.RecyclerViewOrderAdapter;
+import rsantillanc.sanjoylao.ui.custom.adapter.RecyclerOrderAdapter;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -30,7 +30,7 @@ public class OrdersFragment extends Fragment {
 
     //Globals
     private Context _context;
-    private RecyclerViewOrderAdapter mOrderAdapter;
+    private RecyclerOrderAdapter mOrderAdapter;
     private ArrayList<Object> mBanquets ;
 
     //Views
@@ -83,7 +83,7 @@ public class OrdersFragment extends Fragment {
         mRecyclerView.setHasFixedSize(false);
 
         //Set adapter
-        mOrderAdapter = new RecyclerViewOrderAdapter(mBanquets,_context);
+        mOrderAdapter = new RecyclerOrderAdapter(mBanquets,_context);
         mRecyclerView.setAdapter(mOrderAdapter);
     }
 
@@ -112,7 +112,7 @@ public class OrdersFragment extends Fragment {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
-                    Fragment gotToFront = MainFragment.newInstance();
+                    Fragment gotToFront = HomeFragment.newInstance();
                     FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                     fragmentTransaction.replace(R.id.fragments_content, gotToFront);

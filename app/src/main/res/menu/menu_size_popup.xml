@@ -1,0 +1,23 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="rsantillanc.sanjoylao.ui.activity.OrderActivity">
+    <item
+        android:id="@+id/action_size_popup1"
+        android:orderInCategory="100"
+        android:title="@string/action_size_popup_title"
+        android:icon="@drawable/ic_info_plate"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/action_size_popup2"
+        android:orderInCategory="100"
+        android:title="@string/action_size_popup_title"
+        android:icon="@drawable/ic_info_plate"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/action_size_popup3"
+        android:orderInCategory="100"
+        android:title="@string/action_size_popup_title"
+        android:icon="@drawable/ic_info_plate"
+        app:showAsAction="always" />
+</menu>

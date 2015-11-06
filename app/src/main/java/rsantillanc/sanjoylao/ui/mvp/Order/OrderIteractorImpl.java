@@ -14,7 +14,7 @@ public class OrderIteractorImpl implements IOrderIteractor {
             @Override
             public void run() {
                 try {
-                    Thread.sleep(3000);
+                    Thread.sleep(500);
                     listener.onOrdersSuccess(new BanquetModel().dummyBanquets());
                 } catch (InterruptedException e) {
                     listener.onOrdersError(e.getMessage());

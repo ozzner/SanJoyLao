@@ -34,11 +34,6 @@ public class SoupDetailsFragment extends Fragment {
         titles = getResources().getStringArray(R.array.tabs_names);
     }
 
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putCharSequenceArray(KEY_TITLES, titles);
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

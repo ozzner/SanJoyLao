@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cv_item_plate"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/item_soup_height"
+    android:foreground="@drawable/list_selector"
+    app:cardCornerRadius="@dimen/space_4dp"
+    app:cardElevation="@dimen/space_4dp"
+    app:cardUseCompatPadding="true">
+
+    <!--Main content-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:weightSum="3">
+
+        <!--Image-->
+        <LinearLayout
+            android:id="@+id/lay_plates_image"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/iv_plate_image"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/plate_3" />
+        </LinearLayout>
+
+        <!--Content-->
+        <LinearLayout
+            android:id="@+id/lay_plate_details"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:orientation="vertical"
+            android:padding="@dimen/space_16dp"
+            android:weightSum="4">
+
+            <!--Name-->
+            <LinearLayout
+                android:id="@+id/lay_plate_name"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1.4"
+                android:gravity="left|center_vertical"
+                android:orientation="horizontal"
+                >
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/tv_plate_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/height_title_plate"
+                        android:minHeight="@dimen/height_title_plate"
+                        android:text="Large Text"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/txt_16sp" />
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+
+            <!--Titles-->
+            <LinearLayout
+                android:id="@+id/lay_plate_size_name"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.75"
+                android:gravity="center|left"
+                android:orientation="horizontal"
+                android:weightSum="3">
+
+                <TextView
+                    android:id="@+id/tv_plate_size_name1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="left"
+                    android:visibility="invisible"
+                    android:text="@string/title_personal"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="@dimen/txt_14sp" />
+
+                <TextView
+                    android:id="@+id/tv_plate_size_name2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="left"
+                    android:visibility="invisible"
+                    android:text="@string/title_mediana"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="@dimen/txt_14sp" />
+
+                <TextView
+                    android:id="@+id/tv_plate_size_name3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="left"
+                    android:visibility="invisible"
+                    android:text="@string/title_grande"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="@dimen/txt_14sp" />
+            </LinearLayout>
+
+            <!--Price-->
+            <LinearLayout
+                android:id="@+id/lay_prices"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.75"
+                android:orientation="horizontal"
+                android:weightSum="3">
+
+                <TextView
+                    android:id="@+id/tv_plate_price1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="left"
+                    android:visibility="invisible"
+                    android:textColor="@color/gray"
+                    android:text="S/. 15.50"
+                    android:textSize="@dimen/txt_13sp" />
+
+                <TextView
+                    android:id="@+id/tv_plate_price2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="left"
+                    android:visibility="invisible"
+                    android:textColor="@color/gray"
+                    android:text="S/. 55.50"
+                    android:textSize="@dimen/txt_13sp" />
+
+                <TextView
+                    android:id="@+id/tv_plate_price3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="left"
+                    android:visibility="invisible"
+                    android:textColor="@color/gray"
+                    android:text="S/. 25.00"
+                    android:textSize="@dimen/txt_13sp" />
+            </LinearLayout>
+
+            <!--Order-->
+            <LinearLayout
+                android:id="@+id/lay_plate_actions"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1.1"
+                android:gravity="right|center_vertical"
+                android:orientation="horizontal"
+                android:weightSum="4">
+
+
+                <LinearLayout
+                    android:layout_width="@dimen/space_0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.7"
+                    android:gravity="center"
+                    android:padding="@dimen/space_4dp">
+
+                    <ImageView
+                        android:id="@+id/iv_plate_add"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/ic_add_orders"
+                        android:layout_gravity="right"
+                        android:tint="@color/colorPrimary" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>
+
+

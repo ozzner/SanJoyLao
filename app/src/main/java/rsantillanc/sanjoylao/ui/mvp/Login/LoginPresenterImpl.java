@@ -13,7 +13,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.List;
 import rsantillanc.sanjoylao.R;
-import rsantillanc.sanjoylao.model.UserSignInModel;
+import rsantillanc.sanjoylao.model.APISignInModel;
 import rsantillanc.sanjoylao.storage.dao.UserDao;
 import rsantillanc.sanjoylao.util.Const;
 
@@ -23,6 +23,7 @@ import rsantillanc.sanjoylao.util.Const;
 public class LoginPresenterImpl implements ILoginPresenter, OnRegisterListener, OnLoginListener {
 
     private static final String TAG = LoginPresenterImpl.class.getSimpleName() + Const.BLANK_SPACE;
+    private static final int SIZE = 200;
     private ILoginView mLoginView;
     private ILoginIteractor mLoginIteractor;
     private GoogleApiClient mGoogleApi;
@@ -84,7 +85,7 @@ public class LoginPresenterImpl implements ILoginPresenter, OnRegisterListener, 
      * @param person Object google
      */
     private void buildUserProfile(Person person) {
-        UserSignInModel signin = new UserSignInModel();
+        APISignInModel signin = new APISignInModel();
 
         signin.setFullName(person.getDisplayName());
         signin.setUsername(Plus.AccountApi.getAccountName(mGoogleApi));
@@ -92,7 +93,7 @@ public class LoginPresenterImpl implements ILoginPresenter, OnRegisterListener, 
         signin.setEmail(Plus.AccountApi.getAccountName(mGoogleApi));
 
         if (person.hasImage()) {
-            signin.setUrlProfileImage(person.getImage().getUrl());
+            signin.setUrlProfileImage(customSizeURLGooglePlus(person.getImage().getUrl()));
             signin.setHaveProfileImage(true);
         }
 
@@ -109,13 +110,14 @@ public class LoginPresenterImpl implements ILoginPresenter, OnRegisterListener, 
     }
 
 
+
     /**
      * Contruye el perfil desde los datos de facebook
      * @param response datos de la respuesta.
      */
     private void buildUserProfile(JSONObject response) {
         try {
-            UserSignInModel signin = new UserSignInModel();
+            APISignInModel signin = new APISignInModel();
 
             signin.setUsername(response.getString("email"));
             signin.setEmail(response.getString("email"));
@@ -127,7 +129,7 @@ public class LoginPresenterImpl implements ILoginPresenter, OnRegisterListener, 
             String url = pictureData.getString("url");
 
             if (!url.equals(Const.EMPTY)) {
-                signin.setUrlProfileImage(url);
+                signin.setUrlProfileImage(customSizeURLFacebook(response.getString("id")));
                 signin.setHaveProfileImage(true);
             }
 
@@ -145,6 +147,28 @@ public class LoginPresenterImpl implements ILoginPresenter, OnRegisterListener, 
             mLoginView.hideLoader();
             e.printStackTrace();
         }
+    }
+
+
+
+    /**
+     * Por defecto el tamaño de la imagen es de 50x50, este metodo permite
+     * obtener una imagen con un tamaño typo=large
+     * @param userID id que te otorga facebook y lo concatenas con graph de facebook.
+     * @return String con imagen a tamaño deseado.
+     */
+    private String customSizeURLFacebook(String userID) {
+        return "https://graph.facebook.com/" + userID + "/picture?type=large";
+    }
+
+    /**
+     * Por defecto el tamaño de la imagen es de 50x50, este metodo permite
+     * obtener una imagen con un tamaño deseado.
+     * @param url String que contiene la dirección de la imagen.
+     * @return String con imagen a tamaño deseado.
+     */
+    private String customSizeURLGooglePlus(String url) {
+        return url.substring(0,url.length()-2) + SIZE;
     }
 
 
@@ -209,7 +233,7 @@ public class LoginPresenterImpl implements ILoginPresenter, OnRegisterListener, 
     @Override
     public void onRegisterSuccess(Object obj) {
         mLoginView.updateLoader(mActivity.getString(R.string.progress_message_starting));
-        mLoginIteractor.doLogin(mActivity, ((UserSignInModel) obj).getUsername(), ((UserSignInModel) obj).getPassword(), this);
+        mLoginIteractor.doLogin(mActivity, ((APISignInModel) obj).getUsername(), ((APISignInModel) obj).getPassword(), this);
     }
 
     @Override
@@ -243,7 +267,7 @@ public class LoginPresenterImpl implements ILoginPresenter, OnRegisterListener, 
     }
 
     @Override
-    public void onBasicAuthenticationError(UserSignInModel signin) {
+    public void onBasicAuthenticationError(APISignInModel signin) {
         if (signin != null) {
             mLoginView.updateLoader(mActivity.getString(R.string.progress_message_registering));
             mLoginIteractor.doSignin(signin, this);

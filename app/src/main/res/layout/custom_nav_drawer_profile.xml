@@ -50,7 +50,8 @@
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_gravity="right"
-                android:src="@drawable/abc_spinner_mtrl_am_alpha" />
+                android:tint="@color/white"
+                android:src="@drawable/ic_menu_overflow" />
         </LinearLayout>
         <!-- email address-->
 

@@ -11,13 +11,13 @@ import retrofit.Callback;
 import retrofit.GsonConverterFactory;
 import retrofit.Response;
 import retrofit.Retrofit;
-import rsantillanc.sanjoylao.api.ConstAPI;
-import rsantillanc.sanjoylao.api.ParseAPIService;
-import rsantillanc.sanjoylao.model.UserCreatedModel;
+import rsantillanc.sanjoylao.api.service.ParseAPIService;
+import rsantillanc.sanjoylao.model.APISignInModel;
+import rsantillanc.sanjoylao.model.APIUserCreatedModel;
 import rsantillanc.sanjoylao.model.UserModel;
-import rsantillanc.sanjoylao.model.UserSignInModel;
 import rsantillanc.sanjoylao.storage.dao.UserDao;
 import rsantillanc.sanjoylao.util.Const;
+import rsantillanc.sanjoylao.util.ConstAPI;
 import rsantillanc.sanjoylao.util.SJLStrings;
 
 /**
@@ -25,7 +25,7 @@ import rsantillanc.sanjoylao.util.SJLStrings;
  */
 public class LoginIteractorImpl implements ILoginIteractor {
 
-    private UserSignInModel oUserSignin;
+    private APISignInModel oUserSignin;
     private Context _context;
 
     /**
@@ -35,22 +35,22 @@ public class LoginIteractorImpl implements ILoginIteractor {
      * @param listener Para recibir los eventos de error o éxito.
      */
     @Override
-    public void doSignin(final UserSignInModel signin, final OnRegisterListener listener) {
+    public void doSignin(final APISignInModel signin, final OnRegisterListener listener) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(ConstAPI.PARSE_URL_BASE)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-        Call<UserCreatedModel> call = retrofit.create(ParseAPIService.class).signUp(signin);
-        call.enqueue(new Callback<UserCreatedModel>() {
+        Call<APIUserCreatedModel> call = retrofit.create(ParseAPIService.class).signUp(signin);
+        call.enqueue(new Callback<APIUserCreatedModel>() {
 
             @Override
-            public void onResponse(Response<UserCreatedModel> response, Retrofit retrofit) {
+            public void onResponse(Response<APIUserCreatedModel> response, Retrofit retrofit) {
+
                 if (response.body() != null) {
                     listener.onRegisterSuccess(signin);
                 } else
                     listener.onError("No se pudo registrar.");
-
             }
 
             @Override
@@ -84,10 +84,11 @@ public class LoginIteractorImpl implements ILoginIteractor {
         call.enqueue(new Callback<UserModel>() {
             @Override
             public void onResponse(Response<UserModel> response, Retrofit retrofit) {
+
                 if (response.body() != null) {
                     listener.onLoginSuccess(response.body());
                     //Save local
-                    long rows = new UserDao(context).saveUser(response.body());
+                    long rows = new UserDao(context).insertUser(response.body());
                     Log.e(Const.DEBUG, "row: " + rows);
                 } else
                     listener.onLoginError("No pudo iniciar sesión.");
@@ -117,11 +118,11 @@ public class LoginIteractorImpl implements ILoginIteractor {
         call.enqueue(new Callback<UserModel>() {
             @Override
             public void onResponse(Response<UserModel> response, Retrofit retrofit) {
-                    if (response.body() != null){
+                 if (response.body() != null){
                         //Send callback
                         listener.onBasicAuthenticationSuccess(response.body());
                         //Store user
-                        new UserDao(get_context()).saveUser(response.body());
+                        new UserDao(get_context()).insertUser(response.body());
                     }else
                         listener.onBasicAuthenticationError(getoUserSignin());
             }
@@ -139,7 +140,7 @@ public class LoginIteractorImpl implements ILoginIteractor {
      * @param signin Objecto con los datos.
      */
     @Override
-    public void setSignInUserModel(UserSignInModel signin) {
+    public void setSignInUserModel(APISignInModel signin) {
         this.oUserSignin = signin;
     }
 
@@ -148,7 +149,7 @@ public class LoginIteractorImpl implements ILoginIteractor {
         this._context = context;
     }
 
-    public UserSignInModel getoUserSignin() {
+    public APISignInModel getoUserSignin() {
         return oUserSignin;
     }
 

@@ -33,6 +33,7 @@
     <color name="gray_trans_95">#F2dddddd</color>
     <color name="layer_shadow">#640b0000</color>
     <color name="nav_text_color_secondary">#dadada</color>
+    <color name="item_pressed_foreground">#14000000</color>
 
     <!-- Background transparen -->
     <color name="transparent_black">#96000000</color>

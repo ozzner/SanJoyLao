@@ -1,5 +1,8 @@
 package rsantillanc.sanjoylao.util;
 
+import android.content.Context;
+import android.graphics.Typeface;
+
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.Locale;
@@ -51,6 +54,10 @@ public class SJLStrings {
         String output = myFormatter.format(input);
 
         return output;
+    }
+
+    public static Typeface getSJLFont(Context c){
+        return Typeface.createFromAsset(c.getAssets(), "fonts/deng_th_.ttf");
     }
 
 }
