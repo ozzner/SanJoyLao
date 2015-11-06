@@ -111,5 +111,6 @@
     <string name="view_card">Ver carta</string>
     <string name="title_my_orders">Mis pedidos</string>
     <string name="action_size_popup_title">tamaño</string>
+    <string name="title_activity_map">Map</string>
 
 </resources>

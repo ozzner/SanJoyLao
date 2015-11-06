@@ -76,6 +76,7 @@ public class LoginActivity extends BaseActivity implements ILoginView,
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         //Check if can go to main activity
         verifyUserActive();
 
