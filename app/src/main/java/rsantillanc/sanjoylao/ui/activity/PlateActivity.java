@@ -11,7 +11,9 @@ import android.view.View;
 import java.util.List;
 
 import rsantillanc.sanjoylao.R;
+import rsantillanc.sanjoylao.SJLApplication;
 import rsantillanc.sanjoylao.model.PlateModel;
+import rsantillanc.sanjoylao.model.PlateSizeModel;
 import rsantillanc.sanjoylao.ui.custom.adapter.RecyclerPlateAdapter;
 import rsantillanc.sanjoylao.ui.mvp.Plate.IPlateView;
 import rsantillanc.sanjoylao.ui.mvp.Plate.PlatePresenterImpl;
@@ -27,6 +29,7 @@ public class PlateActivity extends BaseActivity implements IPlateView, RecyclerP
 
     //Runtime
     PlatePresenterImpl mpresenter;
+    private SJLApplication app;
 
 
     //[Activity lifecycle ]
@@ -77,6 +80,7 @@ public class PlateActivity extends BaseActivity implements IPlateView, RecyclerP
 
     private void init() {
         mpresenter = new PlatePresenterImpl(this, this);
+        app = ((SJLApplication) getApplication());
     }
 
     private void initUIElements() {
@@ -140,12 +144,15 @@ public class PlateActivity extends BaseActivity implements IPlateView, RecyclerP
         showToast("Added!");
     }
 
+    @Override
+    public void onPopupItemClick(MenuItem item, PlateSizeModel plateSize) {
+//        showToast("gropupId " +item.getGroupId() + " Id " + item.getItemId()+ " Name: " + item.getTitle());
+        mpresenter.addPlateToOrder(plateSize,app.getUserLogued());
+    }
+
 
     // {POPUP ITEM}
-    @Override
-    public void onPopupItemClick(MenuItem item) {
-        mpresenter.addPlateToOrder();
-    }
+
 
 
 }

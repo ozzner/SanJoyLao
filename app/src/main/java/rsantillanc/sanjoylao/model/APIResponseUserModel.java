@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 /**
  * Created by RenzoD on 20/10/2015.
  */
-public class APIUserCreatedModel {
+public class APIResponseUserModel {
 
     @SerializedName("objectId")
     private String objectId;
@@ -16,7 +16,7 @@ public class APIUserCreatedModel {
     @SerializedName("sessionToken")
     private String sessionToken;
 
-    public APIUserCreatedModel(String objectId, String createdAt, String sessionToken) {
+    public APIResponseUserModel(String objectId, String createdAt, String sessionToken) {
         this.objectId = objectId;
         this.createdAt = createdAt;
         this.sessionToken = sessionToken;

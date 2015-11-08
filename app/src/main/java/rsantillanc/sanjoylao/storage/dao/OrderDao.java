@@ -43,14 +43,19 @@ public class OrderDao {
     public long insert(OrderModel order) {
         ContentValues cv = new ContentValues();
         cv.put(objectId, order.getObjectId());
-        cv.put(idLocationDelivery, order.getLocationDelivery().getObjectId());
-        cv.put(idOrderType, order.getOrderType().getObjectId());
-        cv.put(idStatus, order.getStatus().getObjectId());
-        cv.put(idPayment, order.getPyment().getObjectId());
-        cv.put(idUser, order.getUser().getObjectId());
+        if (order.getLocationDelivery() != null)
+            cv.put(idLocationDelivery, order.getLocationDelivery().getObjectId());
+        if (order.getOrderType() != null)
+            cv.put(idOrderType, order.getOrderType().getObjectId());
+        if (order.getStatus() != null)
+            cv.put(idStatus, order.getStatus().getObjectId());
+        if (order.getPyment() != null)
+            cv.put(idPayment, order.getPyment().getObjectId());
+        if (order.getUser() != null)
+            cv.put(idUser, order.getUser().getObjectId());
         cv.put(price, order.getPrice());
         cv.put(createdAt, order.getCreatedAt());
-        cv.put(createdAt, order.getUpdatedAt());
+        cv.put(updatedAt, order.getUpdatedAt());
         return db.insert(Tables.ORDERS, null, cv);
     }
 
@@ -68,5 +73,10 @@ public class OrderDao {
             order = null;
 
         return order;
+    }
+
+    public boolean checkActiveOrder(String statusID) {
+        Cursor cur = db.query(Tables.ORDERS, null, idStatus + COMPARE, new String[]{statusID}, null, null, null);
+        return cur.moveToFirst();
     }
 }

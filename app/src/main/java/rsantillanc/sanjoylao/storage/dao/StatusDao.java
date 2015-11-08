@@ -47,12 +47,27 @@ public class StatusDao {
     }
 
 
-    public String getStatusIdByCode(int iCode) {
+    public String getIdStatusByCode(int iCode) {
         Cursor cur = db.query(Tables.STATUS, null, code + COMPARE, new String[]{String.valueOf(iCode)}, null, null, null);
         if (cur.moveToFirst()) {
             return cur.getString(cur.getColumnIndex(objectId));
         }else
             return Const.EMPTY;
 
+    }
+
+    public StatusModel getStatusByCode(int statusTemporal) {
+        Cursor cur = db.query(Tables.STATUS, null, code + COMPARE, new String[]{String.valueOf(statusTemporal)}, null, null, null);
+        StatusModel status;
+        if (cur.moveToFirst()) {
+            status = new StatusModel();
+            status.setCode(cur.getInt(cur.getColumnIndex(code)));
+            status.setName(cur.getString(cur.getColumnIndex(name)));
+            status.setObjectId(cur.getString(cur.getColumnIndex(objectId)));
+            status.setDescription(cur.getString(cur.getColumnIndex(description)));
+        }else
+          status = null;
+
+        return status;
     }
 }

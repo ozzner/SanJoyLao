@@ -1,6 +1,7 @@
 package rsantillanc.sanjoylao.ui.mvp.Plate;
 
 import android.app.Activity;
+import android.content.Context;
 import android.util.Log;
 
 import java.io.UnsupportedEncodingException;
@@ -15,11 +16,10 @@ import retrofit.Response;
 import retrofit.Retrofit;
 import rsantillanc.sanjoylao.api.service.ParseAPIService;
 import rsantillanc.sanjoylao.model.APIResultPlateModel;
-import rsantillanc.sanjoylao.model.OrderModel;
 import rsantillanc.sanjoylao.model.PlateModel;
-import rsantillanc.sanjoylao.storage.dao.OrderDao;
+import rsantillanc.sanjoylao.model.PlateSizeModel;
+import rsantillanc.sanjoylao.model.UserModel;
 import rsantillanc.sanjoylao.storage.dao.PlateDao;
-import rsantillanc.sanjoylao.storage.dao.StatusDao;
 import rsantillanc.sanjoylao.ui.mvp.Order.OrderIteractorImpl;
 import rsantillanc.sanjoylao.util.Const;
 import rsantillanc.sanjoylao.util.ConstAPI;
@@ -51,7 +51,7 @@ public class PlateIteractorImpl {
                 public void onResponse(Response<APIResultPlateModel> response, Retrofit retrofit) {
                     if (response.isSuccess()) {
                         long count = storePlates(response.body().getResultArray());
-                         listener.onListFilterSuccess(response.body().getResultArray());
+                        listener.onListFilterSuccess(response.body().getResultArray());
 
                         Log.e(Const.DEBUG, "oonResponse plates stored: " + count);
                     } else {
@@ -104,28 +104,12 @@ public class PlateIteractorImpl {
         return encodedData;
     }
 
-    public void addPlate() {
 
+    public void addPlate(Context c, PlateSizeModel plateSize, UserModel user) {
+        OrderIteractorImpl iteractor = new OrderIteractorImpl();
+        iteractor.addItemToOrder(c, plateSize, user);
     }
 
 
-    public void makeOrder() {
-        OrderModel order = getActiveOrder();
-        if (order != null){
 
-       }else{
-           createOrder();
-       }
-
-    }
-
-    private void createOrder() {
-        OrderIteractorImpl orderIter = new OrderIteractorImpl();
-        orderIter.createOrder();
-    }
-
-    private OrderModel getActiveOrder() {
-        String id = new StatusDao(mActivity.getApplicationContext()).getStatusIdByCode(Const.STATUS_TEMPORAL);
-        return new OrderDao(mActivity).getActiveOrderIfExist(id);
-    }
 }

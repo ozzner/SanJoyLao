@@ -12,8 +12,8 @@ import retrofit.GsonConverterFactory;
 import retrofit.Response;
 import retrofit.Retrofit;
 import rsantillanc.sanjoylao.api.service.ParseAPIService;
-import rsantillanc.sanjoylao.model.APISignInModel;
-import rsantillanc.sanjoylao.model.APIUserCreatedModel;
+import rsantillanc.sanjoylao.model.APIRequestSignInModel;
+import rsantillanc.sanjoylao.model.APIResponseUserModel;
 import rsantillanc.sanjoylao.model.UserModel;
 import rsantillanc.sanjoylao.storage.dao.UserDao;
 import rsantillanc.sanjoylao.util.Const;
@@ -25,7 +25,7 @@ import rsantillanc.sanjoylao.util.SJLStrings;
  */
 public class LoginIteractorImpl implements ILoginIteractor {
 
-    private APISignInModel oUserSignin;
+    private APIRequestSignInModel oUserSignin;
     private Context _context;
 
     /**
@@ -35,17 +35,17 @@ public class LoginIteractorImpl implements ILoginIteractor {
      * @param listener Para recibir los eventos de error o éxito.
      */
     @Override
-    public void doSignin(final APISignInModel signin, final OnRegisterListener listener) {
+    public void doSignin(final APIRequestSignInModel signin, final OnRegisterListener listener) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(ConstAPI.PARSE_URL_BASE)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-        Call<APIUserCreatedModel> call = retrofit.create(ParseAPIService.class).signUp(signin);
-        call.enqueue(new Callback<APIUserCreatedModel>() {
+        Call<APIResponseUserModel> call = retrofit.create(ParseAPIService.class).signUp(signin);
+        call.enqueue(new Callback<APIResponseUserModel>() {
 
             @Override
-            public void onResponse(Response<APIUserCreatedModel> response, Retrofit retrofit) {
+            public void onResponse(Response<APIResponseUserModel> response, Retrofit retrofit) {
 
                 if (response.body() != null) {
                     listener.onRegisterSuccess(signin);
@@ -140,7 +140,7 @@ public class LoginIteractorImpl implements ILoginIteractor {
      * @param signin Objecto con los datos.
      */
     @Override
-    public void setSignInUserModel(APISignInModel signin) {
+    public void setSignInUserModel(APIRequestSignInModel signin) {
         this.oUserSignin = signin;
     }
 
@@ -149,7 +149,7 @@ public class LoginIteractorImpl implements ILoginIteractor {
         this._context = context;
     }
 
-    public APISignInModel getoUserSignin() {
+    public APIRequestSignInModel getoUserSignin() {
         return oUserSignin;
     }
 

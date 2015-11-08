@@ -23,6 +23,7 @@ import android.widget.Toast;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import rsantillanc.sanjoylao.R;
+import rsantillanc.sanjoylao.SJLApplication;
 import rsantillanc.sanjoylao.model.UserModel;
 import rsantillanc.sanjoylao.storage.dao.UserDao;
 import rsantillanc.sanjoylao.ui.fragment.BanquetsFragment;
@@ -80,8 +81,8 @@ public class MainActivity extends BaseActivity
     private boolean backPressedToExitOnce = false;
     private Bundle mBundle = null;
     private static AppBarLayout mAppbarLayout;
-    private UserModel currentUser;
     private MainPresenterImpl mPresenter;
+    private SJLApplication app;
 
 
     @Override
@@ -120,7 +121,7 @@ public class MainActivity extends BaseActivity
 
 
     private void initContextAndData(Bundle bundle) {
-
+        app = ((SJLApplication) getApplication());
         mContext = getApplicationContext();
         mPresenter = new MainPresenterImpl(MainActivity.this, this);
 
@@ -151,10 +152,10 @@ public class MainActivity extends BaseActivity
 
     private void setUpProfile() {
         if (mBundle != null) {
-            currentUser = ((UserModel) mBundle.getSerializable(Const.EXTRA_USER));
-            username.setText(currentUser.getFullName());//Se cayo aqui por nullpointerEx
-            email.setText(currentUser.getEmail());
-            mPresenter.loadProfileImage(currentUser.getUrlProfileImage(), profileImage);
+            app.setUserLogued(((UserModel) mBundle.getSerializable(Const.EXTRA_USER)));
+            username.setText(app.getUserLogued().getFullName());//Se cayo aqui por nullpointerEx
+            email.setText(app.getUserLogued().getEmail());
+            mPresenter.loadProfileImage(app.getUserLogued().getUrlProfileImage(), profileImage);
         }
     }
 

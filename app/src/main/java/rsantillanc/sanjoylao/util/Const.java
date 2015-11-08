@@ -76,7 +76,9 @@ public class Const {
     public static final String EXTRA_CATEGORY_ID = "category_id";
     public static final String EXTRA_CATEGORY_NAME = "category_name";
     public static final String KEY_POINTER = "Pointer";
+    public static final String CLASS_USER = "_User";
     public static final String CLASS_PLATE = "Plate";
+    public static final String CLASS_STATUS = "Status";
 
     //[ STATUS ]
     public static final int STATUS_TEMPORAL = 1;

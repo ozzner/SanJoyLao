@@ -5,6 +5,8 @@ import android.app.Activity;
 import java.util.List;
 
 import rsantillanc.sanjoylao.model.PlateModel;
+import rsantillanc.sanjoylao.model.PlateSizeModel;
+import rsantillanc.sanjoylao.model.UserModel;
 
 /**
  * Created by RenzoD on 29/10/2015.
@@ -44,7 +46,7 @@ public class PlatePresenterImpl implements IPlatePresenter,OnPlateListener {
         mView.onError(error);
     }
 
-    public void addPlateToOrder() {
-        iteractor.makeOrder();
+    public void addPlateToOrder(PlateSizeModel plateSize, UserModel user) {
+        iteractor.addPlate(mActivity,plateSize,user);
     }
 }

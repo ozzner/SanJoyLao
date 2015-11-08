@@ -60,7 +60,7 @@ public class RecyclerPlateAdapter extends RecyclerView.Adapter<RecyclerPlateAdap
 
         //Hide all
         for (int i = 0; i < names.length; i++) {
-            hideVisibility(names[i],prices[i]);
+            hideVisibility(names[i], prices[i]);
         }
 
         //Show only with values
@@ -94,7 +94,7 @@ public class RecyclerPlateAdapter extends RecyclerView.Adapter<RecyclerPlateAdap
     }
 
 
-    private void showPopupMenu(View v, int position) {
+    private void showPopupMenu(View v, int position, final PlateModel plate) {
         Context wrapper = new ContextThemeWrapper(_context, R.style.PopupMenu);
         final PopupMenu popup = new PopupMenu(wrapper, v);
         popup.getMenuInflater().inflate(R.menu.menu_size_popup, popup.getMenu());
@@ -109,8 +109,7 @@ public class RecyclerPlateAdapter extends RecyclerView.Adapter<RecyclerPlateAdap
         popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-
-                mItemClickListener.onPopupItemClick(item);
+                mItemClickListener.onPopupItemClick(item,plate.getPlateSize().get(item.getItemId()));
                 return false;
             }
         });
@@ -201,7 +200,7 @@ public class RecyclerPlateAdapter extends RecyclerView.Adapter<RecyclerPlateAdap
             if (mItemClickListener != null) {
 
                 if (v instanceof ImageView)
-                    showPopupMenu(v, getPosition());
+                    showPopupMenu(v, getPosition(), plates.get(getPosition()));
                 else
                     mItemClickListener.onItemClick(plates.get(getPosition()));
 
@@ -219,7 +218,7 @@ public class RecyclerPlateAdapter extends RecyclerView.Adapter<RecyclerPlateAdap
 
         void onAddPlateClick(View v);
 
-        void onPopupItemClick(MenuItem item);
+        void onPopupItemClick(MenuItem item, PlateSizeModel plateSize);
     }
 
 

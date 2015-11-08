@@ -8,11 +8,11 @@ import retrofit.http.GET;
 import retrofit.http.Headers;
 import retrofit.http.POST;
 import retrofit.http.Query;
+import rsantillanc.sanjoylao.model.APIRequestOrderModel;
+import rsantillanc.sanjoylao.model.APIRequestSignInModel;
+import rsantillanc.sanjoylao.model.APIResponseUserModel;
 import rsantillanc.sanjoylao.model.APIResultCategoryModel;
 import rsantillanc.sanjoylao.model.APIResultPlateModel;
-import rsantillanc.sanjoylao.model.APISignInModel;
-import rsantillanc.sanjoylao.model.APIUserCreatedModel;
-import rsantillanc.sanjoylao.model.OrderModel;
 import rsantillanc.sanjoylao.model.OrderTypeModel;
 import rsantillanc.sanjoylao.model.PlateModel;
 import rsantillanc.sanjoylao.model.PlateSizeModel;
@@ -31,7 +31,7 @@ public interface ParseAPIService {
             "Content-Type: application/json"
     })
     @POST("users")
-    Call<APIUserCreatedModel> signUp(@Body APISignInModel userBody);
+    Call<APIResponseUserModel> signUp(@Body APIRequestSignInModel userBody);
 
 
     @Headers({
@@ -107,5 +107,5 @@ public interface ParseAPIService {
             "Content-Type: application/json"
     })
     @POST("classes/Order")
-    Call<JsonObject> createOrder(@Body OrderModel neworder);
+    Call<JsonObject> createOrder(@Body APIRequestOrderModel request);
 }

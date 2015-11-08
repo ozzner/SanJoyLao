@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 /**
  * Created by rsantillanc on 29/10/2015.
  */
-public class APIFileCreatedModel {
+public class APIResponseFileModel {
 
     @SerializedName("name")
     private String name;
@@ -13,12 +13,12 @@ public class APIFileCreatedModel {
     @SerializedName("url")
     private String url;
 
-    public APIFileCreatedModel(String name, String url) {
+    public APIResponseFileModel(String name, String url) {
         this.name = name;
         this.url = url;
     }
 
-    public APIFileCreatedModel(){
+    public APIResponseFileModel(){
 
     }
 

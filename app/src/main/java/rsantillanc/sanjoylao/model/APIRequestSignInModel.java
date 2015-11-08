@@ -7,7 +7,7 @@ import rsantillanc.sanjoylao.util.Const;
 /**
  * Created by RenzoD on 20/10/2015.
  */
-public class APISignInModel {
+public class APIRequestSignInModel {
 
     @SerializedName("username")
     private String username;
@@ -37,7 +37,7 @@ public class APISignInModel {
     private boolean isEnabled;
 
 
-    public APISignInModel() {
+    public APIRequestSignInModel() {
         this.password = Const.EMPTY;
         this.username = Const.EMPTY;
         this.phoneNumber = Const.PHONE_DEFAULT;
@@ -45,15 +45,15 @@ public class APISignInModel {
     }
 
 
-    public APISignInModel(String username,
-                          String password,
-                          String email,
-                          String fullName,
-                          int socialLogin,
-                          boolean haveProfileImage,
-                          String urlProfileImage,
-                          long phoneNumber,
-                          boolean isEnabled) {
+    public APIRequestSignInModel(String username,
+                                 String password,
+                                 String email,
+                                 String fullName,
+                                 int socialLogin,
+                                 boolean haveProfileImage,
+                                 String urlProfileImage,
+                                 long phoneNumber,
+                                 boolean isEnabled) {
 
         this.username = username;
         this.password = password;

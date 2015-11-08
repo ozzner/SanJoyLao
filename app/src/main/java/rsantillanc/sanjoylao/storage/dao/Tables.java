@@ -75,7 +75,7 @@ public class Tables {
 
     public static final String CREATE_ORDER = "CREATE TABLE `ORDERS` (\n" +
             "\t`objectId`\tTEXT NOT NULL,\n" +
-            "\t`idLocationDelivery`\tTEXT NOT NULL,\n" +
+            "\t`idLocationDelivery`\tTEXT ,\n" +
             "\t`idOrderType`\tTEXT,\n" +
             "\t`idPayment`\tTEXT UNIQUE,\n" +
             "\t`idStatus`\tTEXT,\n" +
