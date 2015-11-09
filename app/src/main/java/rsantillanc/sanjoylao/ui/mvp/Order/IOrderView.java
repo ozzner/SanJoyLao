@@ -17,5 +17,5 @@ public interface IOrderView {
     void showPaymentMethod();
     void onOrderDetailsLoaded(List<OrderDetailModel> orders);
     void printAmount(double amount);
-    void printDiscount(double amount);
+    void printDiscount(double amount,double amountWithDiscount, CharSequence percent);
 }

@@ -27,6 +27,7 @@ import rsantillanc.sanjoylao.util.SJLStrings;
 public class OrderActivity extends BaseActivity
         implements View.OnClickListener, IOrderView, RecyclerOrderAdapter.OnOrderItemClickListener {
 
+    private static final double MIN_TO_DISCOUNT = 100.00;
     //Views
     private Toolbar toolbar;
     private FloatingActionButton mFloatingActionButton;
@@ -37,9 +38,8 @@ public class OrderActivity extends BaseActivity
     private ProgressBar mProgressBar;
 
     //Globals
-
     private LinearLayoutManager mLinearLayoutManager;
-    private RecyclerOrderAdapter mOrderAdapter;
+    private RecyclerOrderAdapter mOrdersAdapter;
     private double total = 0.0;
 
     //MVP
@@ -138,7 +138,7 @@ public class OrderActivity extends BaseActivity
     }
 
     private void enableTotalPrice() {
-        tvTotalPrice.setVisibility(View.VISIBLE);
+        tvDiscount.setVisibility(View.VISIBLE);
     }
 
 
@@ -192,24 +192,30 @@ public class OrderActivity extends BaseActivity
     @Override
     public void onOrderDetailsLoaded(List<OrderDetailModel> orders) {
         //Set adapter
-        mOrderAdapter = new RecyclerOrderAdapter(orders, _context);
-        mOrderAdapter.setOnItemClickListener(this);
-        mRecyclerView.setAdapter(mOrderAdapter);
+        mOrdersAdapter = new RecyclerOrderAdapter(orders, _context);
+        mOrdersAdapter.setOnItemClickListener(this);
+        mRecyclerView.setAdapter(mOrdersAdapter);
     }
 
     @Override
     public void printAmount(double amount) {
-        total = amount;
-        tvTotalPrice.setText(Const.PRICE_PEN + SJLStrings.format(total, SJLStrings.FORMAT_MILES_EN));
-        tvTotalPrice.setPaintFlags(tvTotalPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+        tvDiscount.setText(Const.PRICE_PEN + SJLStrings.format(amount, SJLStrings.FORMAT_MILES_EN));
         mCollapsiong.setTitle(getString(R.string.title_my_orders));
         enableTotalPrice();
     }
 
     @Override
-    public void printDiscount(double amount) {
-        tvPercent.setText(15 + "%" + "\ndesc.");
-        tvDiscount.setText(Const.PRICE_PEN + SJLStrings.format((amount * 0.85), SJLStrings.FORMAT_MILES_EN));
+    public void printDiscount(double amount ,double amountWithDiscount, CharSequence percent) {
+
+        //Discount
+        tvPercent.setText(percent);
+        tvDiscount.setText(Const.PRICE_PEN + SJLStrings.format(amountWithDiscount, SJLStrings.FORMAT_MILES_EN));
+
+        //Total
+        tvTotalPrice.setText(Const.PRICE_PEN + SJLStrings.format(amount, SJLStrings.FORMAT_MILES_EN));
+        tvTotalPrice.setPaintFlags(tvTotalPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+
+        //Title
         mCollapsiong.setTitle(getString(R.string.title_my_orders));
         enableAllPriceViews();
     }

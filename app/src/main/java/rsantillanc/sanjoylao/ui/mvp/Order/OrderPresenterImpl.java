@@ -8,11 +8,16 @@ import java.util.List;
 
 import rsantillanc.sanjoylao.model.FeastModel;
 import rsantillanc.sanjoylao.model.OrderDetailModel;
+import rsantillanc.sanjoylao.util.Const;
 
 /**
  * Created by rsantillanc on 27/10/2015.
  */
 public class OrderPresenterImpl implements IOrderPresenter, OnOrdersListener {
+
+    private static final double MIN_PRICE_TO_DISCOUNT = 300.00;
+    private static final int DISCOUNT = 12;
+    private static final double PERCENT = (100.00 - DISCOUNT) / 100.00;
 
     private OrderIteractorImpl mIterator;
     private IOrderView mView;
@@ -59,18 +64,40 @@ public class OrderPresenterImpl implements IOrderPresenter, OnOrdersListener {
     }
 
 
-//{On Order Listener}
+    //{On Order Listener}
     @Override
     public void onOrdersError(Context c, CharSequence error) {
-        Toast.makeText(c,"Error loading orders detail: " + error,Toast.LENGTH_SHORT).show();
+        Toast.makeText(c, "Error loading orders detail: " + error, Toast.LENGTH_SHORT).show();
         mView.hideLoader();
     }
 
     @Override
     public void onLoadDetails(Context c, List<OrderDetailModel> orderDetails) {
-        Toast.makeText(c,"Success loading orders detail size: " + orderDetails.size(),Toast.LENGTH_SHORT).show();
+        Toast.makeText(c, "Success loading orders detail size: " + orderDetails.size(), Toast.LENGTH_SHORT).show();
         mView.hideLoader();
         mView.onOrderDetailsLoaded(orderDetails);
+        buildTotalPrice(orderDetails);
+    }
+
+    private void buildTotalPrice(List<OrderDetailModel> orderDetails) {
+        double total = 0.0;
+        for (OrderDetailModel orderDetail : orderDetails)
+            total = orderDetail.getPlateSize().getPrice() + total;
+
+        if (total > MIN_PRICE_TO_DISCOUNT)
+            mView.printDiscount(total, getPriceWithDiscount(total), printPercent());
+        else
+            mView.printAmount(total);
+
+
+    }
+
+    private CharSequence printPercent() {
+        return DISCOUNT + Const.PERCENT_OPERATOR + "\nDesc.";
+    }
+
+    private double getPriceWithDiscount(double total) {
+        return total * PERCENT;
     }
 
 
