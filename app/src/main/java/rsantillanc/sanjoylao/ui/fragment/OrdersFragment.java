@@ -83,7 +83,7 @@ public class OrdersFragment extends Fragment {
         mRecyclerView.setHasFixedSize(false);
 
         //Set adapter
-        mOrderAdapter = new RecyclerOrderAdapter(mBanquets,_context);
+//        mOrderAdapter = new RecyclerOrderAdapter(mBanquets,_context);
         mRecyclerView.setAdapter(mOrderAdapter);
     }
 

@@ -13,6 +13,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
+import rsantillanc.sanjoylao.model.OrderDetailModel;
 import rsantillanc.sanjoylao.model.OrderTypeModel;
 import rsantillanc.sanjoylao.model.PlateModel;
 import rsantillanc.sanjoylao.model.PlateSizeModel;
@@ -71,7 +72,14 @@ public class ParseAPIDeserializer<T> implements JsonDeserializer<T> {
             array = json.getAsJsonObject().getAsJsonArray(ConstAPI.PARSE_KEY_RESULT);
             return ((T) getModelsFromJsonArray(array, StatusModel.class));
 
-        } else
+           //OrderDetail
+        } else if (typeOfT.equals(OrderDetailModel.class)) {
+
+            array = json.getAsJsonObject().getAsJsonArray(ConstAPI.PARSE_KEY_RESULT);
+            return ((T) getModelsFromJsonArray(array, OrderDetailModel.class));
+
+
+        }else
             return null;
     }
 

@@ -14,6 +14,7 @@ import rsantillanc.sanjoylao.model.APIRequestSignInModel;
 import rsantillanc.sanjoylao.model.APIResponseUserModel;
 import rsantillanc.sanjoylao.model.APIResultCategoryModel;
 import rsantillanc.sanjoylao.model.APIResultPlateModel;
+import rsantillanc.sanjoylao.model.OrderDetailModel;
 import rsantillanc.sanjoylao.model.OrderTypeModel;
 import rsantillanc.sanjoylao.model.PlateModel;
 import rsantillanc.sanjoylao.model.PlateSizeModel;
@@ -46,8 +47,6 @@ public interface ParseAPIService {
     @Headers({
             "X-Parse-Application-Id: RTM3ioKCBgaAJjXmDRr493sb13uYzGrMnePLhzhm",
             "X-Parse-REST-API-Key: 6xr428CvfJT8WMGByPUhfvJWmFaxjozudaPy9bUB",
-
-
     })
     @GET("classes/Plate?include=idCategory")
     Call<APIResultPlateModel> getPlatesWhereClausule(@Query(value = "where", encoded = true) String jsonWhere);
@@ -118,4 +117,14 @@ public interface ParseAPIService {
     })
     @POST("classes/OrderDetail")
     Call<JsonObject> createOrderDetail(@Body APIRequestOrderDetailModel detailModel);
+
+
+
+    @Headers({
+            "X-Parse-Application-Id: RTM3ioKCBgaAJjXmDRr493sb13uYzGrMnePLhzhm",
+            "X-Parse-REST-API-Key: 6xr428CvfJT8WMGByPUhfvJWmFaxjozudaPy9bUB",
+    })
+    @POST("classes/OrderDetail?include=idOrder.idUser,idOrder.idStatus,idPlateSize.idPlate.idCategory,idPlateSize.idSize")
+    Call<OrderDetailModel> getOrdersDetails(@Query(value = "where", encoded = true) String jsonFilter);
+    //where={"post":{"__type":"Pointer","className":"Post","objectId":"8TOXdXf3tz"}}
 }

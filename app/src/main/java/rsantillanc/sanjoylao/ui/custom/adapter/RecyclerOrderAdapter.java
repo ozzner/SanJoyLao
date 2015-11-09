@@ -12,6 +12,9 @@ import java.util.Collections;
 import java.util.List;
 
 import rsantillanc.sanjoylao.R;
+import rsantillanc.sanjoylao.model.OrderDetailModel;
+import rsantillanc.sanjoylao.util.Const;
+import rsantillanc.sanjoylao.util.SJLStrings;
 
 /**
  * Created by RenzoD on 03/06/2015.
@@ -19,14 +22,14 @@ import rsantillanc.sanjoylao.R;
 public class RecyclerOrderAdapter extends RecyclerView.Adapter<RecyclerOrderAdapter.BanquetViewHolder> {
 
     private LayoutInflater layIn;
-    private List<Object> banquetItems = Collections.EMPTY_LIST;
+    private List<OrderDetailModel> orders = Collections.EMPTY_LIST;
     private Context ctx;
     private OnOrderItemClickListener mItemClickListener;
 
 
-    public RecyclerOrderAdapter(List<Object> banquetItems, Context ctx) {
+    public RecyclerOrderAdapter(List<OrderDetailModel> details, Context ctx) {
         this.layIn = LayoutInflater.from(ctx);
-        this.banquetItems = banquetItems;
+        this.orders = details;
         this.ctx = ctx;
     }
 
@@ -37,24 +40,24 @@ public class RecyclerOrderAdapter extends RecyclerView.Adapter<RecyclerOrderAdap
 
     @Override
     public void onBindViewHolder(BanquetViewHolder orderHolder, int index) {
-//        FeastModel banquet = (FeastModel) banquetItems.get(index);
-//
-//        orderHolder.tvPrice.setText(Const.PRICE_PEN + SJLStrings.format(banquet.getPrice(), SJLStrings.FORMAT_MILES_EN));
-//        orderHolder.tvPrice.setTypeface(SJLStrings.getSJLFont(ctx));
-//        orderHolder.tvName.setText(banquet.getName()); //Delete hardcode
-//        orderHolder.tvCount.setText(Const.TAG_POR + (index + 1));
-//
-//        if (banquet.isFlagOptions())
-//            orderHolder.tvOptions.setText("Las " + banquet.getOption() + " que eligió");//Delete hardcode
-//        else
-//            orderHolder.tvOptions.setText("La opción elegida.");//Delete hardcode
+        OrderDetailModel item = orders.get(index);
+
+    /**
+     * Falta validar si el plato pertenece a un banquete,
+     * de ser así se tiene que agregar una validación
+     */
+        orderHolder.tvPrice.setText(Const.PRICE_PEN + SJLStrings.format(item.getPlateSize().getPrice(), SJLStrings.FORMAT_MILES_EN));
+        orderHolder.tvPrice.setTypeface(SJLStrings.getSJLFont(ctx));
+        orderHolder.tvName.setText(item.getPlateSize().getPlate().getName()); //Delete hardcode
+        orderHolder.tvCount.setText(Const.TAG_POR + (index + 1));
+        orderHolder.tvOptions.setText(item.getPlateSize().getSize().getName());
 
 
     }
 
     @Override
     public int getItemCount() {
-        return banquetItems.size();
+        return orders.size();
     }
 
 
