@@ -51,9 +51,8 @@ public class OrderIteractorImpl implements IOrderIteractor {
             OrderModel currentOrder = new OrderDao(c).getActiveOrderIfExist(new StatusDao(c).getIdStatusByCode(Const.STATUS_TEMPORAL));
             addItemDetail(c, currentOrder.getObjectId(), plateSize, listener);
         } else
-            createOrder(c, plateSize, user,listener);
+            createOrder(c, plateSize, user, listener);
     }
-
 
 
     private void createOrder(final Context c, final PlateSizeModel plateSize, final UserModel user, final OnOrdersListener listener) {
@@ -65,6 +64,7 @@ public class OrderIteractorImpl implements IOrderIteractor {
         APIRequestOrderModel req = new APIRequestOrderModel();
         req.setIdUser(new ParsePointerModel(Const.CLASS_USER, user.getObjectId()));
         req.setIdStatus(makeStatusPointer(c));
+        req.setPrice(plateSize.getPrice());
 
         Call<JsonObject> call = retrofit.create(ParseAPIService.class).createOrder(req);
         call.enqueue(new Callback<JsonObject>() {
@@ -72,16 +72,23 @@ public class OrderIteractorImpl implements IOrderIteractor {
             public void onResponse(Response<JsonObject> response, Retrofit retrofit) {
                 if (response.isSuccess()) {
                     final JsonElement orderID = response.body().getAsJsonObject().get(ConstAPI.PARSE_ID);
-                    storeCurrentOrder(c, user, response);
-                    addItemDetail(c, orderID.toString(), plateSize, listener);
-                } else
-                    Log.e(Const.DEBUG, "Order error: " + response.errorBody());
+                    long row = storeCurrentOrder(c, user, plateSize, response);
+                    if (row > 0)
+                        addItemDetail(c, orderID.getAsString(), plateSize, listener);
+                    else
+                        listener.onOrdersError(c,"No se creó la orden. Intente nuevamente.");
+                } else{
+                    listener.onOrdersError(c, "Error. No se pudo agregar.");
+                    Log.e(Const.DEBUG, "onResponse Error. Detalle vacio.");
+
+                }
+
             }
 
             @Override
             public void onFailure(Throwable t) {
                 Log.e(Const.DEBUG, "Order Throwable: " + t.getMessage());
-
+                listener.onOrdersError(c,t.getMessage());
             }
         });
     }
@@ -104,9 +111,13 @@ public class OrderIteractorImpl implements IOrderIteractor {
                 if (response.isSuccess()) {
                     final JsonElement orderDetailID = response.body().getAsJsonObject().get(ConstAPI.PARSE_ID);
                     final JsonElement createdAt = response.body().getAsJsonObject().get(ConstAPI.PARSE_CREATED);
-                    long row = createOrderDetailOnDevice(c, orderID, orderDetailID.toString(), createdAt.toString(), plateSize);
-                    listener.onLoadDetails(new OrderDao(c).getOrderDetailsByOrderID(orderID));
-                    Log.e(Const.DEBUG, "OrderDetailModel created: " + row);
+
+                    long row = createOrderDetailOnDevice(c, orderID,  orderDetailID.getAsString(), createdAt.getAsString(), plateSize);
+                    if (row > 0)
+                        listener.onLoadDetails(c, new OrderDao(c).getOrderDetailsByOrderID(orderID));
+                    else
+                        listener.onOrdersError(c,"Error, no se pudo agregar.");
+
                 } else
                     Log.e(Const.DEBUG, "onResponse  OrderDetailModel created: " + response.errorBody());
             }
@@ -121,11 +132,11 @@ public class OrderIteractorImpl implements IOrderIteractor {
 
     }
 
-    private long createOrderDetailOnDevice(Context c, String orderID,String orderDetailID, String createdAt, PlateSizeModel plateSize) {
-       return new OrderDao(c).insertDetail(orderID,orderDetailID,createdAt,plateSize);
+    private long createOrderDetailOnDevice(Context c, String orderID, String orderDetailID, String createdAt, PlateSizeModel plateSize) {
+        return new OrderDao(c).insertDetail(orderID, orderDetailID, createdAt, plateSize);
     }
 
-    private void storeCurrentOrder(Context c, UserModel user, Response<JsonObject> response) {
+    private long storeCurrentOrder(Context c, UserModel user, PlateSizeModel plateSize, Response<JsonObject> response) {
         OrderModel order = new OrderModel();
 
         JsonElement objectId = response.body().getAsJsonObject().get(ConstAPI.PARSE_ID);
@@ -136,10 +147,12 @@ public class OrderIteractorImpl implements IOrderIteractor {
         order.setObjectId(objectId.getAsString());
         order.setCreatedAt(createdAt.getAsString());
         order.setUpdatedAt(createdAt.getAsString());
+        order.setPrice(plateSize.getPrice());
 
         long insert = new OrderDao(c).insert(order);
         Log.e(Const.DEBUG, "Order Created Local: " + insert);
 
+        return insert;
     }
 
     private ParsePointerModel makeStatusPointer(Context c) {

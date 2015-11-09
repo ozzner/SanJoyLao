@@ -90,6 +90,9 @@ public class OrderDao {
         } else
             order = null;
 
+        if (!cur.isClosed())
+            cur.close();
+
         return order;
     }
 

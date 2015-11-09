@@ -1,6 +1,7 @@
 package rsantillanc.sanjoylao.ui.mvp.Plate;
 
 import android.app.Activity;
+import android.content.Context;
 
 import java.util.List;
 
@@ -8,6 +9,7 @@ import rsantillanc.sanjoylao.model.PlateModel;
 import rsantillanc.sanjoylao.model.PlateSizeModel;
 import rsantillanc.sanjoylao.model.RelationPlateSizeModel;
 import rsantillanc.sanjoylao.model.UserModel;
+import rsantillanc.sanjoylao.ui.activity.PlateActivity;
 
 /**
  * Created by RenzoD on 29/10/2015.
@@ -52,8 +54,9 @@ public class PlatePresenterImpl implements IPlatePresenter,OnPlateListener {
     }
 
     @Override
-    public void onPlateAddSucess(int size) {
-        mView.onPlateAddOrderCorrect(size);
+    public void onPlateAddSucess(Context c, int size) {
+        IPlateView view = new PlateActivity();
+        view.onPlateAddOrderCorrect(c,size);
     }
 
     public void addPlateToOrder(PlateSizeModel plateSize, UserModel user) {

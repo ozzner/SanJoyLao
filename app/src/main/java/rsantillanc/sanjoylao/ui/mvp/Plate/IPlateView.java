@@ -1,5 +1,7 @@
 package rsantillanc.sanjoylao.ui.mvp.Plate;
 
+import android.content.Context;
+
 import java.util.List;
 
 import rsantillanc.sanjoylao.model.PlateModel;
@@ -12,5 +14,5 @@ public interface IPlateView {
     void onPlatesLoadSuccess(List<RelationPlateSizeModel> plates);
     void goToPlateDetail(PlateModel plate);
     void onError(CharSequence error);
-    void onPlateAddOrderCorrect(int size);
+    void onPlateAddOrderCorrect(Context c, int size);
 }

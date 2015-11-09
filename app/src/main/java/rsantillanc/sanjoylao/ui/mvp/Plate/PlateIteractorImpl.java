@@ -139,13 +139,13 @@ public class PlateIteractorImpl implements OnOrdersListener {
     }
 
     @Override
-    public void onOrdersError(CharSequence error) {
+    public void onOrdersError(Context c, CharSequence error) {
 
     }
 
     @Override
-    public void onLoadDetails(List<OrderDetailModel> orderDetails) {
+    public void onLoadDetails(Context c, List<OrderDetailModel> orderDetails) {
         PlatePresenterImpl presenter = new PlatePresenterImpl();
-        presenter.onPlateAddSucess(orderDetails.size());
+        presenter.onPlateAddSucess(c,orderDetails.size());
     }
 }

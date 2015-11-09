@@ -1,6 +1,7 @@
 package rsantillanc.sanjoylao.ui.mvp.Order;
 
 import android.app.Activity;
+import android.content.Context;
 
 import java.util.List;
 
@@ -65,12 +66,12 @@ public class OrderPresenterImpl implements IOrderPresenter, OnOrdersListener {
     }
 
     @Override
-    public void onOrdersError(CharSequence error) {
+    public void onOrdersError(Context c, CharSequence error) {
 
     }
 
     @Override
-    public void onLoadDetails(List<OrderDetailModel> orderDetails) {
+    public void onLoadDetails(Context c, List<OrderDetailModel> orderDetails) {
 
     }
 }

@@ -151,7 +151,6 @@ public class OrderActivity extends BaseActivity
     public void onClick(View v) {
         if (v == mFloatingActionButton) {
             showToast("Open payment methods!");
-//            showSnackbar("snack", v);
         }
     }
 

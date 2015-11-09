@@ -116,6 +116,6 @@ public interface ParseAPIService {
             "X-Parse-REST-API-Key: 6xr428CvfJT8WMGByPUhfvJWmFaxjozudaPy9bUB",
             "Content-Type: application/json"
     })
-    @POST("classes/OrderDetailModel")
+    @POST("classes/OrderDetail")
     Call<JsonObject> createOrderDetail(@Body APIRequestOrderDetailModel detailModel);
 }

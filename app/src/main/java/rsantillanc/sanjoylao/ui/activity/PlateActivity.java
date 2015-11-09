@@ -1,5 +1,6 @@
 package rsantillanc.sanjoylao.ui.activity;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -7,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -134,8 +136,8 @@ public class PlateActivity extends BaseActivity implements IPlateView, RecyclerP
     }
 
     @Override
-    public void onPlateAddOrderCorrect(int size) {
-        showToast("Platos agregados al carrito: " + size);
+    public void onPlateAddOrderCorrect(Context c, int size) {
+        Toast.makeText(c,"Pedido agregado! total: " + size,Toast.LENGTH_LONG).show();
     }
 
 
