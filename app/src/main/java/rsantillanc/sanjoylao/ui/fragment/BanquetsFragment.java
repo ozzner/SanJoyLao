@@ -18,7 +18,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import rsantillanc.sanjoylao.R;
-import rsantillanc.sanjoylao.model.BanquetModel;
+import rsantillanc.sanjoylao.model.FeastModel;
 import rsantillanc.sanjoylao.ui.activity.MainActivity;
 import rsantillanc.sanjoylao.ui.activity.OptionsGridActivity;
 import rsantillanc.sanjoylao.ui.activity.OptionsListActivity;
@@ -59,8 +59,8 @@ public class BanquetsFragment extends Fragment {
         mRecyclerView = (RecyclerView) view.findViewById(R.id.rv_banquets);
 
         /*Setup*/
-        BanquetModel model = new BanquetModel();
-        banquets = model.dummyBanquets();
+//        FeastModel model = new FeastModel();
+//        banquets = model.dummyBanquets();
         mAdapter = new RecyclerViewBanquetAdapter(banquets, activity);
         mAdapter.setOnItemClickListener(new RecyclerViewBanquetAdapter.OnItemClickListener() {
             @Override
@@ -68,7 +68,7 @@ public class BanquetsFragment extends Fragment {
                 //Obtain type of device
                 typeDevice = Android.getTypeDevice(getActivity());
                 Bundle bundle = new Bundle();
-                bundle.putSerializable(Const.TAG_BANQUET, (BanquetModel) banquets.get(index));
+                bundle.putSerializable(Const.TAG_BANQUET, (FeastModel) banquets.get(index));
 
                 if (typeDevice > Const.PHONE_SCREEN) {
 
@@ -81,7 +81,7 @@ public class BanquetsFragment extends Fragment {
                 } else {
 
                     Intent in;
-                    if (((BanquetModel) banquets.get(index)).isFlagOptions())
+                    if (((FeastModel) banquets.get(index)).isFlagOptions())
                         in = new Intent(getActivity(), OptionsListActivity.class);
                     else
                         in = new Intent(getActivity(), OptionsGridActivity.class);

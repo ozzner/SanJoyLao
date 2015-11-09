@@ -15,6 +15,7 @@ import rsantillanc.sanjoylao.model.CategoryModel;
 import rsantillanc.sanjoylao.model.ParseFileModel;
 import rsantillanc.sanjoylao.model.PlateModel;
 import rsantillanc.sanjoylao.model.PlateSizeModel;
+import rsantillanc.sanjoylao.model.RelationPlateSizeModel;
 import rsantillanc.sanjoylao.util.Const;
 
 /**
@@ -82,9 +83,9 @@ public class PlateDao {
             return plate.getImage().getUrl();
     }
 
-    public List<PlateModel> listByCategory(String categoryID) {
+    public List<RelationPlateSizeModel> listByCategory(String categoryID) {
         Cursor query = db.query(Tables.PLATE, null, idCategory + "=?", new String[]{categoryID}, null, null, null);
-        return loopPlates(query,new ArrayList<PlateModel>());
+        return buildRelationPlateSize(query, new ArrayList<RelationPlateSizeModel>());
     }
 
 
@@ -103,7 +104,7 @@ public class PlateDao {
                 plate.setIngredients(cur.getString(cur.getColumnIndex(available)));
                 plate.setQualification(makeJSONObject(cur.getString(cur.getColumnIndex(qualification))));
                 plate.setRecommendet((cur.getInt(cur.getColumnIndex(recommended))) == 1 ? true : false);
-                plate.setPlateSize(makePlateSize(cur.getString(cur.getColumnIndex(objectId))));
+//                plate.setPlateSize(makePlateSize(cur.getString(cur.getColumnIndex(objectId))));
 
                 plates.add(plate);
             } while (cur.moveToNext());
@@ -115,7 +116,41 @@ public class PlateDao {
     }
 
 
+    private List<RelationPlateSizeModel> buildRelationPlateSize(Cursor cur, List<RelationPlateSizeModel> list) {
+        RelationPlateSizeModel relation;
 
+        if (cur.moveToFirst()) {
+            PlateModel plate;
+            do {
+                relation = new RelationPlateSizeModel();
+                plate = new PlateModel();
+
+                plate.setObjectId(cur.getString(cur.getColumnIndex(objectId)));
+                plate.setCategory(findCategoryByID(cur.getString(cur.getColumnIndex(idCategory))));
+                plate.setImage(makeFile(cur));
+                plate.setName(cur.getString(cur.getColumnIndex(name)));
+                plate.setAtFeast((cur.getInt(cur.getColumnIndex(name))) == 1 ? true : false);
+                plate.setAvalible((cur.getInt(cur.getColumnIndex(available))) == 1 ? true : false);
+                plate.setIngredients(cur.getString(cur.getColumnIndex(available)));
+                plate.setQualification(makeJSONObject(cur.getString(cur.getColumnIndex(qualification))));
+                plate.setRecommendet((cur.getInt(cur.getColumnIndex(recommended))) == 1 ? true : false);
+
+                //Creating
+                relation.setCurrentPlate(plate);
+                relation.setListSizes(makePlateSize(cur.getString(cur.getColumnIndex(objectId))));
+
+                //Add
+                list.add(relation);
+
+            } while (cur.moveToNext());
+
+            if (!cur.isClosed()) {
+                cur.close();
+            }
+        }
+
+        return list;
+    }
 
     private CategoryModel findCategoryByID(String categoryID) {
         return new CategoryDao(_context).getCategoryByID(categoryID);
@@ -130,9 +165,9 @@ public class PlateDao {
 
     private JSONObject makeJSONObject(String qualification) {
         if (qualification.equals(Const.EMPTY_JSON))
-        return null;
+            return null;
         else {
-            JSONObject qa = new JSONObject() ;
+            JSONObject qa = new JSONObject();
             try {
                 qa.getJSONObject(qualification);
             } catch (JSONException e) {
@@ -148,4 +183,8 @@ public class PlateDao {
     }
 
 
+    public PlateModel getPlateByID(String plateID) {
+        Cursor cur = db.query(Tables.PLATE, null, objectId + "=?", new String[]{plateID}, null, null, null);
+        return loopPlates(cur, new ArrayList<PlateModel>()).get(0);
+    }
 }

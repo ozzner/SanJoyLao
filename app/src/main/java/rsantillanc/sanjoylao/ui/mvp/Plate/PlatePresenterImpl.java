@@ -6,6 +6,7 @@ import java.util.List;
 
 import rsantillanc.sanjoylao.model.PlateModel;
 import rsantillanc.sanjoylao.model.PlateSizeModel;
+import rsantillanc.sanjoylao.model.RelationPlateSizeModel;
 import rsantillanc.sanjoylao.model.UserModel;
 
 /**
@@ -23,6 +24,10 @@ public class PlatePresenterImpl implements IPlatePresenter,OnPlateListener {
         this.mActivity = activity;
     }
 
+    public PlatePresenterImpl() {
+        mActivity = null;
+    }
+
 
     @Override
     public void onPlateClick(PlateModel plate) {
@@ -37,13 +42,18 @@ public class PlatePresenterImpl implements IPlatePresenter,OnPlateListener {
 
     //{ON_PLATE_LISTENER}
     @Override
-    public void onListFilterSuccess(List<PlateModel> platesFilter) {
+    public void onListFilterSuccess(List<RelationPlateSizeModel> platesFilter) {
         mView.onPlatesLoadSuccess(platesFilter);
     }
 
     @Override
     public void onListFilterError(CharSequence error) {
         mView.onError(error);
+    }
+
+    @Override
+    public void onPlateAddSucess(int size) {
+        mView.onPlateAddOrderCorrect(size);
     }
 
     public void addPlateToOrder(PlateSizeModel plateSize, UserModel user) {

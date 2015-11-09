@@ -12,9 +12,6 @@ import java.util.Collections;
 import java.util.List;
 
 import rsantillanc.sanjoylao.R;
-import rsantillanc.sanjoylao.model.BanquetModel;
-import rsantillanc.sanjoylao.util.Const;
-import rsantillanc.sanjoylao.util.SJLStrings;
 
 /**
  * Created by RenzoD on 03/06/2015.
@@ -40,17 +37,17 @@ public class RecyclerOrderAdapter extends RecyclerView.Adapter<RecyclerOrderAdap
 
     @Override
     public void onBindViewHolder(BanquetViewHolder orderHolder, int index) {
-        BanquetModel banquet = (BanquetModel) banquetItems.get(index);
-
-        orderHolder.tvPrice.setText(Const.PRICE_PEN + SJLStrings.format(banquet.getPrice(), SJLStrings.FORMAT_MILES_EN));
-        orderHolder.tvPrice.setTypeface(SJLStrings.getSJLFont(ctx));
-        orderHolder.tvName.setText(banquet.getName()); //Delete hardcode
-        orderHolder.tvCount.setText(Const.TAG_POR + (index + 1));
-
-        if (banquet.isFlagOptions())
-            orderHolder.tvOptions.setText("Las " + banquet.getOption() + " que eligió");//Delete hardcode
-        else
-            orderHolder.tvOptions.setText("La opción elegida.");//Delete hardcode
+//        FeastModel banquet = (FeastModel) banquetItems.get(index);
+//
+//        orderHolder.tvPrice.setText(Const.PRICE_PEN + SJLStrings.format(banquet.getPrice(), SJLStrings.FORMAT_MILES_EN));
+//        orderHolder.tvPrice.setTypeface(SJLStrings.getSJLFont(ctx));
+//        orderHolder.tvName.setText(banquet.getName()); //Delete hardcode
+//        orderHolder.tvCount.setText(Const.TAG_POR + (index + 1));
+//
+//        if (banquet.isFlagOptions())
+//            orderHolder.tvOptions.setText("Las " + banquet.getOption() + " que eligió");//Delete hardcode
+//        else
+//            orderHolder.tvOptions.setText("La opción elegida.");//Delete hardcode
 
 
     }

@@ -79,6 +79,8 @@ public class Const {
     public static final String CLASS_USER = "_User";
     public static final String CLASS_PLATE = "Plate";
     public static final String CLASS_STATUS = "Status";
+    public static final String CLASS_ORDER = "Order";
+    public static final String CLASS_PLATE_SIZE = "PlateSize";
 
     //[ STATUS ]
     public static final int STATUS_TEMPORAL = 1;

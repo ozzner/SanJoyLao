@@ -14,8 +14,8 @@ import android.view.View;
 import java.util.ArrayList;
 
 import rsantillanc.sanjoylao.R;
+import rsantillanc.sanjoylao.model.FeastModel;
 import rsantillanc.sanjoylao.ui.custom.adapter.RecyclerViewOptionsAdapter;
-import rsantillanc.sanjoylao.model.BanquetModel;
 import rsantillanc.sanjoylao.model.OptionsModel;
 import rsantillanc.sanjoylao.util.Const;
 import rsantillanc.sanjoylao.ui.popup.DetailsOptionsPopup;
@@ -38,11 +38,11 @@ public class OptionsListActivity extends ActionBarActivity {
         mToolbar = (Toolbar)findViewById(R.id.toolbar_options);
 
         init(getApplicationContext());
-        BanquetModel model = (BanquetModel)getIntent().getSerializableExtra(Const.TAG_BANQUET);
+        FeastModel model = (FeastModel)getIntent().getSerializableExtra(Const.TAG_BANQUET);
         setUpActionBar(model);
     }
 
-    private void setUpActionBar(BanquetModel model) {
+    private void setUpActionBar(FeastModel model) {
         mToolbar.setTitle(model.getName() + " (S/. 55.65)");
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

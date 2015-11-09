@@ -12,5 +12,5 @@ public interface IOrderIteractor {
 
     void getOrdersFromServer(String clausule, OnOrdersListener listener);
 
-    void addItemToOrder(Context c,PlateSizeModel plateSize, UserModel user);
+    void addItemToOrder(Context c,PlateSizeModel plateSize, UserModel user, OnOrdersListener listener);
 }

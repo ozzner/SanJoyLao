@@ -5,7 +5,15 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.google.gson.Gson;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import rsantillanc.sanjoylao.model.FeastPlateModel;
+import rsantillanc.sanjoylao.model.OrderDetailModel;
 import rsantillanc.sanjoylao.model.OrderModel;
+import rsantillanc.sanjoylao.model.PlateSizeModel;
 
 /**
  * Created by RenzoD on 06/11/2015.
@@ -14,6 +22,7 @@ public class OrderDao {
 
     private static final String SELECT = "Select * from " + Tables.ORDERS;
     private static final String COMPARE = "=?";
+    private final Context _context;
 
     //Columns
     private String objectId = "objectId";
@@ -26,6 +35,14 @@ public class OrderDao {
     private String createdAt = "createdAt";
     private String updatedAt = "updatedAt";
 
+    //Columns detail
+    private String objectIdDetail = "objectId";
+    private String idFeastPlate = "idFeastPlate";
+    private String idOrder = "idOrder";
+    private String idPlateSize = "idPlateSize";
+    private String createdAtDetail = "createdAt";
+    private String updatedAtDetail = "updatedAt";
+
 
     //Database
     private SQLiteDatabase db;
@@ -33,6 +50,7 @@ public class OrderDao {
     public OrderDao(Context c) {
         SJLDatabase mSJLDatabase = new SJLDatabase(c);
         this.db = mSJLDatabase.getWritableDatabase();
+        this._context = c;
     }
 
     public int count() {
@@ -75,8 +93,81 @@ public class OrderDao {
         return order;
     }
 
+    public OrderModel getOrderByID(String orderID) {
+        Cursor cur = db.query(Tables.ORDERS, null, objectId + COMPARE, new String[]{orderID}, null, null, null);
+        OrderModel order;
+
+        if (cur.moveToFirst()) {
+            order = new OrderModel();
+            order.setObjectId(cur.getString(cur.getColumnIndex(objectId)));
+            order.setCreatedAt(cur.getString(cur.getColumnIndex(createdAt)));
+            order.setUpdatedAt(cur.getString(cur.getColumnIndex(updatedAt)));
+            order.setPrice(cur.getDouble(cur.getColumnIndex(price)));
+        } else
+            order = null;
+
+        return order;
+    }
+
     public boolean checkActiveOrder(String statusID) {
         Cursor cur = db.query(Tables.ORDERS, null, idStatus + COMPARE, new String[]{statusID}, null, null, null);
         return cur.moveToFirst();
+    }
+
+    public long insertDetail(String orderID, String orderDetailID, String createdAt, PlateSizeModel plateSize) {
+
+        ContentValues cv = new ContentValues();
+        cv.put(objectIdDetail, orderDetailID);
+        cv.put(idPlateSize, plateSize.getObjectId());
+        cv.put(idOrder, orderID);
+        cv.put(createdAtDetail, createdAt);
+        cv.put(updatedAtDetail, createdAt);
+        return db.insert(Tables.ORDER_DETAIL, null, cv);
+    }
+
+    private String makePlateSizeToJson(PlateSizeModel plateSize) {
+        return new Gson().toJson(plateSize);
+    }
+
+    public List<OrderDetailModel> getOrderDetailsByOrderID(String orderID) {
+        Cursor cur = db.query(Tables.ORDER_DETAIL, null, idOrder + COMPARE, new String[]{orderID}, null, null, null);
+        return loopDetails(cur,new ArrayList<OrderDetailModel>());
+    }
+
+    private List<OrderDetailModel> loopDetails(Cursor cur, List<OrderDetailModel> listDetails) {
+
+        if (cur.moveToFirst())
+            do {
+
+                OrderDetailModel detail = new OrderDetailModel();
+                detail.setObjectId(cur.getString(cur.getColumnIndex(objectIdDetail)));
+                detail.setOrder(makeOrder(cur.getString(cur.getColumnIndex(idOrder))));
+                detail.setPlateSize(makePlateSize(cur.getString(cur.getColumnIndex(idPlateSize))));
+                detail.setCreatedAt(cur.getString(cur.getColumnIndex(createdAtDetail)));
+                //Add if exist
+                if (cur.getString(cur.getColumnIndex(idFeastPlate)) != null)
+                    detail.setFeastPlate(makeFeastPlate(cur.getString(cur.getColumnIndex(idFeastPlate))));
+
+                detail.setUpdatedAt(cur.getString(cur.getColumnIndex(updatedAtDetail)));
+                listDetails.add(detail);
+            } while (cur.moveToNext());
+
+        if (!cur.isClosed()) {
+            cur.close();
+        }
+
+        return listDetails;
+    }
+
+    private FeastPlateModel makeFeastPlate(String feastPlateID) {
+        return null;
+    }
+
+    private PlateSizeModel makePlateSize(String plateSizeID) {
+        return new PlateSizeDao(_context).getPlateSize(plateSizeID);
+    }
+
+    private OrderModel makeOrder(String orderID) {
+        return getOrderByID(orderID);
     }
 }

@@ -14,6 +14,7 @@ import rsantillanc.sanjoylao.R;
 import rsantillanc.sanjoylao.SJLApplication;
 import rsantillanc.sanjoylao.model.PlateModel;
 import rsantillanc.sanjoylao.model.PlateSizeModel;
+import rsantillanc.sanjoylao.model.RelationPlateSizeModel;
 import rsantillanc.sanjoylao.ui.custom.adapter.RecyclerPlateAdapter;
 import rsantillanc.sanjoylao.ui.mvp.Plate.IPlateView;
 import rsantillanc.sanjoylao.ui.mvp.Plate.PlatePresenterImpl;
@@ -106,8 +107,8 @@ public class PlateActivity extends BaseActivity implements IPlateView, RecyclerP
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
-    private void setUpAdapter(List<PlateModel> plates) {
-        RecyclerPlateAdapter ap = new RecyclerPlateAdapter(plates, this);
+    private void setUpAdapter(List<RelationPlateSizeModel> relations) {
+        RecyclerPlateAdapter ap = new RecyclerPlateAdapter(relations, this);
         ap.setOnItemPlateClickListener(this);
         mRecycler.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         mRecycler.setHasFixedSize(true);
@@ -118,8 +119,8 @@ public class PlateActivity extends BaseActivity implements IPlateView, RecyclerP
     // {IView}
 
     @Override
-    public void onPlatesLoadSuccess(List<PlateModel> plates) {
-        setUpAdapter(plates);
+    public void onPlatesLoadSuccess(List<RelationPlateSizeModel> relations) {
+        setUpAdapter(relations);
     }
 
     @Override
@@ -130,6 +131,11 @@ public class PlateActivity extends BaseActivity implements IPlateView, RecyclerP
     @Override
     public void onError(CharSequence error) {
         showToast(error);
+    }
+
+    @Override
+    public void onPlateAddOrderCorrect(int size) {
+        showToast("Platos agregados al carrito: " + size);
     }
 
 
@@ -146,13 +152,7 @@ public class PlateActivity extends BaseActivity implements IPlateView, RecyclerP
 
     @Override
     public void onPopupItemClick(MenuItem item, PlateSizeModel plateSize) {
-//        showToast("gropupId " +item.getGroupId() + " Id " + item.getItemId()+ " Name: " + item.getTitle());
         mpresenter.addPlateToOrder(plateSize,app.getUserLogued());
     }
-
-
-    // {POPUP ITEM}
-
-
 
 }

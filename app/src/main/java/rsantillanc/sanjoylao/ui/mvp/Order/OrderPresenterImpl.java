@@ -4,7 +4,9 @@ import android.app.Activity;
 
 import java.util.List;
 
-import rsantillanc.sanjoylao.model.BanquetModel;
+import rsantillanc.sanjoylao.model.FeastModel;
+import rsantillanc.sanjoylao.model.OrderDetailModel;
+import rsantillanc.sanjoylao.model.OrderModel;
 
 /**
  * Created by rsantillanc on 27/10/2015.
@@ -24,7 +26,7 @@ public class OrderPresenterImpl implements IOrderPresenter, OnOrdersListener {
     private double getTotalPrice(Iterable<? extends Object> orders) {
         double total = 0.0;
         for (Object banquet : orders) {
-            total += ((BanquetModel) banquet).getPrice();
+            total += ((FeastModel) banquet).getPrice();
         }
         return total;
     }
@@ -35,29 +37,40 @@ public class OrderPresenterImpl implements IOrderPresenter, OnOrdersListener {
         mIterator.getOrdersFromServer(userID, this);
     }
 
+
     @Override
-    public void onOrdersSuccess(final List<Object> orders) {
-        final double totalPrice = getTotalPrice(orders);
+    public void onOrderCreated(final OrderModel orders) {
+//        final double totalPrice = orders.getPrice();
+//
+//        mActivity.runOnUiThread(new Runnable() {
+//            @Override
+//            public void run() {
+//
+//                if (totalPrice > 1500)
+//                    mView.printDiscount(totalPrice);
+//
+//                //Pass
+//                mView.printAmount(totalPrice);
+//                mView.onDataLoaded(orders);
+//                mView.hideLoader();
+//            }
+//
+//        });
 
-        mActivity.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
+    }
 
-                if (totalPrice > 1500)
-                    mView.printDiscount(totalPrice);
-
-                //Pass
-                mView.printAmount(totalPrice);
-                mView.onDataLoaded(orders);
-                mView.hideLoader();
-            }
-
-        });
+    @Override
+    public void onOrderLoaded() {
 
     }
 
     @Override
     public void onOrdersError(CharSequence error) {
+
+    }
+
+    @Override
+    public void onLoadDetails(List<OrderDetailModel> orderDetails) {
 
     }
 }

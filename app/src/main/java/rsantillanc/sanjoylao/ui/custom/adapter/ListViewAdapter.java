@@ -15,7 +15,7 @@ import android.widget.Toast;
 import java.util.List;
 
 import rsantillanc.sanjoylao.R;
-import rsantillanc.sanjoylao.model.BanquetModel;
+import rsantillanc.sanjoylao.model.FeastModel;
 import rsantillanc.sanjoylao.model.ChefModel;
 import rsantillanc.sanjoylao.model.CommentModel;
 import rsantillanc.sanjoylao.model.RiceModel;
@@ -33,7 +33,7 @@ public class ListViewAdapter extends BaseAdapter implements View.OnClickListener
     //Soup
     private SoupModel oSoup;
     //Banquet
-    private BanquetModel oBanquet;
+    private FeastModel oBanquet;
     //Rice
     private RiceModel oRice;
     //Chef
@@ -226,40 +226,40 @@ public class ListViewAdapter extends BaseAdapter implements View.OnClickListener
                 holder.tvMessage.setText(oComment.getMessage());
                 holder.tvDatatime.setText(oComment.getDatatime());
                 break;
-
-            case Const.ORDERS:
-                //TODO borrar luego ya que no es correcto, solo es por pruebas.
-                OrdersViewHolder orderHolder = null;
-                oBanquet = (BanquetModel) getItem(position);
-
-                if (vi == null) {
-                    vi = layIn.inflate(R.layout.item_orders, parent, false);
-
-                    orderHolder = new OrdersViewHolder();
-                    orderHolder.tvName = (TextView) vi.findViewById(R.id.tv_order_name);
-                    orderHolder.tvOptions = (TextView) vi.findViewById(R.id.tv_order_option);
-                    orderHolder.tvPrice = (TextView) vi.findViewById(R.id.tv_order_price);
-                    orderHolder.ivInfo = (ImageView) vi.findViewById(R.id.iv_order_info);
-                    orderHolder.ivDelete = (ImageView) vi.findViewById(R.id.iv_order_delete);
-
-                    vi.setTag(orderHolder);
-
-                } else
-                    orderHolder = (OrdersViewHolder) vi.getTag();
-
-                orderHolder.tvPrice.setText(Const.PRICE_PEN + String.valueOf(oBanquet.getPrice()));
-                orderHolder.tvName.setText((position + 1) + ".- " + oBanquet.getName());//Delete hardcode
-
-                if (oBanquet.isFlagOptions())
-                orderHolder.tvOptions.setText("Las " + oBanquet.getOption() + " que eligió");//Delete hardcode
-                else
-                 orderHolder.tvOptions.setText("La opción elegida.");//Delete hardcode
-
-
-                orderHolder.ivDelete.setOnClickListener(this);
-                orderHolder.ivInfo.setOnClickListener(this);
-
-                break;
+//
+//            case Const.ORDERS:
+//                //TODO borrar luego ya que no es correcto, solo es por pruebas.
+//                OrdersViewHolder orderHolder = null;
+//                oBanquet = (FeastModel) getItem(position);
+//
+//                if (vi == null) {
+//                    vi = layIn.inflate(R.layout.item_orders, parent, false);
+//
+//                    orderHolder = new OrdersViewHolder();
+//                    orderHolder.tvName = (TextView) vi.findViewById(R.id.tv_order_name);
+//                    orderHolder.tvOptions = (TextView) vi.findViewById(R.id.tv_order_option);
+//                    orderHolder.tvPrice = (TextView) vi.findViewById(R.id.tv_order_price);
+//                    orderHolder.ivInfo = (ImageView) vi.findViewById(R.id.iv_order_info);
+//                    orderHolder.ivDelete = (ImageView) vi.findViewById(R.id.iv_order_delete);
+//
+//                    vi.setTag(orderHolder);
+//
+//                } else
+//                    orderHolder = (OrdersViewHolder) vi.getTag();
+//
+//                orderHolder.tvPrice.setText(Const.PRICE_PEN + String.valueOf(oBanquet.getPrice()));
+//                orderHolder.tvName.setText((position + 1) + ".- " + oBanquet.getName());//Delete hardcode
+//
+//                if (oBanquet.isFlagOptions())
+//                orderHolder.tvOptions.setText("Las " + oBanquet.getOption() + " que eligió");//Delete hardcode
+//                else
+//                 orderHolder.tvOptions.setText("La opción elegida.");//Delete hardcode
+//
+//
+//                orderHolder.ivDelete.setOnClickListener(this);
+//                orderHolder.ivInfo.setOnClickListener(this);
+//
+//                break;
 
 
             case Const.CHEF:

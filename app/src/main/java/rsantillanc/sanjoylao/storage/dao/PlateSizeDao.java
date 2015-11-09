@@ -8,10 +8,9 @@ import android.database.sqlite.SQLiteDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
-import rsantillanc.sanjoylao.model.ParsePointerModel;
+import rsantillanc.sanjoylao.model.PlateModel;
 import rsantillanc.sanjoylao.model.PlateSizeModel;
 import rsantillanc.sanjoylao.model.SizeModel;
-import rsantillanc.sanjoylao.util.Const;
 
 /**
  * Created by rsantillanc on 03/11/2015.
@@ -58,14 +57,14 @@ public class PlateSizeDao extends BaseDao {
 
     //{HELPERS}
 
-    private List<PlateSizeModel> loopPlateSize(Cursor cur, List<PlateSizeModel> list) {
+    private List<PlateSizeModel> loopPlateSize(Cursor cur, List<PlateSizeModel> list, String plateID) {
 
         if (cur.moveToFirst())
             do {
                 PlateSizeModel plateSize = new PlateSizeModel();
 
                 plateSize.setObjectId(cur.getString(cur.getColumnIndex(objectId)));
-                plateSize.setIdPlate(makePlatePointer(plateID));
+                plateSize.setIdPlate(makePlate(plateID));
                 plateSize.setPrice(cur.getDouble(cur.getColumnIndex(price)));
                 plateSize.setSize(makeSize(cur.getString(cur.getColumnIndex(idSize))));
 
@@ -82,12 +81,30 @@ public class PlateSizeDao extends BaseDao {
         return new SizeDao(_context).getSizeByID(sizeID);
     }
 
-    private ParsePointerModel makePlatePointer(String plateID) {
-        return new ParsePointerModel(Const.CLASS_PLATE, plateID);
+    private PlateModel makePlate(String plateID) {
+        return new PlateDao(_context).getPlateByID(plateID);
     }
 
     public List<PlateSizeModel> listByPlateID(String plateID) {
         Cursor cur = db.query(Tables.PLATE_SIZE, null, idPlate + "=?", new String[]{plateID}, null, null, null);
-       return loopPlateSize(cur,new ArrayList<PlateSizeModel>());
+       return loopPlateSize(cur, new ArrayList<PlateSizeModel>(), plateID);
+    }
+
+    public PlateSizeModel getPlateSize(String plateSizeID) {
+        Cursor cur = db.query(Tables.PLATE_SIZE, null, objectId + "=?", new String[]{plateSizeID}, null, null, null);
+
+        return getPlateSize(cur);
+    }
+
+    private PlateSizeModel getPlateSize(Cursor cur) {
+        PlateSizeModel plateSize = new PlateSizeModel();
+        if (cur.moveToFirst()){
+            plateSize.setObjectId(cur.getString(cur.getColumnIndex(objectId)));
+            plateSize.setPrice(cur.getDouble(cur.getColumnIndex(price)));
+            plateSize.setTimeOfPreparation(cur.getInt(cur.getColumnIndex(timeOfPreparation)));
+            plateSize.setSize(makeSize(cur.getString(cur.getColumnIndex(idSize))));
+            plateSize.setIdPlate(makePlate(cur.getString(cur.getColumnIndex(idPlate))));
+        }
+        return plateSize;
     }
 }

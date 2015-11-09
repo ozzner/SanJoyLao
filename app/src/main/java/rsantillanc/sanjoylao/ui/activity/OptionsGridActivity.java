@@ -23,9 +23,9 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import rsantillanc.sanjoylao.R;
+import rsantillanc.sanjoylao.model.FeastModel;
 import rsantillanc.sanjoylao.ui.custom.adapter.GridViewAdapter;
 import rsantillanc.sanjoylao.ui.custom.dialog.SJLAlertDialog;
-import rsantillanc.sanjoylao.model.BanquetModel;
 import rsantillanc.sanjoylao.model.OptionsModel;
 import rsantillanc.sanjoylao.util.Const;
 import rsantillanc.sanjoylao.storage.sp.SJLPreferences;
@@ -53,7 +53,7 @@ public class OptionsGridActivity extends ActionBarActivity implements GridViewAd
         mDialog.set(this);
 
         init(getApplicationContext());
-        BanquetModel model = (BanquetModel) getIntent().getSerializableExtra(Const.TAG_BANQUET);
+        FeastModel model = (FeastModel) getIntent().getSerializableExtra(Const.TAG_BANQUET);
         setUpActionBar(model);
     }
 
@@ -91,7 +91,7 @@ public class OptionsGridActivity extends ActionBarActivity implements GridViewAd
 
     }
 
-    private void setUpActionBar(BanquetModel model) {
+    private void setUpActionBar(FeastModel model) {
         mToolbar.setTitle("Banqute de la Amistad (S/. 152.00)");
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

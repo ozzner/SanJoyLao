@@ -20,6 +20,7 @@ import java.util.List;
 import rsantillanc.sanjoylao.R;
 import rsantillanc.sanjoylao.model.PlateModel;
 import rsantillanc.sanjoylao.model.PlateSizeModel;
+import rsantillanc.sanjoylao.model.RelationPlateSizeModel;
 import rsantillanc.sanjoylao.util.Const;
 import rsantillanc.sanjoylao.util.SJLStrings;
 
@@ -30,15 +31,15 @@ public class RecyclerPlateAdapter extends RecyclerView.Adapter<RecyclerPlateAdap
 
     private final Activity mActivity;
     private LayoutInflater layIn;
-    private List<PlateModel> plates = Collections.EMPTY_LIST;
+    private List<RelationPlateSizeModel> relations = Collections.EMPTY_LIST;
     private OnItemPlateClickListener mItemClickListener;
     private Context _context;
     private int currentIndex;
 
 
-    public RecyclerPlateAdapter(List<PlateModel> items, Activity activity) {
+    public RecyclerPlateAdapter(List<RelationPlateSizeModel> items, Activity activity) {
         this.layIn = LayoutInflater.from(activity);
-        this.plates = items;
+        this.relations = items;
         this._context = activity;
         this.mActivity = activity;
     }
@@ -52,11 +53,11 @@ public class RecyclerPlateAdapter extends RecyclerView.Adapter<RecyclerPlateAdap
     @Override
     public void onBindViewHolder(PlateHolder holder, int index) {
 
-        PlateModel plate = plates.get(index);
+        RelationPlateSizeModel relation = relations.get(index);
         TextView[] names = {holder.tvName1, holder.tvName2, holder.tvName3};
         TextView[] prices = {holder.tvPrice1, holder.tvPrice2, holder.tvPrice3};
 
-        holder.tvPlateName.setText(plate.getName());
+        holder.tvPlateName.setText(relation.getCurrentPlate().getName());
 
         //Hide all
         for (int i = 0; i < names.length; i++) {
@@ -64,8 +65,8 @@ public class RecyclerPlateAdapter extends RecyclerView.Adapter<RecyclerPlateAdap
         }
 
         //Show only with values
-        for (int i = 0; i < plate.getPlateSize().size(); i++) {
-            printValues(names[i], prices[i], plate.getPlateSize().get(i));
+        for (int i = 0; i < relation.getListSizes().size(); i++) {
+            printValues(names[i], prices[i], relation.getListSizes().get(i));
         }
 
     }
@@ -90,26 +91,27 @@ public class RecyclerPlateAdapter extends RecyclerView.Adapter<RecyclerPlateAdap
 
     @Override
     public int getItemCount() {
-        return plates.size();
+        return relations.size();
     }
 
 
-    private void showPopupMenu(View v, int position, final PlateModel plate) {
+    private void showPopupMenu(View v,final RelationPlateSizeModel rel) {
         Context wrapper = new ContextThemeWrapper(_context, R.style.PopupMenu);
         final PopupMenu popup = new PopupMenu(wrapper, v);
         popup.getMenuInflater().inflate(R.menu.menu_size_popup, popup.getMenu());
 
         int index = 0;
         popup.getMenu().clear();
-        for (PlateSizeModel plateSize : plates.get(position).getPlateSize()) {
+        for (PlateSizeModel plateSize : rel.getListSizes()) {
             popup.getMenu().add(Menu.NONE, index, Menu.NONE, plateSize.getSize().getName())
                     .setIcon(_context.getResources().getDrawable(R.drawable.ic_info_plate));
             index++;
         }
+
         popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                mItemClickListener.onPopupItemClick(item,plate.getPlateSize().get(item.getItemId()));
+                mItemClickListener.onPopupItemClick(item,rel.getListSizes().get(item.getItemId()));
                 return false;
             }
         });
@@ -200,9 +202,9 @@ public class RecyclerPlateAdapter extends RecyclerView.Adapter<RecyclerPlateAdap
             if (mItemClickListener != null) {
 
                 if (v instanceof ImageView)
-                    showPopupMenu(v, getPosition(), plates.get(getPosition()));
+                    showPopupMenu(v, relations.get(getPosition()));
                 else
-                    mItemClickListener.onItemClick(plates.get(getPosition()));
+                    mItemClickListener.onItemClick(relations.get(getPosition()).getCurrentPlate());
 
             }
         }

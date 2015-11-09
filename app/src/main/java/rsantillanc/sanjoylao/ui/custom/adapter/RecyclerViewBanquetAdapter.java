@@ -12,8 +12,6 @@ import java.util.Collections;
 import java.util.List;
 
 import rsantillanc.sanjoylao.R;
-import rsantillanc.sanjoylao.model.BanquetModel;
-import rsantillanc.sanjoylao.util.Const;
 
 /**
  * Created by RenzoD on 03/06/2015.
@@ -40,13 +38,13 @@ public class RecyclerViewBanquetAdapter extends RecyclerView.Adapter<RecyclerVie
 
     @Override
     public void onBindViewHolder(BanquetViewHolder holder, int index) {
-        BanquetModel banquet = (BanquetModel) banquetItems.get(index);
-        holder.tvPrice.setText(Const.PRICE_PEN + String.valueOf(banquet.getPrice()));
-        holder.tvName.setText(banquet.getName());
-        if (banquet.isFlagOptions())
-            holder.tvOptions.setText(banquet.getOption());
-        else
-            holder.tvOptions.setText("No hay opciones");
+//        FeastModel banquet = (FeastModel) banquetItems.get(index);
+//        holder.tvPrice.setText(Const.PRICE_PEN + String.valueOf(banquet.getPrice()));
+//        holder.tvName.setText(banquet.getName());
+//        if (banquet.isFlagOptions())
+//            holder.tvOptions.setText(banquet.getOption());
+//        else
+//            holder.tvOptions.setText("No hay opciones");
     }
 
     @Override

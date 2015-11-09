@@ -27,7 +27,7 @@ import rsantillanc.sanjoylao.R;
 import rsantillanc.sanjoylao.ui.custom.adapter.GridViewAdapter;
 import rsantillanc.sanjoylao.ui.custom.adapter.RecyclerViewOptionsAdapter;
 import rsantillanc.sanjoylao.ui.custom.dialog.SJLAlertDialog;
-import rsantillanc.sanjoylao.model.BanquetModel;
+import rsantillanc.sanjoylao.model.FeastModel;
 import rsantillanc.sanjoylao.model.OptionsModel;
 import rsantillanc.sanjoylao.util.Const;
 import rsantillanc.sanjoylao.storage.sp.SJLPreferences;
@@ -48,7 +48,7 @@ public class BanquetDetailsFragment extends Fragment implements GridViewAdapter.
     private ArrayList<OptionsModel> options;
     private GridViewAdapter.OnPlateClickListener mListener;
     private OptionsModel opModel;
-    private BanquetModel oBanquet;
+    private FeastModel oBanquet;
     private int columnWidth;
     private RecyclerView mRecyclerView;
     private RecyclerViewOptionsAdapter mAdapter;
@@ -71,7 +71,7 @@ public class BanquetDetailsFragment extends Fragment implements GridViewAdapter.
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        oBanquet = (BanquetModel)getArguments().getSerializable(Const.TAG_BANQUET);
+        oBanquet = (FeastModel)getArguments().getSerializable(Const.TAG_BANQUET);
         mPreferences = new SJLPreferences(getActivity());
         customDialog = new SJLAlertDialog();
         customDialog.set(this);
@@ -138,7 +138,7 @@ public class BanquetDetailsFragment extends Fragment implements GridViewAdapter.
         });
         mGridView = (GridView)vi.findViewById(R.id.gv_options);
         mToolbar = (Toolbar)vi.findViewById(R.id.toolbar_options);
-//        BanquetModel model = (BanquetModel)getArguments().getSerializable(Const.TAG_BANQUET);
+//        FeastModel model = (FeastModel)getArguments().getSerializable(Const.TAG_BANQUET);
 
         /*Setup*/
         opModel = new OptionsModel();
