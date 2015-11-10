@@ -259,7 +259,7 @@ public class MainActivity extends BaseActivity
         startActivity(order);
     }
 
-    //-----------------------[Sub-rutines]
+    //-----------------------[Sub routines]
 
     private void sync() {
         mPresenter.loadCategories();
@@ -268,6 +268,7 @@ public class MainActivity extends BaseActivity
         mPresenter.loadPlate();
         mPresenter.loadOrderType();
         mPresenter.loadStatus();
+        mPresenter.loadOrders();
         mPresenter.savePreferences();
     }
 

@@ -265,6 +265,12 @@ public class MainIteractorImpl {
     }
 
 
+    public void syncOrders(Context c) {
+
+    }
+
+
+
 
 
     //--------------------{COUNTERS}--------------------
@@ -310,6 +316,7 @@ public class MainIteractorImpl {
                 .error(R.drawable.ic_profile)
                 .into(imageView);
     }
+
 
 
 }

@@ -124,7 +124,7 @@ public interface ParseAPIService {
             "X-Parse-Application-Id: RTM3ioKCBgaAJjXmDRr493sb13uYzGrMnePLhzhm",
             "X-Parse-REST-API-Key: 6xr428CvfJT8WMGByPUhfvJWmFaxjozudaPy9bUB",
     })
-    @POST("classes/OrderDetail?include=idOrder.idUser,idOrder.idStatus,idPlateSize.idPlate.idCategory,idPlateSize.idSize")
+        @POST("classes/OrderDetail?include=idOrder.idUser,idOrder.idStatus,idPlateSize.idPlate.idCategory,idPlateSize.idSize")
     Call<OrderDetailModel> getOrdersDetails(@Query(value = "where", encoded = true) String jsonFilter);
     //where={"post":{"__type":"Pointer","className":"Post","objectId":"8TOXdXf3tz"}}
 }

@@ -54,16 +54,16 @@ public class OrderIteractorImpl implements IOrderIteractor {
                 if (response.isSuccess()) {
                     List<OrderDetailModel> list = new ArrayList();
                     list.addAll((Collection<? extends OrderDetailModel>) response.body());
-                    listener.onLoadDetails(c,list);
-                    Log.e(Const.DEBUG,"onResponse RESULT ordersDetail: " + list.size());
-                }else{
-                    Log.e(Const.DEBUG,"onResponse RESULT ordersDetail: " + response.errorBody());
+                    listener.onLoadDetails(c, list);
+                    Log.e(Const.DEBUG, "onResponse RESULT ordersDetail: " + list.size());
+                } else {
+                    Log.e(Const.DEBUG, "onResponse RESULT ordersDetail: " + response.errorBody());
                 }
             }
 
             @Override
             public void onFailure(Throwable t) {
-                Log.e(Const.DEBUG,"onFailure Throwable: ordersDetail" + t.getMessage());
+                Log.e(Const.DEBUG, "onFailure Throwable: ordersDetail" + t.getMessage());
             }
         });
     }
@@ -72,7 +72,6 @@ public class OrderIteractorImpl implements IOrderIteractor {
         String s = "{\"idOrder\":{\"__type\":\"Pointer\",\"className\":\"Order\",\"objectId\":\"" + orderID + "\"}}";
         return s;
     }
-
 
 
     @Override
@@ -165,7 +164,7 @@ public class OrderIteractorImpl implements IOrderIteractor {
     }
 
     private long createOrderDetailOnDevice(Context c, String orderDetailID, OrderModel order, String createdAt, PlateSizeModel plateSize) {
-        return new OrderDao(c).insertDetail(new OrderDetailModel(orderDetailID,null,order,plateSize,createdAt,createdAt,Const.DEFAULT_COUNTER));
+        return new OrderDao(c).insertDetail(new OrderDetailModel(orderDetailID, null, order, plateSize, createdAt, createdAt, Const.DEFAULT_COUNTER));
     }
 
     private long storeCurrentOrder(Context c, UserModel user, PlateSizeModel plateSize, Response<JsonObject> response) {
@@ -199,19 +198,25 @@ public class OrderIteractorImpl implements IOrderIteractor {
 
     public void getOrdersFrom(Context c, OnOrdersListener listener) {
 
-        //From device
+
         if (checkIfExistActiveOrder(c)) {
+            //From device
             listener.onLoadDetails(c,
                     new OrderDao(c).getOrderDetailsByOrderID(
                             new OrderDao(c).getActiveOrderIfExist(
                                     new StatusDao(c).getIdStatusByCode(Const.STATUS_TEMPORAL))
                                     .getObjectId()));
-        //From server
-        }else
-           getOrdersFromServer(
-                   new OrderDao(c).getActiveOrderIfExist(
-                           new StatusDao(c).getIdStatusByCode(Const.STATUS_TEMPORAL))
-                           .getObjectId(), listener, c);
+
+            //From server
+//            getOrdersFromServer(
+//                    new OrderDao(c).getActiveOrderIfExist(
+//                            new StatusDao(c).getIdStatusByCode(Const.STATUS_TEMPORAL))
+//                            .getObjectId(), listener, c);
+
+        } else {
+            listener.onLoadDetails(c,new ArrayList<OrderDetailModel>());
+        }
+
 
     }
 
