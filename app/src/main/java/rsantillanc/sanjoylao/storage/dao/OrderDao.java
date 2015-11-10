@@ -40,6 +40,7 @@ public class OrderDao {
     private String idFeastPlate = "idFeastPlate";
     private String idOrder = "idOrder";
     private String idPlateSize = "idPlateSize";
+    private String counter = "counter";
     private String createdAtDetail = "createdAt";
     private String updatedAtDetail = "updatedAt";
 
@@ -71,6 +72,7 @@ public class OrderDao {
             cv.put(idPayment, order.getPyment().getObjectId());
         if (order.getUser() != null)
             cv.put(idUser, order.getUser().getObjectId());
+
         cv.put(price, order.getPrice());
         cv.put(createdAt, order.getCreatedAt());
         cv.put(updatedAt, order.getUpdatedAt());
@@ -117,12 +119,13 @@ public class OrderDao {
         return cur.moveToFirst();
     }
 
-    public long insertDetail(String orderID, String orderDetailID, String createdAt, PlateSizeModel plateSize) {
+    public long insertDetail(OrderDetailModel detail) {
 
         ContentValues cv = new ContentValues();
-        cv.put(objectIdDetail, orderDetailID);
-        cv.put(idPlateSize, plateSize.getObjectId());
-        cv.put(idOrder, orderID);
+        cv.put(objectIdDetail, detail.getObjectId());
+        cv.put(idPlateSize, detail.getPlateSize().getObjectId());
+        cv.put(idOrder, detail.getOrder().getObjectId());
+        cv.put(counter, detail.getCounter());
         cv.put(createdAtDetail, createdAt);
         cv.put(updatedAtDetail, createdAt);
         return db.insert(Tables.ORDER_DETAIL, null, cv);
@@ -146,6 +149,7 @@ public class OrderDao {
                 detail.setObjectId(cur.getString(cur.getColumnIndex(objectIdDetail)));
                 detail.setOrder(makeOrder(cur.getString(cur.getColumnIndex(idOrder))));
                 detail.setPlateSize(makePlateSize(cur.getString(cur.getColumnIndex(idPlateSize))));
+                detail.setCounter(cur.getInt(cur.getColumnIndex(counter)));
                 detail.setCreatedAt(cur.getString(cur.getColumnIndex(createdAtDetail)));
                 //Add if exist
                 if (cur.getString(cur.getColumnIndex(idFeastPlate)) != null)

@@ -91,4 +91,5 @@ public class Const {
     public static final int STATUS_ON_ROAD = 4;
     public static final int STATUS_DELIVERED = 5;
     public static final int STATUS_CANCELLED = 6;
+    public static final int DEFAULT_COUNTER = 1;
 }

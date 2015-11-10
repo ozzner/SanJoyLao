@@ -205,7 +205,7 @@ public class OrderActivity extends BaseActivity
     }
 
     @Override
-    public void printDiscount(double amount ,double amountWithDiscount, CharSequence percent) {
+    public void printDiscount(double amount, double amountWithDiscount, CharSequence percent) {
 
         //Discount
         tvPercent.setText(percent);
@@ -240,12 +240,14 @@ public class OrderActivity extends BaseActivity
 
     @Override
     public void onAddCount() {
-        showToast("onAddCount");
+        mOrdersAdapter.notifyDataSetChanged();
+        mPresenter.buildTotalPrice(mOrdersAdapter.getOrders());
     }
 
     @Override
     public void onRemoveCount() {
-        showToast("onRemoveCount");
+        mOrdersAdapter.notifyDataSetChanged();
+        mPresenter.buildTotalPrice(mOrdersAdapter.getOrders());
     }
 
     @Override

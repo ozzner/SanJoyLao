@@ -21,10 +21,13 @@ import rsantillanc.sanjoylao.util.SJLStrings;
  */
 public class RecyclerOrderAdapter extends RecyclerView.Adapter<RecyclerOrderAdapter.BanquetViewHolder> {
 
+    private static final int MAX_UNID = 100;
+    private static final int MIN_UNID = 1;
     private LayoutInflater layIn;
     private List<OrderDetailModel> orders = Collections.EMPTY_LIST;
     private Context ctx;
     private OnOrderItemClickListener mItemClickListener;
+    private double total = 0.0;
 
 
     public RecyclerOrderAdapter(List<OrderDetailModel> details, Context ctx) {
@@ -42,16 +45,22 @@ public class RecyclerOrderAdapter extends RecyclerView.Adapter<RecyclerOrderAdap
     public void onBindViewHolder(BanquetViewHolder orderHolder, int index) {
         OrderDetailModel item = orders.get(index);
 
-    /**
-     * Falta validar si el plato pertenece a un banquete,
-     * de ser así se tiene que agregar una validación
-     */
-        orderHolder.tvPrice.setText(Const.PRICE_PEN + SJLStrings.format(item.getPlateSize().getPrice(), SJLStrings.FORMAT_MILES_EN));
+        /**
+         * Falta validar si el plato pertenece a un banquete,
+         * de ser así se tiene que agregar una validación
+         */
+
+        orderHolder.tvPrice.setText(Const.PRICE_PEN + SJLStrings.format((item.getPlateSize().getPrice() * item.getCounter()), SJLStrings.FORMAT_MILES_EN));
         orderHolder.tvPrice.setTypeface(SJLStrings.getSJLFont(ctx));
         orderHolder.tvName.setText(item.getPlateSize().getPlate().getName()); //Delete hardcode
-        orderHolder.tvCount.setText(Const.TAG_POR + (index + 1));
-        orderHolder.tvOptions.setText(item.getPlateSize().getSize().getName());
 
+        if (item.getCounter() == 1)
+            orderHolder.tvCount.setVisibility(View.INVISIBLE);
+        else
+            orderHolder.tvCount.setVisibility(View.VISIBLE);
+
+        orderHolder.tvCount.setText(Const.TAG_POR + item.getCounter());
+        orderHolder.tvOptions.setText(item.getPlateSize().getSize().getName());
 
     }
 
@@ -60,6 +69,9 @@ public class RecyclerOrderAdapter extends RecyclerView.Adapter<RecyclerOrderAdap
         return orders.size();
     }
 
+    public List<OrderDetailModel> getOrders() {
+        return orders;
+    }
 
     class BanquetViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
@@ -98,9 +110,9 @@ public class RecyclerOrderAdapter extends RecyclerView.Adapter<RecyclerOrderAdap
         public void onClick(View v) {
             if (mItemClickListener != null)
                 if (v == ivCountAdd)
-                    mItemClickListener.onAddCount();
+                    incrementedCounter(getPosition());
                 else if (v == ivCountDel)
-                    mItemClickListener.onRemoveCount();
+                    decrementCounter(getPosition());
                 else if (v == ivIngredients)
                     mItemClickListener.onOpenIngredients();
                 else if (v == ivOpenImage)
@@ -110,8 +122,32 @@ public class RecyclerOrderAdapter extends RecyclerView.Adapter<RecyclerOrderAdap
                 else
                     mItemClickListener.onItemClick(v, getPosition());
 
-
         }
+    }
+
+    public double getTotalPrice() {
+        for (OrderDetailModel order : orders) {
+            total += (order.getPlateSize().getPrice() * order.getCounter());
+        }
+        return this.total;
+    }
+
+    private void decrementCounter(int position) {
+        int counter = orders.get(position).getCounter();
+        if (counter > MIN_UNID)
+            counter--;
+
+        orders.get(position).setCounter(counter);
+        mItemClickListener.onRemoveCount();
+    }
+
+    private void incrementedCounter(int position) {
+        int counter = orders.get(position).getCounter();
+        if (counter < MAX_UNID)
+            counter++;
+
+        orders.get(position).setCounter(counter);
+        mItemClickListener.onAddCount();
     }
 
 

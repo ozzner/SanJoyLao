@@ -148,6 +148,7 @@ public class Tables {
           "\t`idFeastPlate`\tTEXT,\n" +
           "\t`idOrder`\tTEXT,\n" +
           "\t`idPlateSize`\tTEXT,\n" +
+          "\t`counter`\tINTEGER DEFAULT 1,\n" +
           "\t`createdAt`\tTEXT,\n" +
           "\t`updatedAt`\tTEXT,\n" +
           "\tPRIMARY KEY(objectId)\n" +

@@ -15,9 +15,9 @@ import rsantillanc.sanjoylao.util.Const;
  */
 public class OrderPresenterImpl implements IOrderPresenter, OnOrdersListener {
 
-    private static final double MIN_PRICE_TO_DISCOUNT = 300.00;
-    private static final int DISCOUNT = 12;
-    private static final double PERCENT = (100.00 - DISCOUNT) / 100.00;
+    public static final double MIN_PRICE_TO_DISCOUNT = 300.00;
+    public static final int DISCOUNT = 12;
+    public static final double PERCENT = (100.00 - DISCOUNT) / 100.00;
 
     private OrderIteractorImpl mIterator;
     private IOrderView mView;
@@ -79,10 +79,10 @@ public class OrderPresenterImpl implements IOrderPresenter, OnOrdersListener {
         buildTotalPrice(orderDetails);
     }
 
-    private void buildTotalPrice(List<OrderDetailModel> orderDetails) {
+    public void buildTotalPrice(List<OrderDetailModel> orderDetails) {
         double total = 0.0;
         for (OrderDetailModel orderDetail : orderDetails)
-            total = orderDetail.getPlateSize().getPrice() + total;
+            total = (orderDetail.getPlateSize().getPrice() * orderDetail.getCounter()) + total;
 
         if (total > MIN_PRICE_TO_DISCOUNT)
             mView.printDiscount(total, getPriceWithDiscount(total), printPercent());

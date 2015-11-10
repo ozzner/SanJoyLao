@@ -142,7 +142,7 @@ public class OrderIteractorImpl implements IOrderIteractor {
                     final JsonElement orderDetailID = response.body().getAsJsonObject().get(ConstAPI.PARSE_ID);
                     final JsonElement createdAt = response.body().getAsJsonObject().get(ConstAPI.PARSE_CREATED);
 
-                    long row = createOrderDetailOnDevice(c, orderID, orderDetailID.getAsString(), createdAt.getAsString(), plateSize);
+                    long row = createOrderDetailOnDevice(c, orderDetailID.getAsString(), new OrderDao(c).getOrderByID(orderID), createdAt.getAsString(), plateSize);
                     Log.e(Const.DEBUG, "onResponse onCreated correct: " + row);
 
                     if (row > 0)
@@ -164,8 +164,8 @@ public class OrderIteractorImpl implements IOrderIteractor {
 
     }
 
-    private long createOrderDetailOnDevice(Context c, String orderID, String orderDetailID, String createdAt, PlateSizeModel plateSize) {
-        return new OrderDao(c).insertDetail(orderID, orderDetailID, createdAt, plateSize);
+    private long createOrderDetailOnDevice(Context c, String orderDetailID, OrderModel order, String createdAt, PlateSizeModel plateSize) {
+        return new OrderDao(c).insertDetail(new OrderDetailModel(orderDetailID,null,order,plateSize,createdAt,createdAt,Const.DEFAULT_COUNTER));
     }
 
     private long storeCurrentOrder(Context c, UserModel user, PlateSizeModel plateSize, Response<JsonObject> response) {
