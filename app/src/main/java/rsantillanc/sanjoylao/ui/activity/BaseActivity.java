@@ -17,7 +17,7 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     protected void showToast(CharSequence sequence){
-        Toast.makeText(_context,sequence,Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(),sequence,Toast.LENGTH_LONG).show();
     }
 
     protected void showSnackbar(CharSequence message, View view){

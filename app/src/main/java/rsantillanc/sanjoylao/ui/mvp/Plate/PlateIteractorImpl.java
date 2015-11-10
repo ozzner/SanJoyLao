@@ -4,8 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.List;
 
 import retrofit.Call;
@@ -16,7 +14,6 @@ import retrofit.Retrofit;
 import rsantillanc.sanjoylao.api.service.ParseAPIService;
 import rsantillanc.sanjoylao.model.APIResultPlateModel;
 import rsantillanc.sanjoylao.model.OrderDetailModel;
-import rsantillanc.sanjoylao.model.OrderModel;
 import rsantillanc.sanjoylao.model.PlateModel;
 import rsantillanc.sanjoylao.model.PlateSizeModel;
 import rsantillanc.sanjoylao.model.RelationPlateSizeModel;
@@ -27,6 +24,7 @@ import rsantillanc.sanjoylao.ui.mvp.Order.OnOrdersListener;
 import rsantillanc.sanjoylao.ui.mvp.Order.OrderIteractorImpl;
 import rsantillanc.sanjoylao.util.Const;
 import rsantillanc.sanjoylao.util.ConstAPI;
+import rsantillanc.sanjoylao.util.SJLStrings;
 
 /**
  * Created by RenzoD on 29/10/2015.
@@ -58,7 +56,7 @@ public class PlateIteractorImpl implements OnOrdersListener {
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
 
-            Call<APIResultPlateModel> plates = retrofit.create(ParseAPIService.class).getPlatesWhereClausule(getUrlEncoded(makeJson(categoryID)));
+            Call<APIResultPlateModel> plates = retrofit.create(ParseAPIService.class).getPlatesWhereClausule(SJLStrings.getUrlEncoded(makeJson(categoryID)));
             plates.enqueue(new Callback<APIResultPlateModel>() {
                 @Override
                 public void onResponse(Response<APIResultPlateModel> response, Retrofit retrofit) {
@@ -106,16 +104,6 @@ public class PlateIteractorImpl implements OnOrdersListener {
         return s;
     }
 
-    private String getUrlEncoded(String jsonFilter) {
-        String encodedData = null;
-        try {
-            encodedData = URLEncoder.encode(jsonFilter, "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-        return encodedData;
-    }
-
 
     public void addPlate(Context c, PlateSizeModel plateSize, UserModel user) {
         OrderIteractorImpl iteractor = new OrderIteractorImpl();
@@ -129,23 +117,13 @@ public class PlateIteractorImpl implements OnOrdersListener {
 
 
     @Override
-    public void onOrderCreated(OrderModel orders) {
+    public void onOrdersError(Context c, CharSequence error) {
 
     }
 
     @Override
-    public void onOrderLoaded() {
-
-    }
-
-    @Override
-    public void onOrdersError(CharSequence error) {
-
-    }
-
-    @Override
-    public void onLoadDetails(List<OrderDetailModel> orderDetails) {
+    public void onLoadDetails(Context c, List<OrderDetailModel> orderDetails) {
         PlatePresenterImpl presenter = new PlatePresenterImpl();
-        presenter.onPlateAddSucess(orderDetails.size());
+        presenter.onPlateAddSucess(c,orderDetails.size());
     }
 }

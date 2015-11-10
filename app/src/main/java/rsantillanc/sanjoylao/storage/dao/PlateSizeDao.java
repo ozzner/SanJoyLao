@@ -47,7 +47,7 @@ public class PlateSizeDao extends BaseDao {
     public long insert(PlateSizeModel plateSize) {
         ContentValues cv = new ContentValues();
         cv.put(objectId, plateSize.getObjectId());
-        cv.put(idPlate, plateSize.getIdPlate().getObjectId());
+        cv.put(idPlate, plateSize.getPlate().getObjectId());
         cv.put(idSize, plateSize.getSize().getObjectId());
         cv.put(price, plateSize.getPrice());
         cv.put(timeOfPreparation, plateSize.getTimeOfPreparation());
@@ -64,7 +64,7 @@ public class PlateSizeDao extends BaseDao {
                 PlateSizeModel plateSize = new PlateSizeModel();
 
                 plateSize.setObjectId(cur.getString(cur.getColumnIndex(objectId)));
-                plateSize.setIdPlate(makePlate(plateID));
+                plateSize.setPlate(makePlate(plateID));
                 plateSize.setPrice(cur.getDouble(cur.getColumnIndex(price)));
                 plateSize.setSize(makeSize(cur.getString(cur.getColumnIndex(idSize))));
 
@@ -103,7 +103,7 @@ public class PlateSizeDao extends BaseDao {
             plateSize.setPrice(cur.getDouble(cur.getColumnIndex(price)));
             plateSize.setTimeOfPreparation(cur.getInt(cur.getColumnIndex(timeOfPreparation)));
             plateSize.setSize(makeSize(cur.getString(cur.getColumnIndex(idSize))));
-            plateSize.setIdPlate(makePlate(cur.getString(cur.getColumnIndex(idPlate))));
+            plateSize.setPlate(makePlate(cur.getString(cur.getColumnIndex(idPlate))));
         }
         return plateSize;
     }

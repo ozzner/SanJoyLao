@@ -16,6 +16,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import rsantillanc.sanjoylao.R;
+import rsantillanc.sanjoylao.model.OrderDetailModel;
 import rsantillanc.sanjoylao.ui.custom.adapter.RecyclerOrderAdapter;
 import rsantillanc.sanjoylao.ui.mvp.Order.IOrderView;
 import rsantillanc.sanjoylao.ui.mvp.Order.OrderPresenterImpl;
@@ -24,8 +25,9 @@ import rsantillanc.sanjoylao.util.Const;
 import rsantillanc.sanjoylao.util.SJLStrings;
 
 public class OrderActivity extends BaseActivity
-        implements View.OnClickListener, IOrderView,RecyclerOrderAdapter.OnOrderItemClickListener {
+        implements View.OnClickListener, IOrderView, RecyclerOrderAdapter.OnOrderItemClickListener {
 
+    private static final double MIN_TO_DISCOUNT = 100.00;
     //Views
     private Toolbar toolbar;
     private FloatingActionButton mFloatingActionButton;
@@ -36,9 +38,8 @@ public class OrderActivity extends BaseActivity
     private ProgressBar mProgressBar;
 
     //Globals
-
     private LinearLayoutManager mLinearLayoutManager;
-    private RecyclerOrderAdapter mOrderAdapter;
+    private RecyclerOrderAdapter mOrdersAdapter;
     private double total = 0.0;
 
     //MVP
@@ -50,7 +51,7 @@ public class OrderActivity extends BaseActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order);
-        mPresenter = new OrderPresenterImpl(this,OrderActivity.this);
+        mPresenter = new OrderPresenterImpl(this, OrderActivity.this);
 
         //Init views
         initUIComponents();
@@ -91,11 +92,8 @@ public class OrderActivity extends BaseActivity
         mLinearLayoutManager = new LinearLayoutManager(_context);
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
         mRecyclerView.setHasFixedSize(false);
-
-        //Load data
-        mPresenter.loadOrdersByUserId("ozzner");
+        mPresenter.loadOrders();
     }
-
 
 
     private void setUpFloatingButton() {
@@ -140,7 +138,7 @@ public class OrderActivity extends BaseActivity
     }
 
     private void enableTotalPrice() {
-        tvTotalPrice.setVisibility(View.VISIBLE);
+        tvDiscount.setVisibility(View.VISIBLE);
     }
 
 
@@ -151,7 +149,6 @@ public class OrderActivity extends BaseActivity
     public void onClick(View v) {
         if (v == mFloatingActionButton) {
             showToast("Open payment methods!");
-//            showSnackbar("snack", v);
         }
     }
 
@@ -159,13 +156,12 @@ public class OrderActivity extends BaseActivity
     // IOrderView
     @Override
     public void showLoader() {
-
+        mProgressBar.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void hideLoader() {
         mProgressBar.setVisibility(View.GONE);
-
     }
 
     @Override
@@ -194,26 +190,32 @@ public class OrderActivity extends BaseActivity
     }
 
     @Override
-    public void onDataLoaded(List<Object> orders) {
+    public void onOrderDetailsLoaded(List<OrderDetailModel> orders) {
         //Set adapter
-        mOrderAdapter = new RecyclerOrderAdapter(orders, _context);
-        mOrderAdapter.setOnItemClickListener(this);
-        mRecyclerView.setAdapter(mOrderAdapter);
+        mOrdersAdapter = new RecyclerOrderAdapter(orders, _context);
+        mOrdersAdapter.setOnItemClickListener(this);
+        mRecyclerView.setAdapter(mOrdersAdapter);
     }
 
     @Override
     public void printAmount(double amount) {
-        total = amount;
-        tvTotalPrice.setText(Const.PRICE_PEN + SJLStrings.format(total, SJLStrings.FORMAT_MILES_EN));
-        tvTotalPrice.setPaintFlags(tvTotalPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+        tvDiscount.setText(Const.PRICE_PEN + SJLStrings.format(amount, SJLStrings.FORMAT_MILES_EN));
         mCollapsiong.setTitle(getString(R.string.title_my_orders));
         enableTotalPrice();
     }
 
     @Override
-    public void printDiscount(double amount) {
-        tvPercent.setText(15 + "%" + "\ndesc.");
-        tvDiscount.setText(Const.PRICE_PEN + SJLStrings.format((amount * 0.85), SJLStrings.FORMAT_MILES_EN));
+    public void printDiscount(double amount, double amountWithDiscount, CharSequence percent) {
+
+        //Discount
+        tvPercent.setText(percent);
+        tvDiscount.setText(Const.PRICE_PEN + SJLStrings.format(amountWithDiscount, SJLStrings.FORMAT_MILES_EN));
+
+        //Total
+        tvTotalPrice.setText(Const.PRICE_PEN + SJLStrings.format(amount, SJLStrings.FORMAT_MILES_EN));
+        tvTotalPrice.setPaintFlags(tvTotalPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+
+        //Title
         mCollapsiong.setTitle(getString(R.string.title_my_orders));
         enableAllPriceViews();
     }
@@ -238,12 +240,14 @@ public class OrderActivity extends BaseActivity
 
     @Override
     public void onAddCount() {
-        showToast("onAddCount");
+        mOrdersAdapter.notifyDataSetChanged();
+        mPresenter.buildTotalPrice(mOrdersAdapter.getOrders());
     }
 
     @Override
     public void onRemoveCount() {
-        showToast("onRemoveCount");
+        mOrdersAdapter.notifyDataSetChanged();
+        mPresenter.buildTotalPrice(mOrdersAdapter.getOrders());
     }
 
     @Override

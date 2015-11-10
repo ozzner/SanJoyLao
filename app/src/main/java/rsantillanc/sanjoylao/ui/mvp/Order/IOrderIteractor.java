@@ -10,7 +10,7 @@ import rsantillanc.sanjoylao.model.UserModel;
  */
 public interface IOrderIteractor {
 
-    void getOrdersFromServer(String clausule, OnOrdersListener listener);
+    void getOrdersFromServer(String clausule, OnOrdersListener listener, Context c);
 
     void addItemToOrder(Context c,PlateSizeModel plateSize, UserModel user, OnOrdersListener listener);
 }

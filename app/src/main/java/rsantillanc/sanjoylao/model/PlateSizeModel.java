@@ -11,7 +11,8 @@ public class PlateSizeModel implements Serializable {
     private static final long serialVersionUID = 0L;
 
     private String objectId;
-    private PlateModel idPlate;
+    @SerializedName("idPlate")
+    private PlateModel plate;
     @SerializedName("idSize")
     private SizeModel size;
     private double price;
@@ -23,7 +24,7 @@ public class PlateSizeModel implements Serializable {
 
     public PlateSizeModel(String objectId, PlateModel idPlate, SizeModel size, int price, int timeOfPreparation) {
         this.objectId = objectId;
-        this.idPlate = idPlate;
+        this.plate = idPlate;
         this.size = size;
         this.price = price;
         this.timeOfPreparation = timeOfPreparation;
@@ -37,12 +38,12 @@ public class PlateSizeModel implements Serializable {
         this.objectId = objectId;
     }
 
-    public PlateModel getIdPlate() {
-        return idPlate;
+    public PlateModel getPlate() {
+        return plate;
     }
 
-    public void setIdPlate(PlateModel idPlate) {
-        this.idPlate = idPlate;
+    public void setPlate(PlateModel plate) {
+        this.plate = plate;
     }
 
     public SizeModel getSize() {

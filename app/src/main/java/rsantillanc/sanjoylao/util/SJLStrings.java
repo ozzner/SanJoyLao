@@ -3,6 +3,8 @@ package rsantillanc.sanjoylao.util;
 import android.content.Context;
 import android.graphics.Typeface;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.Locale;
@@ -60,4 +62,13 @@ public class SJLStrings {
         return Typeface.createFromAsset(c.getAssets(), "fonts/deng_th_.ttf");
     }
 
+    public static String getUrlEncoded(String jsonFilter) {
+        String encodedData = null;
+        try {
+            encodedData = URLEncoder.encode(jsonFilter, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return encodedData;
+    }
 }

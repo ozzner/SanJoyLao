@@ -12,24 +12,26 @@ public class OrderDetailModel implements Serializable{
 
     private String objectId;
     @SerializedName("idFeastPlate")
-    private  FeastPlateModel FeastPlate;
+    private  FeastPlateModel feastPlate;
     @SerializedName("idOrder")
     private OrderModel order;
     @SerializedName("idPlateSize")
     private PlateSizeModel plateSize;
+    private int counter;
     private String createdAt;
     private String updatedAt;
 
     public OrderDetailModel() {
     }
 
-    public OrderDetailModel(String objectId, FeastPlateModel feastPlate, OrderModel order, PlateSizeModel plateSize, String createdAt, String updatedAt) {
+    public OrderDetailModel(String objectId, FeastPlateModel feastPlate, OrderModel order, PlateSizeModel plateSize, String createdAt, String updatedAt,int counter) {
         this.objectId = objectId;
-        FeastPlate = feastPlate;
+        this.feastPlate = feastPlate;
         this.order = order;
         this.plateSize = plateSize;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+        this.counter = counter;
     }
 
 
@@ -42,11 +44,11 @@ public class OrderDetailModel implements Serializable{
     }
 
     public FeastPlateModel getFeastPlate() {
-        return FeastPlate;
+        return feastPlate;
     }
 
     public void setFeastPlate(FeastPlateModel feastPlate) {
-        FeastPlate = feastPlate;
+        this.feastPlate = feastPlate;
     }
 
     public OrderModel getOrder() {
@@ -63,6 +65,14 @@ public class OrderDetailModel implements Serializable{
 
     public void setPlateSize(PlateSizeModel plateSize) {
         this.plateSize = plateSize;
+    }
+
+    public int getCounter() {
+        return counter;
+    }
+
+    public void setCounter(int counter) {
+        this.counter = counter;
     }
 
     public String getCreatedAt() {

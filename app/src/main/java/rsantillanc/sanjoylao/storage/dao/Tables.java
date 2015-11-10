@@ -80,7 +80,7 @@ public class Tables {
             "\t`idPayment`\tTEXT UNIQUE,\n" +
             "\t`idStatus`\tTEXT,\n" +
             "\t`idUser`\tREAL NOT NULL,\n" +
-            "\t`Price`\tNUMERIC NOT NULL DEFAULT 0.0,\n" +
+            "\t`price`\tNUMERIC NOT NULL DEFAULT 0.0,\n" +
             "\t`createdAt`\tTEXT NOT NULL,\n" +
             "\t`updatedAt`\tINTEGER NOT NULL,\n" +
             "\tPRIMARY KEY(objectId)\n" +
@@ -148,6 +148,7 @@ public class Tables {
           "\t`idFeastPlate`\tTEXT,\n" +
           "\t`idOrder`\tTEXT,\n" +
           "\t`idPlateSize`\tTEXT,\n" +
+          "\t`counter`\tINTEGER DEFAULT 1,\n" +
           "\t`createdAt`\tTEXT,\n" +
           "\t`updatedAt`\tTEXT,\n" +
           "\tPRIMARY KEY(objectId)\n" +
