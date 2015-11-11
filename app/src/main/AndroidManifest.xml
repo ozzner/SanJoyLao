@@ -111,7 +111,7 @@
             android:theme="@style/SJLTheme.Base.Standard" >
         </activity>
         <activity
-            android:name=".ui.activity.ImageViewerActivity"
+            android:name=".ui.activity.ViewerActivity"
             android:label="@string/title_activity_image_viewer"
             android:theme="@style/SJLAppCompatAlertDialogStyle">
         </activity>

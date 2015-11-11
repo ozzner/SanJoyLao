@@ -8,13 +8,14 @@ import android.content.res.Resources;
 import android.support.v4.app.DialogFragment;
 
 import rsantillanc.sanjoylao.R;
+import rsantillanc.sanjoylao.model.PlateModel;
 
 /**
  * Created by RenzoD on 20/06/2015.
  */
 public class SJLAlertDialog extends DialogFragment {
 
-    private static OnBookingListener mBookingListener;
+    private static OnSJLAlertDialogListener mBookingListener;
     private static String[] items;
 
 
@@ -43,11 +44,19 @@ public class SJLAlertDialog extends DialogFragment {
 
     }
 
-    public void set(OnBookingListener listener) {
+    public void set(OnSJLAlertDialogListener listener) {
         this.mBookingListener = listener;
     }
 
-    public interface OnBookingListener {
+    public static void showCustomAlert(Context ctx,PlateModel plate) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(ctx);
+        builder.setMessage(plate.getIngredients());
+        builder.setTitle(plate.getName());
+        Dialog dialog = builder.create();
+        dialog.show();
+    }
+
+    public interface OnSJLAlertDialogListener {
         void onClick(DialogInterface dialog, int index);
     }
 }

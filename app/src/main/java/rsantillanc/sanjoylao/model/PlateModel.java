@@ -21,7 +21,7 @@ public class PlateModel implements Serializable {
     private String updatedAt;
     private boolean atFeast;
     private boolean avalible;
-    private String ingredients;
+    private CharSequence ingredients;
     private JSONObject qualification;
     private boolean recommendet;
 //    private List<PlateSizeModel>  plateSize;
@@ -97,11 +97,11 @@ public class PlateModel implements Serializable {
         this.avalible = avalible;
     }
 
-    public String getIngredients() {
+    public CharSequence getIngredients() {
         return ingredients;
     }
 
-    public void setIngredients(String ingredients) {
+    public void setIngredients(CharSequence ingredients) {
         this.ingredients = ingredients;
     }
 

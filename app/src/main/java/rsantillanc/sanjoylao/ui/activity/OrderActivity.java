@@ -9,6 +9,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,7 +20,10 @@ import java.util.List;
 
 import rsantillanc.sanjoylao.R;
 import rsantillanc.sanjoylao.model.OrderDetailModel;
+import rsantillanc.sanjoylao.model.PlateModel;
+import rsantillanc.sanjoylao.model.PlateSizeModel;
 import rsantillanc.sanjoylao.ui.custom.adapter.RecyclerOrderAdapter;
+import rsantillanc.sanjoylao.ui.custom.dialog.SJLAlertDialog;
 import rsantillanc.sanjoylao.ui.mvp.Order.IOrderView;
 import rsantillanc.sanjoylao.ui.mvp.Order.OrderPresenterImpl;
 import rsantillanc.sanjoylao.util.Android;
@@ -213,7 +217,7 @@ public class OrderActivity extends BaseActivity implements
             mCollapsiong.setTitle(getString(R.string.title_my_orders));
             mCollapsiong.setTitleEnabled(true);
 
-        //Collapsed
+            //Collapsed
         } else {
             mCollapsiong.setTitleEnabled(false);
             getSupportActionBar().setTitle(tvDiscount.getText().toString());
@@ -228,14 +232,31 @@ public class OrderActivity extends BaseActivity implements
     }
 
     @Override
-    public void onOpenImage() {
-        Intent viewer = new Intent(getApplicationContext(),ImageViewerActivity.class);
+    public void onOpenImage(PlateSizeModel plateSize) {
+        Intent viewer = new Intent(getApplicationContext(), ViewerActivity.class);
         startActivity(viewer);
     }
 
     @Override
-    public void onOpenIngredients() {
-        showToast("onOpenIngredients");
+    public void onOpenIngredients(PlateModel plate) {
+        String HTML_BODY =
+                "              <p style=\"text-align: justify;\">" +
+                        "        <h4><font color='#D32F2F'>" + getString(R.string.label_description) + "</font></h4>" +
+                        "        <font color='#607D8B'>" +
+                        "        La sopa wantán es una sopa china, hecha a base de caldo de pollo, carne de pollo, cerdo y Wantán.<br><br>" +
+
+                        "        Usualmente lleva tres o cuatro wantanes y se sirve con cebolla china.\n<br><br>" +
+                        "        Esta sopa también puede llevar col y fideos chinos, además de langostinos y por" +
+                        "        lo general se le agregan sillao (salsa de soya).<br><br>" +
+
+                        "        Es usual consumirla previa a un plato de fondo como Chow mein o arroz frito.\n" +
+                        "        </font><br><br><br>" +
+                        "        <h4><font color='#D32F2F'>" + getString(R.string.label_ingredients) + "</font></h4>" +
+                        "        <b>Wantan, pollo, langostino, chancho, pato, huevo de codorniz.<b>\n<br><br><br>" +
+                        "        </p>" +
+                        "";
+        plate.setIngredients(Html.fromHtml(HTML_BODY));
+        SJLAlertDialog.showCustomAlert(OrderActivity.this, plate);
     }
 
     @Override

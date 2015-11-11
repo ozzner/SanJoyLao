@@ -31,7 +31,7 @@ import rsantillanc.sanjoylao.util.Const;
 import rsantillanc.sanjoylao.storage.sp.SJLPreferences;
 import rsantillanc.sanjoylao.ui.popup.DetailsOptionsPopup;
 
-public class OptionsGridActivity extends ActionBarActivity implements GridViewAdapter.OnPlateClickListener,SJLAlertDialog.OnBookingListener  {
+public class OptionsGridActivity extends ActionBarActivity implements GridViewAdapter.OnPlateClickListener,SJLAlertDialog.OnSJLAlertDialogListener {
 
     private Toolbar mToolbar;
     private Button btOrder;

@@ -13,6 +13,8 @@ import java.util.List;
 
 import rsantillanc.sanjoylao.R;
 import rsantillanc.sanjoylao.model.OrderDetailModel;
+import rsantillanc.sanjoylao.model.PlateModel;
+import rsantillanc.sanjoylao.model.PlateSizeModel;
 import rsantillanc.sanjoylao.util.Const;
 import rsantillanc.sanjoylao.util.SJLStrings;
 
@@ -99,7 +101,7 @@ public class RecyclerOrderAdapter extends RecyclerView.Adapter<RecyclerOrderAdap
             ivOpenImage = (ImageView) vi.findViewById(R.id.iv_order_open_image);
             ivDelete = (ImageView) vi.findViewById(R.id.iv_order_delete);
 
-            vi.setOnClickListener(this);
+//            vi.setOnClickListener(this);
             ivCountAdd.setOnClickListener(this);
             ivCountDel.setOnClickListener(this);
             ivIngredients.setOnClickListener(this);
@@ -115,13 +117,13 @@ public class RecyclerOrderAdapter extends RecyclerView.Adapter<RecyclerOrderAdap
                 else if (v == ivCountDel)
                     decrementCounter(getPosition());
                 else if (v == ivIngredients)
-                    mItemClickListener.onOpenIngredients();
+                    mItemClickListener.onOpenIngredients(orders.get(getPosition()).getPlateSize().getPlate());
                 else if (v == ivOpenImage)
-                    mItemClickListener.onOpenImage();
+                    mItemClickListener.onOpenImage(orders.get(getPosition()).getPlateSize());
                 else if (v == ivDelete)
                     deleteItemDetail(getPosition(),orders.get(getPosition()));
-                else
-                    mItemClickListener.onItemClick(v, getPosition());
+//                else
+//                    mItemClickListener.onItemClick(v, getPosition());
 
         }
     }
@@ -164,9 +166,9 @@ public class RecyclerOrderAdapter extends RecyclerView.Adapter<RecyclerOrderAdap
     public interface OnOrderItemClickListener {
         void onItemClick(View v, int index);
 
-        void onOpenImage();
+        void onOpenImage(PlateSizeModel plateSize);
 
-        void onOpenIngredients();
+        void onOpenIngredients(PlateModel plate);
 
         void onIncrementCount();
 

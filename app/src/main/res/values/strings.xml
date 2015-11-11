@@ -113,5 +113,7 @@
     <string name="action_size_popup_title">tamaño</string>
     <string name="title_activity_map">Map</string>
     <string name="title_activity_image_viewer">Image viewer</string>
+    <string name="label_description">Descripción</string>
+    <string name="label_ingredients">Ingredientes</string>
 
 </resources>

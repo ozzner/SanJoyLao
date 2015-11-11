@@ -1,18 +1,36 @@
 package rsantillanc.sanjoylao.ui.activity;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import rsantillanc.sanjoylao.R;
 
-public class ImageViewerActivity extends AppCompatActivity {
+public class ViewerActivity extends BaseActivity implements View.OnClickListener{
+
+    private ImageView ivClose;
+    private TextView tvOpen;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image_viewer);
+        initUIElements();
+        setupUIElements();
+    }
+
+    private void initUIElements() {
+        ivClose = (ImageView)findViewById(R.id.iv_viewer_close);
+        tvOpen = (TextView)findViewById(R.id.tv_viewer_open);
+    }
+
+
+    private void setupUIElements() {
+        ivClose.setOnClickListener(this);
+        tvOpen.setOnClickListener(this);
     }
 
     @Override
@@ -35,5 +53,13 @@ public class ImageViewerActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v instanceof ImageView)
+            finish();
+        else
+            showToast("¡Open plate!");
     }
 }

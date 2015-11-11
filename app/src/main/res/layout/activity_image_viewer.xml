@@ -48,12 +48,13 @@
         android:orientation="horizontal" >
 
         <ImageView
-            android:layout_width="25dp"
-            android:layout_height="25dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:tint="@color/white"
-            android:src="@drawable/ic_info" />
+            android:src="@drawable/vec_viewer_open" />
 
         <TextView
+            android:id="@+id/tv_viewer_open"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:paddingLeft="10dp"
@@ -67,11 +68,11 @@
 
     <LinearLayout
         android:id="@+id/llDownloadWallpaper"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:layout_marginRight="5dp"
         android:layout_marginTop="5dp"
-        android:gravity="center_vertical"
+        android:gravity="center"
         android:orientation="horizontal"
         android:background="@drawable/bg_button_image_viewer_small"
         android:layout_alignParentTop="true"
@@ -79,12 +80,11 @@
         >
 
         <ImageView
+            android:id="@+id/iv_viewer_close"
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:tint="@color/white"
-            android:background="@drawable/list_selector"
-            android:scaleType="centerCrop"
-            android:src="@drawable/ic_delete" />
+            android:src="@drawable/vec_close" />
 
     </LinearLayout>
 

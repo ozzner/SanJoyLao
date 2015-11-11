@@ -37,7 +37,7 @@ import rsantillanc.sanjoylao.ui.popup.DetailsOptionsPopup;
  * A simple {@link Fragment} subclass.
  */
 public class BanquetDetailsFragment extends Fragment implements GridViewAdapter.OnPlateClickListener
-        ,SJLAlertDialog.OnBookingListener {
+        ,SJLAlertDialog.OnSJLAlertDialogListener {
 
     private static BanquetDetailsFragment instance;
 
