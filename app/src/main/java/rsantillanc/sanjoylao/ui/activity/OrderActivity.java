@@ -2,6 +2,7 @@ package rsantillanc.sanjoylao.ui.activity;
 
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
@@ -24,8 +25,10 @@ import rsantillanc.sanjoylao.util.Android;
 import rsantillanc.sanjoylao.util.Const;
 import rsantillanc.sanjoylao.util.SJLStrings;
 
-public class OrderActivity extends BaseActivity
-        implements View.OnClickListener, IOrderView, RecyclerOrderAdapter.OnOrderItemClickListener {
+public class OrderActivity extends BaseActivity implements
+        View.OnClickListener,
+        IOrderView,
+        RecyclerOrderAdapter.OnOrderItemClickListener, AppBarLayout.OnOffsetChangedListener {
 
     private static final double MIN_TO_DISCOUNT = 100.00;
     //Views
@@ -45,6 +48,7 @@ public class OrderActivity extends BaseActivity
     //MVP
     private OrderPresenterImpl mPresenter;
     private CollapsingToolbarLayout mCollapsiong;
+    private AppBarLayout mAppBar;
 
 
     @Override
@@ -63,18 +67,19 @@ public class OrderActivity extends BaseActivity
 
 
     //---------------------- [INIT  COMPONENTS]
+
     private void initUIComponents() {
+        //Price
+        tvDiscount = (TextView) findViewById(R.id.tv_order_price_discount);
+        tvTotalPrice = (TextView) findViewById(R.id.tv_order_price_total);
+        tvPercent = (TextView) findViewById(R.id.tv_order_percent);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         mFloatingActionButton = (FloatingActionButton) findViewById(R.id.fab_order_payment);
         mRecyclerView = (RecyclerView) findViewById(R.id.rcv_orders);
         mProgressBar = (ProgressBar) findViewById(R.id.pb_orders);
         mCollapsiong = (CollapsingToolbarLayout) findViewById(R.id.ctlLayout);
-
-        //Price
-        tvDiscount = (TextView) findViewById(R.id.tv_order_price_discount);
-        tvTotalPrice = (TextView) findViewById(R.id.tv_order_price_total);
-        tvPercent = (TextView) findViewById(R.id.tv_order_percent);
+        mAppBar = (AppBarLayout) findViewById(R.id.appbarLayout);
     }
 
 
@@ -83,6 +88,11 @@ public class OrderActivity extends BaseActivity
         setUpToolbar();
         setUpFloatingButton();
         setUpRecyclerView();
+        setUpAppBarLayout();
+    }
+
+    private void setUpAppBarLayout() {
+        mAppBar.addOnOffsetChangedListener(this);
     }
 
 
@@ -139,6 +149,8 @@ public class OrderActivity extends BaseActivity
 
     private void enableTotalPrice() {
         tvDiscount.setVisibility(View.VISIBLE);
+        tvPercent.setVisibility(View.INVISIBLE);
+        tvTotalPrice.setVisibility(View.INVISIBLE);
     }
 
 
@@ -153,41 +165,13 @@ public class OrderActivity extends BaseActivity
     }
 
 
-    // IOrderView
-    @Override
-    public void showLoader() {
-        mProgressBar.setVisibility(View.VISIBLE);
-    }
+    // {IOrderView}
 
     @Override
     public void hideLoader() {
         mProgressBar.setVisibility(View.GONE);
     }
 
-    @Override
-    public void openItem(Object item) {
-
-    }
-
-    @Override
-    public void upPrice() {
-
-    }
-
-    @Override
-    public void downPrice() {
-
-    }
-
-    @Override
-    public void deleteItem(int position) {
-
-    }
-
-    @Override
-    public void showPaymentMethod() {
-
-    }
 
     @Override
     public void onOrderDetailsLoaded(List<OrderDetailModel> orders) {
@@ -200,7 +184,6 @@ public class OrderActivity extends BaseActivity
     @Override
     public void printAmount(double amount) {
         tvDiscount.setText(Const.PRICE_PEN + SJLStrings.format(amount, SJLStrings.FORMAT_MILES_EN));
-        mCollapsiong.setTitle(getString(R.string.title_my_orders));
         enableTotalPrice();
     }
 
@@ -215,11 +198,26 @@ public class OrderActivity extends BaseActivity
         tvTotalPrice.setText(Const.PRICE_PEN + SJLStrings.format(amount, SJLStrings.FORMAT_MILES_EN));
         tvTotalPrice.setPaintFlags(tvTotalPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
 
-        //Title
-        mCollapsiong.setTitle(getString(R.string.title_my_orders));
         enableAllPriceViews();
+
     }
 
+
+    @Override
+    public void onOffsetChanged(AppBarLayout appBarLayout, int offSet) {
+
+        //Open
+        if (Math.abs(offSet) / 2 <= toolbar.getHeight()) {
+            mCollapsiong.requestLayout();
+            mCollapsiong.setTitle(getString(R.string.title_my_orders));
+            mCollapsiong.setTitleEnabled(true);
+
+        //Collapsed
+        } else {
+            mCollapsiong.setTitleEnabled(false);
+            getSupportActionBar().setTitle(tvDiscount.getText().toString());
+        }
+    }
 
     //{ON ORDERS ITEM LISTENER}
 
@@ -239,19 +237,28 @@ public class OrderActivity extends BaseActivity
     }
 
     @Override
-    public void onAddCount() {
+    public void onIncrementCount() {
         mOrdersAdapter.notifyDataSetChanged();
         mPresenter.buildTotalPrice(mOrdersAdapter.getOrders());
     }
 
     @Override
-    public void onRemoveCount() {
+    public void onDecrementCount() {
         mOrdersAdapter.notifyDataSetChanged();
         mPresenter.buildTotalPrice(mOrdersAdapter.getOrders());
     }
 
     @Override
-    public void onDeleteItem() {
-        showToast("onDeleteItem");
+    public void onDeleteItem(OrderDetailModel itemDetail) {
+        mOrdersAdapter.notifyDataSetChanged();
+        mPresenter.deleteAnItemDetail(getApplicationContext(), itemDetail);
+        mPresenter.buildTotalPrice(mOrdersAdapter.getOrders());
     }
+
+    @Override
+    public void onDeleteSuccess(CharSequence message) {
+        showToast(message);
+    }
+
+
 }

@@ -54,15 +54,25 @@ public class OrderIteractorImpl implements IOrderIteractor {
                 if (response.isSuccess()) {
                     List<OrderDetailModel> list = new ArrayList();
                     list.addAll((Collection<? extends OrderDetailModel>) response.body());
-                    listener.onLoadDetails(c, list);
-                    Log.e(Const.DEBUG, "onResponse RESULT ordersDetail: " + list.size());
+
+                    if (list.isEmpty())
+                        listener.onOrdersError(c, "No hay pedidos.");
+                    else
+                        listener.onLoadDetails(c, list);
+                    long l = 0;
+                    for (OrderDetailModel detail : list) {
+                        l = new OrderDao(c).insertDetail(detail);
+                    }
+                    Log.e(Const.DEBUG, "onRespons ordersDetail rows affected: " + l);
                 } else {
-                    Log.e(Const.DEBUG, "onResponse RESULT ordersDetail: " + response.errorBody());
+                    listener.onOrdersError(c, "Error loading details");
+                    Log.e(Const.DEBUG, "onResponse RESULT ordersDetail: " + response.errorBody().toString());
                 }
             }
 
             @Override
             public void onFailure(Throwable t) {
+                listener.onOrdersError(c, "Hubo un error al cargar la data.");
                 Log.e(Const.DEBUG, "onFailure Throwable: ordersDetail" + t.getMessage());
             }
         });
@@ -159,8 +169,36 @@ public class OrderIteractorImpl implements IOrderIteractor {
 
             }
         });
+    }
 
 
+    public void callDeleteDetail(final Context c, final OrderDetailModel itemDetail, final OnOrdersListener listener) {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(ConstAPI.PARSE_URL_BASE)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        Call<JsonObject> call = retrofit.create(ParseAPIService.class).deleteDetail(itemDetail.getObjectId());
+        call.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Response<JsonObject> response, Retrofit retrofit) {
+                if (response.isSuccess()) {
+                   Log.e(Const.DEBUG, "onResponse correct deleted: " + response.body().toString());
+                    listener.onDeleteSuccess("¡Eliminado!");
+                    int on = new OrderDao(c).deleteDetail(itemDetail.getObjectId());
+                    Log.e(Const.DEBUG, "OrderDeleted on device: " + (on > 0));
+                }else {
+                    Log.e(Const.DEBUG, "onResponse isSuccess?: " + response.isSuccess());
+                    listener.onOrdersError(c,"Server after");
+                }
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                listener.onOrdersError(c,"Error on server.");
+                Log.e(Const.DEBUG, "onFailure: " + t.getMessage());
+            }
+        });
     }
 
     private long createOrderDetailOnDevice(Context c, String orderDetailID, OrderModel order, String createdAt, PlateSizeModel plateSize) {
@@ -199,25 +237,41 @@ public class OrderIteractorImpl implements IOrderIteractor {
     public void getOrdersFrom(Context c, OnOrdersListener listener) {
 
 
-        if (checkIfExistActiveOrder(c)) {
-            //From device
-            listener.onLoadDetails(c,
-                    new OrderDao(c).getOrderDetailsByOrderID(
-                            new OrderDao(c).getActiveOrderIfExist(
-                                    new StatusDao(c).getIdStatusByCode(Const.STATUS_TEMPORAL))
-                                    .getObjectId()));
+        if (countOrder(c) <= 0) {
+            listener.onOrdersError(c, "No hay pedidos");
+            return;
+        }
 
-            //From server
-//            getOrdersFromServer(
-//                    new OrderDao(c).getActiveOrderIfExist(
-//                            new StatusDao(c).getIdStatusByCode(Const.STATUS_TEMPORAL))
-//                            .getObjectId(), listener, c);
+        if (checkIfExistActiveOrder(c)) {
+
+            if (countDetails(c) >= 1)
+                //From device
+                listener.onLoadDetails(c,
+                        new OrderDao(c).getOrderDetailsByOrderID(
+                                new OrderDao(c).getActiveOrderIfExist(
+                                        new StatusDao(c).getIdStatusByCode(Const.STATUS_TEMPORAL))
+                                        .getObjectId()));
+
+            else
+                //From server
+                getOrdersFromServer(
+                        new OrderDao(c).getActiveOrderIfExist(
+                                new StatusDao(c).getIdStatusByCode(Const.STATUS_TEMPORAL))
+                                .getObjectId(), listener, c);
 
         } else {
-            listener.onLoadDetails(c,new ArrayList<OrderDetailModel>());
+            listener.onLoadDetails(c, new ArrayList<OrderDetailModel>());
         }
 
 
+    }
+
+    private int countDetails(Context c) {
+        return new OrderDao(c).countDetails();
+    }
+
+    private int countOrder(Context c) {
+        return new OrderDao(c).count();
     }
 
     public Converter.Factory customConverter(Type type) {
@@ -228,5 +282,6 @@ public class OrderIteractorImpl implements IOrderIteractor {
         return GsonConverterFactory.create(build);
 
     }
+
 
 }

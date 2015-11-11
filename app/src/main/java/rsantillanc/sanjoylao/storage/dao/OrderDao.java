@@ -22,6 +22,8 @@ public class OrderDao {
 
     private static final String SELECT = "Select * from " + Tables.ORDERS;
     private static final String COMPARE = "=?";
+    private static final String SELECT_DETAILS = "Select * from " + Tables.ORDER_DETAIL;
+    ;
     private final Context _context;
 
     //Columns
@@ -137,7 +139,7 @@ public class OrderDao {
 
     public List<OrderDetailModel> getOrderDetailsByOrderID(String orderID) {
         Cursor cur = db.query(Tables.ORDER_DETAIL, null, idOrder + COMPARE, new String[]{orderID}, null, null, null);
-        return loopDetails(cur,new ArrayList<OrderDetailModel>());
+        return loopDetails(cur, new ArrayList<OrderDetailModel>());
     }
 
     private List<OrderDetailModel> loopDetails(Cursor cur, List<OrderDetailModel> listDetails) {
@@ -176,5 +178,14 @@ public class OrderDao {
 
     private OrderModel makeOrder(String orderID) {
         return getOrderByID(orderID);
+    }
+
+    public int countDetails() {
+        Cursor cur = db.rawQuery(SELECT_DETAILS, null);
+        return cur.getCount();
+    }
+
+    public int deleteDetail(String objectId) {
+        return db.delete(Tables.ORDER_DETAIL, objectIdDetail + COMPARE, new String[]{objectId});
     }
 }

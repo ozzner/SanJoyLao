@@ -6,7 +6,6 @@ import android.widget.Toast;
 
 import java.util.List;
 
-import rsantillanc.sanjoylao.model.FeastModel;
 import rsantillanc.sanjoylao.model.OrderDetailModel;
 import rsantillanc.sanjoylao.util.Const;
 
@@ -29,35 +28,6 @@ public class OrderPresenterImpl implements IOrderPresenter, OnOrdersListener {
         this.mActivity = actitvity;
     }
 
-    private double getTotalPrice(Iterable<? extends Object> orders) {
-        double total = 0.0;
-        for (Object banquet : orders) {
-            total += ((FeastModel) banquet).getPrice();
-        }
-        return total;
-    }
-
-
-//    @Override
-//    public void onOrderCreated(final OrderModel orders) {
-//        final double totalPrice = orders.getPrice();
-//
-//        mActivity.runOnUiThread(new Runnable() {
-//            @Override
-//            public void run() {
-//
-//                if (totalPrice > 1500)
-//                    mView.printDiscount(totalPrice);
-//
-//                //Pass
-//                mView.printAmount(totalPrice);
-//                mView.onOrderDetailsLoaded(orders);
-//                mView.hideLoader();
-//            }
-//
-//        });
-
-//    }
 
     public void loadOrders() {
         mIterator.getOrdersFrom(mActivity, this);
@@ -67,7 +37,7 @@ public class OrderPresenterImpl implements IOrderPresenter, OnOrdersListener {
     //{On Order Listener}
     @Override
     public void onOrdersError(Context c, CharSequence error) {
-        Toast.makeText(c, "Error loading orders detail: " + error, Toast.LENGTH_SHORT).show();
+        Toast.makeText(c,error, Toast.LENGTH_SHORT).show();
         mView.hideLoader();
     }
 
@@ -77,6 +47,11 @@ public class OrderPresenterImpl implements IOrderPresenter, OnOrdersListener {
         mView.hideLoader();
         mView.onOrderDetailsLoaded(orderDetails);
         buildTotalPrice(orderDetails);
+    }
+
+    @Override
+    public void onDeleteSuccess(CharSequence message) {
+        mView.onDeleteSuccess(message);
     }
 
     public void buildTotalPrice(List<OrderDetailModel> orderDetails) {
@@ -101,4 +76,7 @@ public class OrderPresenterImpl implements IOrderPresenter, OnOrdersListener {
     }
 
 
+    public void deleteAnItemDetail(Context c, OrderDetailModel itemDetail) {
+        mIterator.callDeleteDetail(c,itemDetail,this);
+    }
 }

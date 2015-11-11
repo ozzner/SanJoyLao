@@ -58,7 +58,7 @@ public class MainPresenterImpl {
         iteractor.syncStatus(mainActivity.getApplicationContext());
     }
 
-    public void loadOrders() {
-        iteractor.syncOrders(mainActivity.getApplicationContext());
+    public void loadOrders(String userID) {
+        iteractor.syncOrders(mainActivity.getApplicationContext(),userID);
     }
 }
