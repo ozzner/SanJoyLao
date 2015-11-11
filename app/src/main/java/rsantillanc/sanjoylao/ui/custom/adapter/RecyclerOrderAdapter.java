@@ -118,7 +118,7 @@ public class RecyclerOrderAdapter extends RecyclerView.Adapter<RecyclerOrderAdap
                 else if (v == ivOpenImage)
                     mItemClickListener.onOpenImage();
                 else if (v == ivDelete)
-                   deleteItemDetail(getPosition());
+                    deleteItemDetail(getPosition());
                 else
                     mItemClickListener.onItemClick(v, getPosition());
 
