@@ -33,23 +33,12 @@
         <item name="android:textSize">14sp</item>
         <item name="android:tint">@color/colorAccent</item>
     </style>
-    <!--&lt;!&ndash; DIALOG &ndash;&gt;-->
-    <!--<style name="AppDialog" parent="android:style/Theme.Dialog">-->
 
-    <!--&lt;!&ndash; <item name="android:background">@color/transparente</item> &ndash;&gt;-->
-    <!--<item name="android:windowBackground">@color/whitesmoke</item>-->
-    <!--<item name="android:colorForeground">#fff</item>-->
-    <!--<item name="android:windowFrame">@null</item>-->
-    <!--<item name="android:windowIsFloating">true</item>-->
-    <!--<item name="android:windowIsTranslucent">true</item>-->
-    <!--<item name="android:windowNoTitle">true</item>-->
-    <!--</style>-->
-
-    <!--<style name="AlertDialogCustom" parent="@android:style/Holo.Light.ButtonBar.AlertDialog">-->
-    <!--<item name="android:textColor">#FFFF00</item>-->
-    <!--<item name="android:typeface">monospace</item>-->
-    <!--<item name="android:textSize">18sp</item>-->
-    <!--</style>-->
+    <!-- Them dialog-->
+    <style name="SJLAppCompatAlertDialogStyle" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+    </style>
 
     <!-- RATINGBAR -->
     <style name="foodRatingBar" parent="@android:style/Widget.RatingBar">

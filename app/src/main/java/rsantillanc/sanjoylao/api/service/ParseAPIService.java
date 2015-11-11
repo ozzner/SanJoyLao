@@ -150,6 +150,7 @@ public interface ParseAPIService {
     @DELETE("classes/OrderDetail/{objectId}")
     Call<JsonObject> deleteDetail(@Path("objectId") String objectId);
 
+
     @Headers({
             "X-Parse-Application-Id: RTM3ioKCBgaAJjXmDRr493sb13uYzGrMnePLhzhm",
             "X-Parse-REST-API-Key: 6xr428CvfJT8WMGByPUhfvJWmFaxjozudaPy9bUB",

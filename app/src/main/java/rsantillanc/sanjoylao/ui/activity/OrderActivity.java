@@ -1,5 +1,6 @@
 package rsantillanc.sanjoylao.ui.activity;
 
+import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
@@ -228,7 +229,8 @@ public class OrderActivity extends BaseActivity implements
 
     @Override
     public void onOpenImage() {
-        showToast("onOpenImage");
+        Intent viewer = new Intent(getApplicationContext(),ImageViewerActivity.class);
+        startActivity(viewer);
     }
 
     @Override
