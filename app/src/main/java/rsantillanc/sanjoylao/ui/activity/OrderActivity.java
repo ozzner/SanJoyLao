@@ -35,7 +35,6 @@ public class OrderActivity extends BaseActivity implements
         IOrderView,
         RecyclerOrderAdapter.OnOrderItemClickListener, AppBarLayout.OnOffsetChangedListener {
 
-    private static final double MIN_TO_DISCOUNT = 100.00;
     //Views
     private Toolbar toolbar;
     private FloatingActionButton mFloatingActionButton;

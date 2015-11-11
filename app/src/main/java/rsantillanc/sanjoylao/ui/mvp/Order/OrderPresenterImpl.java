@@ -43,7 +43,7 @@ public class OrderPresenterImpl implements IOrderPresenter, OnOrdersListener {
 
     @Override
     public void onLoadDetails(Context c, List<OrderDetailModel> orderDetails) {
-        Toast.makeText(c, "Success loading orders detail size: " + orderDetails.size(), Toast.LENGTH_SHORT).show();
+//        Toast.makeText(c, "Success loading orders detail size: " + orderDetails.size(), Toast.LENGTH_SHORT).show();
         mView.hideLoader();
         mView.onOrderDetailsLoaded(orderDetails);
         buildTotalPrice(orderDetails);
