@@ -268,7 +268,7 @@ public class MainActivity extends BaseActivity
         mPresenter.loadPlate();
         mPresenter.loadOrderType();
         mPresenter.loadStatus();
-        mPresenter.loadOrders();
+        mPresenter.loadOrders(app.getUserLogued().getObjectId());
         mPresenter.savePreferences();
     }
 

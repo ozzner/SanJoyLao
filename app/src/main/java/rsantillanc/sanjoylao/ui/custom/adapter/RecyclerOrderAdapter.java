@@ -118,11 +118,16 @@ public class RecyclerOrderAdapter extends RecyclerView.Adapter<RecyclerOrderAdap
                 else if (v == ivOpenImage)
                     mItemClickListener.onOpenImage();
                 else if (v == ivDelete)
-                    mItemClickListener.onDeleteItem();
+                   deleteItemDetail(getPosition());
                 else
                     mItemClickListener.onItemClick(v, getPosition());
 
         }
+    }
+
+    private void deleteItemDetail(int position) {
+        orders.remove(position);
+        mItemClickListener.onDeleteItem(orders.get(position));
     }
 
     public double getTotalPrice() {
@@ -138,7 +143,7 @@ public class RecyclerOrderAdapter extends RecyclerView.Adapter<RecyclerOrderAdap
             counter--;
 
         orders.get(position).setCounter(counter);
-        mItemClickListener.onRemoveCount();
+        mItemClickListener.onDecrementCount();
     }
 
     private void incrementedCounter(int position) {
@@ -147,7 +152,7 @@ public class RecyclerOrderAdapter extends RecyclerView.Adapter<RecyclerOrderAdap
             counter++;
 
         orders.get(position).setCounter(counter);
-        mItemClickListener.onAddCount();
+        mItemClickListener.onIncrementCount();
     }
 
 
@@ -162,11 +167,11 @@ public class RecyclerOrderAdapter extends RecyclerView.Adapter<RecyclerOrderAdap
 
         void onOpenIngredients();
 
-        void onAddCount();
+        void onIncrementCount();
 
-        void onRemoveCount();
+        void onDecrementCount();
 
-        void onDeleteItem();
+        void onDeleteItem(OrderDetailModel orderDetailModel);
     }
 
 }

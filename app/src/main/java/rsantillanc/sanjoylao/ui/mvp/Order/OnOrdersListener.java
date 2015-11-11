@@ -12,4 +12,5 @@ import rsantillanc.sanjoylao.model.OrderDetailModel;
 public interface OnOrdersListener {
     void onOrdersError(Context c, CharSequence error);
     void onLoadDetails(Context c, List<OrderDetailModel> orderDetails);
+    void onDeleteSuccess(CharSequence message);
 }

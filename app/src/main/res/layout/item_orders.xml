@@ -12,7 +12,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/space_8dp"
-        android:foreground="@drawable/list_selector"
         app:cardCornerRadius="@dimen/space_4dp"
         app:cardElevation="@dimen/space_4dp"
         >

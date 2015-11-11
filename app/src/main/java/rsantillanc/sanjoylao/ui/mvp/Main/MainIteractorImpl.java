@@ -24,12 +24,14 @@ import rsantillanc.sanjoylao.api.deserializer.ParseAPIDeserializer;
 import rsantillanc.sanjoylao.api.service.ParseAPIService;
 import rsantillanc.sanjoylao.model.APIResultCategoryModel;
 import rsantillanc.sanjoylao.model.CategoryModel;
+import rsantillanc.sanjoylao.model.OrderModel;
 import rsantillanc.sanjoylao.model.OrderTypeModel;
 import rsantillanc.sanjoylao.model.PlateModel;
 import rsantillanc.sanjoylao.model.PlateSizeModel;
 import rsantillanc.sanjoylao.model.SizeModel;
 import rsantillanc.sanjoylao.model.StatusModel;
 import rsantillanc.sanjoylao.storage.dao.CategoryDao;
+import rsantillanc.sanjoylao.storage.dao.OrderDao;
 import rsantillanc.sanjoylao.storage.dao.OrderTypeDao;
 import rsantillanc.sanjoylao.storage.dao.PlateDao;
 import rsantillanc.sanjoylao.storage.dao.PlateSizeDao;
@@ -37,6 +39,7 @@ import rsantillanc.sanjoylao.storage.dao.SizeDao;
 import rsantillanc.sanjoylao.storage.dao.StatusDao;
 import rsantillanc.sanjoylao.util.Const;
 import rsantillanc.sanjoylao.util.ConstAPI;
+import rsantillanc.sanjoylao.util.SJLStrings;
 
 /**
  * Created by rsantillanc on 20/10/2015.
@@ -101,7 +104,7 @@ public class MainIteractorImpl {
                         for (SizeModel sizeModel : list) {
                             rows = new SizeDao(ctx).insert(sizeModel);
                         }
-                        Log.e(Const.DEBUG, "rows affected: " + rows);
+                        Log.e(Const.DEBUG, "size rows affected: " + rows);
                     }
                 }
 
@@ -137,7 +140,7 @@ public class MainIteractorImpl {
                         for (PlateSizeModel plateSize : list) {
                             rows = new PlateSizeDao(ctx).insert(plateSize);
                         }
-                        Log.e(Const.DEBUG, "rows affected: " + rows);
+                        Log.e(Const.DEBUG, "plateSize rows affected: " + rows);
                     }
                 }
 
@@ -201,13 +204,13 @@ public class MainIteractorImpl {
             call.enqueue(new Callback<OrderTypeModel>() {
                 @Override
                 public void onResponse(Response<OrderTypeModel> response, Retrofit retrofit) {
-                    if (response.isSuccess()){
+                    if (response.isSuccess()) {
                         List<OrderTypeModel> list = new ArrayList();
                         list.addAll((Collection<? extends OrderTypeModel>) response.body());
 
                         long rows = 0;
                         for (OrderTypeModel orderType : list) {
-                             rows = new OrderTypeDao(c).insert(orderType);
+                            rows = new OrderTypeDao(c).insert(orderType);
                         }
                         Log.e(Const.DEBUG, "orderType rows affected: " + rows);
                     }
@@ -220,11 +223,10 @@ public class MainIteractorImpl {
             });
 
 
-        }else{
+        } else {
             //TODO PUEDE SACAR DESDE LA BASE DE DATOS LOCAL.
         }
     }
-
 
 
     public void syncStatus(final Context c) {
@@ -240,7 +242,7 @@ public class MainIteractorImpl {
             call.enqueue(new Callback<StatusModel>() {
                 @Override
                 public void onResponse(Response<StatusModel> response, Retrofit retrofit) {
-                    if (response.isSuccess()){
+                    if (response.isSuccess()) {
                         List<StatusModel> list = new ArrayList();
                         list.addAll((Collection<? extends StatusModel>) response.body());
 
@@ -248,7 +250,6 @@ public class MainIteractorImpl {
                         for (StatusModel status : list) {
                             rows = new StatusDao(c).insert(status);
                         }
-
                         Log.e(Const.DEBUG, "status rows affected: " + rows);
                     }
                 }
@@ -259,18 +260,47 @@ public class MainIteractorImpl {
                 }
             });
 
-        }else{
+        } else {
             //TODO PUEDE SACAR DESDE LA BASE DE DATOS LOCAL.
         }
     }
 
 
-    public void syncOrders(Context c) {
+    public void syncOrders(final Context c, String userID) {
+        if (countOrders(c) == 0) {
+
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl(ConstAPI.PARSE_URL_BASE)
+                    .addConverterFactory(myConverter(OrderModel.class))
+                    .build();
+
+            Call<OrderModel> call = retrofit.create(ParseAPIService.class).getAllOrders(SJLStrings.getUrlEncoded(makeJsonFilter(userID)));
+            call.enqueue(new Callback<OrderModel>() {
+                @Override
+                public void onResponse(Response<OrderModel> response, Retrofit retrofit) {
+                    if (response.isSuccess()) {
+                        List<OrderModel> list = new ArrayList();
+                        list.addAll((Collection<? extends OrderModel>) response.body());
+
+                        long rows = 0;
+                        for (OrderModel order : list) {
+                            rows = new OrderDao(c).insert(order);
+                        }
+                        Log.e(Const.DEBUG, "orders rows affected: " + rows);
+                    }
+                }
+
+                @Override
+                public void onFailure(Throwable t) {
+
+                }
+            });
+
+        } else {
+            //TODO PUEDE SACAR DESDE LA BASE DE DATOS LOCAL.
+        }
 
     }
-
-
-
 
 
     //--------------------{COUNTERS}--------------------
@@ -288,6 +318,9 @@ public class MainIteractorImpl {
         return new PlateDao(c).count();
     }
 
+    private int countOrders(Context c) {
+        return new OrderDao(c).count();
+    }
 
     public Converter.Factory myConverter(Type type) {
 
@@ -309,6 +342,8 @@ public class MainIteractorImpl {
         return new PlateSizeDao(c).count();
     }
 
+
+    //{Custom}
     public void getProfileImage(Context c, ImageView imageView, String url) {
         Picasso.with(c)
                 .load(url)
@@ -317,6 +352,10 @@ public class MainIteractorImpl {
                 .into(imageView);
     }
 
+    private String makeJsonFilter(String userID) {
+        String s = "{\"idUser\":{\"__type\":\"Pointer\",\"className\":\"_User\",\"objectId\":\"" + userID + "\"}}";
+        return s;
+    }
 
 
 }
