@@ -9,6 +9,7 @@ public class APIRequestOrderDetailModel {
     private ParsePointerModel idFeastPlate;
     private ParsePointerModel idOrder;
     private ParsePointerModel idPlateSize;
+    private int counter;
 
     public APIRequestOrderDetailModel() {
     }
@@ -53,5 +54,11 @@ public class APIRequestOrderDetailModel {
         this.idPlateSize = idPlateSize;
     }
 
+    public int getCounter() {
+        return counter;
+    }
 
+    public void setCounter(int counter) {
+        this.counter = counter;
+    }
 }

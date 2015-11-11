@@ -17,11 +17,11 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     protected void showToast(CharSequence sequence){
-        Toast.makeText(getApplicationContext(),sequence,Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(),sequence,Toast.LENGTH_SHORT).show();
     }
 
     protected void showSnackbar(CharSequence message, View view){
-        Snackbar.make(view,message, Snackbar.LENGTH_LONG)
+        Snackbar.make(view,message, Snackbar.LENGTH_SHORT)
                 .setAction("Action", null).show();
     }
 }

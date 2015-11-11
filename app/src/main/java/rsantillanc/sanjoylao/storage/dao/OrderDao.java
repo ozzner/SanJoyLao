@@ -23,6 +23,7 @@ public class OrderDao {
     private static final String SELECT = "Select * from " + Tables.ORDERS;
     private static final String COMPARE = "=?";
     private static final String SELECT_DETAILS = "Select * from " + Tables.ORDER_DETAIL;
+    private static final String AND = " AND ";
     ;
     private final Context _context;
 
@@ -187,5 +188,38 @@ public class OrderDao {
 
     public int deleteDetail(String objectId) {
         return db.delete(Tables.ORDER_DETAIL, objectIdDetail + COMPARE, new String[]{objectId});
+    }
+
+    public boolean checkIfExistItemOrder(String orderID, String plateSizeID) {
+        Cursor cur = db.query(Tables.ORDER_DETAIL, null, idOrder + COMPARE + AND + idPlateSize + COMPARE, new String[]{orderID, plateSizeID}, null, null, null);
+        return cur.moveToFirst();
+    }
+
+    public OrderDetailModel getOrderDetail(String orderID, String plateSizeID) {
+        Cursor cur = db.query(Tables.ORDER_DETAIL, null, idOrder + COMPARE + AND + idPlateSize + COMPARE, new String[]{orderID, plateSizeID}, null, null, null);
+        OrderDetailModel detail;
+
+        if (cur.moveToFirst()) {
+            detail = new OrderDetailModel();
+            detail.setObjectId(cur.getString(cur.getColumnIndex(objectIdDetail)));
+            detail.setOrder(makeOrder(cur.getString(cur.getColumnIndex(idOrder))));
+            detail.setPlateSize(makePlateSize(cur.getString(cur.getColumnIndex(idPlateSize))));
+            detail.setCounter(cur.getInt(cur.getColumnIndex(counter)));
+            detail.setCreatedAt(cur.getString(cur.getColumnIndex(createdAtDetail)));
+            //Add if exist
+            if (cur.getString(cur.getColumnIndex(idFeastPlate)) != null)
+                detail.setFeastPlate(makeFeastPlate(cur.getString(cur.getColumnIndex(idFeastPlate))));
+
+            detail.setUpdatedAt(cur.getString(cur.getColumnIndex(updatedAtDetail)));
+        } else {
+            detail = null;
+        }
+        return detail;
+    }
+
+    public int updateCounter(OrderDetailModel orderDetail) {
+        ContentValues cv = new ContentValues(1);
+        cv.put(counter, orderDetail.getCounter() + 1);
+        return db.update(Tables.ORDER_DETAIL, cv, objectIdDetail + COMPARE, new String[]{orderDetail.getObjectId()});
     }
 }

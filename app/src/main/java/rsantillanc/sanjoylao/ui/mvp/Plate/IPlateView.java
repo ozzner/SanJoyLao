@@ -15,4 +15,5 @@ public interface IPlateView {
     void goToPlateDetail(PlateModel plate);
     void onError(CharSequence error);
     void onPlateAddOrderCorrect(Context c, int size);
+    void onPlateCounterUpdated(Context c, CharSequence ok);
 }
