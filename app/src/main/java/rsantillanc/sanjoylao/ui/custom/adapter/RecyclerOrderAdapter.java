@@ -48,6 +48,7 @@ public class RecyclerOrderAdapter extends RecyclerView.Adapter<RecyclerOrderAdap
         /**
          * Falta validar si el plato pertenece a un banquete,
          * de ser así se tiene que agregar una validación
+         * Además falta aumentar el contador cuando han elegido el mismo plato.
          */
 
         orderHolder.tvPrice.setText(Const.PRICE_PEN + SJLStrings.format((item.getPlateSize().getPrice() * item.getCounter()), SJLStrings.FORMAT_MILES_EN));
@@ -118,16 +119,16 @@ public class RecyclerOrderAdapter extends RecyclerView.Adapter<RecyclerOrderAdap
                 else if (v == ivOpenImage)
                     mItemClickListener.onOpenImage();
                 else if (v == ivDelete)
-                    deleteItemDetail(getPosition());
+                    deleteItemDetail(getPosition(),orders.get(getPosition()));
                 else
                     mItemClickListener.onItemClick(v, getPosition());
 
         }
     }
 
-    private void deleteItemDetail(int position) {
+    private void deleteItemDetail(int position, OrderDetailModel orderDetail) {
         orders.remove(position);
-        mItemClickListener.onDeleteItem(orders.get(position));
+        mItemClickListener.onDeleteItem(orderDetail);
     }
 
     public double getTotalPrice() {

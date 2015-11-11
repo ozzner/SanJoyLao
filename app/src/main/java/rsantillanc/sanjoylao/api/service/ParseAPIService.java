@@ -8,6 +8,7 @@ import retrofit.http.DELETE;
 import retrofit.http.GET;
 import retrofit.http.Headers;
 import retrofit.http.POST;
+import retrofit.http.PUT;
 import retrofit.http.Path;
 import retrofit.http.Query;
 import rsantillanc.sanjoylao.model.APIRequestOrderDetailModel;
@@ -148,4 +149,12 @@ public interface ParseAPIService {
     })
     @DELETE("classes/OrderDetail/{objectId}")
     Call<JsonObject> deleteDetail(@Path("objectId") String objectId);
+
+    @Headers({
+            "X-Parse-Application-Id: RTM3ioKCBgaAJjXmDRr493sb13uYzGrMnePLhzhm",
+            "X-Parse-REST-API-Key: 6xr428CvfJT8WMGByPUhfvJWmFaxjozudaPy9bUB",
+            "Content-Type: application/json"
+    })
+    @PUT("classes/OrderDetail/{objectId}")
+    Call<JsonObject>  updateCounterItemOrder(@Path("objectId") String objectId,@Body JsonObject counter);
 }

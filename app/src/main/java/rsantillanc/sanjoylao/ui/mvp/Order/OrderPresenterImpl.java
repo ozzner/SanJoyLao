@@ -54,6 +54,11 @@ public class OrderPresenterImpl implements IOrderPresenter, OnOrdersListener {
         mView.onDeleteSuccess(message);
     }
 
+    @Override
+    public void onCounterSuccess(Context c, CharSequence ok) {
+
+    }
+
     public void buildTotalPrice(List<OrderDetailModel> orderDetails) {
         double total = 0.0;
         for (OrderDetailModel orderDetail : orderDetails)

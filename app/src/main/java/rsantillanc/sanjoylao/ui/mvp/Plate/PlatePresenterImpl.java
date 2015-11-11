@@ -56,10 +56,15 @@ public class PlatePresenterImpl implements IPlatePresenter,OnPlateListener {
     @Override
     public void onPlateAddSucess(Context c, int size) {
         IPlateView view = new PlateActivity();
-        view.onPlateAddOrderCorrect(c,size);
+        view.onPlateAddOrderCorrect(c, size);
     }
 
     public void addPlateToOrder(PlateSizeModel plateSize, UserModel user) {
-        iteractor.addPlate(mActivity,plateSize,user);
+        iteractor.addPlate(mActivity, plateSize, user);
+    }
+
+    public void onPlateCounterSuccess(Context c, CharSequence ok) {
+        IPlateView v = new PlateActivity();
+        v.onPlateCounterUpdated(c,ok);
     }
 }

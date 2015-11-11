@@ -95,7 +95,7 @@ public class RecyclerPlateAdapter extends RecyclerView.Adapter<RecyclerPlateAdap
     }
 
 
-    private void showPopupMenu(View v,final RelationPlateSizeModel rel) {
+    private void showPopupMenu(View v, final RelationPlateSizeModel rel) {
         Context wrapper = new ContextThemeWrapper(_context, R.style.PopupMenu);
         final PopupMenu popup = new PopupMenu(wrapper, v);
         popup.getMenuInflater().inflate(R.menu.menu_size_popup, popup.getMenu());
@@ -111,7 +111,7 @@ public class RecyclerPlateAdapter extends RecyclerView.Adapter<RecyclerPlateAdap
         popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                mItemClickListener.onPopupItemClick(item,rel.getListSizes().get(item.getItemId()));
+                mItemClickListener.onPopupItemClick(item, rel.getListSizes().get(item.getItemId()));
                 return false;
             }
         });
@@ -201,9 +201,12 @@ public class RecyclerPlateAdapter extends RecyclerView.Adapter<RecyclerPlateAdap
         public void onClick(View v) {
             if (mItemClickListener != null) {
 
-                if (v instanceof ImageView)
-                    showPopupMenu(v, relations.get(getPosition()));
-                else
+                if (v instanceof ImageView) {
+                    if (relations.get(getPosition()).getListSizes().size() == 1)
+                        mItemClickListener.onPopupItemClick(null, relations.get(getPosition()).getListSizes().get(0));
+                    else
+                        showPopupMenu(v, relations.get(getPosition()));
+                } else
                     mItemClickListener.onItemClick(relations.get(getPosition()).getCurrentPlate());
 
             }

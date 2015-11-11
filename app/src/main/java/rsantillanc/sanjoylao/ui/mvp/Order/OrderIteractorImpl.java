@@ -88,9 +88,60 @@ public class OrderIteractorImpl implements IOrderIteractor {
     public void addItemToOrder(Context c, PlateSizeModel plateSize, UserModel user, OnOrdersListener listener) {
         if (checkIfExistActiveOrder(c)) {
             OrderModel currentOrder = new OrderDao(c).getActiveOrderIfExist(new StatusDao(c).getIdStatusByCode(Const.STATUS_TEMPORAL));
-            addItemDetail(c, currentOrder.getObjectId(), plateSize, listener);
+
+            if (checkIfExistItemDetail(c, currentOrder.getObjectId(), plateSize.getObjectId())) {
+                updateCounterItemOrder(c, new OrderDao(c).getOrderDetail(currentOrder.getObjectId(), plateSize.getObjectId()), listener, true);
+            } else
+                addItemDetail(c, currentOrder.getObjectId(), plateSize, listener);
+
         } else
             createOrder(c, plateSize, user, listener);
+    }
+
+    private void updateCounterItemOrder(final Context c, final OrderDetailModel orderDetail, final OnOrdersListener listener, boolean isIncrement) {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(ConstAPI.PARSE_URL_BASE)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        Call<JsonObject> call = retrofit.create(ParseAPIService.class).updateCounterItemOrder(orderDetail.getObjectId(), makeBodyCounter(isIncrement));
+        call.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Response<JsonObject> response, Retrofit retrofit) {
+                if (response.isSuccess()) {
+                    listener.onCounterSuccess(c,"¡Agregado!");
+                    Log.e(Const.DEBUG, "onResponse success " + response.body().toString());
+                } else {
+                    listener.onOrdersError(c,response.message());
+                    Log.e(Const.DEBUG, "onResponse error " + response.message());
+                }
+                int i = updateCounterItemOrderOnDevice(orderDetail, c);
+                Log.e(Const.DEBUG, "update local: " + i);
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                listener.onOrdersError(c,t.getMessage());
+                Log.e(Const.DEBUG, "onFailure error " + t.getMessage());
+            }
+        });
+    }
+
+    private int updateCounterItemOrderOnDevice(OrderDetailModel orderDetail, Context c) {
+        return new OrderDao(c).updateCounter(orderDetail);
+    }
+
+    private JsonObject makeBodyCounter(boolean isIncrement) {
+        JsonObject father = new JsonObject();
+        JsonObject son = new JsonObject();
+        son.addProperty("__op", "Increment");
+        son.addProperty("amount", isIncrement ? 1 : -1);
+        father.add("counter", son);
+        return father;
+    }
+
+    private boolean checkIfExistItemDetail(Context c, String orderID, String plateSizeID) {
+        return new OrderDao(c).checkIfExistItemOrder(orderID, plateSizeID);
     }
 
 
@@ -142,6 +193,7 @@ public class OrderIteractorImpl implements IOrderIteractor {
         APIRequestOrderDetailModel detailModel = new APIRequestOrderDetailModel();
         detailModel.setIdOrder(new ParsePointerModel(Const.CLASS_ORDER, orderID));
         detailModel.setIdPlateSize(new ParsePointerModel(Const.CLASS_PLATE_SIZE, plateSize.getObjectId()));
+        detailModel.setCounter(Const.DEFAULT_COUNTER);
 
         Call<JsonObject> call = retrofit.create(ParseAPIService.class).createOrderDetail(detailModel);
         call.enqueue(new Callback<JsonObject>() {
@@ -183,19 +235,19 @@ public class OrderIteractorImpl implements IOrderIteractor {
             @Override
             public void onResponse(Response<JsonObject> response, Retrofit retrofit) {
                 if (response.isSuccess()) {
-                   Log.e(Const.DEBUG, "onResponse correct deleted: " + response.body().toString());
+                    Log.e(Const.DEBUG, "onResponse correct deleted: " + response.body().toString());
                     listener.onDeleteSuccess("¡Eliminado!");
                     int on = new OrderDao(c).deleteDetail(itemDetail.getObjectId());
                     Log.e(Const.DEBUG, "OrderDeleted on device: " + (on > 0));
-                }else {
+                } else {
                     Log.e(Const.DEBUG, "onResponse isSuccess?: " + response.isSuccess());
-                    listener.onOrdersError(c,"Server after");
+                    listener.onOrdersError(c, "Server after");
                 }
             }
 
             @Override
             public void onFailure(Throwable t) {
-                listener.onOrdersError(c,"Error on server.");
+                listener.onOrdersError(c, "Error on server.");
                 Log.e(Const.DEBUG, "onFailure: " + t.getMessage());
             }
         });

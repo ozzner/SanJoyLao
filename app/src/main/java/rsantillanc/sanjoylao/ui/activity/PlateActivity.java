@@ -71,7 +71,7 @@ public class PlateActivity extends BaseActivity implements IPlateView, RecyclerP
         if (id == R.id.action_plate_info) {
             showToast("San Joy Lao | V." + Android.getAppVersion(this));
             return true;
-        }else {
+        } else {
             finish();
         }
 
@@ -137,7 +137,12 @@ public class PlateActivity extends BaseActivity implements IPlateView, RecyclerP
 
     @Override
     public void onPlateAddOrderCorrect(Context c, int size) {
-        Toast.makeText(c,"Pedido agregado! total: " + size,Toast.LENGTH_LONG).show();
+        Toast.makeText(c, "Agregado en total: " + size, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onPlateCounterUpdated(Context c, CharSequence ok) {
+        Toast.makeText(c, ok, Toast.LENGTH_SHORT).show();
     }
 
 
@@ -154,7 +159,7 @@ public class PlateActivity extends BaseActivity implements IPlateView, RecyclerP
 
     @Override
     public void onPopupItemClick(MenuItem item, PlateSizeModel plateSize) {
-        mpresenter.addPlateToOrder(plateSize,app.getUserLogued());
+        mpresenter.addPlateToOrder(plateSize, app.getUserLogued());
     }
 
 }

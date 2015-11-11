@@ -250,9 +250,9 @@ public class OrderActivity extends BaseActivity implements
 
     @Override
     public void onDeleteItem(OrderDetailModel itemDetail) {
-        mOrdersAdapter.notifyDataSetChanged();
         mPresenter.deleteAnItemDetail(getApplicationContext(), itemDetail);
         mPresenter.buildTotalPrice(mOrdersAdapter.getOrders());
+        mOrdersAdapter.notifyDataSetChanged();
     }
 
     @Override

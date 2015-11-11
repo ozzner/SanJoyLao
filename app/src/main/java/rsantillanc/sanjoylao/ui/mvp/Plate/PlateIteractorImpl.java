@@ -131,4 +131,10 @@ public class PlateIteractorImpl implements OnOrdersListener {
     public void onDeleteSuccess(CharSequence message) {
 
     }
+
+    @Override
+    public void onCounterSuccess(Context c, CharSequence ok) {
+        PlatePresenterImpl presenter = new PlatePresenterImpl();
+        presenter.onPlateCounterSuccess(c,ok);
+    }
 }
