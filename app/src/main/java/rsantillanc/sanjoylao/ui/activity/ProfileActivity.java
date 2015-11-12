@@ -1,5 +1,6 @@
 package rsantillanc.sanjoylao.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
@@ -30,20 +31,17 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
             R.drawable.ic_account,
             R.drawable.ic_favorite
     };
-    private UserModel currentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        currentUser = (UserModel) getIntent().getExtras().getSerializable(Const.EXTRA_USER);
-
         //Init views
         initUIComponents();
 
         //Config
-        setUpUIComponents();
+        setupUIComponents();
 
     }
 
@@ -54,8 +52,6 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
         mFloatingActionButton = (FloatingActionButton) findViewById(R.id.fab_profile_save);
         mViewPager = (ViewPager) findViewById(R.id.viewpager);
         mTabLayout = (TabLayout) findViewById(R.id.tbl_profile);
-
-
     }
 
     private void setUpTabLayout() {
@@ -64,7 +60,10 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
     }
 
     private void setUpViewPager() {
-        ViewPagerAdapter pager = new ViewPagerAdapter(getSupportFragmentManager(), loadTitles(),currentUser);
+        ViewPagerAdapter pager = new ViewPagerAdapter(
+                getSupportFragmentManager(),
+                loadTitles(),
+                (UserModel) getIntent().getExtras().getSerializable(Const.EXTRA_USER));
         mViewPager.setAdapter(pager);
     }
 
@@ -79,10 +78,10 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
     }
 
     //---------------------- [SETUPS COMPONENTS]
-    private void setUpUIComponents() {
+    private void setupUIComponents() {
         setUpViewPager();
         setUpTabLayout();
-        setUpToolbar();
+        setUpToolbar((UserModel) getIntent().getExtras().getSerializable(Const.EXTRA_USER));
         setUpFloatingButton();
     }
 
@@ -90,12 +89,12 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
         mFloatingActionButton.setOnClickListener(this);
     }
 
-    private void setUpToolbar() {
+    private void setUpToolbar(UserModel serializable) {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle(currentUser.getFullName());
+        getSupportActionBar().setTitle(serializable.getFullName());
         getSupportActionBar().setSubtitle(getString(R.string.label_profile_created) +
-                SJLDates.customDateConverter(currentUser.getCreatedAt(), SJLStrings.PARSE_DATE_FORMAT,SJLDates.FORMAT_DATE_GENERAL));
+                SJLDates.customDateConverter(serializable.getCreatedAt(), SJLStrings.PARSE_DATE_FORMAT, SJLDates.FORMAT_DATE_GENERAL));
     }
 
 
@@ -115,11 +114,26 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
         if (id == R.id.action_orders_history) {
             showToast("San Joy Lao | V." + Android.getAppVersion(this));
             return true;
+        } else {
+            goToMainActivity((UserModel) getIntent().getExtras().getSerializable(Const.EXTRA_USER));
+            return true;
         }
 
-        return super.onOptionsItemSelected(item);
     }
 
+    private void goToMainActivity(UserModel currentUser) {
+        Intent main = new Intent(getApplicationContext(),MainActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(Const.EXTRA_USER,currentUser);
+        main.putExtras(bundle);
+        main.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        startActivity(main);
+    }
+
+    @Override
+    public void onBackPressed() {
+        goToMainActivity((UserModel) getIntent().getExtras().getSerializable(Const.EXTRA_USER));
+    }
 
     //---------------------- [CALLBAKCS]
     @Override

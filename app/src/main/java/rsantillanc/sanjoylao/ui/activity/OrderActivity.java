@@ -23,6 +23,7 @@ import rsantillanc.sanjoylao.SJLApplication;
 import rsantillanc.sanjoylao.model.OrderDetailModel;
 import rsantillanc.sanjoylao.model.PlateModel;
 import rsantillanc.sanjoylao.model.PlateSizeModel;
+import rsantillanc.sanjoylao.model.UserModel;
 import rsantillanc.sanjoylao.ui.custom.adapter.RecyclerOrderAdapter;
 import rsantillanc.sanjoylao.ui.custom.dialog.SJLAlertDialog;
 import rsantillanc.sanjoylao.ui.mvp.Order.IOrderView;
@@ -94,6 +95,9 @@ public class OrderActivity extends BaseActivity implements
         setUpFloatingButton();
         setUpRecyclerView();
         setUpAppBarLayout();
+    }
+
+    private void setupTitle(String string, UserModel user) {
     }
 
     private void setUpAppBarLayout() {

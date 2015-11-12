@@ -86,6 +86,8 @@ public class MainActivity extends BaseActivity
     private static AppBarLayout mAppbarLayout;
     private MainPresenterImpl mPresenter;
     private SJLApplication app;
+    private TextView tvTitle;
+    private TextView tvSubtitle;
 
 
     @Override
@@ -108,7 +110,7 @@ public class MainActivity extends BaseActivity
         //Synchronizing
         sync();
 
-        Log.e(Const.DEBUG,"onCreate main activity");
+        Log.e(Const.DEBUG, "onCreate main activity");
     }
 
 //    @Override
@@ -174,6 +176,16 @@ public class MainActivity extends BaseActivity
         setUpOrientation();
         setUpProfile();
         mAppbarLayout.setExpanded(false);
+        setupTitle(getString(R.string.app_name), ((UserModel) getIntent().getExtras().getSerializable(Const.EXTRA_USER)));
+    }
+
+    private void setupTitle(String title, UserModel serializable) {
+        tvTitle.setText(title);
+        tvSubtitle.setText(serializable.getFullName());
+    }
+
+    private void updateTitle(CharSequence title) {
+        tvTitle.setText(title);
     }
 
     private void setUpAppBarLayout() {
@@ -218,8 +230,13 @@ public class MainActivity extends BaseActivity
 
     private void setUpToolbar() {
 
+        //Get view
         LayoutInflater inflate = LayoutInflater.from(this);
         View custom = inflate.inflate(R.layout.custom_tab, null);
+
+        //Get child
+        tvTitle = (TextView) custom.findViewById(R.id.tv_custom_toolbar_title);
+        tvSubtitle = (TextView) custom.findViewById(R.id.tv_custom_toolbar_subtitle);
         toolbar.addView(custom);
 
         setSupportActionBar(toolbar);
@@ -269,7 +286,7 @@ public class MainActivity extends BaseActivity
         } else if (id == R.id.action_orders) {
             goToOrderActivity();
         } else if (id == R.id.action_profile) {
-            goToProfileActivity(mBundle);
+            goToProfileActivity(getIntent().getExtras());
         } else if (id == R.id.action_about) {
             showToast("San Joy Lao App | V." + Android.getAppVersion(this));
         } else if (id == R.id.action_logout) {
@@ -287,6 +304,7 @@ public class MainActivity extends BaseActivity
     private void goToProfileActivity(Bundle bundle) {
         Intent profile = new Intent(mContext, ProfileActivity.class);
         profile.putExtras(bundle);
+        profile.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         startActivity(profile);
     }
 
@@ -471,6 +489,7 @@ public class MainActivity extends BaseActivity
 
                 break;
             default:
+                title = getString(R.string.app_name);
                 ui = HomeFragment.newInstance();
                 typeOfDevice = Android.getTypeDevice(this);
                 isTransaction = true;
@@ -485,7 +504,7 @@ public class MainActivity extends BaseActivity
 
             //Display a title
             if (title != null)
-                getSupportActionBar().setTitle("");
+                updateTitle(title);
 
             //Active row
             menuItem.setChecked(true);
