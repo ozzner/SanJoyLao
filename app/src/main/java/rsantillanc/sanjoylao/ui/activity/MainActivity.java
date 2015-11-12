@@ -124,12 +124,6 @@ public class MainActivity extends BaseActivity
         app = ((SJLApplication) getApplication());
         mContext = getApplicationContext();
         mPresenter = new MainPresenterImpl(MainActivity.this, this);
-
-        if (bundle == null)
-            mBundle = getIntent().getExtras();
-        else
-            mBundle = bundle;
-
     }
 
 
@@ -151,12 +145,20 @@ public class MainActivity extends BaseActivity
     }
 
     private void setUpProfile() {
-        if (mBundle != null) {
-            app.setUserLogued(((UserModel) mBundle.getSerializable(Const.EXTRA_USER)));
-            username.setText(app.getUserLogued().getFullName());//Se cayo aqui por nullpointerEx
-            email.setText(app.getUserLogued().getEmail());
-            mPresenter.loadProfileImage(app.getUserLogued().getUrlProfileImage(), profileImage);
-        }
+
+        if (getIntent().getExtras() == null)
+            return;
+
+        final UserModel serializable = (UserModel)getIntent().getExtras().getSerializable(Const.EXTRA_USER);
+        app.setUserLogued(serializable);
+
+        username.setText(serializable.getFullName());
+        email.setText(serializable.getEmail());
+
+        //Long process
+        mPresenter.loadProfileImage(serializable.getUrlProfileImage(), profileImage);
+        mPresenter.loadOrders(serializable.getObjectId());
+
     }
 
     private void setUpNavView() {
@@ -257,6 +259,7 @@ public class MainActivity extends BaseActivity
     private void goToOrderActivity() {
         Intent order = new Intent(mContext, OrderActivity.class);
         startActivity(order);
+        finish();
     }
 
     //-----------------------[Sub routines]
@@ -268,7 +271,6 @@ public class MainActivity extends BaseActivity
         mPresenter.loadPlate();
         mPresenter.loadOrderType();
         mPresenter.loadStatus();
-        mPresenter.loadOrders(app.getUserLogued().getObjectId());
         mPresenter.savePreferences();
     }
 

@@ -19,6 +19,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import rsantillanc.sanjoylao.R;
+import rsantillanc.sanjoylao.SJLApplication;
 import rsantillanc.sanjoylao.model.OrderDetailModel;
 import rsantillanc.sanjoylao.model.PlateModel;
 import rsantillanc.sanjoylao.model.PlateSizeModel;
@@ -133,16 +134,36 @@ public class OrderActivity extends BaseActivity implements
         if (id == R.id.action_orders_history) {
             showToast("San Joy Lao | V." + Android.getAppVersion(this));
             return true;
-        }
+        } else if (id == android.R.id.home) {
+            goToMainActivity();
 
+        }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        goToMainActivity();
+    }
+
+    private void goToMainActivity() {
+        SJLApplication app = ((SJLApplication) getApplication());
+
+        final Bundle bundle = new Bundle();
+        bundle.putSerializable(Const.EXTRA_USER, app.getUserLogued());
+
+        Intent main = new Intent(getApplicationContext(), MainActivity.class);
+        main.putExtras(bundle);
+        main.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(main);
+
+        finish();
     }
 
 
     private void setUpToolbar() {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
     }
 
     private void enableAllPriceViews() {
