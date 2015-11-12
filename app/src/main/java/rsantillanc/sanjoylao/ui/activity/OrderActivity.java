@@ -275,7 +275,7 @@ public class OrderActivity extends BaseActivity implements
                         "        Es usual consumirla previa a un plato de fondo como Chow mein o arroz frito.\n" +
                         "        </font><br><br><br>" +
                         "        <h4><font color='#D32F2F'>" + getString(R.string.label_ingredients) + "</font></h4>" +
-                        "        <b>Wantan, pollo, langostino, chancho, pato, huevo de codorniz.<b>\n<br><br><br>" +
+                        "        Wantan, pollo, langostino, chancho, pato, huevo de codorniz.\n<br><br><br>" +
                         "        </p>" +
                         "";
         plate.setIngredients(Html.fromHtml(HTML_BODY));
