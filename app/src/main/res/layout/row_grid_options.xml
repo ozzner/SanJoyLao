@@ -23,7 +23,7 @@
     </ImageView>
 
     <TextView
-        style="@style/custom_textview"
+        style="@style/SJLTexViewStyle"
         android:layout_width="match_parent"
         android:layout_height="@dimen/editext_height"
         android:text=" Incluye:"

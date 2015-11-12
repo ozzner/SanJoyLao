@@ -14,6 +14,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -72,7 +73,9 @@ public class MainActivity extends BaseActivity
     private static final int BANQUETS = R.id.nav_main_banquets;
     private static final int DRINKS = R.id.nav_main_drinks;
     private static final int CENTRAL = R.id.nav_main_call_center;
-    private static final int MAIN = 10;
+    private static final int HOME = 10;
+    private static final String TAG_COLLAPSED = "collapsed";
+    private static final String TAG_EXPANDED = "expanded";
 
 
     //Global vars
@@ -91,7 +94,7 @@ public class MainActivity extends BaseActivity
         setContentView(R.layout.activity_main);
 
         //Manager context & data
-        initContextAndData(savedInstanceState);
+        initContextAndData();
 
         //Init Views
         initUIComponents();
@@ -100,11 +103,12 @@ public class MainActivity extends BaseActivity
         setUpsUIComponents();
 
         //Show fragment
-        displayFragment(new HomeFragment(this, true), MAIN, true);
+        displayFragment(new HomeFragment(this, true), HOME, false);
 
         //Synchronizing
         sync();
 
+        Log.e(Const.DEBUG,"onCreate main activity");
     }
 
 //    @Override
@@ -120,7 +124,43 @@ public class MainActivity extends BaseActivity
 //    }
 
 
-    private void initContextAndData(Bundle bundle) {
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.e(Const.DEBUG, "onStart main activity");
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Log.e(Const.DEBUG, "onRestart main activity");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.e(Const.DEBUG, "onStop main activity");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.e(Const.DEBUG, "onPause main activity");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.e(Const.DEBUG, "onDestroy main activity");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.e(Const.DEBUG, "onResume main activity");
+    }
+
+    private void initContextAndData() {
         app = ((SJLApplication) getApplication());
         mContext = getApplicationContext();
         mPresenter = new MainPresenterImpl(MainActivity.this, this);
@@ -133,15 +173,16 @@ public class MainActivity extends BaseActivity
         setUpDrawerToggle();
         setUpOrientation();
         setUpProfile();
+        mAppbarLayout.setExpanded(false);
     }
 
     private void setUpAppBarLayout() {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                setCollapseAppBarLayout(true);
-            }
-        }, DELAY_LONG);
+//        new Handler().postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                setCollapseAppBarLayout(true);
+//            }
+//        }, DELAY_LONG);
     }
 
     private void setUpProfile() {
@@ -149,7 +190,7 @@ public class MainActivity extends BaseActivity
         if (getIntent().getExtras() == null)
             return;
 
-        final UserModel serializable = (UserModel)getIntent().getExtras().getSerializable(Const.EXTRA_USER);
+        final UserModel serializable = (UserModel) getIntent().getExtras().getSerializable(Const.EXTRA_USER);
         app.setUserLogued(serializable);
 
         username.setText(serializable.getFullName());
@@ -253,13 +294,16 @@ public class MainActivity extends BaseActivity
         Intent login = new Intent(mContext, LoginActivity.class);
         startActivity(login);
         new UserDao(this).logout();
+
+        //End main
         finish();
     }
 
     private void goToOrderActivity() {
         Intent order = new Intent(mContext, OrderActivity.class);
+        order.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        order.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(order);
-        finish();
     }
 
     //-----------------------[Sub routines]
@@ -302,6 +346,7 @@ public class MainActivity extends BaseActivity
         CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) mAppbarLayout.getLayoutParams();
         behavior = (AppBarLayout.Behavior) params.getBehavior();
 
+
         if (on) { //Collapse
             if (behavior != null) {
                 behavior.onNestedFling(null, mAppbarLayout, null, 0, 10000, true);
@@ -315,14 +360,14 @@ public class MainActivity extends BaseActivity
     }
 
     public static void collapseAppBarLayout() {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) mAppbarLayout.getLayoutParams();
-                AppBarLayout.Behavior behavior = (AppBarLayout.Behavior) params.getBehavior();
-                behavior.onNestedFling(null, mAppbarLayout, null, 0, 10000, true);
-            }
-        }, DELAY_SHORT);
+//        new Handler().postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) mAppbarLayout.getLayoutParams();
+//                AppBarLayout.Behavior behavior = (AppBarLayout.Behavior) params.getBehavior();
+//                behavior.onNestedFling(null, mAppbarLayout, null, 0, 10000, true);
+//            }
+//        }, DELAY_SHORT);
 
     }
 
@@ -330,10 +375,25 @@ public class MainActivity extends BaseActivity
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.fragments_content, ui);
+        final Fragment expanded = fragmentManager.findFragmentByTag(TAG_EXPANDED);
+        final Fragment collapsed = fragmentManager.findFragmentByTag(TAG_COLLAPSED);
+
+        if (isBackStack) {
+
+            if (expanded != null)
+                fragmentTransaction.remove(expanded);
+            fragmentTransaction.replace(R.id.fragments_content2, ui, TAG_COLLAPSED);
+
+        } else {
+
+            if (collapsed != null)
+                fragmentTransaction.remove(collapsed);
+            fragmentTransaction.replace(R.id.fragments_content, ui, TAG_EXPANDED);
+        }
+
         fragmentTransaction.commit();
 
-        if (typeOfDevice > Const.PHONE_SCREEN && position == MAIN) {
+        if (typeOfDevice > Const.PHONE_SCREEN && position == HOME) {
             Fragment details = FrontFragment.getInstance();
             FragmentTransaction secondTransaction = fragmentManager.beginTransaction();
             secondTransaction.replace(R.id.container_details_main, details);
@@ -349,6 +409,8 @@ public class MainActivity extends BaseActivity
         boolean isTransaction;
         Fragment ui;
         CharSequence title = null;
+        boolean back = false;
+
 
         switch (menuItem.getItemId()) {
 
@@ -368,6 +430,7 @@ public class MainActivity extends BaseActivity
             case PLATES:
                 ui = CategoryFragment.newInstance();
                 isTransaction = true;
+                back = true;
                 title = getString(R.string.item_title_plates);
                 setCollapseAppBarLayout(false);
                 break;
@@ -418,7 +481,7 @@ public class MainActivity extends BaseActivity
         if (isTransaction) {
 
             //Show indicate fragment
-            displayFragment(ui, menuItem.getItemId(), false);
+            displayFragment(ui, menuItem.getItemId(), back);
 
             //Display a title
             if (title != null)

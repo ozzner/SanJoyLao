@@ -62,7 +62,8 @@ public class PlateDao {
         cv.put(name, plate.getName());
         cv.put(atFeast, (plate.isAtFeast()) ? 1 : 0);
         cv.put(available, (plate.isAvalible()) ? 1 : 0);
-        cv.put(ingredients, plate.getIngredients().toString());
+        if (plate.getIngredients() != null)
+            cv.put(ingredients, plate.getIngredients().toString());
         cv.put(qualification, getQualificationPlate(plate));
         cv.put(recommended, (plate.isRecommendet()) ? 1 : 0);
 

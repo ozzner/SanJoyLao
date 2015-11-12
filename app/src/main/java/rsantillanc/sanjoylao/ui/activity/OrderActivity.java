@@ -138,7 +138,7 @@ public class OrderActivity extends BaseActivity implements
             goToMainActivity();
 
         }
-        return super.onOptionsItemSelected(item);
+        return true;
     }
 
     @Override
@@ -153,11 +153,10 @@ public class OrderActivity extends BaseActivity implements
         bundle.putSerializable(Const.EXTRA_USER, app.getUserLogued());
 
         Intent main = new Intent(getApplicationContext(), MainActivity.class);
+        main.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         main.putExtras(bundle);
-        main.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(main);
 
-        finish();
     }
 
 
