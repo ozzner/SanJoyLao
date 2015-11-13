@@ -53,7 +53,7 @@
                         android:numStars="6"
                         android:rating="2.5"
                         android:layout_marginLeft="@dimen/space_10dp"
-                        style="@style/foodRatingBar"/>
+                        style="@style/SJLRatingBarStyle"/>
 
                 </LinearLayout>
 

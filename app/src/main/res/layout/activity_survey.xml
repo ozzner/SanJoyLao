@@ -62,7 +62,7 @@
 
                 <RatingBar
                     android:id="@+id/ratingBar"
-                    style="@style/foodRatingBar"
+                    style="@style/SJLRatingBarStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:isIndicator="false"
@@ -114,7 +114,7 @@
 
                 <RatingBar
                     android:id="@+id/ratingBar2"
-                    style="@style/foodRatingBar"
+                    style="@style/SJLRatingBarStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:isIndicator="false"
@@ -164,7 +164,7 @@
 
                 <RatingBar
                     android:id="@+id/ratingBar3"
-                    style="@style/foodRatingBar"
+                    style="@style/SJLRatingBarStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:isIndicator="false"

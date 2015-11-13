@@ -41,11 +41,11 @@
     </style>
 
     <!-- RATINGBAR -->
-    <style name="foodRatingBar" parent="@android:style/Widget.RatingBar">
+    <style name="SJLRatingBarStyle" parent="@android:style/Widget.RatingBar">
         <item name="android:progressDrawable">@drawable/ratingbar_selector</item>
-        <item name="android:gravity">center_vertical</item>
-        <item name="android:paddingTop">@dimen/space_7dp</item>
-        <item name="android:paddingBottom">@dimen/space_7dp</item>
+        <item name="android:gravity">left</item>
+        <!--<item name="android:paddingTop">@dimen/space_7dp</item>-->
+        <!--<item name="android:paddingBottom">@dimen/space_7dp</item>-->
     </style>
 
     <style name="CustomEditTextStyle" parent="@android:style/Widget.EditText">

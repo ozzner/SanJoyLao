@@ -49,8 +49,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="1.4"
                 android:gravity="left|center_vertical"
-                android:orientation="horizontal"
-                >
+                android:orientation="horizontal">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -86,10 +85,10 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="left"
-                    android:visibility="invisible"
                     android:text="@string/title_personal"
                     android:textColor="@color/colorAccent"
-                    android:textSize="@dimen/txt_14sp" />
+                    android:textSize="@dimen/txt_14sp"
+                    android:visibility="invisible" />
 
                 <TextView
                     android:id="@+id/tv_plate_size_name2"
@@ -97,10 +96,10 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="left"
-                    android:visibility="invisible"
                     android:text="@string/title_mediana"
                     android:textColor="@color/colorAccent"
-                    android:textSize="@dimen/txt_14sp" />
+                    android:textSize="@dimen/txt_14sp"
+                    android:visibility="invisible" />
 
                 <TextView
                     android:id="@+id/tv_plate_size_name3"
@@ -108,10 +107,10 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="left"
-                    android:visibility="invisible"
                     android:text="@string/title_grande"
                     android:textColor="@color/colorAccent"
-                    android:textSize="@dimen/txt_14sp" />
+                    android:textSize="@dimen/txt_14sp"
+                    android:visibility="invisible" />
             </LinearLayout>
 
             <!--Price-->
@@ -129,10 +128,10 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="left"
-                    android:visibility="invisible"
-                    android:textColor="@color/gray"
                     android:text="S/. 15.50"
-                    android:textSize="@dimen/txt_13sp" />
+                    android:textColor="@color/gray"
+                    android:textSize="@dimen/txt_13sp"
+                    android:visibility="invisible" />
 
                 <TextView
                     android:id="@+id/tv_plate_price2"
@@ -140,10 +139,10 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="left"
-                    android:visibility="invisible"
-                    android:textColor="@color/gray"
                     android:text="S/. 55.50"
-                    android:textSize="@dimen/txt_13sp" />
+                    android:textColor="@color/gray"
+                    android:textSize="@dimen/txt_13sp"
+                    android:visibility="invisible" />
 
                 <TextView
                     android:id="@+id/tv_plate_price3"
@@ -151,10 +150,10 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="left"
-                    android:visibility="invisible"
-                    android:textColor="@color/gray"
                     android:text="S/. 25.00"
-                    android:textSize="@dimen/txt_13sp" />
+                    android:textColor="@color/gray"
+                    android:textSize="@dimen/txt_13sp"
+                    android:visibility="invisible" />
             </LinearLayout>
 
             <!--Order-->
@@ -163,15 +162,36 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1.1"
-                android:gravity="right|center_vertical"
                 android:orientation="horizontal"
                 android:weightSum="4">
 
+                <RelativeLayout
+                    android:layout_width="@dimen/space_0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="left"
+                    android:layout_weight="3"
+                    android:gravity="left"
+                    android:orientation="horizontal">
+
+                    <RatingBar
+                        android:id="@+id/rb_rating"
+                        style="@style/SJLRatingBarStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:isIndicator="false"
+                        android:numStars="4"
+                        android:rating="2.5"
+                        android:stepSize="0.5"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true" />
+
+                </RelativeLayout>
 
                 <LinearLayout
                     android:layout_width="@dimen/space_0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="0.7"
+                    android:layout_weight="1"
                     android:gravity="center"
                     android:padding="@dimen/space_4dp">
 
@@ -179,8 +199,8 @@
                         android:id="@+id/iv_plate_add"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:src="@drawable/ic_add_orders"
                         android:layout_gravity="right"
+                        android:src="@drawable/ic_add_orders"
                         android:tint="@color/colorPrimary" />
                 </LinearLayout>
 
