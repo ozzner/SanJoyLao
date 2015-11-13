@@ -1,6 +1,7 @@
 package rsantillanc.sanjoylao.ui.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -20,7 +21,6 @@ import rsantillanc.sanjoylao.model.RelationPlateSizeModel;
 import rsantillanc.sanjoylao.ui.custom.adapter.RecyclerPlateAdapter;
 import rsantillanc.sanjoylao.ui.mvp.Plate.IPlateView;
 import rsantillanc.sanjoylao.ui.mvp.Plate.PlatePresenterImpl;
-import rsantillanc.sanjoylao.util.Android;
 import rsantillanc.sanjoylao.util.Const;
 
 public class PlateActivity extends BaseActivity implements IPlateView, RecyclerPlateAdapter.OnItemPlateClickListener {
@@ -67,15 +67,20 @@ public class PlateActivity extends BaseActivity implements IPlateView, RecyclerP
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_plate_info) {
-            showToast("San Joy Lao | V." + Android.getAppVersion(this));
+        if (id == R.id.action_plate_add_order) {
+            goToOrderActivity();
             return true;
         } else {
             finish();
+            return true;
         }
+    }
 
-        return super.onOptionsItemSelected(item);
+    private void goToOrderActivity() {
+        Intent order = new Intent(getApplicationContext(), OrderActivity.class);
+        order.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        order.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(order);
     }
 
 
@@ -149,7 +154,18 @@ public class PlateActivity extends BaseActivity implements IPlateView, RecyclerP
     // {PLATE ITEM LISTENER}
     @Override
     public void onItemClick(PlateModel plate) {
-        showToast(plate.getName());
+        goToPlateDetailActivity(plate);
+    }
+
+    private void goToPlateDetailActivity(PlateModel plate) {
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(Const.EXTRA_PLATE_DETAIL,plate);
+
+        Intent in = new Intent(getApplicationContext(), PlateDetailActivity.class);
+        in.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        in.putExtras(bundle);
+
+        startActivity(in);
     }
 
     @Override

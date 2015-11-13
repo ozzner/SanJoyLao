@@ -115,5 +115,7 @@
     <string name="title_activity_image_viewer">Image viewer</string>
     <string name="label_description">Descripción</string>
     <string name="label_ingredients">Ingredientes</string>
+    <string name="action_category_info">Information</string>
+    <string name="title_activity_plate_detail">Plate Detail Activity</string>
 
 </resources>

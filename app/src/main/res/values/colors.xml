@@ -2,8 +2,8 @@
 <resources>
 
     <!--Material design colors-->
-    <color name="colorPrimary">#F44336</color>
-    <color name="colorPrimaryDark">#D32F2F</color>
+    <color name="colorPrimary">#E53935</color>
+    <color name="colorPrimaryDark">#B71C1C</color>
     <color name="colorAccent">#607D8B</color>
     <color name="colorPrimary_trans_35">#59E53935</color>
 
@@ -37,6 +37,7 @@
 
     <!-- Background transparen -->
     <color name="transparent_black">#96000000</color>
+    <color name="transparent_black_light">#64000000</color>
 
     <!-- my colors-->
     <color name="my_green">#02A902</color>

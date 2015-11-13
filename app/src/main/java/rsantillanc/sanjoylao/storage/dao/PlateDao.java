@@ -105,7 +105,6 @@ public class PlateDao {
                 plate.setIngredients(cur.getString(cur.getColumnIndex(available)));
                 plate.setQualification(makeJSONObject(cur.getString(cur.getColumnIndex(qualification))));
                 plate.setRecommendet((cur.getInt(cur.getColumnIndex(recommended))) == 1 ? true : false);
-//                plate.setPlateSize(makePlateSize(cur.getString(cur.getColumnIndex(objectId))));
 
                 plates.add(plate);
             } while (cur.moveToNext());

@@ -46,7 +46,8 @@ public class CategoryDao implements BaseColumns {
         ContentValues cv = new ContentValues();
         cv.put(objectId, category.getObjectId());
         cv.put(name, category.getName());
-        cv.put(urlImage, category.getImage().getUrl());
+        if (category.getImage() != null)
+            cv.put(urlImage, category.getImage().getUrl());
         cv.put(createdAt, category.getCreatedAt());
         cv.put(updatedAt, category.getUpdatedAt());
         return db.insert(Tables.CATEGORY, null, cv);

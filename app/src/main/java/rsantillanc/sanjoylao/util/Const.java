@@ -58,7 +58,6 @@ public class Const {
     public static final int LOGIN_GOOGLE = 0;
     public static final int LOGIN_FACEBOOK = 1;
     public static final int LOGIN_FORM = -1;
-    public static final String EXTRA_USER = "user";
     public static final long PHONE_DEFAULT = 999999999;
     public static final String PARSE_DATE = "Date";
 
@@ -77,6 +76,10 @@ public class Const {
     public static final String PARSE_TYPE_FILE = "File";
     public static final String EXTRA_CATEGORY_ID = "category_id";
     public static final String EXTRA_CATEGORY_NAME = "category_name";
+    public static final String EXTRA_PLATE_DETAIL = "plate_detail";
+    public static final String EXTRA_USER = "user";
+
+
     public static final String KEY_POINTER = "Pointer";
     public static final String CLASS_USER = "_User";
     public static final String CLASS_PLATE = "Plate";

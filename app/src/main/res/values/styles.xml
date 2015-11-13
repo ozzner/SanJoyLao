@@ -27,7 +27,7 @@
 
 
     <!-- popup menu theme. -->
-    <style name="PopupMenu"  parent="SJLTheme.Base.PopupOverlay">
+    <style name="PopupMenu" parent="SJLTheme.Base.PopupOverlay">
         <!--<item name="android:background">@color/transparent_black</item>-->
         <item name="android:textColor">@color/gray</item>
         <item name="android:textSize">14sp</item>
@@ -43,8 +43,9 @@
     <!-- RATINGBAR -->
     <style name="foodRatingBar" parent="@android:style/Widget.RatingBar">
         <item name="android:progressDrawable">@drawable/ratingbar_selector</item>
-        <item name="android:minHeight">40dip</item>
-        <item name="android:maxHeight">40dip</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:paddingTop">@dimen/space_7dp</item>
+        <item name="android:paddingBottom">@dimen/space_7dp</item>
     </style>
 
     <style name="CustomEditTextStyle" parent="@android:style/Widget.EditText">
@@ -81,4 +82,5 @@
 
     <dimen name="custom_title_size_toolbar">16sp</dimen>
     <dimen name="custom_subtitle_size_toolbar">12sp</dimen>
+    <dimen name="space_7dp">7dp</dimen>
 </resources>

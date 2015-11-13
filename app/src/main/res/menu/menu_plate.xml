@@ -2,10 +2,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="rsantillanc.sanjoylao.ui.activity.OrderActivity">
+
     <item
-        android:id="@+id/action_plate_info"
+        android:id="@+id/action_plate_add_order"
         android:orderInCategory="100"
-        android:title="@string/action_login_info"
-        android:icon="@drawable/ic_info_plate"
-        app:showAsAction="always" />
+        android:title="@string/action_orders"
+        android:icon="@drawable/ic_orders"
+        app:showAsAction="always"/>
+
+
+    <item
+        android:id="@+id/action_category_info"
+        android:orderInCategory="100"
+        android:title="@string/action_category_info"
+        android:icon="@drawable/ic_info"
+        app:showAsAction="collapseActionView"/>
+
+
 </menu>

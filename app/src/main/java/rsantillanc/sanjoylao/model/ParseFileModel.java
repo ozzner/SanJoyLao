@@ -2,12 +2,16 @@ package rsantillanc.sanjoylao.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
 import rsantillanc.sanjoylao.util.Const;
 
 /**
  * Created by rsantillanc on 29/10/2015.
  */
-public class ParseFileModel {
+public class ParseFileModel implements Serializable{
+    private static final long serialVersionUID = 0L;
+
 
     private String __type ;
 
