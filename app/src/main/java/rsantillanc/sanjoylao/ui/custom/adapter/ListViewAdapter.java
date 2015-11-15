@@ -206,26 +206,26 @@ public class ListViewAdapter extends BaseAdapter implements View.OnClickListener
 
             case Const.COMMENTS:
 
-                CommentViewHolder holder;
-                oComment = (CommentModel) getItem(position);
-
-                if (vi == null) {
-                    holder = new CommentViewHolder();
-
-
-                    vi = layIn.inflate(R.layout.row_comments, parent, false);
-                    holder.tvMessage = (TextView) vi.findViewById(R.id.tv_comment);
-                    holder.tvDatatime = (TextView) vi.findViewById(R.id.tv_comment_time);
-                    holder.ivUserProfile = (ImageView) vi.findViewById(R.id.iv_comment_profile);
-
-                    vi.setTag(holder);
-                } else
-                    holder = (CommentViewHolder) vi.getTag();
-
-
-                holder.tvMessage.setText(oComment.getMessage());
-                holder.tvDatatime.setText(oComment.getDatatime());
-                break;
+//                CommentViewHolder holder;
+//                oComment = (CommentModel) getItem(position);
+//
+//                if (vi == null) {
+//                    holder = new CommentViewHolder();
+//
+//
+//                    vi = layIn.inflate(R.layout.item_comment, parent, false);
+//                    holder.tvMessage = (TextView) vi.findViewById(R.id.tv_comment);
+//                    holder.tvDatatime = (TextView) vi.findViewById(R.id.tv_comment_time);
+//                    holder.ivUserProfile = (ImageView) vi.findViewById(R.id.iv_comment_profile);
+//
+//                    vi.setTag(holder);
+//                } else
+//                    holder = (CommentViewHolder) vi.getTag();
+//
+//
+//                holder.tvMessage.setText(oComment.getMessage());
+//                holder.tvDatatime.setText(oComment.getDatatime());
+//                break;
 //
 //            case Const.ORDERS:
 //                //TODO borrar luego ya que no es correcto, solo es por pruebas.

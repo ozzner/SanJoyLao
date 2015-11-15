@@ -17,6 +17,7 @@ import rsantillanc.sanjoylao.model.APIRequestSignInModel;
 import rsantillanc.sanjoylao.model.APIResponseUserModel;
 import rsantillanc.sanjoylao.model.APIResultCategoryModel;
 import rsantillanc.sanjoylao.model.APIResultPlateModel;
+import rsantillanc.sanjoylao.model.CommentModel;
 import rsantillanc.sanjoylao.model.OrderDetailModel;
 import rsantillanc.sanjoylao.model.OrderModel;
 import rsantillanc.sanjoylao.model.OrderTypeModel;
@@ -158,4 +159,14 @@ public interface ParseAPIService {
     })
     @PUT("classes/OrderDetail/{objectId}")
     Call<JsonObject>  updateCounterItemOrder(@Path("objectId") String objectId,@Body JsonObject counter);
+
+
+
+    @Headers({
+            "X-Parse-Application-Id: RTM3ioKCBgaAJjXmDRr493sb13uYzGrMnePLhzhm",
+            "X-Parse-REST-API-Key: 6xr428CvfJT8WMGByPUhfvJWmFaxjozudaPy9bUB",
+            "Content-Type: application/json"
+    })
+    @GET("classes/Comment?include=idPlate.idCategory,idUser")
+    Call<CommentModel> findCommentsBy(@Query(value = "where", encoded = true) String jsonFilter);
 }

@@ -13,12 +13,12 @@
     <string name="motto">\"Donde usted es parte de la familia...\"</string>
   
     <string name="lorem_ipsum">
-        Tipo:\nSalado
-        \n\nDescripción:
-        \nLa sopa wantán es una sopa china, hecha a base de caldo de pollo, carne de pollo, cerdo y Wantán. Usualmente lleva tres o cuatro wantanes y se sirve con cebolla china.
-        Esta sopa también puede llevar col y fideos chinos, además de langostinos. Generalmente se le agregan sillao (salsa de soya). Es usual consumirla previa a un plato de fondo como Chow mein o arroz frito.
-        \n\nIngredientes:
-        \nWantan, pollo, langostino, chancho, pato, huevo de codorniz.
+       Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+        Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s,
+        when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+        It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
+        It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages,
+        and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
     </string>
 
     <!-- Navigation actionbar names -->

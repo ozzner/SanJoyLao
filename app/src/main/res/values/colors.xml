@@ -37,7 +37,7 @@
 
     <!-- Background transparen -->
     <color name="transparent_black">#96000000</color>
-    <color name="transparent_black_light">#64000000</color>
+    <color name="transparent_black_light">#4b000000</color>
 
     <!-- my colors-->
     <color name="my_green">#02A902</color>

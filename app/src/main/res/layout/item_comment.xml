@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/gray_color_0"
+    android:clickable="false"
+    android:orientation="horizontal"
+    android:padding="@dimen/space_4dp">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="80dp"
+            android:layout_height="70dp"
+            android:paddingLeft="@dimen/space_4dp"
+            android:paddingTop="@dimen/space_4dp"
+            android:gravity="top|left">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:src="@drawable/ic_add_orders"
+                android:scaleType="centerCrop"
+                app:border_color="@android:color/white"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:gravity="left"
+                android:layout_marginLeft="@dimen/space_8dp"
+                android:text="@string/default_datatime" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingTop="@dimen/space_8dp"
+        android:paddingRight="@dimen/space_8dp"
+        android:weightSum="4">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/space_0dp"
+            android:layout_weight="1.5">
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/default_text"
+                android:inputType="textMultiLine"
+                android:textSize="@dimen/txt_16sp"
+                android:textColor="@color/colorAccent"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/space_0dp"
+            android:layout_weight="2.5">
+
+            <TextView
+                android:id="@+id/textView16"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/space_4dp"
+                android:text="@string/lorem_ipsum" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</LinearLayout>

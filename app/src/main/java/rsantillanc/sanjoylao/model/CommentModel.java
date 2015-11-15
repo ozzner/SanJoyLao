@@ -1,62 +1,71 @@
 package rsantillanc.sanjoylao.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
-import java.util.ArrayList;
 
 /**
  * Created by RenzoD on 04/06/2015.
  */
 public class CommentModel implements Serializable {
+    private static final long serialVersionUID = 0L;
 
-    private int userProfile;
-    private String message;
-    private String datatime;
+    private String objectId;
+    private String comment;
+    @SerializedName("idPlate")
+    private PlateModel plate;
+    @SerializedName("idUser")
+    private UserModel user;
+    private String createdAt;
 
-
-
-    public CommentModel(int userProfile, String message, String datatime) {
-        this.userProfile = userProfile;
-        this.message = message;
-        this.datatime = datatime;
+    public CommentModel(String objectId, String comment, PlateModel plate, UserModel user, String createdAt) {
+        this.objectId = objectId;
+        this.comment = comment;
+        this.plate = plate;
+        this.user = user;
+        this.createdAt = createdAt;
     }
 
     public CommentModel() {
     }
 
-    public ArrayList<Object> testData(){
-
-        ArrayList<Object> model = new ArrayList<>();
-        model.add(new CommentModel(0,"Muy bueno recomendable.","23:20"));
-        model.add(new CommentModel(1,"Buen platillo, recomendable con yucas.","10:25"));
-        model.add(new CommentModel(3,"Aceptable para la entrada","9:55"));
-        model.add(new CommentModel(4,"Recontra buenazo, debería ser el plato de la casa.","Ayer"));
-        model.add(new CommentModel(5,"Este platillo tiene que ser acompañado con pan al ajo.","3 dias"));
-        model.add(new CommentModel(6,"Riquisimo","19-Jul"));
-
-        return model;
+    public String getObjectId() {
+        return objectId;
     }
 
-    public int getUserProfile() {
-        return userProfile;
+    public void setObjectId(String objectId) {
+        this.objectId = objectId;
     }
 
-    public void setUserProfile(int userProfile) {
-        this.userProfile = userProfile;
+    public String getComment() {
+        return comment;
     }
 
-    public String getMessage() {
-        return message;
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public PlateModel getPlate() {
+        return plate;
     }
 
-    public String getDatatime() {
-        return datatime;
+    public void setPlate(PlateModel plate) {
+        this.plate = plate;
     }
 
-    public void setDatatime(String datatime) {
-        this.datatime = datatime;
+    public UserModel getUser() {
+        return user;
+    }
+
+    public void setUser(UserModel user) {
+        this.user = user;
+    }
+
+    public String getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
     }
 }

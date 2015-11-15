@@ -14,9 +14,6 @@ import android.widget.Toast;
 import java.util.List;
 
 import rsantillanc.sanjoylao.R;
-import rsantillanc.sanjoylao.ui.custom.adapter.ListViewAdapter;
-import rsantillanc.sanjoylao.model.CommentModel;
-import rsantillanc.sanjoylao.util.Const;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -58,9 +55,9 @@ public class CommentsFragment extends Fragment {
         btSend = (Button)v.findViewById(R.id.btn_send_comment);
 
         /*Setup*/
-        CommentModel oModel = new CommentModel();
-        comments =  oModel.testData();
-        mListView.setAdapter(new ListViewAdapter(getActivity(),comments, Const.COMMENTS));
+//        CommentModel oModel = new CommentModel();
+//        comments =  oModel.testData();
+//        mListView.setAdapter(new ListViewAdapter(getActivity(),comments, Const.COMMENTS));
 
         btSend.setOnClickListener(new View.OnClickListener() {
             @Override
