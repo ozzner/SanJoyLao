@@ -1,6 +1,7 @@
 package rsantillanc.sanjoylao.ui.activity;
 
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -10,15 +11,21 @@ import java.util.List;
 
 import rsantillanc.sanjoylao.R;
 import rsantillanc.sanjoylao.model.CommentModel;
+import rsantillanc.sanjoylao.ui.custom.adapter.RecyclerCommentAdapter;
 import rsantillanc.sanjoylao.ui.mvp.PlateDetail.IPlateDetailView;
 import rsantillanc.sanjoylao.ui.mvp.PlateDetail.PlateDetailPresenterImpl;
 import rsantillanc.sanjoylao.util.Const;
 
 public class PlateDetailActivity extends BaseActivity implements IPlateDetailView {
 
+    //View
     private Toolbar toolbar;
     private ProgressBar pbLoader;
     private RecyclerView rcvComments;
+
+    //Runtime
+    private RecyclerCommentAdapter mAdapter;
+
 
 
     private PlateDetailPresenterImpl mPresenter;
@@ -32,7 +39,7 @@ public class PlateDetailActivity extends BaseActivity implements IPlateDetailVie
         //Data & context
         init();
 
-        //views
+        //Views
         initUIElements();
 
         //Config
@@ -44,6 +51,7 @@ public class PlateDetailActivity extends BaseActivity implements IPlateDetailVie
     private void setupUIElements() {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        mPresenter.loadComments(getIntent().getExtras().getSerializable(Const.EXTRA_PLATE_DETAIL));
     }
 
     private void initUIElements() {
@@ -54,13 +62,15 @@ public class PlateDetailActivity extends BaseActivity implements IPlateDetailVie
 
     private void init() {
         mPresenter = new PlateDetailPresenterImpl(this, this);
-        mPresenter.loadComments(getIntent().getExtras().getSerializable(Const.EXTRA_PLATE_DETAIL));
     }
 
     //---{CallBacks IView}
     @Override
     public void onCommentsSuccess(List<CommentModel> listComments) {
-        showToast("Total: " + listComments.size());
+        mAdapter = new RecyclerCommentAdapter(listComments,getApplicationContext());
+        rcvComments.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        rcvComments.setHasFixedSize(true);
+        rcvComments.setAdapter(mAdapter);
     }
 
     @Override

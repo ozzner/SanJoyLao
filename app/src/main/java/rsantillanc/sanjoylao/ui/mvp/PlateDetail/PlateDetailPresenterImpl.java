@@ -25,6 +25,7 @@ public class PlateDetailPresenterImpl implements IPlateDetailPresenter, OnPlateD
 
 
     public void loadComments(Serializable model) {
+        mView.showLoader();
         iteractor.loadCommentsByPlateId( mActivity,(PlateModel) model,this);
     }
 

@@ -30,6 +30,12 @@ public class SJLDates {
      * Formato: {@value}
      */
     public static final String FORMAT_DATE_FULL = "yyyy-MM-dd HH:mm:ss:SSS";
+
+    /**
+     * Formato: {@value}
+     */
+    public static final String FORMAT_DATE = "dd-MMM HH:mm";
+
     /**
      * Formato: {@value}
      */
