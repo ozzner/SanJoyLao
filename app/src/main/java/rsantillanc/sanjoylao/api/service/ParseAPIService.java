@@ -169,4 +169,13 @@ public interface ParseAPIService {
     })
     @GET("classes/Comment?include=idPlate.idCategory,idUser")
     Call<CommentModel> findCommentsBy(@Query(value = "where", encoded = true) String jsonFilter);
+
+
+    @Headers({
+            "X-Parse-Application-Id: RTM3ioKCBgaAJjXmDRr493sb13uYzGrMnePLhzhm",
+            "X-Parse-REST-API-Key: 6xr428CvfJT8WMGByPUhfvJWmFaxjozudaPy9bUB",
+            "Content-Type: application/json"
+    })
+    @POST("classes/Comment")
+    Call<JsonObject> newComment(@Body JsonObject bodyComment);
 }

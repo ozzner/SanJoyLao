@@ -27,12 +27,9 @@ import rsantillanc.sanjoylao.R;
 import rsantillanc.sanjoylao.SJLApplication;
 import rsantillanc.sanjoylao.model.UserModel;
 import rsantillanc.sanjoylao.storage.dao.UserDao;
-import rsantillanc.sanjoylao.ui.fragment.BanquetsFragment;
 import rsantillanc.sanjoylao.ui.fragment.CategoryFragment;
-import rsantillanc.sanjoylao.ui.fragment.ChefFragment;
 import rsantillanc.sanjoylao.ui.fragment.FrontFragment;
 import rsantillanc.sanjoylao.ui.fragment.HomeFragment;
-import rsantillanc.sanjoylao.ui.fragment.SoupFragment;
 import rsantillanc.sanjoylao.ui.mvp.Main.IMainView;
 import rsantillanc.sanjoylao.ui.mvp.Main.MainPresenterImpl;
 import rsantillanc.sanjoylao.util.Android;
@@ -440,7 +437,7 @@ public class MainActivity extends BaseActivity
 
                 break;
             case SOUP:
-                ui = SoupFragment.newInstance();
+                ui = HomeFragment.newInstance();
                 isTransaction = true;
                 title = getString(R.string.item_title_soup);
                 setCollapseAppBarLayout(true);
@@ -453,7 +450,7 @@ public class MainActivity extends BaseActivity
                 setCollapseAppBarLayout(false);
                 break;
             case CHEF:
-                ui = ChefFragment.newInstance();
+                ui = HomeFragment.newInstance();
                 isTransaction = true;
                 title = getString(R.string.item_title_chef);
                 setCollapseAppBarLayout(true);
@@ -470,7 +467,7 @@ public class MainActivity extends BaseActivity
 //                ui = HomeFragment.newInstance();
 //                break;
             case BANQUETS:
-                ui = BanquetsFragment.newInstance();
+                ui = HomeFragment.newInstance();
                 title = getString(R.string.item_title_banquets);
                 isTransaction = true;
                 setCollapseAppBarLayout(true);

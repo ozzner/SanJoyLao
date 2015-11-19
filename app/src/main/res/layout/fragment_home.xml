@@ -1,7 +1,5 @@
-<android.support.design.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
@@ -39,6 +37,7 @@
                     android:tint="@color/white" />
 
                 <TextView
+                    style="@style/SJLTexViewStyle"
                     android:layout_width="@dimen/space_0dp"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="@dimen/space_4dp"
@@ -47,16 +46,15 @@
                     android:text="+51 993297151"
                     android:textColor="@color/white"
                     android:textSize="@dimen/txt_15sp"
-                    android:textStyle="bold"
-                    style="@style/SJLTexViewStyle"/>
+                    android:textStyle="bold" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="@dimen/space_0dp"
                 android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/space_16dp"
                 android:layout_weight="1"
                 android:background="@drawable/bg_button_image_viewer"
-                android:layout_marginLeft="@dimen/space_16dp"
                 android:padding="@dimen/space_10dp">
 
                 <ImageView
@@ -68,6 +66,7 @@
                     android:tint="@color/white" />
 
                 <TextView
+                    style="@style/SJLTexViewStyle"
                     android:layout_width="@dimen/space_0dp"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="@dimen/space_4dp"
@@ -76,8 +75,7 @@
                     android:text="Delivery"
                     android:textColor="@color/white"
                     android:textSize="@dimen/txt_15sp"
-                    android:textStyle="bold"
-                    style="@style/SJLTexViewStyle"/>
+                    android:textStyle="bold" />
             </LinearLayout>
 
         </LinearLayout>
@@ -86,24 +84,35 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/space_0dp"
             android:layout_weight="4"
-            android:gravity="center">
+            android:gravity="center"
+            android:weightSum="1">
 
             <ImageView
                 android:id="@+id/iv_logo_main"
-                android:layout_width="match_parent"
-                android:layout_height="250dp"
-                android:src="@drawable/logo" />
+                android:layout_width="wrap_content"
+                android:layout_height="315dp"
+                android:src="@drawable/logo"
+                android:layout_weight="0.53" />
         </LinearLayout>
 
 
     </LinearLayout>
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/map_id"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        android:src="@drawable/vec_map_locals" />
+        android:gravity="right">
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/map_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="@dimen/fab_margin"
+            android:src="@drawable/vec_map_locals" />
+
+    </LinearLayout>
+
 
 </android.support.design.widget.CoordinatorLayout>

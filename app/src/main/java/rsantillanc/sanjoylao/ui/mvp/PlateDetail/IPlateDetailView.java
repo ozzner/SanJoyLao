@@ -12,4 +12,5 @@ public interface IPlateDetailView {
     void onError(CharSequence cs);
     void showLoader();
     void hideLoader();
+    void showMessage(String s);
 }

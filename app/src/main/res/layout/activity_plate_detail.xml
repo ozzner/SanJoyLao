@@ -17,6 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
+            app:titleTextAppearance="@style/SJLToolbarTitle"
             app:popupTheme="@style/SJLTheme.Base.PopupOverlay" />
 
     </android.support.design.widget.AppBarLayout>

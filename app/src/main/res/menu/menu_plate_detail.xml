@@ -1,0 +1,14 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="rsantillanc.sanjoylao.ui.activity.OrderActivity">
+
+    <item
+        android:id="@+id/action_new_comment"
+        android:orderInCategory="100"
+        android:title="@string/title_dialog_new_comment"
+        android:icon="@drawable/vec_comment"
+        app:showAsAction="always"/>
+
+
+</menu>

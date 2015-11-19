@@ -117,5 +117,9 @@
     <string name="label_ingredients">Ingredientes</string>
     <string name="action_category_info">Information</string>
     <string name="title_activity_plate_detail">Plate Detail Activity</string>
+    <string name="title_dialog_new_comment">Nuevo comentario</string>
+    <string name="cancel">Cancel</string>
+    <string name="hint_comment">Escribe tu comentario</string>
+    <string name="error_empty">No debe estar vacío.</string>
 
 </resources>
