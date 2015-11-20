@@ -27,9 +27,6 @@ import rsantillanc.sanjoylao.R;
 import rsantillanc.sanjoylao.SJLApplication;
 import rsantillanc.sanjoylao.model.UserModel;
 import rsantillanc.sanjoylao.storage.dao.UserDao;
-import rsantillanc.sanjoylao.ui.fragment.CategoryFragment;
-import rsantillanc.sanjoylao.ui.fragment.FrontFragment;
-import rsantillanc.sanjoylao.ui.fragment.HomeFragment;
 import rsantillanc.sanjoylao.ui.mvp.Main.IMainView;
 import rsantillanc.sanjoylao.ui.mvp.Main.MainPresenterImpl;
 import rsantillanc.sanjoylao.util.Android;
@@ -40,7 +37,6 @@ import rsantillanc.sanjoylao.util.MenuColorizer;
 public class MainActivity extends BaseActivity
         implements
         NavigationView.OnNavigationItemSelectedListener,
-        HomeFragment.OnLoadSuccess,
         IMainView {
 
 
@@ -59,20 +55,10 @@ public class MainActivity extends BaseActivity
     private CircleImageView profileImage;
 
 
-    //Constants
-    private static final int INPUT = R.id.nav_main_input;
-    private static final int SOUP = R.id.nav_main_soup;
-    private static final int PLATES = R.id.nav_main_plates;
-    private static final int CHEF = R.id.nav_main_chef;
-    //    private static final int CHICKEN_MEAT = R.id.nav_main_chicken_and_meat;
-//    private static final int FISH = R.id.nav_main_fish;
-//    private static final int VEGETARIAN = R.id.nav_main_vegetarian_food;
-    private static final int BANQUETS = R.id.nav_main_banquets;
-    private static final int DRINKS = R.id.nav_main_drinks;
-    private static final int CENTRAL = R.id.nav_main_call_center;
-    private static final int HOME = 10;
-    private static final String TAG_COLLAPSED = "collapsed";
-    private static final String TAG_EXPANDED = "expanded";
+
+    public static final int HOME = 10;
+    public static final String TAG_COLLAPSED = "collapsed";
+    public static final String TAG_EXPANDED = "expanded";
 
 
     //Global vars
@@ -101,8 +87,8 @@ public class MainActivity extends BaseActivity
         //Configurations
         setUpsUIComponents();
 
-        //Show fragment
-        displayFragment(new HomeFragment(this, true), HOME, false);
+        //Display home
+        mPresenter.displayFragment(HOME);
 
         //Synchronizing
         sync();
@@ -110,17 +96,7 @@ public class MainActivity extends BaseActivity
         Log.e(Const.DEBUG, "onCreate main activity");
     }
 
-//    @Override
-//    protected void onSaveInstanceState(Bundle outState) {
-//        outState = mBundle;
-//        super.onSaveInstanceState(outState);
-//    }
 
-//    @Override
-//    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-//        super.onRestoreInstanceState(savedInstanceState);
-//        mBundle = savedInstanceState;
-//    }
 
 
     @Override
@@ -174,6 +150,7 @@ public class MainActivity extends BaseActivity
         setUpProfile();
         mAppbarLayout.setExpanded(false);
         setupTitle(getString(R.string.app_name), ((UserModel) getIntent().getExtras().getSerializable(Const.EXTRA_USER)));
+
     }
 
     private void setupTitle(String title, UserModel serializable) {
@@ -181,18 +158,10 @@ public class MainActivity extends BaseActivity
         tvSubtitle.setText(serializable.getFullName());
     }
 
-    private void updateTitle(CharSequence title) {
+    public void updateTitle(CharSequence title) {
         tvTitle.setText(title);
     }
 
-    private void setUpAppBarLayout() {
-//        new Handler().postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//                setCollapseAppBarLayout(true);
-//            }
-//        }, DELAY_LONG);
-    }
 
     private void setUpProfile() {
 
@@ -277,9 +246,8 @@ public class MainActivity extends BaseActivity
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == android.R.id.home) {
-            mDrawerLayout.openDrawer(GravityCompat.END);
+            openMenu();
         } else if (id == R.id.action_orders) {
             goToOrderActivity();
         } else if (id == R.id.action_profile) {
@@ -374,26 +342,15 @@ public class MainActivity extends BaseActivity
         }
     }
 
-    public static void collapseAppBarLayout() {
-//        new Handler().postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//                CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) mAppbarLayout.getLayoutParams();
-//                AppBarLayout.Behavior behavior = (AppBarLayout.Behavior) params.getBehavior();
-//                behavior.onNestedFling(null, mAppbarLayout, null, 0, 10000, true);
-//            }
-//        }, DELAY_SHORT);
 
-    }
-
-    private void displayFragment(Fragment ui, int position, boolean isBackStack) {
+    public void showFragment(Fragment ui, boolean isSecondary) {
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         final Fragment expanded = fragmentManager.findFragmentByTag(TAG_EXPANDED);
         final Fragment collapsed = fragmentManager.findFragmentByTag(TAG_COLLAPSED);
 
-        if (isBackStack) {
+        if (isSecondary) {
 
             if (expanded != null)
                 fragmentTransaction.remove(expanded);
@@ -408,156 +365,53 @@ public class MainActivity extends BaseActivity
 
         fragmentTransaction.commit();
 
-        if (typeOfDevice > Const.PHONE_SCREEN && position == HOME) {
-            Fragment details = FrontFragment.getInstance();
-            FragmentTransaction secondTransaction = fragmentManager.beginTransaction();
-            secondTransaction.replace(R.id.container_details_main, details);
-            secondTransaction.commit();
-        }
+//        if (typeOfDevice > Const.PHONE_SCREEN && position == HOME) {
+//            Fragment details = FrontFragment.getInstance();
+//            FragmentTransaction secondTransaction = fragmentManager.beginTransaction();
+//            secondTransaction.replace(R.id.container_details_main, details);
+//            secondTransaction.commit();
+//        }
     }
 
 
     /*------------------------ LISTENERS ---------------------*/
     @Override
     public boolean onNavigationItemSelected(MenuItem menuItem) {
-
-        boolean isTransaction;
-        Fragment ui;
-        CharSequence title = null;
-        boolean back = false;
-
-
-        switch (menuItem.getItemId()) {
-
-            case INPUT:
-                ui = HomeFragment.newInstance();
-                title = getString(R.string.item_title_inputs);
-                isTransaction = true;
-                setCollapseAppBarLayout(true);
-
-                break;
-            case SOUP:
-                ui = HomeFragment.newInstance();
-                isTransaction = true;
-                title = getString(R.string.item_title_soup);
-                setCollapseAppBarLayout(true);
-                break;
-            case PLATES:
-                ui = CategoryFragment.newInstance();
-                isTransaction = true;
-                back = true;
-                title = getString(R.string.item_title_plates);
-                setCollapseAppBarLayout(false);
-                break;
-            case CHEF:
-                ui = HomeFragment.newInstance();
-                isTransaction = true;
-                title = getString(R.string.item_title_chef);
-                setCollapseAppBarLayout(true);
-                break;
-//            case CHICKEN_MEAT:
-//                ui = HomeFragment.newInstance();
-//                title = getString(R.string.item_title_meat_and_chicken);
-//                break;
-//            case FISH:
-//                ui = HomeFragment.newInstance();
-//                title = getString(R.string.item_title_inputs);
-//                break;
-//            case VEGETARIAN:
-//                ui = HomeFragment.newInstance();
-//                break;
-            case BANQUETS:
-                ui = HomeFragment.newInstance();
-                title = getString(R.string.item_title_banquets);
-                isTransaction = true;
-                setCollapseAppBarLayout(true);
-
-                break;
-            case DRINKS:
-                ui = HomeFragment.newInstance();
-                isTransaction = true;
-                setCollapseAppBarLayout(true);
-
-                break;
-            case CENTRAL:
-                ui = HomeFragment.newInstance();
-                isTransaction = true;
-                setCollapseAppBarLayout(true);
-
-                break;
-            default:
-                title = getString(R.string.app_name);
-                ui = HomeFragment.newInstance();
-                typeOfDevice = Android.getTypeDevice(this);
-                isTransaction = true;
-                setCollapseAppBarLayout(true);
-                break;
-        }
-
-        if (isTransaction) {
-
-            //Show indicate fragment
-            displayFragment(ui, menuItem.getItemId(), back);
-
-            //Display a title
-            if (title != null)
-                updateTitle(title);
-
-            //Active row
-            menuItem.setChecked(true);
-
-            //Close menu list
-            mDrawerLayout.closeDrawers();
-        }
-
+        mPresenter.displayFragment(menuItem.getItemId());
         return false;
     }
 
 
+
+
     //----------------------[IMainView]
-    @Override
-    public void viewloaded() {
-        setUpAppBarLayout();
-    }
 
 
-    @Override
-    public void goToLogin() {
-
-    }
-
-    @Override
-    public void goToProfile() {
-
-    }
-
-    @Override
-    public void goToOrders() {
-
-    }
-
-    @Override
-    public void showLoader() {
-
-    }
-
-    @Override
-    public void hideLoader() {
-
-    }
-
-    @Override
-    public void uptateTitle(CharSequence title) {
-
-    }
 
     @Override
     public void closeMenu() {
-
+        mDrawerLayout.closeDrawers();
     }
 
     @Override
     public void openMenu() {
-
+        mDrawerLayout.openDrawer(GravityCompat.END);
     }
+
+    @Override
+    public void displayFragment(Fragment ui, boolean isSecondary) {
+        showFragment(ui,isSecondary);
+    }
+
+    @Override
+    public void markItemSelected(int item) {
+        mNavView.setCheckedItem(item);
+    }
+
+    @Override
+    public void collapse(boolean b) {
+        setCollapseAppBarLayout(b);
+    }
+
+
 }

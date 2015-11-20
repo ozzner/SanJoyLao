@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -26,6 +27,7 @@ import rsantillanc.sanjoylao.model.PlateSizeModel;
 import rsantillanc.sanjoylao.model.UserModel;
 import rsantillanc.sanjoylao.ui.custom.adapter.RecyclerOrderAdapter;
 import rsantillanc.sanjoylao.ui.custom.dialog.SJLAlertDialog;
+import rsantillanc.sanjoylao.ui.custom.view.DividerItemDecoration;
 import rsantillanc.sanjoylao.ui.mvp.Order.IOrderView;
 import rsantillanc.sanjoylao.ui.mvp.Order.OrderPresenterImpl;
 import rsantillanc.sanjoylao.util.Android;
@@ -111,6 +113,8 @@ public class OrderActivity extends BaseActivity implements
         mLinearLayoutManager = new LinearLayoutManager(_context);
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
         mRecyclerView.setHasFixedSize(false);
+        mRecyclerView.addItemDecoration(new DividerItemDecoration(getApplicationContext(), DividerItemDecoration.VERTICAL_LIST));
+        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mPresenter.loadOrders();
     }
 

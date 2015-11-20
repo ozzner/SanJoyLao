@@ -3,6 +3,7 @@ package rsantillanc.sanjoylao.ui.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -19,6 +20,7 @@ import rsantillanc.sanjoylao.model.PlateModel;
 import rsantillanc.sanjoylao.model.PlateSizeModel;
 import rsantillanc.sanjoylao.model.RelationPlateSizeModel;
 import rsantillanc.sanjoylao.ui.custom.adapter.RecyclerPlateAdapter;
+import rsantillanc.sanjoylao.ui.custom.view.DividerItemDecoration;
 import rsantillanc.sanjoylao.ui.mvp.Plate.IPlateView;
 import rsantillanc.sanjoylao.ui.mvp.Plate.PlatePresenterImpl;
 import rsantillanc.sanjoylao.util.Const;
@@ -118,7 +120,8 @@ public class PlateActivity extends BaseActivity implements IPlateView, RecyclerP
         RecyclerPlateAdapter ap = new RecyclerPlateAdapter(relations, this);
         ap.setOnItemPlateClickListener(this);
         mRecycler.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        mRecycler.setHasFixedSize(true);
+        mRecycler.addItemDecoration(new DividerItemDecoration(getApplicationContext(), DividerItemDecoration.VERTICAL_LIST));
+        mRecycler.setItemAnimator(new DefaultItemAnimator());
         mRecycler.setAdapter(ap);
     }
 
@@ -159,7 +162,7 @@ public class PlateActivity extends BaseActivity implements IPlateView, RecyclerP
 
     private void goToPlateDetailActivity(PlateModel plate) {
         Bundle bundle = new Bundle();
-        bundle.putSerializable(Const.EXTRA_PLATE_DETAIL,plate);
+        bundle.putSerializable(Const.EXTRA_PLATE_DETAIL, plate);
 
         Intent in = new Intent(getApplicationContext(), PlateDetailActivity.class);
         in.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);

@@ -3,14 +3,14 @@
 
     <!--Navigation drawer-->
     <string-array name="nav_drawer_labels">
-        <item>@string/item_title_inputs</item>
+        <item>@string/item_title_entree</item>
         <item>@string/item_title_soup</item>
-        <item>@string/item_title_plates</item>
+        <item>@string/item_title_category</item>
         <item>@string/item_title_chef</item>
         <item>@string/item_title_meat_and_chicken</item>
         <item>@string/item_title_fish</item>
         <item>@string/item_title_vegetarian_food</item>
-        <item>@string/item_title_banquets</item>
+        <item>@string/item_title_banquet</item>
         <item>@string/item_title_drinks</item>
         <item>@string/item_title_call_center</item>
     </string-array>

@@ -4,9 +4,9 @@
 
         <!-- Entradas-->
         <item
-            android:id="@+id/nav_main_input"
+            android:id="@+id/nav_main_entree"
             android:icon="@drawable/ic_entree"
-            android:title="@string/item_title_inputs" />
+            android:title="@string/item_title_entree" />
         <!-- Sopas-->
         <item
             android:id="@+id/nav_main_soup"
@@ -15,9 +15,9 @@
 
         <!-- Platos-->
         <item
-            android:id="@+id/nav_main_plates"
+            android:id="@+id/nav_main_category"
             android:icon="@drawable/vec_plate"
-            android:title="@string/item_title_plates" />
+            android:title="@string/item_title_category" />
 
 
         <!--&lt;!&ndash; Pollos y carnes&ndash;&gt;-->
@@ -39,13 +39,13 @@
         <!--android:title="@string/item_title_vegetarian_food" />-->
         <!-- Banquetes -->
         <item
-            android:id="@+id/nav_main_banquets"
+            android:id="@+id/nav_main_banquet"
             android:icon="@drawable/ic_banquet"
-            android:title="@string/item_title_banquets" />
+            android:title="@string/item_title_banquet" />
 
         <!-- Vinos y bebidas -->
         <item
-            android:id="@+id/nav_main_drinks"
+            android:id="@+id/nav_main_drink"
             android:icon="@drawable/ic_wine_and_drinks"
             android:title="@string/item_title_drinks" />
 

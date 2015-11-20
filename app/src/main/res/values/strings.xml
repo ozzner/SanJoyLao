@@ -25,14 +25,14 @@
     <string name="drawer_open">Cerrar</string>
     <string name="drawer_close">Abrir</string>
 
-    <string name="item_title_inputs">Entradas</string>
+    <string name="item_title_entree">Entradas</string>
     <string name="item_title_soup">Sopas &amp; caldos</string>
-    <string name="item_title_plates">Fondos</string>
+    <string name="item_title_category">Fondos</string>
     <string name="item_title_chef">Recomendaciones del chef</string>
     <string name="item_title_meat_and_chicken">Pollos y carnes</string>
     <string name="item_title_fish">Pescados</string>
     <string name="item_title_vegetarian_food">Comida vegetariana</string>
-    <string name="item_title_banquets">Banquetes</string>
+    <string name="item_title_banquet">Banquetes</string>
     <string name="item_title_drinks">Vinos &amp; bebidas</string>
     <string name="item_title_call_center">Central telefónica</string>
 

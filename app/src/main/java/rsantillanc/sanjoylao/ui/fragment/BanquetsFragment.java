@@ -9,7 +9,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +18,6 @@ import java.util.ArrayList;
 
 import rsantillanc.sanjoylao.R;
 import rsantillanc.sanjoylao.model.FeastModel;
-import rsantillanc.sanjoylao.ui.activity.MainActivity;
 import rsantillanc.sanjoylao.ui.activity.OptionsGridActivity;
 import rsantillanc.sanjoylao.ui.activity.OptionsListActivity;
 import rsantillanc.sanjoylao.ui.custom.adapter.RecyclerViewBanquetAdapter;
@@ -117,27 +115,26 @@ public class BanquetsFragment extends Fragment {
 
     private void backToFrontPage() {
 
-        getView().setFocusableInTouchMode(true);
-        getView().requestFocus();
-        getView().setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
-                    Fragment gotToFront = new HomeFragment(new HomeFragment.OnLoadSuccess() {
-                        @Override
-                        public void viewloaded() {
-                            MainActivity.collapseAppBarLayout();
-                        }
-                    },true);
-                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                    fragmentTransaction.replace(R.id.fragments_content, gotToFront);
-                    fragmentTransaction.commit();
-
-                    return true;
-                }
-                return false;
-            }
-        });
+//        getView().setFocusableInTouchMode(true);
+//        getView().requestFocus();
+//        getView().setOnKeyListener(new View.OnKeyListener() {
+//            @Override
+//            public boolean onKey(View v, int keyCode, KeyEvent event) {
+//                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
+//                    Fragment gotToFront = new HomeFragment(new HomeFragment.OnLoadSuccess() {
+//                        @Override
+//                        public void viewloaded() {
+//                        }
+//                    },true);
+//                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+//                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//                    fragmentTransaction.replace(R.id.fragments_content, gotToFront);
+//                    fragmentTransaction.commit();
+//
+//                    return true;
+//                }
+//                return false;
+//            }
+//        });
     }
 }

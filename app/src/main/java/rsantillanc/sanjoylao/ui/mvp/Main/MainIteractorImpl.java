@@ -313,7 +313,6 @@ public class MainIteractorImpl {
         return new OrderTypeDao(c).count();
     }
 
-
     private int countPlates(Context c) {
         return new PlateDao(c).count();
     }

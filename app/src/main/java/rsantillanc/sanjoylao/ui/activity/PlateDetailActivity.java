@@ -1,6 +1,7 @@
 package rsantillanc.sanjoylao.ui.activity;
 
 import android.os.Bundle;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -16,6 +17,7 @@ import rsantillanc.sanjoylao.SJLApplication;
 import rsantillanc.sanjoylao.model.CommentModel;
 import rsantillanc.sanjoylao.model.PlateModel;
 import rsantillanc.sanjoylao.ui.custom.adapter.RecyclerCommentAdapter;
+import rsantillanc.sanjoylao.ui.custom.view.DividerItemDecoration;
 import rsantillanc.sanjoylao.ui.mvp.PlateDetail.IPlateDetailView;
 import rsantillanc.sanjoylao.ui.mvp.PlateDetail.PlateDetailPresenterImpl;
 import rsantillanc.sanjoylao.util.Const;
@@ -95,6 +97,8 @@ public class PlateDetailActivity extends BaseActivity implements IPlateDetailVie
         mAdapter = new RecyclerCommentAdapter(listComments, getApplicationContext());
         rcvComments.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         rcvComments.setHasFixedSize(true);
+        rcvComments.addItemDecoration(new DividerItemDecoration(getApplicationContext(), DividerItemDecoration.VERTICAL_LIST));
+        rcvComments.setItemAnimator(new DefaultItemAnimator());
         rcvComments.setAdapter(mAdapter);
     }
 

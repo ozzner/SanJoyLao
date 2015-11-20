@@ -16,9 +16,9 @@
         android:id="@+id/lay_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/toolbar_login"
         android:orientation="vertical"
         android:weightSum="3">
+        <!--android:layout_below="@id/toolbar_login"-->
 
         <LinearLayout
             android:id="@+id/lay_logo"
