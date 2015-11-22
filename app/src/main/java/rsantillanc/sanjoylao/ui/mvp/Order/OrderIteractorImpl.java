@@ -1,6 +1,8 @@
 package rsantillanc.sanjoylao.ui.mvp.Order;
 
 import android.content.Context;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 
 import com.google.gson.Gson;
@@ -39,9 +41,10 @@ import rsantillanc.sanjoylao.util.SJLStrings;
  */
 public class OrderIteractorImpl implements IOrderIteractor {
 
+    private Handler handler = new Handler(Looper.myLooper());
 
     @Override
-    public void getOrdersFromServer(String orderID, final OnOrdersListener listener, final Context c) {
+    public void getOrdersFromServer(String orderID, final OnOrderListener listener, final Context c) {
         Retrofit fit = new Retrofit.Builder()
                 .baseUrl(ConstAPI.PARSE_URL_BASE)
                 .addConverterFactory(customConverter(OrderDetailModel.class))
@@ -85,7 +88,7 @@ public class OrderIteractorImpl implements IOrderIteractor {
 
 
     @Override
-    public void addItemToOrder(Context c, PlateSizeModel plateSize, UserModel user, OnOrdersListener listener) {
+    public void addItemToOrder(Context c, PlateSizeModel plateSize, UserModel user, OnOrderListener listener) {
         if (checkIfExistActiveOrder(c)) {
             OrderModel currentOrder = new OrderDao(c).getActiveOrderIfExist(new StatusDao(c).getIdStatusByCode(Const.STATUS_TEMPORAL));
 
@@ -98,7 +101,7 @@ public class OrderIteractorImpl implements IOrderIteractor {
             createOrder(c, plateSize, user, listener);
     }
 
-    private void updateCounterItemOrder(final Context c, final OrderDetailModel orderDetail, final OnOrdersListener listener, boolean isIncrement) {
+    private void updateCounterItemOrder(final Context c, final OrderDetailModel orderDetail, final OnOrderListener listener, boolean isIncrement) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(ConstAPI.PARSE_URL_BASE)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -145,7 +148,7 @@ public class OrderIteractorImpl implements IOrderIteractor {
     }
 
 
-    private void createOrder(final Context c, final PlateSizeModel plateSize, final UserModel user, final OnOrdersListener listener) {
+    private void createOrder(final Context c, final PlateSizeModel plateSize, final UserModel user, final OnOrderListener listener) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(ConstAPI.PARSE_URL_BASE)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -183,7 +186,7 @@ public class OrderIteractorImpl implements IOrderIteractor {
         });
     }
 
-    private void addItemDetail(final Context c, final String orderID, final PlateSizeModel plateSize, final OnOrdersListener listener) {
+    private void addItemDetail(final Context c, final String orderID, final PlateSizeModel plateSize, final OnOrderListener listener) {
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(ConstAPI.PARSE_URL_BASE)
@@ -224,7 +227,7 @@ public class OrderIteractorImpl implements IOrderIteractor {
     }
 
 
-    public void callDeleteDetail(final Context c, final OrderDetailModel itemDetail, final OnOrdersListener listener) {
+    public void callDeleteDetail(final Context c, final OrderDetailModel itemDetail, final OnOrderListener listener) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(ConstAPI.PARSE_URL_BASE)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -286,7 +289,7 @@ public class OrderIteractorImpl implements IOrderIteractor {
     }
 
 
-    public void getOrdersFrom(Context c, OnOrdersListener listener) {
+    public void getOrdersFrom(Context c, OnOrderListener listener) {
 
 
         if (countOrder(c) <= 0) {
@@ -336,4 +339,12 @@ public class OrderIteractorImpl implements IOrderIteractor {
     }
 
 
+    public void sendPayment(final double amount, final OnOrderListener listener) {
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    listener.paymentCorrect(amount);
+                }
+            },4200);
+    }
 }

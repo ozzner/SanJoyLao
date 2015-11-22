@@ -50,9 +50,11 @@ public class Const {
 
 
     //[ DEBUG ]
+    public static final String DEBUG = "DEBUGGING";
     public static final String DEBUG_GOOGLE_PLUS = "GOOGLE_PLUS";
     public static final String DEBUG_FACEBOOK = "FACEBOOK";
-    public static final String DEBUG = "DEBUGGING";
+    public static final String DEBUG_PUSH = "[DEBUG_PUSH]";
+
 
     //[ OAUTH ]
     public static final int LOGIN_GOOGLE = 0;
@@ -65,6 +67,8 @@ public class Const {
     //Keys sharedPreferences
     public static final String KEY_ORDER_TYPE = "sjl_my_order";
     public static final String KEY_INSTALLATION = "first_time";
+    public static final String KEY_PUSH_STATUS = "status_order";
+
 
     //[ USER ]
     public static final int USER_ENABLED = 1;
@@ -78,6 +82,7 @@ public class Const {
     public static final String EXTRA_CATEGORY_NAME = "category_name";
     public static final String EXTRA_PLATE_DETAIL = "plate_detail";
     public static final String EXTRA_USER = "user";
+    public static final String SJL_CHANNEL = "SJLChannel";
 
 
     public static final String KEY_POINTER = "Pointer";

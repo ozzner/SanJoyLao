@@ -13,4 +13,6 @@ public interface IOrderView {
     void printAmount(double amount);
     void printDiscount(double amount,double amountWithDiscount, CharSequence percent);
     void onDeleteSuccess(CharSequence message);
+    void onPaymentSuccess(double amount);
+    void showLoader(CharSequence message);
 }

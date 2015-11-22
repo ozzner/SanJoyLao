@@ -1,8 +1,10 @@
 package rsantillanc.sanjoylao.ui.activity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -24,7 +26,6 @@ import rsantillanc.sanjoylao.SJLApplication;
 import rsantillanc.sanjoylao.model.OrderDetailModel;
 import rsantillanc.sanjoylao.model.PlateModel;
 import rsantillanc.sanjoylao.model.PlateSizeModel;
-import rsantillanc.sanjoylao.model.UserModel;
 import rsantillanc.sanjoylao.ui.custom.adapter.RecyclerOrderAdapter;
 import rsantillanc.sanjoylao.ui.custom.dialog.SJLAlertDialog;
 import rsantillanc.sanjoylao.ui.custom.view.DividerItemDecoration;
@@ -47,15 +48,16 @@ public class OrderActivity extends BaseActivity implements
     private TextView tvPercent;
     private TextView tvDiscount;
     private ProgressBar mProgressBar;
+    private ProgressDialog mProgressDialog;
 
     //Globals
     private LinearLayoutManager mLinearLayoutManager;
     private RecyclerOrderAdapter mOrdersAdapter;
-    private double total = 0.0;
+    private double amount = 0.0;
 
     //MVP
     private OrderPresenterImpl mPresenter;
-    private CollapsingToolbarLayout mCollapsiong;
+    private CollapsingToolbarLayout mCollapsing;
     private AppBarLayout mAppBar;
 
 
@@ -70,6 +72,7 @@ public class OrderActivity extends BaseActivity implements
 
         //Config
         setUpUIComponents();
+
 
     }
 
@@ -86,7 +89,7 @@ public class OrderActivity extends BaseActivity implements
         mFloatingActionButton = (FloatingActionButton) findViewById(R.id.fab_order_payment);
         mRecyclerView = (RecyclerView) findViewById(R.id.rcv_orders);
         mProgressBar = (ProgressBar) findViewById(R.id.pb_orders);
-        mCollapsiong = (CollapsingToolbarLayout) findViewById(R.id.ctlLayout);
+        mCollapsing = (CollapsingToolbarLayout) findViewById(R.id.ctlLayout);
         mAppBar = (AppBarLayout) findViewById(R.id.appbarLayout);
     }
 
@@ -99,8 +102,6 @@ public class OrderActivity extends BaseActivity implements
         setUpAppBarLayout();
     }
 
-    private void setupTitle(String string, UserModel user) {
-    }
 
     private void setUpAppBarLayout() {
         mAppBar.addOnOffsetChangedListener(this);
@@ -192,7 +193,8 @@ public class OrderActivity extends BaseActivity implements
     @Override
     public void onClick(View v) {
         if (v == mFloatingActionButton) {
-            showToast("Open payment methods!");
+            mPresenter.processPayment();
+
         }
     }
 
@@ -202,6 +204,11 @@ public class OrderActivity extends BaseActivity implements
     @Override
     public void hideLoader() {
         mProgressBar.setVisibility(View.GONE);
+
+        if (mProgressDialog != null)
+            if (mProgressDialog.isShowing())
+                mProgressDialog.cancel();
+
     }
 
 
@@ -240,13 +247,13 @@ public class OrderActivity extends BaseActivity implements
 
         //Open
         if (Math.abs(offSet) / 2 <= toolbar.getHeight()) {
-            mCollapsiong.requestLayout();
-            mCollapsiong.setTitle(getString(R.string.title_my_orders));
-            mCollapsiong.setTitleEnabled(true);
+            mCollapsing.requestLayout();
+            mCollapsing.setTitle(getString(R.string.title_my_orders));
+            mCollapsing.setTitleEnabled(true);
 
             //Collapsed
         } else {
-            mCollapsiong.setTitleEnabled(false);
+            mCollapsing.setTitleEnabled(false);
             getSupportActionBar().setTitle(tvDiscount.getText().toString());
         }
     }
@@ -308,6 +315,20 @@ public class OrderActivity extends BaseActivity implements
     @Override
     public void onDeleteSuccess(CharSequence message) {
         showToast(message);
+    }
+
+    @Override
+    public void onPaymentSuccess(double amount) {
+        String android_id = Settings.Secure.getString(getApplicationContext().getContentResolver(),
+        Settings.Secure.ANDROID_ID);
+        showToast("Payment correct! \ntotal: " + amount+ "\n app_id: " + android_id);
+    }
+
+    @Override
+    public void showLoader(CharSequence message) {
+        mProgressDialog = new ProgressDialog(this);
+        mProgressDialog.setMessage(message);
+        mProgressDialog.show();
     }
 
 

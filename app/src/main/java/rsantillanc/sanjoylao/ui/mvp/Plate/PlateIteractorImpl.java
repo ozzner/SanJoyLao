@@ -20,7 +20,7 @@ import rsantillanc.sanjoylao.model.RelationPlateSizeModel;
 import rsantillanc.sanjoylao.model.UserModel;
 import rsantillanc.sanjoylao.storage.dao.PlateDao;
 import rsantillanc.sanjoylao.storage.dao.PlateSizeDao;
-import rsantillanc.sanjoylao.ui.mvp.Order.OnOrdersListener;
+import rsantillanc.sanjoylao.ui.mvp.Order.OnOrderListener;
 import rsantillanc.sanjoylao.ui.mvp.Order.OrderIteractorImpl;
 import rsantillanc.sanjoylao.util.Const;
 import rsantillanc.sanjoylao.util.ConstAPI;
@@ -29,7 +29,7 @@ import rsantillanc.sanjoylao.util.SJLStrings;
 /**
  * Created by RenzoD on 29/10/2015.
  */
-public class PlateIteractorImpl implements OnOrdersListener {
+public class PlateIteractorImpl implements OnOrderListener {
 
     private final Activity mActivity;
     private final Context _context;
@@ -95,9 +95,7 @@ public class PlateIteractorImpl implements OnOrdersListener {
         return new PlateDao(mActivity.getApplicationContext()).count();
     }
 
-    private void makePlateWithPrice() {
 
-    }
 
     private String makeJson(CharSequence categoryID) {
         String s = "{\"idCategory\":{\"__type\":\"Pointer\",\"className\":\"Category\",\"objectId\":\"" + categoryID + "\"}}";
@@ -117,24 +115,28 @@ public class PlateIteractorImpl implements OnOrdersListener {
 
 
     @Override
-    public void onOrdersError(Context c, CharSequence error) {
-
-    }
-
-    @Override
     public void onLoadDetails(Context c, List<OrderDetailModel> orderDetails) {
         PlatePresenterImpl presenter = new PlatePresenterImpl();
         presenter.onPlateAddSucess(c,orderDetails.size());
     }
 
     @Override
-    public void onDeleteSuccess(CharSequence message) {
+    public void onCounterSuccess(Context c, CharSequence ok) {
+        PlatePresenterImpl presenter = new PlatePresenterImpl();
+        presenter.onPlateCounterSuccess(c,ok);
+    }
+
+    @Override
+    public void onOrdersError(Context c, CharSequence error) {
 
     }
 
     @Override
-    public void onCounterSuccess(Context c, CharSequence ok) {
-        PlatePresenterImpl presenter = new PlatePresenterImpl();
-        presenter.onPlateCounterSuccess(c,ok);
+    public void onDeleteSuccess(CharSequence message) {
+
+    }
+    @Override
+    public void paymentCorrect(double amount) {
+
     }
 }

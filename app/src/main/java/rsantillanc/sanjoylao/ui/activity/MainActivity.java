@@ -22,6 +22,10 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.parse.ParseException;
+import com.parse.ParsePush;
+import com.parse.SaveCallback;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 import rsantillanc.sanjoylao.R;
 import rsantillanc.sanjoylao.SJLApplication;
@@ -139,6 +143,7 @@ public class MainActivity extends BaseActivity
         app = ((SJLApplication) getApplication());
         mContext = getApplicationContext();
         mPresenter = new MainPresenterImpl(MainActivity.this, this);
+
     }
 
 
