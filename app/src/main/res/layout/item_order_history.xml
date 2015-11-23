@@ -1,0 +1,109 @@
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:circle="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cv_item_order"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/space_8dp"
+    app:cardCornerRadius="@dimen/space_4dp"
+    android:padding="@dimen/space_8dp"
+    android:background="@drawable/selector_item_list"
+    app:cardElevation="@dimen/space_4dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/space_8dp"
+            android:paddingBottom="@dimen/space_8dp"
+            android:paddingLeft="@dimen/space_16dp"
+            android:paddingRight="@dimen/space_20dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_order_history_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Order: 225210"
+                android:textColor="@color/black"
+                android:layout_centerVertical="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
+
+            <TextView
+                android:id="@+id/tv_history_datetime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="18/10 18:10"
+                android:textColor="@color/gray_color_3"
+                android:layout_gravity="right"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/space_16dp"
+            android:layout_marginBottom="@dimen/space_8dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_history_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="S/. 260.50"
+                android:textColor="@color/colorAccent"
+                android:layout_centerVertical="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
+
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/gray_trans_75" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:gravity="right|center"
+            android:padding="@dimen/space_8dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_history_status_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/status_pending"
+                android:textColor="@color/colorAccent"
+                android:textSize="@dimen/txt_13sp"
+                android:gravity="right" />
+
+            <rsantillanc.sanjoylao.ui.custom.view.CircleView
+                android:id="@+id/circle_view"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                circle:circleRadius="6dp"
+                circle:strokeWidth="0dp"
+                circle:circleGap="0dp"
+                circle:fillColor="@color/red"
+                circle:strokeColor="@color/red"
+                android:layout_alignBottom="@+id/tv_history_status_name"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>
+

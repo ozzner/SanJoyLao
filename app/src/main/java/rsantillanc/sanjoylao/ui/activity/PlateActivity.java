@@ -178,7 +178,7 @@ public class PlateActivity extends BaseActivity implements IPlateView, RecyclerP
 
     @Override
     public void onPopupItemClick(MenuItem item, PlateSizeModel plateSize) {
-        mpresenter.addPlateToOrder(plateSize, app.getUserLogued());
+        mpresenter.addPlateToOrder(plateSize, app.getCurrentUser());
     }
 
 }

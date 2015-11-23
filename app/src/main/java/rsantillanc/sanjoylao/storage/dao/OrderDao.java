@@ -14,6 +14,9 @@ import rsantillanc.sanjoylao.model.FeastPlateModel;
 import rsantillanc.sanjoylao.model.OrderDetailModel;
 import rsantillanc.sanjoylao.model.OrderModel;
 import rsantillanc.sanjoylao.model.PlateSizeModel;
+import rsantillanc.sanjoylao.model.StatusModel;
+import rsantillanc.sanjoylao.model.UserModel;
+import rsantillanc.sanjoylao.util.Const;
 
 /**
  * Created by RenzoD on 06/11/2015.
@@ -169,6 +172,61 @@ public class OrderDao {
         return listDetails;
     }
 
+    public List<OrderModel> getOrders(String userID, Context c) {
+        Cursor cur = db.query(Tables.ORDERS, null, idUser + COMPARE, new String[]{userID}, null, null, createdAt + " desc");
+        return loopOrders(cur, new ArrayList<OrderModel>(), c);
+    }
+
+    private List<OrderModel> loopOrders(Cursor cur, ArrayList<OrderModel> orders, Context c) {
+
+        if (cur.moveToFirst())
+            do {
+
+                OrderModel order = new OrderModel();
+                order.setObjectId(cur.getString(cur.getColumnIndex(objectIdDetail)));
+                order.setCreatedAt(cur.getString(cur.getColumnIndex(createdAtDetail)));
+                order.setStatus(makeStatus(c, cur.getString(cur.getColumnIndex(idStatus))));
+                order.setUser(makeUser(c));
+                order.setPrice(cur.getDouble(cur.getColumnIndex(price)));
+                orders.add(order);
+
+            } while (cur.moveToNext());
+
+        if (!cur.isClosed()) {
+            cur.close();
+        }
+
+        return orders;
+    }
+
+    private UserModel makeUser(Context c) {
+        return ((UserModel) new UserDao(c).getCurrentUser(Const.USER_ENABLED).get(0));
+    }
+
+
+    public OrderDetailModel getOrderDetail(String orderID, String plateSizeID) {
+        Cursor cur = db.query(Tables.ORDER_DETAIL, null, idOrder + COMPARE + AND + idPlateSize + COMPARE, new String[]{orderID, plateSizeID}, null, null, null);
+        OrderDetailModel detail;
+
+        if (cur.moveToFirst()) {
+            detail = new OrderDetailModel();
+            detail.setObjectId(cur.getString(cur.getColumnIndex(objectIdDetail)));
+            detail.setOrder(makeOrder(cur.getString(cur.getColumnIndex(idOrder))));
+            detail.setPlateSize(makePlateSize(cur.getString(cur.getColumnIndex(idPlateSize))));
+            detail.setCounter(cur.getInt(cur.getColumnIndex(counter)));
+            detail.setCreatedAt(cur.getString(cur.getColumnIndex(createdAtDetail)));
+
+            //Add if exist
+            if (cur.getString(cur.getColumnIndex(idFeastPlate)) != null)
+                detail.setFeastPlate(makeFeastPlate(cur.getString(cur.getColumnIndex(idFeastPlate))));
+
+            detail.setUpdatedAt(cur.getString(cur.getColumnIndex(updatedAtDetail)));
+        } else {
+            detail = null;
+        }
+        return detail;
+    }
+
     private FeastPlateModel makeFeastPlate(String feastPlateID) {
         return null;
     }
@@ -179,6 +237,10 @@ public class OrderDao {
 
     private OrderModel makeOrder(String orderID) {
         return getOrderByID(orderID);
+    }
+
+    private StatusModel makeStatus(Context c, String idStatus) {
+        return new StatusDao(c).getStatus(idStatus);
     }
 
     public int countDetails() {
@@ -195,31 +257,16 @@ public class OrderDao {
         return cur.moveToFirst();
     }
 
-    public OrderDetailModel getOrderDetail(String orderID, String plateSizeID) {
-        Cursor cur = db.query(Tables.ORDER_DETAIL, null, idOrder + COMPARE + AND + idPlateSize + COMPARE, new String[]{orderID, plateSizeID}, null, null, null);
-        OrderDetailModel detail;
-
-        if (cur.moveToFirst()) {
-            detail = new OrderDetailModel();
-            detail.setObjectId(cur.getString(cur.getColumnIndex(objectIdDetail)));
-            detail.setOrder(makeOrder(cur.getString(cur.getColumnIndex(idOrder))));
-            detail.setPlateSize(makePlateSize(cur.getString(cur.getColumnIndex(idPlateSize))));
-            detail.setCounter(cur.getInt(cur.getColumnIndex(counter)));
-            detail.setCreatedAt(cur.getString(cur.getColumnIndex(createdAtDetail)));
-            //Add if exist
-            if (cur.getString(cur.getColumnIndex(idFeastPlate)) != null)
-                detail.setFeastPlate(makeFeastPlate(cur.getString(cur.getColumnIndex(idFeastPlate))));
-
-            detail.setUpdatedAt(cur.getString(cur.getColumnIndex(updatedAtDetail)));
-        } else {
-            detail = null;
-        }
-        return detail;
-    }
-
     public int updateCounter(OrderDetailModel orderDetail) {
         ContentValues cv = new ContentValues(1);
         cv.put(counter, orderDetail.getCounter() + 1);
         return db.update(Tables.ORDER_DETAIL, cv, objectIdDetail + COMPARE, new String[]{orderDetail.getObjectId()});
+    }
+
+
+    public int updateOrderStatus(StatusModel status, OrderModel order) {
+        ContentValues cv = new ContentValues();
+        cv.put(idStatus, status.getObjectId());
+        return db.update(Tables.ORDERS, cv, objectId + COMPARE, new String[]{order.getObjectId()});
     }
 }

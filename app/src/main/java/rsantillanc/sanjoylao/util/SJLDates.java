@@ -4,6 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * Created by RenzoD on 28/10/2015.
@@ -35,6 +36,11 @@ public class SJLDates {
      * Formato: {@value}
      */
     public static final String FORMAT_DATE = "dd-MMM HH:mm";
+
+    /**
+     * Formato: {@value}
+     */
+    public static final String FORMAT_DATE_2 = "dd/MMM HH:mm";
 
     /**
      * Formato: {@value}
@@ -85,5 +91,10 @@ public class SJLDates {
         return outputStringDate;
     }
 
+    public static final SimpleDateFormat SDF1 = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+    public static final SimpleDateFormat SDF2 = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+    public static final SimpleDateFormat SDF3 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.getDefault());
+    public static final SimpleDateFormat SDF4 = new SimpleDateFormat("MM/dd HH:mm", Locale.getDefault());
+    public static final SimpleDateFormat SDF5= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
 
 }

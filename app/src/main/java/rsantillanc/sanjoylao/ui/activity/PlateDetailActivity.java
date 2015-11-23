@@ -84,7 +84,7 @@ public class PlateDetailActivity extends BaseActivity implements IPlateDetailVie
     public boolean onOptionsItemSelected(MenuItem item) {
 
         if (item.getItemId() == R.id.action_new_comment)
-            mPresenter.showAlertDialogComment((getIntent().getExtras().getSerializable(Const.EXTRA_PLATE_DETAIL)), app.getUserLogued());
+            mPresenter.showAlertDialogComment((getIntent().getExtras().getSerializable(Const.EXTRA_PLATE_DETAIL)), app.getCurrentUser());
         else
             finish();
 

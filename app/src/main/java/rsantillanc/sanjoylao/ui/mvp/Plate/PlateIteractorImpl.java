@@ -139,4 +139,14 @@ public class PlateIteractorImpl implements OnOrderListener {
     public void paymentCorrect(double amount) {
 
     }
+
+    @Override
+    public void onUpdatedSuccess(CharSequence s) {
+
+    }
+
+    @Override
+    public void errorUpdating(CharSequence error) {
+
+    }
 }

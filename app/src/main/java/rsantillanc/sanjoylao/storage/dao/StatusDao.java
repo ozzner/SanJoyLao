@@ -39,10 +39,10 @@ public class StatusDao {
 
     public long insert(StatusModel status) {
         ContentValues cv = new ContentValues();
-            cv.put(objectId, status.getObjectId());
-            cv.put(code, status.getCode());
-            cv.put(description, status.getDescription());
-            cv.put(name, status.getName());
+        cv.put(objectId, status.getObjectId());
+        cv.put(code, status.getCode());
+        cv.put(description, status.getDescription());
+        cv.put(name, status.getName());
         return db.insert(Tables.STATUS, null, cv);
     }
 
@@ -51,13 +51,13 @@ public class StatusDao {
         Cursor cur = db.query(Tables.STATUS, null, code + COMPARE, new String[]{String.valueOf(iCode)}, null, null, null);
         if (cur.moveToFirst()) {
             return cur.getString(cur.getColumnIndex(objectId));
-        }else
+        } else
             return Const.EMPTY;
 
     }
 
-    public StatusModel getStatusByCode(int statusTemporal) {
-        Cursor cur = db.query(Tables.STATUS, null, code + COMPARE, new String[]{String.valueOf(statusTemporal)}, null, null, null);
+    public StatusModel getStatusByCode(int statusCode) {
+        Cursor cur = db.query(Tables.STATUS, null, code + COMPARE, new String[]{String.valueOf(statusCode)}, null, null, null);
         StatusModel status;
         if (cur.moveToFirst()) {
             status = new StatusModel();
@@ -65,8 +65,24 @@ public class StatusDao {
             status.setName(cur.getString(cur.getColumnIndex(name)));
             status.setObjectId(cur.getString(cur.getColumnIndex(objectId)));
             status.setDescription(cur.getString(cur.getColumnIndex(description)));
-        }else
-          status = null;
+        } else
+            status = null;
+
+        return status;
+    }
+
+    public StatusModel getStatus(String statusID) {
+        Cursor cur = db.query(Tables.STATUS, null, objectId + COMPARE, new String[]{statusID}, null, null, null);
+        StatusModel status;
+
+        if (cur.moveToFirst()) {
+            status = new StatusModel();
+            status.setCode(cur.getInt(cur.getColumnIndex(code)));
+            status.setName(cur.getString(cur.getColumnIndex(name)));
+            status.setObjectId(cur.getString(cur.getColumnIndex(objectId)));
+            status.setDescription(cur.getString(cur.getColumnIndex(description)));
+        } else
+            status = null;
 
         return status;
     }

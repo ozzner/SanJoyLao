@@ -15,4 +15,9 @@ public interface IOrderView {
     void onDeleteSuccess(CharSequence message);
     void onPaymentSuccess(double amount);
     void showLoader(CharSequence message);
+    void enabledPaymentButton(boolean on);
+    void updateMessageProgressDialog(CharSequence message);
+    void clearAll();
+
+    void showMessage(CharSequence sc);
 }

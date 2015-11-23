@@ -22,10 +22,6 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.parse.ParseException;
-import com.parse.ParsePush;
-import com.parse.SaveCallback;
-
 import de.hdodenhof.circleimageview.CircleImageView;
 import rsantillanc.sanjoylao.R;
 import rsantillanc.sanjoylao.SJLApplication;
@@ -174,7 +170,7 @@ public class MainActivity extends BaseActivity
             return;
 
         final UserModel serializable = (UserModel) getIntent().getExtras().getSerializable(Const.EXTRA_USER);
-        app.setUserLogued(serializable);
+        app.setCurrentUser(serializable);
 
         username.setText(serializable.getFullName());
         email.setText(serializable.getEmail());

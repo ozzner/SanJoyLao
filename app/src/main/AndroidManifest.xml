@@ -14,8 +14,10 @@
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
 
-    <permission android:protectionLevel="signature"
-        android:name="rsantillanc.sanjoylao.permission.C2D_MESSAGE" />
+    <permission
+        android:name="rsantillanc.sanjoylao.permission.C2D_MESSAGE"
+        android:protectionLevel="signature" />
+
     <uses-permission android:name="rsantillanc.sanjoylao.permission.C2D_MESSAGE" />
 
     <application
@@ -38,6 +40,7 @@
         <activity
             android:name=".ui.activity.OptionsListActivity"
             android:label="@string/title_activity_options"
+            android:screenOrientation="portrait"
             android:parentActivityName=".ui.activity.MainActivity">
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
@@ -48,6 +51,7 @@
         <activity
             android:name=".ui.popup.DetailsOptionsPopup"
             android:label="@string/title_activity_details_options_popup"
+            android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Holo.Light.Dialog.NoActionBar.MinWidth"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
@@ -76,6 +80,7 @@
             android:name=".ui.activity.OrderActivity"
             android:label="@string/title_activity_order"
             android:parentActivityName=".ui.activity.MainActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/SJLTheme.Base.Standard">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -86,6 +91,7 @@
             android:label="@string/title_activity_profile"
             android:parentActivityName=".ui.activity.MainActivity"
             android:theme="@style/SJLTheme.Base"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -93,7 +99,8 @@
         </activity>
         <activity
             android:name=".ui.activity.PlateActivity"
-            android:theme="@style/SJLTheme.Base.Standard"></activity>
+            android:screenOrientation="portrait"
+            android:theme="@style/SJLTheme.Base.Standard" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -109,20 +116,28 @@
         <activity
             android:name=".ui.activity.MapActivity"
             android:label="@string/title_activity_map"
-            android:theme="@style/SJLTheme.Base.Standard"></activity>
+            android:screenOrientation="portrait"
+            android:theme="@style/SJLTheme.Base.Standard" />
         <activity
             android:name=".ui.activity.ViewerActivity"
             android:label="@string/title_activity_image_viewer"
-            android:theme="@style/SJLAppCompatAlertDialogStyle"></activity>
+            android:screenOrientation="portrait"
+            android:theme="@style/SJLAppCompatAlertDialogStyle" />
         <activity
             android:name=".ui.activity.PlateDetailActivity"
             android:label="@string/title_activity_plate_detail"
-            android:theme="@style/SJLTheme.Base"></activity>
+            android:screenOrientation="portrait"
+            android:theme="@style/SJLTheme.Base" />
+        <activity
+            android:name=".ui.activity.OrderHistoryActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/SJLTheme.Base.Standard"></activity>
 
+        <!-- Parse config -->
+        <service android:name="com.parse.PushService" />
 
-        <!-- Parse config-->
-        <service android:name="com.parse.PushService"/>
-        <receiver android:name=".reciever.OrderPushReceiver"
+        <receiver
+            android:name=".reciever.OrderPushReceiver"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.parse.push.intent.RECEIVE" />
@@ -130,18 +145,19 @@
                 <action android:name="com.parse.push.intent.OPEN" />
             </intent-filter>
         </receiver>
-        <receiver android:name="com.parse.GcmBroadcastReceiver"
+        <receiver
+            android:name="com.parse.GcmBroadcastReceiver"
             android:permission="com.google.android.c2dm.permission.SEND">
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
                 <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
 
-                <!--
-                  IMPORTANT: Change "com.parse.starter" to match your app's package name.
-                -->
+                <!--                   IMPORTANT: Change "com.parse.starter" to match your app's package name. -->
                 <category android:name="rsantillanc.sanjoylao" />
             </intent-filter>
         </receiver>
+
+
     </application>
 
 </manifest>

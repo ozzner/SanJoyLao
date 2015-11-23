@@ -73,14 +73,12 @@ public interface ParseAPIService {
     Call<SizeModel> getAllSizes();
 
 
-
     @Headers({
             "X-Parse-Application-Id: RTM3ioKCBgaAJjXmDRr493sb13uYzGrMnePLhzhm",
             "X-Parse-REST-API-Key: 6xr428CvfJT8WMGByPUhfvJWmFaxjozudaPy9bUB",
     })
     @GET("classes/PlateSize?include=idSize")
     Call<PlateSizeModel> getAllPlatesSize();
-
 
 
     @Headers({
@@ -124,16 +122,12 @@ public interface ParseAPIService {
     Call<JsonObject> createOrderDetail(@Body APIRequestOrderDetailModel detailModel);
 
 
-
     @Headers({
             "X-Parse-Application-Id: RTM3ioKCBgaAJjXmDRr493sb13uYzGrMnePLhzhm",
             "X-Parse-REST-API-Key: 6xr428CvfJT8WMGByPUhfvJWmFaxjozudaPy9bUB",
     })
-        @GET("classes/OrderDetail?include=idOrder.idUser,idOrder.idStatus,idPlateSize.idPlate.idCategory,idPlateSize.idSize")
+    @GET("classes/OrderDetail?include=idOrder.idUser,idOrder.idStatus,idPlateSize.idPlate.idCategory,idPlateSize.idSize")
     Call<OrderDetailModel> getOrdersDetails(@Query(value = "where", encoded = true) String jsonFilter);
-
-
-
 
 
     @Headers({
@@ -158,8 +152,7 @@ public interface ParseAPIService {
             "Content-Type: application/json"
     })
     @PUT("classes/OrderDetail/{objectId}")
-    Call<JsonObject>  updateCounterItemOrder(@Path("objectId") String objectId,@Body JsonObject counter);
-
+    Call<JsonObject> updateCounterItemOrder(@Path("objectId") String objectId, @Body JsonObject counter);
 
 
     @Headers({
@@ -178,4 +171,14 @@ public interface ParseAPIService {
     })
     @POST("classes/Comment")
     Call<JsonObject> newComment(@Body JsonObject bodyComment);
+
+
+    @Headers({
+            "X-Parse-Application-Id: RTM3ioKCBgaAJjXmDRr493sb13uYzGrMnePLhzhm",
+            "X-Parse-REST-API-Key: 6xr428CvfJT8WMGByPUhfvJWmFaxjozudaPy9bUB",
+            "Content-Type: application/json"
+    })
+    @PUT("classes/Order/{objectId}")
+    Call<JsonObject> updateOrderStatus(@Body JsonObject json, @Path("objectId") String objectId);
+
 }

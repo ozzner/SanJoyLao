@@ -7,12 +7,12 @@ import java.io.Serializable;
 /**
  * Created by RenzoD on 08/11/2015.
  */
-public class OrderDetailModel implements Serializable{
+public class OrderDetailModel implements Serializable {
     private static final long serialVersionUID = 0L;
 
     private String objectId;
     @SerializedName("idFeastPlate")
-    private  FeastPlateModel feastPlate;
+    private FeastPlateModel feastPlate;
     @SerializedName("idOrder")
     private OrderModel order;
     @SerializedName("idPlateSize")
@@ -24,7 +24,7 @@ public class OrderDetailModel implements Serializable{
     public OrderDetailModel() {
     }
 
-    public OrderDetailModel(String objectId, FeastPlateModel feastPlate, OrderModel order, PlateSizeModel plateSize, String createdAt, String updatedAt,int counter) {
+    public OrderDetailModel(String objectId, FeastPlateModel feastPlate, OrderModel order, PlateSizeModel plateSize, String createdAt, String updatedAt, int counter) {
         this.objectId = objectId;
         this.feastPlate = feastPlate;
         this.order = order;

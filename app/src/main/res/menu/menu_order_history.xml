@@ -3,9 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="rsantillanc.sanjoylao.ui.activity.OrderActivity">
     <item
-        android:id="@+id/action_orders_history"
+        android:id="@+id/action_history_info"
         android:orderInCategory="100"
-        android:title="@string/action_history"
-        android:icon="@drawable/vec_history"
+        android:title="@string/action_about"
         app:showAsAction="never" />
 </menu>

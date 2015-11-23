@@ -8,7 +8,7 @@ public class Const {
     public static final String BLANK_SPACE = " ";
     public static final String EMPTY = "";
     public static final String EMPTY_JSON = "{}";
-    public static final String PRICE_USD = "USD ";
+    public static final String PRICE_USD = " USD";
     public static final String PRICE_PEN = "S/. ";
     public static final String TAG_BANQUET = "BANQUET";
     public static final String TAG_DETAILS_OPTIONS = "DETAILS_OPTIONS";
@@ -19,6 +19,8 @@ public class Const {
     public static final String TAG_FACEBOOK = "facebook";
     public static final String TAG_GOOGLE = "google plus";
     public static final String PERCENT_OPERATOR = "%";
+    public static final String THREE_DOTS = "...";
+
 
 
 

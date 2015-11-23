@@ -29,6 +29,7 @@ import rsantillanc.sanjoylao.model.OrderDetailModel;
 import rsantillanc.sanjoylao.model.OrderModel;
 import rsantillanc.sanjoylao.model.ParsePointerModel;
 import rsantillanc.sanjoylao.model.PlateSizeModel;
+import rsantillanc.sanjoylao.model.StatusModel;
 import rsantillanc.sanjoylao.model.UserModel;
 import rsantillanc.sanjoylao.storage.dao.OrderDao;
 import rsantillanc.sanjoylao.storage.dao.StatusDao;
@@ -112,10 +113,10 @@ public class OrderIteractorImpl implements IOrderIteractor {
             @Override
             public void onResponse(Response<JsonObject> response, Retrofit retrofit) {
                 if (response.isSuccess()) {
-                    listener.onCounterSuccess(c,"¡Agregado!");
+                    listener.onCounterSuccess(c, "¡Agregado!");
                     Log.e(Const.DEBUG, "onResponse success " + response.body().toString());
                 } else {
-                    listener.onOrdersError(c,response.message());
+                    listener.onOrdersError(c, response.message());
                     Log.e(Const.DEBUG, "onResponse error " + response.message());
                 }
                 int i = updateCounterItemOrderOnDevice(orderDetail, c);
@@ -124,7 +125,7 @@ public class OrderIteractorImpl implements IOrderIteractor {
 
             @Override
             public void onFailure(Throwable t) {
-                listener.onOrdersError(c,t.getMessage());
+                listener.onOrdersError(c, t.getMessage());
                 Log.e(Const.DEBUG, "onFailure error " + t.getMessage());
             }
         });
@@ -340,11 +341,63 @@ public class OrderIteractorImpl implements IOrderIteractor {
 
 
     public void sendPayment(final double amount, final OnOrderListener listener) {
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    listener.paymentCorrect(amount);
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                listener.paymentCorrect(amount);
+            }
+        }, 4200);
+    }
+
+    public void checkoutOrder(final OnOrderListener listener, final Context c, final OrderModel order) {
+        final StatusModel status = new StatusDao(c).getStatusByCode(Const.STATUS_CONFIRMED);
+
+        //Local
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                int i = new OrderDao(c).updateOrderStatus(status, order);
+                if (i > 0)
+                    Log.e(Const.DEBUG, "Order Updated correct. ");
+                else
+                    Log.e(Const.DEBUG, "Order Updated error!. ");
+
+            }
+        });
+
+        //Server
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(ConstAPI.PARSE_URL_BASE)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        Call<JsonObject> call = retrofit.create(ParseAPIService.class).updateOrderStatus(buildBodyJson(status), order.getObjectId());
+        call.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Response<JsonObject> response, Retrofit retrofit) {
+                if (response != null){
+                    Log.e(Const.DEBUG, "Order Updated server OK!. ");
+                    listener.onUpdatedSuccess("Correct!");
+                }else {
+                    listener.errorUpdating("Error inténtelo de nuevo");
+                    Log.e(Const.DEBUG, "Order Updated server error!. ");
                 }
-            },4200);
+
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                listener.errorUpdating("Inténtelo más tarde.");
+            }
+        });
+
+
+    }
+
+    private JsonObject buildBodyJson(StatusModel status) {
+        JsonObject json = new JsonObject();
+        json.addProperty("idStatus",status.getObjectId());
+        return json;
     }
 }

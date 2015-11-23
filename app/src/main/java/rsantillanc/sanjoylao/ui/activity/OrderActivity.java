@@ -2,12 +2,13 @@ package rsantillanc.sanjoylao.ui.activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -31,8 +32,8 @@ import rsantillanc.sanjoylao.ui.custom.dialog.SJLAlertDialog;
 import rsantillanc.sanjoylao.ui.custom.view.DividerItemDecoration;
 import rsantillanc.sanjoylao.ui.mvp.Order.IOrderView;
 import rsantillanc.sanjoylao.ui.mvp.Order.OrderPresenterImpl;
-import rsantillanc.sanjoylao.util.Android;
 import rsantillanc.sanjoylao.util.Const;
+import rsantillanc.sanjoylao.util.MenuColorizer;
 import rsantillanc.sanjoylao.util.SJLStrings;
 
 public class OrderActivity extends BaseActivity implements
@@ -56,7 +57,7 @@ public class OrderActivity extends BaseActivity implements
     private double amount = 0.0;
 
     //MVP
-    private OrderPresenterImpl mPresenter;
+    private OrderPresenterImpl presenter;
     private CollapsingToolbarLayout mCollapsing;
     private AppBarLayout mAppBar;
 
@@ -65,7 +66,7 @@ public class OrderActivity extends BaseActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order);
-        mPresenter = new OrderPresenterImpl(this, OrderActivity.this);
+        presenter = new OrderPresenterImpl(this, OrderActivity.this);
 
         //Init views
         initUIComponents();
@@ -116,7 +117,7 @@ public class OrderActivity extends BaseActivity implements
         mRecyclerView.setHasFixedSize(false);
         mRecyclerView.addItemDecoration(new DividerItemDecoration(getApplicationContext(), DividerItemDecoration.VERTICAL_LIST));
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        mPresenter.loadOrders();
+        presenter.loadOrders();
     }
 
 
@@ -130,8 +131,8 @@ public class OrderActivity extends BaseActivity implements
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_order, menu);
-//        int color = getResources().getColor(R.color.white);
-//        MenuColorizer.colorMenu(this, menu, color);
+        int color = getResources().getColor(R.color.white);
+        MenuColorizer.colorMenu(this, menu, color);
         return true;
     }
 
@@ -141,13 +142,19 @@ public class OrderActivity extends BaseActivity implements
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_orders_history) {
-            showToast("San Joy Lao | V." + Android.getAppVersion(this));
+            goToOrderHistory();
             return true;
         } else if (id == android.R.id.home) {
             goToMainActivity();
 
         }
         return true;
+    }
+
+    private void goToOrderHistory() {
+        Intent history = new Intent(getApplicationContext(), OrderHistoryActivity.class);
+        history.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        startActivity(history);
     }
 
     @Override
@@ -159,7 +166,7 @@ public class OrderActivity extends BaseActivity implements
         SJLApplication app = ((SJLApplication) getApplication());
 
         final Bundle bundle = new Bundle();
-        bundle.putSerializable(Const.EXTRA_USER, app.getUserLogued());
+        bundle.putSerializable(Const.EXTRA_USER, app.getCurrentUser());
 
         Intent main = new Intent(getApplicationContext(), MainActivity.class);
         main.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
@@ -193,7 +200,7 @@ public class OrderActivity extends BaseActivity implements
     @Override
     public void onClick(View v) {
         if (v == mFloatingActionButton) {
-            mPresenter.processPayment();
+            presenter.processPayment();
 
         }
     }
@@ -296,19 +303,19 @@ public class OrderActivity extends BaseActivity implements
     @Override
     public void onIncrementCount() {
         mOrdersAdapter.notifyDataSetChanged();
-        mPresenter.buildTotalPrice(mOrdersAdapter.getOrders());
+        presenter.buildTotalPrice(mOrdersAdapter.getDetails());
     }
 
     @Override
     public void onDecrementCount() {
         mOrdersAdapter.notifyDataSetChanged();
-        mPresenter.buildTotalPrice(mOrdersAdapter.getOrders());
+        presenter.buildTotalPrice(mOrdersAdapter.getDetails());
     }
 
     @Override
     public void onDeleteItem(OrderDetailModel itemDetail) {
-        mPresenter.deleteAnItemDetail(getApplicationContext(), itemDetail);
-        mPresenter.buildTotalPrice(mOrdersAdapter.getOrders());
+        presenter.deleteAnItemDetail(getApplicationContext(), itemDetail);
+        presenter.buildTotalPrice(mOrdersAdapter.getDetails());
         mOrdersAdapter.notifyDataSetChanged();
     }
 
@@ -319,16 +326,48 @@ public class OrderActivity extends BaseActivity implements
 
     @Override
     public void onPaymentSuccess(double amount) {
-        String android_id = Settings.Secure.getString(getApplicationContext().getContentResolver(),
-        Settings.Secure.ANDROID_ID);
-        showToast("Payment correct! \ntotal: " + amount+ "\n app_id: " + android_id);
+
+        presenter.processOrder(mOrdersAdapter.getDetails().get(0).getOrder());
+//        String android_id = Settings.Secure.getString(getApplicationContext().getContentResolver(),
+//                Settings.Secure.ANDROID_ID);
+//        showToast("Payment correct! \nTotal: " + amount + "\nId: " + android_id);
     }
 
     @Override
     public void showLoader(CharSequence message) {
         mProgressDialog = new ProgressDialog(this);
         mProgressDialog.setMessage(message);
+        mProgressDialog.setCancelable(false);
         mProgressDialog.show();
+    }
+
+    @Override
+    public void enabledPaymentButton(boolean on) {
+        mFloatingActionButton.setEnabled(on);
+
+        if (!on) {
+            mFloatingActionButton.setImageResource(R.drawable.vec_disabled);
+            DrawableCompat.setTint(mFloatingActionButton.getDrawable(), Color.WHITE);
+        }
+
+    }
+
+    @Override
+    public void updateMessageProgressDialog(CharSequence message) {
+        if (mProgressDialog != null)
+            if (mProgressDialog.isShowing())
+                mProgressDialog.setMessage(message);
+    }
+
+    @Override
+    public void clearAll() {
+        mOrdersAdapter.getDetails().clear();
+        mOrdersAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void showMessage(CharSequence sc) {
+        showToast(sc);
     }
 
 
