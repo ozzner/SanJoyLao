@@ -141,7 +141,7 @@ public class PlateIteractorImpl implements OnOrderListener {
     }
 
     @Override
-    public void onUpdatedSuccess(CharSequence s) {
+    public void orderCheckoutSuccess(CharSequence s) {
 
     }
 

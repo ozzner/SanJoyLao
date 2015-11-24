@@ -4,7 +4,6 @@
     android:id="@+id/cv_item_plate"
     android:layout_width="match_parent"
     android:layout_height="@dimen/item_soup_height"
-    android:foreground="@drawable/list_selector"
     app:cardCornerRadius="@dimen/space_4dp"
     app:cardElevation="@dimen/space_4dp"
     app:cardUseCompatPadding="true">
@@ -13,6 +12,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@drawable/selector_item_list"
         android:orientation="horizontal"
         android:weightSum="3">
 
@@ -21,6 +21,7 @@
             android:id="@+id/lay_plates_image"
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:background="@drawable/selector_item_list"
             android:layout_weight="1"
             android:orientation="vertical">
 

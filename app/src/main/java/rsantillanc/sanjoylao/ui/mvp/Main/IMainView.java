@@ -6,7 +6,7 @@ import android.support.v4.app.Fragment;
  * Created by rsantillanc on 20/10/2015.
  */
 public interface IMainView {
-    void updateTitle(CharSequence title);
+    void updateSubtitle(CharSequence title);
     void closeMenu();
     void openMenu();
     void displayFragment(Fragment ui, boolean isSecondary);

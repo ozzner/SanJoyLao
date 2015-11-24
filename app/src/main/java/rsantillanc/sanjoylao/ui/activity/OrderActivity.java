@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -60,6 +61,7 @@ public class OrderActivity extends BaseActivity implements
     private OrderPresenterImpl presenter;
     private CollapsingToolbarLayout mCollapsing;
     private AppBarLayout mAppBar;
+    private View clickView;
 
 
     @Override
@@ -155,6 +157,9 @@ public class OrderActivity extends BaseActivity implements
         Intent history = new Intent(getApplicationContext(), OrderHistoryActivity.class);
         history.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         startActivity(history);
+
+        if (mOrdersAdapter != null)
+            presenter.saveChanges(mOrdersAdapter.getDetails());
     }
 
     @Override
@@ -172,6 +177,10 @@ public class OrderActivity extends BaseActivity implements
         main.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         main.putExtras(bundle);
         startActivity(main);
+
+        if (mOrdersAdapter != null)
+            presenter.saveChanges(mOrdersAdapter.getDetails());
+
 
     }
 
@@ -199,8 +208,16 @@ public class OrderActivity extends BaseActivity implements
     //Onclik
     @Override
     public void onClick(View v) {
+        clickView = v;
         if (v == mFloatingActionButton) {
-            presenter.processPayment();
+
+            if (mOrdersAdapter == null) {
+                showMessage(getString(R.string.error_empty_orders));
+                return;
+            }
+
+            if (!mOrdersAdapter.getDetails().isEmpty() || mOrdersAdapter.getDetails().size() > 0)
+                presenter.processPayment();
 
         }
     }
@@ -221,7 +238,6 @@ public class OrderActivity extends BaseActivity implements
 
     @Override
     public void onOrderDetailsLoaded(List<OrderDetailModel> orders) {
-        //Set adapter
         mOrdersAdapter = new RecyclerOrderAdapter(orders, _context);
         mOrdersAdapter.setOnItemClickListener(this);
         mRecyclerView.setAdapter(mOrdersAdapter);
@@ -321,16 +337,12 @@ public class OrderActivity extends BaseActivity implements
 
     @Override
     public void onDeleteSuccess(CharSequence message) {
-        showToast(message);
+        showMessage(message);
     }
 
     @Override
     public void onPaymentSuccess(double amount) {
-
         presenter.processOrder(mOrdersAdapter.getDetails().get(0).getOrder());
-//        String android_id = Settings.Secure.getString(getApplicationContext().getContentResolver(),
-//                Settings.Secure.ANDROID_ID);
-//        showToast("Payment correct! \nTotal: " + amount + "\nId: " + android_id);
     }
 
     @Override
@@ -368,6 +380,19 @@ public class OrderActivity extends BaseActivity implements
     @Override
     public void showMessage(CharSequence sc) {
         showToast(sc);
+    }
+
+    @Override
+    public void orderCheckoutSuccess(CharSequence s) {
+        Snackbar.make(clickView, s, Snackbar.LENGTH_INDEFINITE)
+                .setActionTextColor(getResources().getColor(R.color.colorPrimary))
+                .setAction(getString(R.string.action_goto_order), new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        goToOrderHistory();
+                    }
+                }).show();
+        presenter.sendPushNotification();
     }
 
 

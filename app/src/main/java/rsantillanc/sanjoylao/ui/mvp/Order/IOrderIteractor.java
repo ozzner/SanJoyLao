@@ -11,4 +11,5 @@ import rsantillanc.sanjoylao.model.UserModel;
 public interface IOrderIteractor {
     void getOrdersFromServer(String clausule, OnOrderListener listener, Context c);
     void addItemToOrder(Context c,PlateSizeModel plateSize, UserModel user, OnOrderListener listener);
+    void makePushNotification();
 }

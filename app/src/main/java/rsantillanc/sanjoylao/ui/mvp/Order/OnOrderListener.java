@@ -15,6 +15,6 @@ public interface OnOrderListener {
     void onDeleteSuccess(CharSequence message);
     void onCounterSuccess(Context c, CharSequence ok);
     void paymentCorrect(double amount);
-    void onUpdatedSuccess(CharSequence s);
+    void orderCheckoutSuccess(CharSequence s);
     void errorUpdating(CharSequence error);
 }

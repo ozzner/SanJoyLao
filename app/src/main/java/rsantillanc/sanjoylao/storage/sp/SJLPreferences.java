@@ -72,4 +72,13 @@ public class SJLPreferences {
     public boolean isInstallation() {
         return mPreferences.getBoolean(Const.KEY_INSTALLATION, true);
     }
+
+    public void saveCurrentAmount(double amount) {
+        mEditor.putLong(Const.KEY_CURRENT_AMOUNT, ((long) amount));
+        mEditor.commit();
+    }
+
+    public long getCurrentAmount() {
+        return mPreferences.getLong(Const.KEY_CURRENT_AMOUNT, 0);
+    }
 }

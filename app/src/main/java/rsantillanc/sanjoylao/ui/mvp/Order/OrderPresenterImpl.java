@@ -9,6 +9,7 @@ import java.util.List;
 import rsantillanc.sanjoylao.R;
 import rsantillanc.sanjoylao.model.OrderDetailModel;
 import rsantillanc.sanjoylao.model.OrderModel;
+import rsantillanc.sanjoylao.storage.sp.SJLPreferences;
 import rsantillanc.sanjoylao.util.Const;
 
 /**
@@ -25,11 +26,15 @@ public class OrderPresenterImpl implements IOrderPresenter, OnOrderListener {
     private OrderIteractorImpl iteractor;
     private IOrderView view;
     private Activity mActivity;
+    public boolean flagSave = false;
+    private SJLPreferences preferences;
 
-    public OrderPresenterImpl(IOrderView view, Activity actitvity) {
+    public OrderPresenterImpl(IOrderView view, Activity activity) {
         this.iteractor = new OrderIteractorImpl();
         this.view = view;
-        this.mActivity = actitvity;
+        this.mActivity = activity;
+        this.preferences = new SJLPreferences(mActivity.getApplicationContext());
+        this.flagSave = false;
     }
 
 
@@ -54,7 +59,7 @@ public class OrderPresenterImpl implements IOrderPresenter, OnOrderListener {
 
     public void processOrder(OrderModel order) {
         view.updateMessageProgressDialog(mActivity.getString(R.string.progress_message_doing_order));
-        iteractor.checkoutOrder(this, mActivity.getApplicationContext(),order);
+        iteractor.checkoutOrder(this, mActivity.getApplicationContext(), order);
     }
 
     @Override
@@ -75,10 +80,10 @@ public class OrderPresenterImpl implements IOrderPresenter, OnOrderListener {
     }
 
     @Override
-    public void onUpdatedSuccess(CharSequence s) {
+    public void orderCheckoutSuccess(CharSequence s) {
         view.hideLoader();
         view.clearAll();
-        view.showMessage(s);
+        view.orderCheckoutSuccess(s);
     }
 
     @Override
@@ -88,16 +93,28 @@ public class OrderPresenterImpl implements IOrderPresenter, OnOrderListener {
 
     public void buildTotalPrice(List<OrderDetailModel> orderDetails) {
         amount = 0.0;
+        double beforeAmount = preferences.getCurrentAmount();
 
         for (OrderDetailModel orderDetail : orderDetails)
             amount = (orderDetail.getPlateSize().getPrice() * orderDetail.getCounter()) + amount;
+
+        //If is requiered
+        updateFlag(beforeAmount);
+
 
         if (amount > MIN_PRICE_TO_DISCOUNT)
             view.printDiscount(amount, getPriceWithDiscount(amount), printPercent());
         else
             view.printAmount(amount);
 
+        //Save value
+        preferences.saveCurrentAmount(amount);
 
+    }
+
+    private void updateFlag(double beforeAmount) {
+        if (beforeAmount != amount)
+            flagSave = true;
     }
 
     private CharSequence printPercent() {
@@ -118,5 +135,18 @@ public class OrderPresenterImpl implements IOrderPresenter, OnOrderListener {
         iteractor.sendPayment((amount > MIN_PRICE_TO_DISCOUNT) ? getPriceWithDiscount(amount) : amount, this);
     }
 
+    public void saveChanges(List<OrderDetailModel> details) {
+        if (flagSave)
+            iteractor.saveAllChanges(amount, details, mActivity.getApplicationContext(), new OrderIteractorImpl.OnSaveListener() {
+                @Override
+                public void onSuccess() {
+                    flagSave = false;
+                }
+            });
+    }
 
+    @Override
+    public void sendPushNotification() {
+        iteractor.makePushNotification();
+    }
 }

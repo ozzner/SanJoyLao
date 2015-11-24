@@ -81,42 +81,42 @@ public class MainPresenterImpl {
 
             case ENTREE:
                 mView.displayFragment(HomeFragment.newInstance(), false);
-                mView.updateTitle(mainActivity.getString(R.string.item_title_entree));
+                mView.updateSubtitle(mainActivity.getString(R.string.item_title_entree));
                 mView.collapse(true);
                 break;
             case SOUP:
                 mView.displayFragment(HomeFragment.newInstance(), false);
-                mView.updateTitle(mainActivity.getString(R.string.item_title_soup));
+                mView.updateSubtitle(mainActivity.getString(R.string.item_title_soup));
                 mView.collapse(true);
                 break;
             case CATEGORY:
                 mView.displayFragment(CategoryFragment.newInstance(),true);
-                mView.updateTitle(mainActivity.getString(R.string.item_title_category));
+                mView.updateSubtitle(mainActivity.getString(R.string.item_title_category));
                 mView.collapse(false);
                 break;
             case CHEF:
                 mView.displayFragment(HomeFragment.newInstance(), false);
-                mView.updateTitle(mainActivity.getString(R.string.item_title_chef));
+                mView.updateSubtitle(mainActivity.getString(R.string.item_title_chef));
                 mView.collapse(true);
                 break;
             case BANQUET:
                 mView.displayFragment(HomeFragment.newInstance(), false);
-                mView.updateTitle(mainActivity.getString(R.string.item_title_banquet));
+                mView.updateSubtitle(mainActivity.getString(R.string.item_title_banquet));
                 mView.collapse(true);
                 break;
             case DRINKS:
                 mView.displayFragment(HomeFragment.newInstance(), false);
-                mView.updateTitle(mainActivity.getString(R.string.item_title_drinks));
+                mView.updateSubtitle(mainActivity.getString(R.string.item_title_drinks));
                 mView.collapse(true);
                 break;
             case CENTRAL:
                 mView.displayFragment(HomeFragment.newInstance(), false);
-                mView.updateTitle(mainActivity.getString(R.string.item_title_category));
+                mView.updateSubtitle(mainActivity.getString(R.string.item_title_category));
                 mView.collapse(true);
                 break;
             default:
                 mView.displayFragment(HomeFragment.newInstance(), false);
-                mView.updateTitle(mainActivity.getString(R.string.app_name));
+                mView.updateSubtitle(mainActivity.getString(R.string.app_name));
                 mView.collapse(true);
                 break;
         }

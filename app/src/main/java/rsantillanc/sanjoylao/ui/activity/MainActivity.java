@@ -150,17 +150,17 @@ public class MainActivity extends BaseActivity
         setUpOrientation();
         setUpProfile();
         mAppbarLayout.setExpanded(false);
-        setupTitle(getString(R.string.app_name), ((UserModel) getIntent().getExtras().getSerializable(Const.EXTRA_USER)));
+        setupTitleTitles(getString(R.string.app_name), getString(R.string.home));
 
     }
 
-    private void setupTitle(String title, UserModel serializable) {
+    private void setupTitleTitles(String title, String subtitle) {
         tvTitle.setText(title);
-        tvSubtitle.setText(serializable.getFullName());
+        tvSubtitle.setText(subtitle);
     }
 
-    public void updateTitle(CharSequence title) {
-        tvTitle.setText(title);
+    public void updateSubtitle(CharSequence title) {
+        tvSubtitle.setText(title);
     }
 
 

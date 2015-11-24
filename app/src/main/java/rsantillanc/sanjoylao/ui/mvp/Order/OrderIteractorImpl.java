@@ -9,6 +9,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.parse.ParsePush;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -43,6 +44,7 @@ import rsantillanc.sanjoylao.util.SJLStrings;
 public class OrderIteractorImpl implements IOrderIteractor {
 
     private Handler handler = new Handler(Looper.myLooper());
+
 
     @Override
     public void getOrdersFromServer(String orderID, final OnOrderListener listener, final Context c) {
@@ -100,6 +102,20 @@ public class OrderIteractorImpl implements IOrderIteractor {
 
         } else
             createOrder(c, plateSize, user, listener);
+    }
+
+    @Override
+    public void makePushNotification() {
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                ParsePush push = new ParsePush();
+                push.setChannel(Const.SJL_CHANNEL);
+                push.setMessage("Su orden ha esta lista.");
+                push.sendInBackground();
+            }
+        }, 30000);
+
     }
 
     private void updateCounterItemOrder(final Context c, final OrderDetailModel orderDetail, final OnOrderListener listener, boolean isIncrement) {
@@ -366,7 +382,6 @@ public class OrderIteractorImpl implements IOrderIteractor {
         });
 
         //Server
-
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(ConstAPI.PARSE_URL_BASE)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -376,10 +391,10 @@ public class OrderIteractorImpl implements IOrderIteractor {
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Response<JsonObject> response, Retrofit retrofit) {
-                if (response != null){
+                if (response != null) {
                     Log.e(Const.DEBUG, "Order Updated server OK!. ");
-                    listener.onUpdatedSuccess("Correct!");
-                }else {
+                    listener.orderCheckoutSuccess("Correct!");
+                } else {
                     listener.errorUpdating("Error inténtelo de nuevo");
                     Log.e(Const.DEBUG, "Order Updated server error!. ");
                 }
@@ -397,7 +412,38 @@ public class OrderIteractorImpl implements IOrderIteractor {
 
     private JsonObject buildBodyJson(StatusModel status) {
         JsonObject json = new JsonObject();
-        json.addProperty("idStatus",status.getObjectId());
+        json.addProperty("idStatus", status.getObjectId());
         return json;
+    }
+
+    public void saveAllChanges(final double currentAmount, final List<OrderDetailModel> details, final Context c, final OnSaveListener save) {
+
+        new Thread(new Runnable() {
+
+            @Override
+            public void run() {
+
+                if (details.size()>0){
+
+                    int x = 0;
+                    for (OrderDetailModel detail : details)
+                        x += new OrderDao(c).updateCounter(detail);
+                    Log.e(Const.DEBUG, "update counters: " + x);
+
+                    OrderModel currentOrder = details.get(0).getOrder();
+                    currentOrder.setPrice(currentAmount);
+                    int i = new OrderDao(c).updatePrice(currentOrder);
+                    if (i > 0)
+                        save.onSuccess();
+
+                    Log.e(Const.DEBUG, "update price: " + i);
+                }
+
+            }
+        }).start();
+    }
+
+    public interface OnSaveListener {
+        void onSuccess();
     }
 }

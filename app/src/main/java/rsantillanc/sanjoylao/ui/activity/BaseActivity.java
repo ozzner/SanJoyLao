@@ -16,12 +16,12 @@ public class BaseActivity extends AppCompatActivity {
         _context = getApplicationContext();
     }
 
-    protected void showToast(CharSequence sequence){
-        Toast.makeText(getApplicationContext(),sequence,Toast.LENGTH_SHORT).show();
+    protected void showToast(CharSequence sequence) {
+        Toast.makeText(getApplicationContext(), sequence, Toast.LENGTH_SHORT).show();
     }
 
-    protected void showSnackbar(CharSequence message, View view){
-        Snackbar.make(view,message, Snackbar.LENGTH_SHORT)
+    protected void showSnackbar(CharSequence message, View view, int value) {
+        Snackbar.make(view, message,value)
                 .setAction("Action", null).show();
     }
 }

@@ -259,7 +259,7 @@ public class OrderDao {
 
     public int updateCounter(OrderDetailModel orderDetail) {
         ContentValues cv = new ContentValues(1);
-        cv.put(counter, orderDetail.getCounter() + 1);
+        cv.put(counter, orderDetail.getCounter());
         return db.update(Tables.ORDER_DETAIL, cv, objectIdDetail + COMPARE, new String[]{orderDetail.getObjectId()});
     }
 
@@ -267,6 +267,12 @@ public class OrderDao {
     public int updateOrderStatus(StatusModel status, OrderModel order) {
         ContentValues cv = new ContentValues();
         cv.put(idStatus, status.getObjectId());
+        return db.update(Tables.ORDERS, cv, objectId + COMPARE, new String[]{order.getObjectId()});
+    }
+
+    public int updatePrice(OrderModel order) {
+        ContentValues cv = new ContentValues();
+        cv.put(price, order.getPrice());
         return db.update(Tables.ORDERS, cv, objectId + COMPARE, new String[]{order.getObjectId()});
     }
 }

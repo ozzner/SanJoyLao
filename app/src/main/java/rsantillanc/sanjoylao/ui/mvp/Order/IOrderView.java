@@ -20,4 +20,6 @@ public interface IOrderView {
     void clearAll();
 
     void showMessage(CharSequence sc);
+
+    void orderCheckoutSuccess(CharSequence s);
 }
