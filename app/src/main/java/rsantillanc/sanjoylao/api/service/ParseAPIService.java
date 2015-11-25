@@ -160,7 +160,7 @@ public interface ParseAPIService {
             "X-Parse-REST-API-Key: 6xr428CvfJT8WMGByPUhfvJWmFaxjozudaPy9bUB",
             "Content-Type: application/json"
     })
-    @GET("classes/Comment?include=idPlate.idCategory,idUser")
+    @GET("classes/Comment?include=idPlate.idCategory,idUser&order=-createdAt")
     Call<CommentModel> findCommentsBy(@Query(value = "where", encoded = true) String jsonFilter);
 
 

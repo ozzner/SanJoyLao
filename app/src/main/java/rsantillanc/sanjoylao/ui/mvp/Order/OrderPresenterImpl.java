@@ -126,7 +126,7 @@ public class OrderPresenterImpl implements IOrderPresenter, OnOrderListener {
     }
 
 
-    public void deleteAnItemDetail(Context c, OrderDetailModel itemDetail) {
+    public void deleteItemDetail(Context c, OrderDetailModel itemDetail) {
         iteractor.callDeleteDetail(c, itemDetail, this);
     }
 

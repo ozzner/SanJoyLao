@@ -1,5 +1,6 @@
 package rsantillanc.sanjoylao.ui.custom.dialog;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -9,6 +10,7 @@ import android.support.v4.app.DialogFragment;
 
 import rsantillanc.sanjoylao.R;
 import rsantillanc.sanjoylao.model.PlateModel;
+import rsantillanc.sanjoylao.util.OnPositiveListener;
 
 /**
  * Created by RenzoD on 20/06/2015.
@@ -56,7 +58,35 @@ public class SJLAlertDialog extends DialogFragment {
         dialog.show();
     }
 
+    public static void showWarningAlert(Activity act, final OnPositiveListener positive,CharSequence message) {
+        Resources src = act.getResources();
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(act);
+        builder .setTitle(act.getString(R.string.warning))
+                .setMessage(message)
+                .setPositiveButton(act.getString(R.string.yes), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        positive.positiveClick();
+                    }
+                })
+                .setNegativeButton(act.getString(R.string.cancel), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.cancel();
+                    }
+                });
+
+
+
+
+        Dialog mDialog = builder.create();
+        mDialog.show();
+    }
+
     public interface OnSJLAlertDialogListener {
         void onClick(DialogInterface dialog, int index);
     }
+
+
 }

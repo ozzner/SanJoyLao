@@ -12,5 +12,8 @@ public interface IPlateDetailView {
     void onError(CharSequence cs);
     void showLoader();
     void hideLoader();
+    void hideAddNew();
+    void showAddNew();
     void showMessage(String s);
+    void addComment(CommentModel newComment);
 }
