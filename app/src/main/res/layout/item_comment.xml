@@ -6,17 +6,17 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
+    android:minHeight="@dimen/min_height_item_comment"
     android:padding="@dimen/space_4dp">
 
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="90dp"
-            android:layout_height="70dp"
-            android:minWidth="70dp"
+            android:layout_height="wrap_content"
             android:paddingLeft="@dimen/space_8dp"
             android:paddingTop="@dimen/space_8dp"
             android:gravity="top|left">
@@ -33,6 +33,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
+            android:layout_gravity="bottom|end"
             android:layout_height="match_parent">
 
             <TextView
@@ -42,6 +43,7 @@
                 android:layout_marginLeft="@dimen/space_4dp"
                 android:textColor="@color/gray_color_3"
                 android:gravity="center"
+                android:layout_gravity="bottom"
                 android:textSize="@dimen/txt_12sp"
                 android:text="@string/default_datatime" />
         </LinearLayout>
@@ -50,7 +52,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         android:paddingTop="@dimen/space_8dp"
         android:paddingRight="@dimen/space_8dp"
@@ -83,9 +85,8 @@
                 android:id="@+id/tv_comment_message"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:inputType="textMultiLine"
                 android:textColor="@color/black_light"
-                android:text="@string/lorem_ipsum" />
+                android:text="@string/default_text" />
         </LinearLayout>
 
 

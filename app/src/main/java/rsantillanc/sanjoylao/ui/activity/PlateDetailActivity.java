@@ -124,7 +124,7 @@ public class PlateDetailActivity extends BaseActivity implements IPlateDetailVie
     public void onCommentsSuccess(List<CommentModel> listComments) {
         mAdapter = new RecyclerCommentAdapter(listComments, getApplicationContext());
         rcvComments.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        rcvComments.setHasFixedSize(true);
+        rcvComments.setHasFixedSize(false);
         rcvComments.addItemDecoration(new DividerItemDecoration(getApplicationContext(), DividerItemDecoration.VERTICAL_LIST));
         rcvComments.setItemAnimator(new DefaultItemAnimator());
         rcvComments.setAdapter(mAdapter);

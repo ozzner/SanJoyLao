@@ -77,4 +77,5 @@
     <dimen name="txt_17sp">17sp</dimen>
     <dimen name="add_new">16sp</dimen>
     <dimen name="add_new_width">200dp</dimen>
+    <dimen name="min_height_item_comment">105dp</dimen>
 </resources>
