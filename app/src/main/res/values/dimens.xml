@@ -71,4 +71,11 @@
     <dimen name="height_title_plate">50dp</dimen>
     <dimen name="width_order_count">28dp</dimen>
     <dimen name="space_30dp">30dp</dimen>
+    <dimen name="custom_title_size_toolbar">17sp</dimen>
+    <dimen name="custom_subtitle_size_toolbar">14sp</dimen>
+    <dimen name="space_7dp">7dp</dimen>
+    <dimen name="txt_17sp">17sp</dimen>
+    <dimen name="add_new">16sp</dimen>
+    <dimen name="add_new_width">200dp</dimen>
+    <dimen name="min_height_item_comment">105dp</dimen>
 </resources>

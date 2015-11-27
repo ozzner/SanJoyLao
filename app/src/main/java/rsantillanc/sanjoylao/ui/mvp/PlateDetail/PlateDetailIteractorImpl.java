@@ -42,7 +42,13 @@ public class PlateDetailIteractorImpl {
             @Override
             public void onResponse(Response<CommentModel> response, Retrofit retrofit) {
                 if (response.isSuccess()) {
-                    listener.onCommentsLoadSuccess((List<CommentModel>) response.body());
+                    List<CommentModel> comments = (List<CommentModel>) response.body();
+
+                    if (comments.isEmpty())
+                        listener.onCommentEmpty();
+                    else
+                        listener.onCommentsLoadSuccess(comments);
+
                 } else {
                     listener.onFailure("No hay datos.");
                 }
@@ -79,27 +85,28 @@ public class PlateDetailIteractorImpl {
         JsonElement plate = gson.toJsonTree(new ParsePointerModel(Const.CLASS_PLATE, idPlate.toString()));
         JsonElement user = gson.toJsonTree(new ParsePointerModel(Const.CLASS_USER, idUser.toString()));
 
-        body.addProperty("comment",comment);
+        body.addProperty("comment", comment);
         body.add("idPlate", plate);
-        body.add("idUser",user);
+        body.add("idUser", user);
 
         return body;
     }
 
 
-    public void sendComment(PlateModel plate, UserModel user, String comment, final OnPlateDetailListener listener) {
+    public void sendComment(final PlateModel plate, final UserModel user, final String comment, final OnPlateDetailListener listener) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(ConstAPI.PARSE_URL_BASE)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-        Call<JsonObject> call = retrofit.create(ParseAPIService.class).newComment(makeJson(plate.getObjectId(),user.getObjectId(),comment));
+        Call<JsonObject> call = retrofit.create(ParseAPIService.class).newComment(makeJson(plate.getObjectId(), user.getObjectId(), comment));
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Response<JsonObject> response, Retrofit retrofit) {
                 if (response.body() != null) {
                     Log.e(Const.DEBUG, "onResponse: " + response.body().toString());
                     listener.onCommentSendSuccess("Gracias.");
+                    listener.addRecentlyComment(makeNewComment(response.body(), comment, user, plate));
                 } else {
                     listener.onFailure("Se enviará más tarde.");
                 }
@@ -110,5 +117,16 @@ public class PlateDetailIteractorImpl {
                 listener.onFailure(t.getMessage());
             }
         });
+    }
+
+    private CommentModel makeNewComment(JsonObject body, String comment, UserModel user, PlateModel plate) {
+        CommentModel obj = new CommentModel();
+        obj.setUser(user);
+        obj.setObjectId(body.get("objectId").getAsString());
+        obj.setCreatedAt(body.get("createdAt").getAsString());
+        obj.setComment(comment);
+        obj.setPlate(plate);
+
+        return obj;
     }
 }

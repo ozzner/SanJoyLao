@@ -55,7 +55,6 @@ public class OrderActivity extends BaseActivity implements
     //Globals
     private LinearLayoutManager mLinearLayoutManager;
     private RecyclerOrderAdapter mOrdersAdapter;
-    private double amount = 0.0;
 
     //MVP
     private OrderPresenterImpl presenter;
@@ -214,10 +213,10 @@ public class OrderActivity extends BaseActivity implements
             if (mOrdersAdapter == null) {
                 showMessage(getString(R.string.error_empty_orders));
                 return;
-            }
-
-            if (!mOrdersAdapter.getDetails().isEmpty() || mOrdersAdapter.getDetails().size() > 0)
+            } else if (!mOrdersAdapter.getDetails().isEmpty() || mOrdersAdapter.getDetails().size() > 0)
                 presenter.processPayment();
+            else
+                showMessage(getString(R.string.error_empty_orders));
 
         }
     }
@@ -238,7 +237,7 @@ public class OrderActivity extends BaseActivity implements
 
     @Override
     public void onOrderDetailsLoaded(List<OrderDetailModel> orders) {
-        mOrdersAdapter = new RecyclerOrderAdapter(orders, _context);
+        mOrdersAdapter = new RecyclerOrderAdapter(orders, this);
         mOrdersAdapter.setOnItemClickListener(this);
         mRecyclerView.setAdapter(mOrdersAdapter);
     }
@@ -309,7 +308,7 @@ public class OrderActivity extends BaseActivity implements
                         "        Es usual consumirla previa a un plato de fondo como Chow mein o arroz frito.\n" +
                         "        </font><br><br><br>" +
                         "        <h4><font color='#D32F2F'>" + getString(R.string.label_ingredients) + "</font></h4>" +
-                        "        Wantan, pollo, langostino, chancho, pato, huevo de codorniz.\n<br><br><br>" +
+                        "        Wantan, pollo, langostino, chancho, pato, huevo de codorniz." +
                         "        </p>" +
                         "";
         plate.setIngredients(Html.fromHtml(HTML_BODY));
@@ -330,7 +329,7 @@ public class OrderActivity extends BaseActivity implements
 
     @Override
     public void onDeleteItem(OrderDetailModel itemDetail) {
-        presenter.deleteAnItemDetail(getApplicationContext(), itemDetail);
+        presenter.deleteItemDetail(getApplicationContext(), itemDetail);
         presenter.buildTotalPrice(mOrdersAdapter.getDetails());
         mOrdersAdapter.notifyDataSetChanged();
     }
@@ -338,6 +337,7 @@ public class OrderActivity extends BaseActivity implements
     @Override
     public void onDeleteSuccess(CharSequence message) {
         showMessage(message);
+        mOrdersAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -394,6 +394,5 @@ public class OrderActivity extends BaseActivity implements
                 }).show();
         presenter.sendPushNotification();
     }
-
 
 }

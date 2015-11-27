@@ -126,7 +126,7 @@ public interface ParseAPIService {
             "X-Parse-Application-Id: RTM3ioKCBgaAJjXmDRr493sb13uYzGrMnePLhzhm",
             "X-Parse-REST-API-Key: 6xr428CvfJT8WMGByPUhfvJWmFaxjozudaPy9bUB",
     })
-    @GET("classes/OrderDetail?include=idOrder.idUser,idOrder.idStatus,idPlateSize.idPlate.idCategory,idPlateSize.idSize")
+    @GET("classes/OrderDetail?include=idOrder.idUser,idOrder.idStatus,idPlateSize.idPlate.idCategory,idPlateSize.idSize&order=-createdAt")
     Call<OrderDetailModel> getOrdersDetails(@Query(value = "where", encoded = true) String jsonFilter);
 
 
@@ -160,7 +160,7 @@ public interface ParseAPIService {
             "X-Parse-REST-API-Key: 6xr428CvfJT8WMGByPUhfvJWmFaxjozudaPy9bUB",
             "Content-Type: application/json"
     })
-    @GET("classes/Comment?include=idPlate.idCategory,idUser")
+    @GET("classes/Comment?include=idPlate.idCategory,idUser&order=-createdAt")
     Call<CommentModel> findCommentsBy(@Query(value = "where", encoded = true) String jsonFilter);
 
 

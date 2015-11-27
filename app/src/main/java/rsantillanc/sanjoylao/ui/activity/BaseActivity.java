@@ -24,4 +24,8 @@ public class BaseActivity extends AppCompatActivity {
         Snackbar.make(view, message,value)
                 .setAction("Action", null).show();
     }
+
+    public void showMessage(CharSequence sc) {
+        showToast(sc);
+    }
 }

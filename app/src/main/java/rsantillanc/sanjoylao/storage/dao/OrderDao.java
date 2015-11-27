@@ -142,7 +142,7 @@ public class OrderDao {
     }
 
     public List<OrderDetailModel> getOrderDetailsByOrderID(String orderID) {
-        Cursor cur = db.query(Tables.ORDER_DETAIL, null, idOrder + COMPARE, new String[]{orderID}, null, null, null);
+        Cursor cur = db.query(Tables.ORDER_DETAIL, null, idOrder + COMPARE, new String[]{orderID}, null, null, createdAt + " ASC");
         return loopDetails(cur, new ArrayList<OrderDetailModel>());
     }
 
@@ -173,7 +173,7 @@ public class OrderDao {
     }
 
     public List<OrderModel> getOrders(String userID, Context c) {
-        Cursor cur = db.query(Tables.ORDERS, null, idUser + COMPARE, new String[]{userID}, null, null, createdAt + " desc");
+        Cursor cur = db.query(Tables.ORDERS, null, idUser + COMPARE, new String[]{userID}, null, null, createdAt + " ASC");
         return loopOrders(cur, new ArrayList<OrderModel>(), c);
     }
 

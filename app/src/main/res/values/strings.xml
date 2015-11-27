@@ -131,5 +131,11 @@
     <string name="error_empty_orders">No hay pedidos.</string>
     <string name="home">Inicio</string>
     <string name="action_goto_order">Ir a pedido.</string>
+    <string name="warning">Atención</string>
+    <string name="alert_delete_order_item">¿Seguro de eliminar este pedido?</string>
+    <string name="yes">Si</string>
+    <string name="add_new_comment">Toque aquí para ser el primero en comentar.</string>
+    <string name="error_validate_fields">No debe haber campos vacios.</string>
+    <string name="message_save_correct">Datos guardados correctamente.</string>
 
 </resources>

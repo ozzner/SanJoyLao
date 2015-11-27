@@ -11,4 +11,6 @@ public interface OnPlateDetailListener {
     void onCommentsLoadSuccess(List<CommentModel> comments);
     void onFailure(CharSequence sequence);
     void onCommentSendSuccess(String s);
+    void onCommentEmpty();
+    void addRecentlyComment(CommentModel newComment);
 }

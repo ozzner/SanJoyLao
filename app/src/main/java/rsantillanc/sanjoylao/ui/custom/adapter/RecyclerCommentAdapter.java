@@ -26,7 +26,7 @@ public class RecyclerCommentAdapter extends RecyclerView.Adapter<RecyclerComment
     private LayoutInflater layIn;
     private List<CommentModel> comments = Collections.EMPTY_LIST;
     private Context ctx;
-    //    private OnOrderItemClickListener mItemClickListener;
+
 
 
     public RecyclerCommentAdapter(List<CommentModel> list, Context ctx) {

@@ -64,33 +64,40 @@
                     android:layout_weight="3"
                     android:orientation="horizontal">
 
-                    <LinearLayout
+                    <FrameLayout
+                        android:id="@+id/lay_plate_detail_zoom"
                         android:layout_width="@dimen/space_0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:background="@drawable/selector_item_list"
                         android:gravity="center">
 
                         <ImageView
+
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_gravity="center"
                             android:src="@drawable/vec_image_preview"
                             android:tint="@color/white" />
 
-                    </LinearLayout>
+                    </FrameLayout>
 
-                    <LinearLayout
+                    <FrameLayout
+                        android:id="@+id/lay_plate_detail_ingredients"
                         android:layout_width="@dimen/space_0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:background="@drawable/selector_item_list"
                         android:gravity="center">
 
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_gravity="center"
                             android:src="@drawable/vec_ingredients"
                             android:tint="@color/white" />
 
-                    </LinearLayout>
+                    </FrameLayout>
 
                 </LinearLayout>
             </LinearLayout>
@@ -100,9 +107,11 @@
 
     <!-- Body-->
     <LinearLayout
+        android:id="@+id/lay_body"
         android:layout_width="match_parent"
         android:layout_height="@dimen/space_0dp"
         android:layout_weight="1.75"
+        android:visibility="gone"
         android:gravity="center"
         android:orientation="vertical">
 
@@ -122,4 +131,29 @@
 
     </LinearLayout>
 
-</LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/lay_add_new"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_0dp"
+        android:layout_weight="1.48"
+        android:visibility="gone"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="@dimen/add_new_width"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/add_new_comment"
+            android:textSize="@dimen/add_new"/>
+        <ImageView
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:tint="@color/colorAccent"
+            android:src="@drawable/vec_add_new"/>
+
+    </LinearLayout>
+
+
+    </LinearLayout>

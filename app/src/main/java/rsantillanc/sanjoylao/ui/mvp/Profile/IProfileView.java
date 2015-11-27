@@ -6,10 +6,8 @@ package rsantillanc.sanjoylao.ui.mvp.Profile;
 public interface IProfileView {
     void showLoader();
     void hideLoader();
-    void valitateFields();
-    void enabledEdition();
-    void disabledEdition();
-    void statusOnline();
-    void statusOffline();
-    void updateUserProfile();
+    void validateFieldsError();
+    void validateFieldsOk();
+
+
 }
