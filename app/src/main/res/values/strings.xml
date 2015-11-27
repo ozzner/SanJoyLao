@@ -83,7 +83,7 @@
 
     <!--Bookings-->
     <string name="booking_table">Servicio a la mesa</string>
-    <string name="booking_order">Reservar una orden</string>
+    <string name="booking_order">Reservar</string>
     <string name="booking_delivery">Delivery</string>
     <string name="title_activity_survey">Encuesta</string>
     <string name="action_settings">Settings</string>
@@ -97,8 +97,8 @@
 
     <!-- Keys -->
     <string name="facebook_app_id">630010387139153</string>
-    <string name="login_with_facebook">Facebook...</string>
-    <string name="login_with_google">Google...</string>
+    <string name="login_with_facebook">Facebook</string>
+    <string name="login_with_google">Google +</string>
     <string name="action_login_info">Information</string>
     <string name="toast_error_null">Objecto nulo</string>
     <string name="progress_message_registering">Registrando...</string>
@@ -137,5 +137,8 @@
     <string name="add_new_comment">Toque aquí para ser el primero en comentar.</string>
     <string name="error_validate_fields">No debe haber campos vacios.</string>
     <string name="message_save_correct">Datos guardados correctamente.</string>
+    <string name="title_dialog_do_order">Realizar pedido</string>
+    <string name="hint_card_number">Credit card code</string>
+    <string name="hint_address">My address</string>
 
 </resources>

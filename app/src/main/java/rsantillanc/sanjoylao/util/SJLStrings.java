@@ -59,7 +59,7 @@ public class SJLStrings {
     }
 
     public static Typeface getSJLFont(Context c){
-        return Typeface.createFromAsset(c.getAssets(), "fonts/deng_th_.ttf");
+        return Typeface.createFromAsset(c.getAssets(), "fonts/sjl_price.ttf");
     }
 
     public static String getUrlEncoded(String jsonFilter) {
