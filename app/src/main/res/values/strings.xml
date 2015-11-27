@@ -135,5 +135,7 @@
     <string name="alert_delete_order_item">¿Seguro de eliminar este pedido?</string>
     <string name="yes">Si</string>
     <string name="add_new_comment">Toque aquí para ser el primero en comentar.</string>
+    <string name="error_validate_fields">No debe haber campos vacios.</string>
+    <string name="message_save_correct">Datos guardados correctamente.</string>
 
 </resources>

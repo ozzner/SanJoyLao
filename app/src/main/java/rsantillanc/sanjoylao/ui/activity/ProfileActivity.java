@@ -4,21 +4,29 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import rsantillanc.sanjoylao.R;
 import rsantillanc.sanjoylao.model.UserModel;
 import rsantillanc.sanjoylao.ui.custom.adapter.ViewPagerAdapter;
+import rsantillanc.sanjoylao.ui.fragment.AccountFragment;
+import rsantillanc.sanjoylao.ui.fragment.FavoriteFragment;
+import rsantillanc.sanjoylao.ui.mvp.Profile.IProfileView;
+import rsantillanc.sanjoylao.ui.mvp.Profile.ProfilePresenterImpl;
 import rsantillanc.sanjoylao.util.Android;
 import rsantillanc.sanjoylao.util.Const;
 import rsantillanc.sanjoylao.util.SJLDates;
 import rsantillanc.sanjoylao.util.SJLStrings;
 
-public class ProfileActivity extends BaseActivity implements View.OnClickListener {
+public class ProfileActivity extends BaseActivity implements View.OnClickListener,IProfileView {
 
     //Views
     private FloatingActionButton mFloatingActionButton;
@@ -32,10 +40,16 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
             R.drawable.ic_favorite
     };
 
+    private ProfilePresenterImpl presenter;
+    private ViewPagerAdapter pagerAdapter;
+    private List<Fragment> fragments;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+        //First
+        init();
 
         //Init views
         initUIComponents();
@@ -43,6 +57,11 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
         //Config
         setupUIComponents();
 
+    }
+
+    private void init() {
+        presenter = new ProfilePresenterImpl(this);
+        fragments = new ArrayList<>();
     }
 
 
@@ -60,11 +79,17 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
     }
 
     private void setUpViewPager() {
-        ViewPagerAdapter pager = new ViewPagerAdapter(
+        buildFragments();
+        pagerAdapter = new ViewPagerAdapter(
                 getSupportFragmentManager(),
-                loadTitles(),
-                (UserModel) getIntent().getExtras().getSerializable(Const.EXTRA_USER));
-        mViewPager.setAdapter(pager);
+                loadTitles(),getFragments());
+        mViewPager.setAdapter(pagerAdapter);
+    }
+
+    private void buildFragments() {
+        fragments.add(new AccountFragment((UserModel) getIntent().getExtras().getSerializable(Const.EXTRA_USER)));
+        fragments.add(new FavoriteFragment());
+        setFragments(fragments);
     }
 
     private void setupTabIcons() {
@@ -73,8 +98,15 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
     }
 
     private String[] loadTitles() {
-        String[] titles = getResources().getStringArray(R.array.tabs_profile);
-        return titles;
+       return getResources().getStringArray(R.array.tabs_profile);
+    }
+
+    public List<Fragment> getFragments() {
+        return fragments;
+    }
+
+    public void setFragments(List<Fragment> fragments) {
+        this.fragments = fragments;
     }
 
     //---------------------- [SETUPS COMPONENTS]
@@ -83,6 +115,7 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
         setUpTabLayout();
         setUpToolbar((UserModel) getIntent().getExtras().getSerializable(Const.EXTRA_USER));
         setUpFloatingButton();
+
     }
 
     private void setUpFloatingButton() {
@@ -100,7 +133,7 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_order, menu);
+        getMenuInflater().inflate(R.menu.menu_profile, menu);
 //        int color = getResources().getColor(R.color.white);
 //        MenuColorizer.colorMenu(this, menu, color);
         return true;
@@ -111,8 +144,8 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_orders_history) {
-            showToast("San Joy Lao | V." + Android.getAppVersion(this));
+        if (id == R.id.action_profile_about) {
+            showToast(getString(R.string.app_name) + Android.getAppVersion(this));
             return true;
         } else {
             goToMainActivity((UserModel) getIntent().getExtras().getSerializable(Const.EXTRA_USER));
@@ -138,6 +171,33 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
     //---------------------- [CALLBAKCS]
     @Override
     public void onClick(View v) {
+        if (v instanceof FloatingActionButton);
+        presenter.validateFields(((AccountFragment) getFragments().get(0)).getFields());
 
     }
+
+    @Override
+    public void showLoader() {
+
+    }
+
+    @Override
+    public void hideLoader() {
+
+    }
+
+    @Override
+    public void validateFieldsError() {
+        showToast(getString(R.string.error_validate_fields));
+    }
+
+    @Override
+    public void validateFieldsOk() {
+        presenter.save(((AccountFragment) getFragments().get(0)).getFields(),
+        (UserModel) getIntent().getExtras().getSerializable(Const.EXTRA_USER));
+    }
+
+
+
+
 }

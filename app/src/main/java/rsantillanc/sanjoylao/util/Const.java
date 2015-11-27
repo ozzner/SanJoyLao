@@ -17,7 +17,7 @@ public class Const {
     public static final float GRID_PADDING = 4;
     public static final String TAG_POR = "x";
     public static final String TAG_FACEBOOK = "facebook";
-    public static final String TAG_GOOGLE = "google plus";
+    public static final String TAG_GOOGLE = "google +";
     public static final String PERCENT_OPERATOR = "%";
     public static final String THREE_DOTS = "...";
 

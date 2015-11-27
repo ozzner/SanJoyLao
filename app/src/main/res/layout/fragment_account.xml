@@ -52,7 +52,7 @@
                             android:layout_width="40dp"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            circle:circleRadius="7dp"
+                            circle:circleRadius="5dp"
                             circle:strokeWidth="0dp"
                             circle:circleGap="0dp"
                             circle:fillColor="@color/my_green"
@@ -241,6 +241,7 @@
                             android:tint="@color/gray"
                             android:scaleType="center"
                             android:padding="@dimen/space_4dp"
+                            android:background="@drawable/selector_item_list"
                             android:src="@drawable/ic_edit" />
 
                     </LinearLayout>

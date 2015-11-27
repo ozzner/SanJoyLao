@@ -15,7 +15,7 @@ import rsantillanc.sanjoylao.util.Const;
 /**
  * Created by RenzoD on 21/10/2015.
  */
-public class UserDao implements BaseColumns {
+public class UserDao extends BaseDao implements BaseColumns {
 
     //Const
     private static final String SELECT = "Select * from ";
@@ -151,5 +151,13 @@ public class UserDao implements BaseColumns {
         ContentValues cv = new ContentValues();
         cv.put(isEnabled, Const.USER_ENABLED);
         db.update(Tables.USER, cv, this.email + "=?", new String[]{email});
+    }
+
+    public int update(UserModel user) {
+        ContentValues cv = new ContentValues();
+        cv.put(identificationDocument,user.getIdentificationDocument());
+        cv.put(phoneNumber,user.getPhoneNumber());
+        cv.put(birthday,user.getBirthday());
+        return db.update(Tables.USER,cv,objectId + COMPARE,new String[] {user.getObjectId()});
     }
 }
