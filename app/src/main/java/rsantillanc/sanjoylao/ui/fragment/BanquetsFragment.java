@@ -123,7 +123,7 @@ public class BanquetsFragment extends Fragment {
 //                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
 //                    Fragment gotToFront = new HomeFragment(new HomeFragment.OnLoadSuccess() {
 //                        @Override
-//                        public void viewloaded() {
+//                        public void viewLoaded() {
 //                        }
 //                    },true);
 //                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();

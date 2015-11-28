@@ -59,7 +59,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     public void onResume() {
         super.onResume();
         if (isLoad)
-            load.viewloaded();
+            load.viewLoaded();
     }
 
     @Override
@@ -75,7 +75,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     }
 
     public interface OnLoadSuccess{
-        void viewloaded();
+        void viewLoaded();
     }
 
 

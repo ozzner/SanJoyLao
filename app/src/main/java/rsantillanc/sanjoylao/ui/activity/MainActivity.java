@@ -62,10 +62,8 @@ public class MainActivity extends BaseActivity
 
 
     //Global vars
-    private int typeOfDevice = -1;
     private Context mContext = null;
     private boolean backPressedToExitOnce = false;
-    private Bundle mBundle = null;
     private static AppBarLayout mAppbarLayout;
     private MainPresenterImpl mPresenter;
     private SJLApplication app;

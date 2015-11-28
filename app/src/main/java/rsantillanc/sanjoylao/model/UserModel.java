@@ -240,7 +240,7 @@ public class UserModel implements Serializable {
         this.identificationDocument = identificationDocument;
     }
 
-    //------------[ Innet class ]
+    //------------[ Inner class ]
 
 
 //    public class ParseDate {

@@ -43,6 +43,7 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
     private ProfilePresenterImpl presenter;
     private ViewPagerAdapter pagerAdapter;
     private List<Fragment> fragments;
+    private UserModel currentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +63,7 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
     private void init() {
         presenter = new ProfilePresenterImpl(this);
         fragments = new ArrayList<>();
+        currentUser = (UserModel) getIntent().getExtras().getSerializable(Const.EXTRA_USER);
     }
 
 
@@ -87,7 +89,7 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
     }
 
     private void buildFragments() {
-        fragments.add(new AccountFragment((UserModel) getIntent().getExtras().getSerializable(Const.EXTRA_USER)));
+        fragments.add(new AccountFragment(currentUser));
         fragments.add(new FavoriteFragment());
         setFragments(fragments);
     }
@@ -193,8 +195,7 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
 
     @Override
     public void validateFieldsOk() {
-        presenter.save(((AccountFragment) getFragments().get(0)).getFields(),
-        (UserModel) getIntent().getExtras().getSerializable(Const.EXTRA_USER));
+        presenter.save(((AccountFragment) getFragments().get(0)).getFields(),currentUser);
     }
 
 

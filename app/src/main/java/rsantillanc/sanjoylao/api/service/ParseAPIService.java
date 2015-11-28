@@ -6,6 +6,7 @@ import retrofit.Call;
 import retrofit.http.Body;
 import retrofit.http.DELETE;
 import retrofit.http.GET;
+import retrofit.http.Header;
 import retrofit.http.Headers;
 import retrofit.http.POST;
 import retrofit.http.PUT;
@@ -181,4 +182,12 @@ public interface ParseAPIService {
     @PUT("classes/Order/{objectId}")
     Call<JsonObject> updateOrderStatus(@Body JsonObject json, @Path("objectId") String objectId);
 
+
+    @Headers({
+            "X-Parse-Application-Id: RTM3ioKCBgaAJjXmDRr493sb13uYzGrMnePLhzhm",
+            "X-Parse-REST-API-Key: 6xr428CvfJT8WMGByPUhfvJWmFaxjozudaPy9bUB",
+            "Content-Type: application/json"
+    })
+    @PUT("users/{objectId}")
+    Call<JsonObject> updateUser(@Body String jsonUser, @Path("objectId") String objectId,@Header("X-Parse-Session-Token") String token);
 }

@@ -2,7 +2,8 @@ package rsantillanc.sanjoylao.ui.mvp.Order;
 
 import android.app.Activity;
 import android.content.Context;
-import android.widget.Toast;
+import android.os.Handler;
+import android.os.Looper;
 
 import java.util.List;
 
@@ -10,7 +11,6 @@ import rsantillanc.sanjoylao.R;
 import rsantillanc.sanjoylao.model.OrderDetailModel;
 import rsantillanc.sanjoylao.model.OrderModel;
 import rsantillanc.sanjoylao.storage.sp.SJLPreferences;
-import rsantillanc.sanjoylao.ui.custom.dialog.NewCommentDialog;
 import rsantillanc.sanjoylao.ui.custom.dialog.ProcessOrderDialog;
 import rsantillanc.sanjoylao.util.Const;
 
@@ -31,6 +31,7 @@ public class OrderPresenterImpl implements IOrderPresenter, OnOrderListener {
     public boolean flagSave = false;
     private SJLPreferences preferences;
     private ProcessOrderDialog processOrder;
+    private Handler handler;
 
     public OrderPresenterImpl(IOrderView view, Activity activity) {
         this.iteractor = new OrderIteractorImpl();
@@ -49,15 +50,21 @@ public class OrderPresenterImpl implements IOrderPresenter, OnOrderListener {
     //{On Order Listener}
     @Override
     public void onOrdersError(Context c, CharSequence error) {
-        Toast.makeText(c, error, Toast.LENGTH_SHORT).show();
+        view.showMessage(error);
         view.hideLoader();
     }
 
     @Override
-    public void onLoadDetails(Context c, List<OrderDetailModel> orderDetails) {
-        view.hideLoader();
-        view.onOrderDetailsLoaded(orderDetails);
-        buildTotalPrice(orderDetails);
+    public void onLoadDetails(Context c, final List<OrderDetailModel> orderDetails) {
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                view.hideLoader();
+                view.onOrderDetailsLoaded(orderDetails);
+                buildTotalPrice(orderDetails);
+            }
+        });
+
     }
 
     public void processOrder(OrderModel order) {
@@ -76,17 +83,30 @@ public class OrderPresenterImpl implements IOrderPresenter, OnOrderListener {
     }
 
     @Override
-    public void paymentCorrect(double amount) {
-        view.hideLoader();
-        view.enabledPaymentButton(false);
-        view.onPaymentSuccess(amount);
+    public void paymentCorrect(final double amount) {
+        handler = new Handler(Looper.myLooper());
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                view.hideLoader();
+                view.enabledPaymentButton(false);
+                view.onPaymentSuccess(amount);
+            }
+        });
+
     }
 
     @Override
-    public void orderCheckoutSuccess(CharSequence s) {
-        view.hideLoader();
-        view.clearAll();
-        view.orderCheckoutSuccess(s);
+    public void orderCheckoutSuccess(final CharSequence s) {
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                view.hideLoader();
+                view.clearAll();
+                view.orderCheckoutSuccess(s);
+            }
+        });
+
     }
 
     @Override

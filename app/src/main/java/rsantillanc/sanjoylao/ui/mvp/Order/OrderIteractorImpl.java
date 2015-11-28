@@ -306,7 +306,7 @@ public class OrderIteractorImpl implements IOrderIteractor {
     }
 
 
-    public void getOrdersFrom(Context c, OnOrderListener listener) {
+    public void getOrdersFrom(final Context c, final OnOrderListener listener) {
 
 
         if (countOrder(c) <= 0) {
@@ -316,7 +316,8 @@ public class OrderIteractorImpl implements IOrderIteractor {
 
         if (checkIfExistActiveOrder(c)) {
 
-            if (countDetails(c) >= 1)
+            if (countDetails(c) >= 1) {
+
                 //From device
                 listener.onLoadDetails(c,
                         new OrderDao(c).getOrderDetailsByOrderID(
@@ -324,7 +325,8 @@ public class OrderIteractorImpl implements IOrderIteractor {
                                         new StatusDao(c).getIdStatusByCode(Const.STATUS_TEMPORAL))
                                         .getObjectId()));
 
-            else
+
+            } else
                 //From server
                 getOrdersFromServer(
                         new OrderDao(c).getActiveOrderIfExist(
@@ -423,7 +425,7 @@ public class OrderIteractorImpl implements IOrderIteractor {
             @Override
             public void run() {
 
-                if (details.size()>0){
+                if (details.size() > 0) {
 
                     int x = 0;
                     for (OrderDetailModel detail : details)

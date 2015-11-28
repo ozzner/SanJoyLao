@@ -158,6 +158,7 @@ public class UserDao extends BaseDao implements BaseColumns {
         cv.put(identificationDocument,user.getIdentificationDocument());
         cv.put(phoneNumber,user.getPhoneNumber());
         cv.put(birthday,user.getBirthday());
+        cv.put(updatedAt,user.getUpdatedAt());
         return db.update(Tables.USER,cv,objectId + COMPARE,new String[] {user.getObjectId()});
     }
 }

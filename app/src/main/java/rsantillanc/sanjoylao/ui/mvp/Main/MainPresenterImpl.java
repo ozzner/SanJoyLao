@@ -116,7 +116,7 @@ public class MainPresenterImpl {
                 break;
             default:
                 mView.displayFragment(HomeFragment.newInstance(), false);
-                mView.updateSubtitle(mainActivity.getString(R.string.app_name));
+                mView.updateSubtitle(mainActivity.getString(R.string.home));
                 mView.collapse(true);
                 break;
         }
