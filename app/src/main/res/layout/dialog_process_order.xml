@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:gravity="center"
+        android:padding="16dp"
+        android:text="@string/title_dialog_do_order"
+        android:textColor="@color/white" />
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/tilName12"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/space_8dp">
+
+        <EditText
+            android:id="@+id/et_input_comment1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/hint_card_number"
+            android:paddingLeft="@dimen/space_10dp"
+            android:inputType="text"/>
+
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/tilName2"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/space_8dp">
+
+        <EditText
+            android:id="@+id/et_input_comment2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/hint_card_number"
+            android:paddingLeft="@dimen/space_10dp"
+            android:inputType="text"/>
+
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/tilName3"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/space_8dp">
+
+        <EditText
+            android:id="@+id/et_input_comment3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/hint_card_number"
+            android:paddingLeft="@dimen/space_10dp"
+            android:inputType="text"/>
+
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/tilName"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/space_8dp">
+
+        <EditText
+            android:id="@+id/et_input_comment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/hint_address"
+            android:paddingLeft="@dimen/space_10dp"
+            android:inputType="text"/>
+
+    </android.support.design.widget.TextInputLayout>
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingLeft="@dimen/space_10dp"
+    android:paddingRight="@dimen/space_10dp"
+    android:weightSum="2"
+    android:gravity="center"
+    android:orientation="horizontal">
+
+    <android.support.v7.widget.AppCompatRadioButton
+        android:id="@+id/app_rb_types_2"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:layout_height="wrap_content"
+        android:text="@string/booking_order"
+        android:padding="16dp">
+
+
+    </android.support.v7.widget.AppCompatRadioButton>
+    <android.support.v7.widget.AppCompatRadioButton
+        android:id="@+id/app_rb_types"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:checked="true"
+        android:layout_height="wrap_content"
+        android:text="@string/booking_delivery"
+        android:padding="16dp">
+
+
+
+    </android.support.v7.widget.AppCompatRadioButton>
+
+
+</LinearLayout>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray_color_0" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:gravity="end">
+
+        <Button
+            android:id="@+id/bt_cancel"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:text="@string/cancel"/>
+
+        <Button
+            android:id="@+id/bt_send"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:text="@string/button_send"
+            android:textColor="?attr/colorPrimary" />
+
+    </LinearLayout>
+
+</LinearLayout>

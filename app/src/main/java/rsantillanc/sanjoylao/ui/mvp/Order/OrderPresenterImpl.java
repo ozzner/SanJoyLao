@@ -10,6 +10,8 @@ import rsantillanc.sanjoylao.R;
 import rsantillanc.sanjoylao.model.OrderDetailModel;
 import rsantillanc.sanjoylao.model.OrderModel;
 import rsantillanc.sanjoylao.storage.sp.SJLPreferences;
+import rsantillanc.sanjoylao.ui.custom.dialog.NewCommentDialog;
+import rsantillanc.sanjoylao.ui.custom.dialog.ProcessOrderDialog;
 import rsantillanc.sanjoylao.util.Const;
 
 /**
@@ -28,6 +30,7 @@ public class OrderPresenterImpl implements IOrderPresenter, OnOrderListener {
     private Activity mActivity;
     public boolean flagSave = false;
     private SJLPreferences preferences;
+    private ProcessOrderDialog processOrder;
 
     public OrderPresenterImpl(IOrderView view, Activity activity) {
         this.iteractor = new OrderIteractorImpl();
@@ -148,5 +151,11 @@ public class OrderPresenterImpl implements IOrderPresenter, OnOrderListener {
     @Override
     public void sendPushNotification() {
         iteractor.makePushNotification();
+    }
+
+    public void showAlertDialogOrder() {
+        processOrder = new ProcessOrderDialog();
+//        processOrder.setOnNewCommentListener(this);
+        processOrder.show(mActivity.getFragmentManager(), "alert_input_order");
     }
 }

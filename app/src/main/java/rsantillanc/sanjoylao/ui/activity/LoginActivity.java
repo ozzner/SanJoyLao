@@ -77,6 +77,9 @@ public class LoginActivity extends BaseActivity implements ILoginView,
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        //getHashKey
+        Android.genHashKey(this);
+
         //Check if can go to main activity
         verifyUserActive();
 

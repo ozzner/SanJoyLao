@@ -214,7 +214,7 @@ public class OrderActivity extends BaseActivity implements
                 showMessage(getString(R.string.error_empty_orders));
                 return;
             } else if (!mOrdersAdapter.getDetails().isEmpty() || mOrdersAdapter.getDetails().size() > 0)
-                presenter.processPayment();
+                presenter.showAlertDialogOrder();
             else
                 showMessage(getString(R.string.error_empty_orders));
 
