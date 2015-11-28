@@ -3,7 +3,6 @@ package rsantillanc.sanjoylao.ui.mvp.Order;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Handler;
-import android.os.Looper;
 
 import java.util.List;
 
@@ -56,15 +55,9 @@ public class OrderPresenterImpl implements IOrderPresenter, OnOrderListener {
 
     @Override
     public void onLoadDetails(Context c, final List<OrderDetailModel> orderDetails) {
-        handler.post(new Runnable() {
-            @Override
-            public void run() {
-                view.hideLoader();
-                view.onOrderDetailsLoaded(orderDetails);
-                buildTotalPrice(orderDetails);
-            }
-        });
-
+        view.hideLoader();
+        view.onOrderDetailsLoaded(orderDetails);
+        buildTotalPrice(orderDetails);
     }
 
     public void processOrder(OrderModel order) {
@@ -84,29 +77,17 @@ public class OrderPresenterImpl implements IOrderPresenter, OnOrderListener {
 
     @Override
     public void paymentCorrect(final double amount) {
-        handler = new Handler(Looper.myLooper());
-        handler.post(new Runnable() {
-            @Override
-            public void run() {
-                view.hideLoader();
-                view.enabledPaymentButton(false);
-                view.onPaymentSuccess(amount);
-            }
-        });
+        view.hideLoader();
+        view.enabledPaymentButton(false);
+        view.onPaymentSuccess(amount);
 
     }
 
     @Override
     public void orderCheckoutSuccess(final CharSequence s) {
-        handler.post(new Runnable() {
-            @Override
-            public void run() {
-                view.hideLoader();
-                view.clearAll();
-                view.orderCheckoutSuccess(s);
-            }
-        });
-
+        view.hideLoader();
+        view.clearAll();
+        view.orderCheckoutSuccess(s);
     }
 
     @Override
