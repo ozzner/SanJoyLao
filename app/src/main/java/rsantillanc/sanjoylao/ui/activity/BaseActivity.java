@@ -4,11 +4,17 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
 import android.view.View;
 import android.widget.Toast;
 
+import rsantillanc.sanjoylao.storage.sp.SJLPreferences;
+
 public class BaseActivity extends AppCompatActivity {
     protected Context _context;
+    public int counter;
+    private SJLPreferences preferences;
+    public Menu menu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,5 +33,10 @@ public class BaseActivity extends AppCompatActivity {
 
     public void showMessage(CharSequence sc) {
         showToast(sc);
+    }
+
+    public int getCounter() {
+        preferences = new SJLPreferences(getApplicationContext());
+        return preferences.getCounter();
     }
 }

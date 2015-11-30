@@ -2,6 +2,8 @@ package rsantillanc.sanjoylao.ui.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.LayerDrawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -19,11 +21,13 @@ import rsantillanc.sanjoylao.SJLApplication;
 import rsantillanc.sanjoylao.model.PlateModel;
 import rsantillanc.sanjoylao.model.PlateSizeModel;
 import rsantillanc.sanjoylao.model.RelationPlateSizeModel;
+import rsantillanc.sanjoylao.storage.sp.SJLPreferences;
 import rsantillanc.sanjoylao.ui.custom.adapter.RecyclerPlateAdapter;
 import rsantillanc.sanjoylao.ui.custom.view.DividerItemDecoration;
 import rsantillanc.sanjoylao.ui.mvp.Plate.IPlateView;
 import rsantillanc.sanjoylao.ui.mvp.Plate.PlatePresenterImpl;
 import rsantillanc.sanjoylao.util.Const;
+import rsantillanc.sanjoylao.util.CountUtil;
 
 public class PlateActivity extends BaseActivity implements IPlateView, RecyclerPlateAdapter.OnItemPlateClickListener {
 
@@ -52,17 +56,26 @@ public class PlateActivity extends BaseActivity implements IPlateView, RecyclerP
 
         //Setups
         initSetUpsElements();
+
     }
 
 
-    //[Navite properties]
+    //[Native properties]
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_plate, menu);
 
-        return super.onCreateOptionsMenu(menu);
+        MenuItem item = menu.findItem(R.id.action_plate_add_order);
 
+        // get drawable del item
+        LayerDrawable icon = (LayerDrawable) item.getIcon();
+
+        // update el counter
+        CountUtil.setCountCountView(this, icon, getCounter());
+
+        return true;
     }
 
     @Override
@@ -71,12 +84,27 @@ public class PlateActivity extends BaseActivity implements IPlateView, RecyclerP
 
         if (id == R.id.action_plate_add_order) {
             goToOrderActivity();
-            return true;
         } else {
-            finish();
-            return true;
+           finish();
         }
+
+        return true;
     }
+
+
+    /*
+   Updates the count of notifications in the ActionBar.
+    */
+    public void updateNotificationsBadge(int count) {
+        counter = count;
+
+        // force the ActionBar to relayout its MenuItems.
+        // onCreateOptionsMenu(Menu) will be called again.
+        invalidateOptionsMenu();
+
+
+    }
+
 
     private void goToOrderActivity() {
         Intent order = new Intent(getApplicationContext(), OrderActivity.class);
@@ -140,18 +168,21 @@ public class PlateActivity extends BaseActivity implements IPlateView, RecyclerP
 
     @Override
     public void onError(CharSequence error) {
-        showToast(error);
+//        showToast(error);
+        Toast.makeText(getApplicationContext(), error, Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void onPlateAddOrderCorrect(Context c, int size) {
-        Toast.makeText(c, "Agregado en total: " + size, Toast.LENGTH_SHORT).show();
+        ((PlateActivity) c).updateNotificationsBadge(size);
+        Toast.makeText(c, "Total: " + size, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onPlateCounterUpdated(Context c, CharSequence ok) {
         Toast.makeText(c, ok, Toast.LENGTH_SHORT).show();
     }
+
 
 
     // {PLATE ITEM LISTENER}
@@ -173,7 +204,8 @@ public class PlateActivity extends BaseActivity implements IPlateView, RecyclerP
 
     @Override
     public void onAddPlateClick(View v) {
-        showToast("Added!");
+//        showToast("Added!");
+        Toast.makeText(getApplicationContext(), "Agregado!", Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -181,4 +213,26 @@ public class PlateActivity extends BaseActivity implements IPlateView, RecyclerP
         mpresenter.addPlateToOrder(plateSize, app.getCurrentUser());
     }
 
+    public int getCounter() {
+        return new SJLPreferences(this).getCounter();
+    }
+
+    /*
+  Sample AsyncTask to fetch the notifications count
+  */
+    class FetchCountTask extends AsyncTask<Integer, Void, Integer> {
+
+
+        @Override
+        protected Integer doInBackground(Integer... integers) {
+            return integers[0];
+        }
+
+        @Override
+        public void onPostExecute(Integer count) {
+            updateNotificationsBadge(count);
+        }
+
+
+    }
 }

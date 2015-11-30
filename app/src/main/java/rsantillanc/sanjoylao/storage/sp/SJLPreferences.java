@@ -81,4 +81,13 @@ public class SJLPreferences {
     public long getCurrentAmount() {
         return mPreferences.getLong(Const.KEY_CURRENT_AMOUNT, 0);
     }
+
+    public void saveCounter(int size) {
+        mEditor.putInt(Const.KEY_COUNTER,size);
+        mEditor.commit();
+    }
+
+    public int getCounter(){
+        return mPreferences.getInt(Const.KEY_COUNTER, 0);
+    }
 }

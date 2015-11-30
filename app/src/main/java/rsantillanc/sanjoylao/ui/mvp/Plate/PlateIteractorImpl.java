@@ -117,7 +117,7 @@ public class PlateIteractorImpl implements OnOrderListener {
     @Override
     public void onLoadDetails(Context c, List<OrderDetailModel> orderDetails) {
         PlatePresenterImpl presenter = new PlatePresenterImpl();
-        presenter.onPlateAddSucess(c,orderDetails.size());
+        presenter.onPlateAddSuccess(c, orderDetails.size());
     }
 
     @Override

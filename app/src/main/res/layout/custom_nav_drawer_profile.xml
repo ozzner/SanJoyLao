@@ -51,6 +51,7 @@
                 android:layout_height="20dp"
                 android:layout_gravity="right"
                 android:tint="@color/white"
+                android:background="@drawable/selector_item_list"
                 android:src="@drawable/ic_menu_overflow" />
         </LinearLayout>
         <!-- email address-->

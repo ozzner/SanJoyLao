@@ -179,8 +179,6 @@ public class OrderActivity extends BaseActivity implements
 
         if (mOrdersAdapter != null)
             presenter.saveChanges(mOrdersAdapter.getDetails());
-
-
     }
 
 
@@ -202,9 +200,10 @@ public class OrderActivity extends BaseActivity implements
     }
 
 
+
     //---------------------- [CALLBAKCS]
 
-    //Onclik
+    //OnClick
     @Override
     public void onClick(View v) {
         clickView = v;
@@ -329,9 +328,11 @@ public class OrderActivity extends BaseActivity implements
 
     @Override
     public void onDeleteItem(OrderDetailModel itemDetail) {
+
         presenter.deleteItemDetail(getApplicationContext(), itemDetail);
         presenter.buildTotalPrice(mOrdersAdapter.getDetails());
         mOrdersAdapter.notifyDataSetChanged();
+        counter = mOrdersAdapter.getDetails().size();
     }
 
     @Override

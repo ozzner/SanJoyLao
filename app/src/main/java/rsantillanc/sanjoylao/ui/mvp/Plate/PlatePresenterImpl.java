@@ -9,6 +9,7 @@ import rsantillanc.sanjoylao.model.PlateModel;
 import rsantillanc.sanjoylao.model.PlateSizeModel;
 import rsantillanc.sanjoylao.model.RelationPlateSizeModel;
 import rsantillanc.sanjoylao.model.UserModel;
+import rsantillanc.sanjoylao.storage.sp.SJLPreferences;
 import rsantillanc.sanjoylao.ui.activity.PlateActivity;
 
 /**
@@ -19,11 +20,13 @@ public class PlatePresenterImpl implements IPlatePresenter,OnPlateListener {
     private final Activity mActivity;
     PlateIteractorImpl iteractor;
     IPlateView mView;
+    SJLPreferences preferences;
 
     public PlatePresenterImpl(Activity activity, IPlateView mView) {
         this.iteractor = new PlateIteractorImpl(activity);
         this.mView = mView;
         this.mActivity = activity;
+        this.preferences = new SJLPreferences(activity);
     }
 
     public PlatePresenterImpl() {
@@ -54,8 +57,10 @@ public class PlatePresenterImpl implements IPlatePresenter,OnPlateListener {
     }
 
     @Override
-    public void onPlateAddSucess(Context c, int size) {
-        IPlateView view = new PlateActivity();
+    public void onPlateAddSuccess(Context c, int size) {
+        preferences= new SJLPreferences(c);
+        preferences.saveCounter(size);
+        PlateActivity view = new PlateActivity();
         view.onPlateAddOrderCorrect(c, size);
     }
 

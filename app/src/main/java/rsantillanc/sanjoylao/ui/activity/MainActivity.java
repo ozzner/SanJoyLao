@@ -2,11 +2,13 @@ package rsantillanc.sanjoylao.ui.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -19,6 +21,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,13 +34,14 @@ import rsantillanc.sanjoylao.ui.mvp.Main.IMainView;
 import rsantillanc.sanjoylao.ui.mvp.Main.MainPresenterImpl;
 import rsantillanc.sanjoylao.util.Android;
 import rsantillanc.sanjoylao.util.Const;
+import rsantillanc.sanjoylao.util.CountUtil;
 import rsantillanc.sanjoylao.util.MenuColorizer;
 
 
 public class MainActivity extends BaseActivity
         implements
         NavigationView.OnNavigationItemSelectedListener,
-        IMainView {
+        IMainView, View.OnClickListener {
 
 
     //Debug var
@@ -69,6 +73,7 @@ public class MainActivity extends BaseActivity
     private SJLApplication app;
     private TextView tvTitle;
     private TextView tvSubtitle;
+    private ImageView ivLogout;
 
 
     @Override
@@ -130,6 +135,7 @@ public class MainActivity extends BaseActivity
     @Override
     protected void onResume() {
         super.onResume();
+        invalidateOptionsMenu();
         Log.e(Const.DEBUG, "onResume main activity");
     }
 
@@ -137,7 +143,6 @@ public class MainActivity extends BaseActivity
         app = ((SJLApplication) getApplication());
         mContext = getApplicationContext();
         mPresenter = new MainPresenterImpl(MainActivity.this, this);
-
     }
 
 
@@ -149,6 +154,7 @@ public class MainActivity extends BaseActivity
         setUpProfile();
         mAppbarLayout.setExpanded(false);
         setupTitleTitles(getString(R.string.app_name), getString(R.string.home));
+        ivLogout.setOnClickListener(this);
 
     }
 
@@ -218,6 +224,7 @@ public class MainActivity extends BaseActivity
         username = (TextView) findViewById(R.id.username);
         email = (TextView) findViewById(R.id.email);
         profileImage = (CircleImageView) findViewById(R.id.circle_image);
+        ivLogout = (ImageView) findViewById(R.id.iv_change_profile);
         mAppbarLayout = (AppBarLayout) findViewById(R.id.appbarLayout);
     }
 
@@ -237,6 +244,12 @@ public class MainActivity extends BaseActivity
 
         //Show all icons overflow
         MenuColorizer.showIcons(menu);
+
+        // get drawable del item
+        LayerDrawable icon = (LayerDrawable) item.getIcon();
+
+        // update el counter
+        CountUtil.setCountCountView(this, icon, getCounter());
 
         return true;
     }
@@ -262,6 +275,17 @@ public class MainActivity extends BaseActivity
         return super.onOptionsItemSelected(item);
     }
 
+
+    /*
+  Updates the count of notifications in the ActionBar.
+   */
+    public void updateNotificationsBadge(int count) {
+        this.counter = count;
+
+        // force the ActionBar to relayout its MenuItems.
+        // onCreateOptionsMenu(Menu) will be called again.
+        ActivityCompat.invalidateOptionsMenu(this);
+    }
 
     //-----------------------[GoTo]
 
@@ -306,6 +330,7 @@ public class MainActivity extends BaseActivity
             super.onBackPressed();
 
         } else {
+
             if (mDrawerLayout.isDrawerOpen(GravityCompat.END)) {
                 mDrawerLayout.closeDrawers();
             } else {
@@ -385,8 +410,6 @@ public class MainActivity extends BaseActivity
 
     //----------------------[IMainView]
 
-
-
     @Override
     public void closeMenu() {
         mDrawerLayout.closeDrawers();
@@ -411,6 +434,18 @@ public class MainActivity extends BaseActivity
     public void collapse(boolean b) {
         setCollapseAppBarLayout(b);
     }
+
+
+    @Override
+    public void onClick(View view) {
+
+        if (view instanceof ImageView){
+            showMessage("Cerrando sesión...");
+        }
+
+
+    }
+
 
 
 }

@@ -2,7 +2,6 @@ package rsantillanc.sanjoylao.ui.mvp.Order;
 
 import android.app.Activity;
 import android.content.Context;
-import android.os.Handler;
 
 import java.util.List;
 
@@ -10,6 +9,7 @@ import rsantillanc.sanjoylao.R;
 import rsantillanc.sanjoylao.model.OrderDetailModel;
 import rsantillanc.sanjoylao.model.OrderModel;
 import rsantillanc.sanjoylao.storage.sp.SJLPreferences;
+import rsantillanc.sanjoylao.ui.activity.MainActivity;
 import rsantillanc.sanjoylao.ui.custom.dialog.ProcessOrderDialog;
 import rsantillanc.sanjoylao.util.Const;
 
@@ -30,7 +30,7 @@ public class OrderPresenterImpl implements IOrderPresenter, OnOrderListener {
     public boolean flagSave = false;
     private SJLPreferences preferences;
     private ProcessOrderDialog processOrder;
-    private Handler handler;
+    private int counter = 0;
 
     public OrderPresenterImpl(IOrderView view, Activity activity) {
         this.iteractor = new OrderIteractorImpl();
@@ -55,6 +55,7 @@ public class OrderPresenterImpl implements IOrderPresenter, OnOrderListener {
 
     @Override
     public void onLoadDetails(Context c, final List<OrderDetailModel> orderDetails) {
+        preferences.saveCounter(orderDetails.size());
         view.hideLoader();
         view.onOrderDetailsLoaded(orderDetails);
         buildTotalPrice(orderDetails);
@@ -102,7 +103,7 @@ public class OrderPresenterImpl implements IOrderPresenter, OnOrderListener {
         for (OrderDetailModel orderDetail : orderDetails)
             amount = (orderDetail.getPlateSize().getPrice() * orderDetail.getCounter()) + amount;
 
-        //If is requiered
+        //If is required
         updateFlag(beforeAmount);
 
 
@@ -158,5 +159,10 @@ public class OrderPresenterImpl implements IOrderPresenter, OnOrderListener {
         processOrder = new ProcessOrderDialog();
 //        processOrder.setOnNewCommentListener(this);
         processOrder.show(mActivity.getFragmentManager(), "alert_input_order");
+    }
+
+    public void updateGeneralCounter() {
+        MainActivity main = new MainActivity();
+        main.updateNotificationsBadge(counter);
     }
 }

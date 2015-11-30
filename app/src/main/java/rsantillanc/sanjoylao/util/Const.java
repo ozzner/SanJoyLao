@@ -71,6 +71,7 @@ public class Const {
     public static final String KEY_INSTALLATION = "first_time";
     public static final String KEY_PUSH_STATUS = "status_order";
     public static final String KEY_CURRENT_AMOUNT = "current_amount";
+    public static final String KEY_COUNTER = "key_counter";
 
 
     //[ USER ]
