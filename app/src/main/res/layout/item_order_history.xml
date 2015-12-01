@@ -76,30 +76,60 @@
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:gravity="right|center"
-            android:padding="@dimen/space_8dp"
+            android:weightSum="2"
             android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/tv_history_status_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/status_pending"
-                android:textColor="@color/colorAccent"
-                android:textSize="@dimen/txt_13sp"
-                android:gravity="right" />
+            <LinearLayout
+                android:layout_width="@dimen/space_0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:padding="@dimen/space_8dp"
+                android:gravity="left|center"
+                android:orientation="horizontal">
 
-            <rsantillanc.sanjoylao.ui.custom.view.CircleView
-                android:id="@+id/circle_view"
-                android:layout_width="40dp"
-                android:layout_height="wrap_content"
-                circle:circleRadius="6dp"
-                circle:strokeWidth="0dp"
-                circle:circleGap="0dp"
-                circle:fillColor="@color/red"
-                circle:strokeColor="@color/red"
-                android:layout_alignBottom="@+id/tv_history_status_name"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true" />
+                <TextView
+                    android:id="@+id/tv_history_timer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    android:text="32:12 min"
+                    android:textSize="@dimen/txt_13sp"
+                    android:textColor="@color/green_600"
+                    android:layout_marginLeft="@dimen/space_8dp"
+                    />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="@dimen/space_0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="right|center"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/tv_history_status_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/status_pending"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="@dimen/txt_13sp"
+                    android:gravity="right" />
+
+                <rsantillanc.sanjoylao.ui.custom.view.CircleView
+                    android:id="@+id/circle_view"
+                    android:layout_width="40dp"
+                    android:layout_height="wrap_content"
+                    circle:circleRadius="6dp"
+                    circle:strokeWidth="0dp"
+                    circle:circleGap="0dp"
+                    circle:fillColor="@color/red"
+                    circle:strokeColor="@color/red"
+                    android:layout_alignBottom="@+id/tv_history_status_name"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true" />
+            </LinearLayout>
+
+
 
         </LinearLayout>
 

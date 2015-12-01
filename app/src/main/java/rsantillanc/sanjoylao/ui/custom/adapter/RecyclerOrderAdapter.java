@@ -93,6 +93,8 @@ public class RecyclerOrderAdapter extends RecyclerView.Adapter<RecyclerOrderAdap
             orderHolder.tvName.setText("Order: " + order.getObjectId());
             orderHolder.tvPrice.setText(Const.PRICE_PEN + SJLStrings.format((order.getPrice()), SJLStrings.FORMAT_MILES_EN));
             orderHolder.tvDatatime.setText(SJLDates.customDateConverter(order.getCreatedAt(), SJLStrings.PARSE_DATE_FORMAT, SJLDates.FORMAT_DATE_2));
+            orderHolder.tvTimer.setVisibility(View.GONE);
+
             switch (order.getStatus().getCode()) {
 
                      /*Cuando se agrega el primer plato de una orden.*/
@@ -114,6 +116,8 @@ public class RecyclerOrderAdapter extends RecyclerView.Adapter<RecyclerOrderAdap
                     orderHolder.cvStatus.setStrokeColor(activity.getResources().getColor(R.color.my_green));
                     orderHolder.cvStatus.setFillColor(activity.getResources().getColor(R.color.my_green));
                     orderHolder.tvStatus.setText(order.getStatus().getName());
+                    orderHolder.tvTimer.setVisibility(View.VISIBLE);
+//                    orderHolder.tvTimer.setText();
                     break;
 
                     /*Cuando se entregó la orden de manera satisfactoria.*/
@@ -180,14 +184,18 @@ public class RecyclerOrderAdapter extends RecyclerView.Adapter<RecyclerOrderAdap
         private TextView tvOptions;
         private TextView tvPrice;
         private TextView tvCount;
+
         //history
         private TextView tvStatus;
         private TextView tvDatatime;
         private CircleView cvStatus;
+        private  TextView tvTimer;
+
 
         public OrderViewHolder(View vi) {
             super(vi);
 
+            //No history
             if (!isHistory) {
 
                 tvName = (TextView) vi.findViewById(R.id.tv_order_name);
@@ -208,11 +216,14 @@ public class RecyclerOrderAdapter extends RecyclerView.Adapter<RecyclerOrderAdap
                 ivDelete.setOnClickListener(this);
 
             } else {
+
+                //History
                 tvPrice = (TextView) vi.findViewById(R.id.tv_history_price);
                 tvDatatime = (TextView) vi.findViewById(R.id.tv_history_datetime);
                 tvName = (TextView) vi.findViewById(R.id.tv_order_history_id);
                 tvStatus = (TextView) vi.findViewById(R.id.tv_history_status_name);
                 cvStatus = (CircleView) vi.findViewById(R.id.circle_view);
+                tvTimer = (TextView) vi.findViewById(R.id.tv_history_timer);
             }
 
         }

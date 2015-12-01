@@ -59,7 +59,6 @@ public class OrderHistoryActivity extends BaseActivity implements IOrderHistoryV
         isActive = false;
     }
 
-
     private void init() {
         presenter = new OrderHistoryPresenter(_context, this);
         app = ((SJLApplication) getApplication());
