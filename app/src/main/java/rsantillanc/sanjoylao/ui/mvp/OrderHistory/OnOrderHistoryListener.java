@@ -10,7 +10,7 @@ import rsantillanc.sanjoylao.model.OrderModel;
  * Created by RenzoD on 22/11/2015.
  */
 public interface OnOrderHistoryListener {
-    void onFindDataSuccess(List<OrderModel> orders);
+    void onFindDataSuccess(List<OrderModel> orders, Context c);
     void onErrorLoad(CharSequence error);
     void onSuccessOrderUpgraded(Context c, String s, String userID);
 }

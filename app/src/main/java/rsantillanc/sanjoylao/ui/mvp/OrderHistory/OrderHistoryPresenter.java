@@ -23,14 +23,14 @@ public class OrderHistoryPresenter implements IOrderHistoryPresenter, OnOrderHis
     }
 
 
-    public void loadOrderHistory(String userID) {
-        implement.loadAllHistoryOrders(this, _context, userID);
+    public void loadOrderHistory(Context c, String userID) {
+        implement.loadAllHistoryOrders(this, c, userID);
     }
 
 
     //{On Order History Listener}
     @Override
-    public void onFindDataSuccess(List<OrderModel> orders) {
+    public void onFindDataSuccess(List<OrderModel> orders, Context c) {
         view.injectData(orders);
     }
 

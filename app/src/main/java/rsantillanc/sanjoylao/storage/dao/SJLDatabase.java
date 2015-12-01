@@ -5,7 +5,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import rsantillanc.sanjoylao.storage.sp.SJLPreferences;
 import rsantillanc.sanjoylao.util.Const;
 
 /**
@@ -83,8 +82,8 @@ public class SJLDatabase extends SQLiteOpenHelper {
     }
 
     private void installApp(Context c) {
-        SJLPreferences sp = new SJLPreferences(c);
-        sp.install();
+//        SJLPreferences sp = new SJLPreferences(c);
+//        sp.install();
     }
 
     private void dropTable(SQLiteDatabase db, String table) {

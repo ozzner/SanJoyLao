@@ -27,7 +27,7 @@ public class OrderHistoryIteractorImpl implements IOrderHistoryIteractor {
             public void run() {
                 List<OrderModel> orders = new OrderDao(c).getOrders(userID, c);
                 if (orders != null)
-                    listener.onFindDataSuccess(orders);
+                    listener.onFindDataSuccess(orders,c);
                 else
                     listener.onErrorLoad(c.getString(R.string.error_empty_data));
             }

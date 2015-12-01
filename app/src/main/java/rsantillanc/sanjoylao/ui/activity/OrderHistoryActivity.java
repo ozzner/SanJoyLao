@@ -31,6 +31,7 @@ public class OrderHistoryActivity extends BaseActivity implements IOrderHistoryV
     public static boolean isActive = false;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,7 +69,7 @@ public class OrderHistoryActivity extends BaseActivity implements IOrderHistoryV
         if (app == null)
             app = ((SJLApplication) getApplication());
 
-        presenter.loadOrderHistory(app.getCurrentUser().getObjectId());
+        presenter.loadOrderHistory(getApplicationContext(), app.getCurrentUser().getObjectId());
     }
 
     private void configUIElements() {
@@ -132,7 +133,10 @@ public class OrderHistoryActivity extends BaseActivity implements IOrderHistoryV
 
     @Override
     public void refresh(Context c, String userID) {
-        ((OrderHistoryActivity) c.getApplicationContext()).payloads();
+        if (presenter == null)
+            presenter = new OrderHistoryPresenter(this,this);
+
+        presenter.loadOrderHistory(c,userID);
     }
 
 

@@ -26,8 +26,8 @@
                 android:id="@+id/iv_logo_main"
                 android:layout_width="wrap_content"
                 android:layout_height="315dp"
-                android:padding="@dimen/space_10dp"
                 android:layout_weight="0.53"
+                android:padding="@dimen/space_10dp"
                 android:src="@drawable/logo" />
         </LinearLayout>
 
@@ -48,51 +48,49 @@
                 android:layout_height="match_parent"
                 android:background="@color/whitesmoke"
                 android:gravity="bottom"
-                android:padding="@dimen/space_4dp"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:padding="@dimen/space_4dp">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:padding="@dimen/space_10dp"
-                    android:layout_height="90dp">
+                    android:layout_height="90dp"
+                    android:padding="@dimen/space_10dp">
 
                     <TextView
                         android:id="@+id/tv_home_address"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/sjl_home_address"
-                        android:padding="@dimen/space_10dp"
                         android:layout_alignParentTop="true"
-                        android:layout_toRightOf="@+id/imageView"
                         android:layout_toEndOf="@+id/imageView"
-                         />
+                        android:layout_toRightOf="@+id/imageView"
+                        android:padding="@dimen/space_10dp"
+                        android:text="@string/sjl_home_address" />
 
                     <ImageView
+                        android:id="@+id/imageView"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
-                        android:src="@drawable/ic_location"
-                        android:tint="@color/colorAccent"
-                        android:id="@+id/imageView"
                         android:layout_marginTop="@dimen/space_12dp"
-                        />
+                        android:src="@drawable/ic_location"
+                        android:tint="@color/colorAccent" />
 
                 </RelativeLayout>
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="0.5dp"
-                    android:background="@color/transparent_2"
-                    android:layout_marginBottom="2.5dp"/>
+                    android:layout_marginBottom="2.5dp"
+                    android:background="@color/transparent_2" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:layout_gravity="bottom"
+                    android:background="@color/transparent_3"
                     android:gravity="right|center"
                     android:orientation="horizontal"
-                    android:background="@color/transparent_3"
-                    android:weightSum="6"
-                    android:padding="@dimen/space_2dp">
+                    android:padding="@dimen/space_2dp"
+                    android:weightSum="6">
 
                     <LinearLayout
                         android:id="@+id/lay_delivery"
@@ -101,23 +99,30 @@
                         android:layout_weight="3"
                         android:background="@drawable/selector_item_list"
                         android:orientation="horizontal">
+
                         <ImageView
                             android:layout_width="0dp"
+                            android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:src="@drawable/vec_call"
-                            android:layout_height="match_parent"
                             android:tint="@color/colorPrimaryDark" />
 
                         <TextView
                             android:layout_width="0dp"
+                            android:layout_height="match_parent"
                             android:layout_weight="2"
+                            android:gravity="center"
                             android:text="Delivery"
                             android:textColor="@color/black"
-                            android:gravity="center"
-                            android:layout_height="match_parent"
                             android:tint="@color/colorAccent" />
                     </LinearLayout>
 
+                    <LinearLayout
+                        android:layout_width="3dp"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/oval_shape">
+
+                    </LinearLayout>
 
                     <LinearLayout
                         android:id="@+id/lay_locals"
@@ -130,20 +135,19 @@
 
                         <TextView
                             android:layout_width="0dp"
-                            android:layout_weight="2"
-                            android:text="Locales"
-                            android:gravity="center"
-                            android:textColor="@color/black"
                             android:layout_height="match_parent"
+                            android:layout_weight="2"
+                            android:gravity="center"
+                            android:text="Locales"
+                            android:textColor="@color/black"
                             android:tint="@color/colorAccent" />
 
                         <ImageView
                             android:layout_width="0dp"
-                            android:layout_weight="1"
                             android:layout_height="match_parent"
+                            android:layout_weight="1"
                             android:src="@drawable/vec_locals"
                             android:tint="@color/colorPrimaryDark" />
-
 
 
                     </LinearLayout>

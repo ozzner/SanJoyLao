@@ -20,7 +20,6 @@ import rsantillanc.sanjoylao.R;
 import rsantillanc.sanjoylao.SJLApplication;
 import rsantillanc.sanjoylao.model.OrderModel;
 import rsantillanc.sanjoylao.ui.activity.OrderHistoryActivity;
-import rsantillanc.sanjoylao.ui.mvp.OrderHistory.OrderHistoryPresenter;
 import rsantillanc.sanjoylao.util.Const;
 
 /**
@@ -52,9 +51,9 @@ public class OrderPushReceiver extends ParsePushBroadcastReceiver {
             bundle.putSerializable(Const.EXTRA_ORDER, order);
 
 
-            OrderHistoryActivity ac = new OrderHistoryActivity();
-            OrderHistoryPresenter presenter = new OrderHistoryPresenter(context, ac);
-            presenter.changeOrderStatus(order, context, Const.STATUS_CONFIRMED, app.getCurrentUser().getObjectId());
+//            OrderHistoryActivity ac = new OrderHistoryActivity(b);
+//            OrderHistoryPresenter presenter = new OrderHistoryPresenter(context, ac);
+//            presenter.changeOrderStatus(order, context, Const.STATUS_CONFIRMED, app.getCurrentUser().getObjectId());
 
 
             /**Build PendingIntent*/
