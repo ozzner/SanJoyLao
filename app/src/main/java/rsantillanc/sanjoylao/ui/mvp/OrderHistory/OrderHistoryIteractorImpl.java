@@ -42,4 +42,10 @@ public class OrderHistoryIteractorImpl implements IOrderHistoryIteractor {
             lis.onSuccessOrderUpgraded(c,"success!", userID);
     }
 
+    @Override
+    public void updateOrder(Context c, OrderModel order, String objectId, int statusCode) {
+        int i = new OrderDao(c).updateOrderStatus(new StatusDao(c).getStatusByCode(statusCode), order);
+        Log.e(Const.DEBUG,"upgrade: " + i);
+    }
+
 }

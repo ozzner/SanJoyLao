@@ -286,7 +286,7 @@ public class MainIteractorImpl {
                         for (OrderModel order : list) {
                             rows = new OrderDao(c).insert(order);
 
-//                            if (order.getStatus().getCode() == Const.STATUS_TEMPORAL){
+//                            if (order.getStatus().getCode() == Const.STATUS_CODE_TEMPORAL){
 //
 //                            }
 

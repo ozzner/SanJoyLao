@@ -10,4 +10,5 @@ import rsantillanc.sanjoylao.model.OrderModel;
 public interface IOrderHistoryIteractor {
     void loadAllHistoryOrders(OnOrderHistoryListener listener, Context c, String userID);
     void upgradeOrder(OrderModel order, Context c, int statusCode, OrderHistoryPresenter lis, String userID);
+    void updateOrder(Context _context, OrderModel order, String objectId, int statusCode);
 }

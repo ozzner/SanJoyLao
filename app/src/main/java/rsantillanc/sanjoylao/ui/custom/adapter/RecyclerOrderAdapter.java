@@ -96,7 +96,7 @@ public class RecyclerOrderAdapter extends RecyclerView.Adapter<RecyclerOrderAdap
             switch (order.getStatus().getCode()) {
 
                      /*Cuando se agrega el primer plato de una orden.*/
-                case Const.STATUS_TEMPORAL:
+                case Const.STATUS_CODE_TEMPORAL:
                     orderHolder.cvStatus.setStrokeColor(activity.getResources().getColor(R.color.blue));
                     orderHolder.cvStatus.setFillColor(activity.getResources().getColor(R.color.blue));
                     orderHolder.tvStatus.setText(order.getStatus().getName());
@@ -150,14 +150,23 @@ public class RecyclerOrderAdapter extends RecyclerView.Adapter<RecyclerOrderAdap
 
     }
 
+    /**Setters and getters*/
+
     public List<OrderDetailModel> getDetails() {
         return details;
+    }
+
+    public void setDetails(List<OrderDetailModel> details) {
+        this.details = details;
     }
 
     public List<OrderModel> getOrders() {
         return orders;
     }
 
+    public void setOrders(List<OrderModel> orders) {
+        this.orders = orders;
+    }
 
     class OrderViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 

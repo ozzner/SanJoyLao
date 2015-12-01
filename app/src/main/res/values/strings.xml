@@ -143,5 +143,8 @@
     <string name="correct_payment">¡Pago correcto!</string>
     <string name="sjl_home_address"><![CDATA[<b>Caminos del Inca 1899</b>, Santiago de Surco  Lima 33. Reservas <b>(01) 2790888</b>]]></string>
     <string name="google_maps_key">AIzaSyBrH0Y50F2oS9Nv3680yju37ETcYlNRrYM</string>
+    <string name="status_confirmed">confirmado</string>
+    <string name="notification_order_confirmed">¡Orden confirmada!</string>
+    <string name="ok">ok</string>
 
 </resources>

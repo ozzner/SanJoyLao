@@ -96,7 +96,7 @@ public class OrderIteractorImpl implements IOrderIteractor {
     @Override
     public void addItemToOrder(Context c, PlateSizeModel plateSize, UserModel user, OnOrderListener listener) {
         if (checkIfExistActiveOrder(c)) {
-            OrderModel currentOrder = new OrderDao(c).getActiveOrderIfExist(new StatusDao(c).getIdStatusByCode(Const.STATUS_TEMPORAL));
+            OrderModel currentOrder = new OrderDao(c).getActiveOrderIfExist(new StatusDao(c).getIdStatusByCode(Const.STATUS_CODE_TEMPORAL));
 
             if (checkIfExistItemDetail(c, currentOrder.getObjectId(), plateSize.getObjectId())) {
                 updateCounterItemOrder(c, new OrderDao(c).getOrderDetail(currentOrder.getObjectId(), plateSize.getObjectId()), listener, true);
@@ -303,7 +303,7 @@ public class OrderIteractorImpl implements IOrderIteractor {
         JsonElement createdAt = response.body().getAsJsonObject().get(ConstAPI.PARSE_CREATED);
 
         order.setUser(user);
-        order.setStatus(new StatusDao(c).getStatusByCode(Const.STATUS_TEMPORAL));
+        order.setStatus(new StatusDao(c).getStatusByCode(Const.STATUS_CODE_TEMPORAL));
         order.setObjectId(objectId.getAsString());
         order.setCreatedAt(createdAt.getAsString());
         order.setUpdatedAt(createdAt.getAsString());
@@ -316,12 +316,12 @@ public class OrderIteractorImpl implements IOrderIteractor {
     }
 
     private ParsePointerModel makeStatusPointer(Context c) {
-        String id = new StatusDao(c).getIdStatusByCode(Const.STATUS_TEMPORAL);
+        String id = new StatusDao(c).getIdStatusByCode(Const.STATUS_CODE_TEMPORAL);
         return new ParsePointerModel(Const.CLASS_STATUS, id);
     }
 
     private boolean checkIfExistActiveOrder(Context c) {
-        return new OrderDao(c).checkActiveOrder(new StatusDao(c).getIdStatusByCode(Const.STATUS_TEMPORAL));
+        return new OrderDao(c).checkActiveOrder(new StatusDao(c).getIdStatusByCode(Const.STATUS_CODE_TEMPORAL));
     }
 
 
@@ -341,7 +341,7 @@ public class OrderIteractorImpl implements IOrderIteractor {
                 listener.onLoadDetails(c,
                         new OrderDao(c).getOrderDetailsByOrderID(
                                 new OrderDao(c).getActiveOrderIfExist(
-                                        new StatusDao(c).getIdStatusByCode(Const.STATUS_TEMPORAL))
+                                        new StatusDao(c).getIdStatusByCode(Const.STATUS_CODE_TEMPORAL))
                                         .getObjectId()));
 
 
@@ -349,7 +349,7 @@ public class OrderIteractorImpl implements IOrderIteractor {
                 //From server
                 getOrdersFromServer(
                         new OrderDao(c).getActiveOrderIfExist(
-                                new StatusDao(c).getIdStatusByCode(Const.STATUS_TEMPORAL))
+                                new StatusDao(c).getIdStatusByCode(Const.STATUS_CODE_TEMPORAL))
                                 .getObjectId(), listener, c);
 
         } else {

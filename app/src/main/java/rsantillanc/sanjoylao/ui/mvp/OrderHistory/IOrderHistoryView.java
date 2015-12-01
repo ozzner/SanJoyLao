@@ -15,4 +15,6 @@ public interface IOrderHistoryView {
     void injectData(List<OrderModel> data);
     void showMessage(CharSequence error);
     void refresh(Context details, String userID);
+    void updateOrdersAdapter(List<OrderModel> orders);
+    void refreshAdapter();
 }

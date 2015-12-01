@@ -4,8 +4,11 @@ import android.content.Context;
 
 import java.util.List;
 
+import rsantillanc.sanjoylao.R;
 import rsantillanc.sanjoylao.model.OrderModel;
+import rsantillanc.sanjoylao.model.StatusModel;
 import rsantillanc.sanjoylao.ui.activity.OrderHistoryActivity;
+import rsantillanc.sanjoylao.util.Const;
 
 /**
  * Created by RenzoD on 22/11/2015.
@@ -51,4 +54,23 @@ public class OrderHistoryPresenter implements IOrderHistoryPresenter, OnOrderHis
     }
 
 
+    public void loopOrdersAndUpdate(OrderModel serialOrder, List<OrderModel> orders) {
+        for (int i = 0; i < orders.size(); i++) {
+            OrderModel orderItem = orders.get(i);
+
+            if (orderItem.getObjectId().equals(serialOrder.getObjectId())) {
+                StatusModel status = orderItem.getStatus();
+                status.setCode(Const.STATUS_CONFIRMED);
+                status.setName(view.getString(R.string.status_confirmed));
+
+                //update
+                orderItem.setStatus(status);
+                orders.set(i, orderItem);
+                view.updateOrdersAdapter(orders);
+                view.refreshAdapter();
+                view.showSnack();
+                break;
+            }
+        }
+    }
 }
