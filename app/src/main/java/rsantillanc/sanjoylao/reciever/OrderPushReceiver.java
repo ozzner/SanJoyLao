@@ -7,15 +7,20 @@ import android.content.Context;
 import android.content.Intent;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.os.Bundle;
 import android.util.Log;
 
+import com.google.gson.Gson;
 import com.parse.ParsePushBroadcastReceiver;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import rsantillanc.sanjoylao.R;
-import rsantillanc.sanjoylao.ui.activity.OrderActivity;
+import rsantillanc.sanjoylao.SJLApplication;
+import rsantillanc.sanjoylao.model.OrderModel;
+import rsantillanc.sanjoylao.ui.activity.OrderHistoryActivity;
+import rsantillanc.sanjoylao.ui.mvp.OrderHistory.OrderHistoryPresenter;
 import rsantillanc.sanjoylao.util.Const;
 
 /**
@@ -25,25 +30,39 @@ public class OrderPushReceiver extends ParsePushBroadcastReceiver {
 
     private static final String TAG = OrderPushReceiver.class.getSimpleName() + Const.BLANK_SPACE;
 
+
     @Override
     protected void onPushReceive(Context context, Intent intent) {
         super.onPushReceive(context, intent);
 
-        Log.e(Const.DEBUG_PUSH, "Push notification OK");
+        SJLApplication app = ((SJLApplication) context.getApplicationContext());
+        Log.e(Const.DEBUG_PUSH, "Incoming push notification");
 
         if (intent == null)
             return;
 
         try {
-
             JSONObject json = new JSONObject(intent.getExtras().getString("com.parse.Data"));
-            Log.e(Const.DEBUG_PUSH, TAG + json);
+            String sOrder = json.get("order").toString();
+            Gson gson = new Gson();
+            OrderModel order = gson.fromJson(sOrder, OrderModel.class);
+
+            Log.e(Const.DEBUG_PUSH, TAG + sOrder);
+            Bundle bundle = new Bundle();
+            bundle.putSerializable(Const.EXTRA_ORDER, order);
+
+
+            OrderHistoryActivity ac = new OrderHistoryActivity();
+            OrderHistoryPresenter presenter = new OrderHistoryPresenter(context, ac);
+            presenter.changeOrderStatus(order, context, Const.STATUS_CONFIRMED, app.getCurrentUser().getObjectId());
+
 
             /**Build PendingIntent*/
 
-            Intent notifyIntent = new Intent(context, OrderActivity.class);
+            Intent notifyIntent = new Intent(context, OrderHistoryActivity.class);
             notifyIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
             notifyIntent.putExtra(Const.KEY_PUSH_STATUS, Const.STATUS_CONFIRMED);
+            notifyIntent.putExtras(bundle);
             PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, notifyIntent, PendingIntent.FLAG_CANCEL_CURRENT);
 
             /**Build Notification*/
@@ -65,10 +84,8 @@ public class OrderPushReceiver extends ParsePushBroadcastReceiver {
             notification.flags = notification.flags | Notification.FLAG_SHOW_LIGHTS | Notification.FLAG_AUTO_CANCEL;
             notificationManager.notify(1, notification);
 
-        }catch(JSONException e){
-            Log.e(Const.DEBUG_PUSH, "Push notification ERROR");
-
-            e.printStackTrace();
+        } catch (JSONException e) {
+            Log.e(Const.DEBUG_PUSH, "Push notification JSONException : " + e.getMessage());
         }
     }
 }

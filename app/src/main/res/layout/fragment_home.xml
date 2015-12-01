@@ -1,8 +1,9 @@
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/transparent_2"
     android:fitsSystemWindows="true"
     tools:context=".ui.fragment.HomeFragment">
 
@@ -17,102 +18,218 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/space_0dp"
-            android:layout_weight="0.5"
-            android:orientation="horizontal"
-            android:weightSum="2">
-
-            <LinearLayout
-                android:layout_width="@dimen/space_0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@drawable/bg_button_image_viewer"
-                android:weightSum="5">
-
-                <ImageView
-                    android:layout_width="@dimen/space_0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:padding="@dimen/space_2dp"
-                    android:src="@drawable/vec_call"
-                    android:tint="@color/white" />
-
-                <TextView
-                    style="@style/SJLTexViewStyle"
-                    android:layout_width="@dimen/space_0dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="@dimen/space_4dp"
-                    android:layout_weight="4"
-                    android:gravity="center"
-                    android:text="+51 993297151"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/txt_15sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="@dimen/space_0dp"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="@dimen/space_16dp"
-                android:layout_weight="1"
-                android:background="@drawable/bg_button_image_viewer"
-                android:padding="@dimen/space_10dp">
-
-                <ImageView
-                    android:layout_width="@dimen/space_0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:padding="@dimen/space_2dp"
-                    android:src="@drawable/vec_delivery"
-                    android:tint="@color/white" />
-
-                <TextView
-                    style="@style/SJLTexViewStyle"
-                    android:layout_width="@dimen/space_0dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="@dimen/space_4dp"
-                    android:layout_weight="4"
-                    android:gravity="center"
-                    android:text="Delivery"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/txt_15sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/space_0dp"
-            android:layout_weight="4"
+            android:layout_weight="3.5"
             android:gravity="center"
-            android:weightSum="1">
+            android:weightSum="1.2">
 
             <ImageView
                 android:id="@+id/iv_logo_main"
                 android:layout_width="wrap_content"
                 android:layout_height="315dp"
-                android:src="@drawable/logo"
-                android:layout_weight="0.53" />
+                android:padding="@dimen/space_10dp"
+                android:layout_weight="0.53"
+                android:src="@drawable/logo" />
         </LinearLayout>
 
 
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/space_0dp"
+            android:layout_weight="1.3"
+            android:orientation="horizontal"
+            android:paddingTop="@dimen/space_8dp"
+            android:visibility="visible"
+            app:cardCornerRadius="@dimen/space_4dp"
+            app:cardElevation="@dimen/space_4dp">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/whitesmoke"
+                android:gravity="bottom"
+                android:padding="@dimen/space_4dp"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:padding="@dimen/space_10dp"
+                    android:layout_height="90dp">
+
+                    <TextView
+                        android:id="@+id/tv_home_address"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/sjl_home_address"
+                        android:padding="@dimen/space_10dp"
+                        android:layout_alignParentTop="true"
+                        android:layout_toRightOf="@+id/imageView"
+                        android:layout_toEndOf="@+id/imageView"
+                         />
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/ic_location"
+                        android:tint="@color/colorAccent"
+                        android:id="@+id/imageView"
+                        android:layout_marginTop="@dimen/space_12dp"
+                        />
+
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/transparent_2"
+                    android:layout_marginBottom="2.5dp"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_gravity="bottom"
+                    android:gravity="right|center"
+                    android:orientation="horizontal"
+                    android:background="@color/transparent_3"
+                    android:weightSum="6"
+                    android:padding="@dimen/space_2dp">
+
+                    <LinearLayout
+                        android:id="@+id/lay_delivery"
+                        android:layout_width="@dimen/space_0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="3"
+                        android:background="@drawable/selector_item_list"
+                        android:orientation="horizontal">
+                        <ImageView
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:src="@drawable/vec_call"
+                            android:layout_height="match_parent"
+                            android:tint="@color/colorPrimaryDark" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_weight="2"
+                            android:text="Delivery"
+                            android:textColor="@color/black"
+                            android:gravity="center"
+                            android:layout_height="match_parent"
+                            android:tint="@color/colorAccent" />
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:id="@+id/lay_locals"
+                        android:layout_width="@dimen/space_0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="3"
+                        android:background="@drawable/selector_item_list"
+                        android:orientation="horizontal">
+
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_weight="2"
+                            android:text="Locales"
+                            android:gravity="center"
+                            android:textColor="@color/black"
+                            android:layout_height="match_parent"
+                            android:tint="@color/colorAccent" />
+
+                        <ImageView
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="match_parent"
+                            android:src="@drawable/vec_locals"
+                            android:tint="@color/colorPrimaryDark" />
+
+
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+        </android.support.v7.widget.CardView>
+
+        <!--<LinearLayout-->
+        <!--android:layout_width="@dimen/space_0dp"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_weight="1"-->
+        <!--android:background="@drawable/bg_button_image_viewer"-->
+        <!--android:weightSum="5">-->
+
+        <!--<ImageView-->
+        <!--android:layout_width="@dimen/space_0dp"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_weight="1"-->
+        <!--android:padding="@dimen/space_2dp"-->
+        <!--android:src="@drawable/vec_call"-->
+        <!--android:tint="@color/white" />-->
+
+        <!--<TextView-->
+        <!--style="@style/SJLTexViewStyle"-->
+        <!--android:layout_width="@dimen/space_0dp"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_marginLeft="@dimen/space_4dp"-->
+        <!--android:layout_weight="4"-->
+        <!--android:gravity="center"-->
+        <!--android:text="+51 993297151"-->
+        <!--android:textColor="@color/white"-->
+        <!--android:textSize="@dimen/txt_15sp"-->
+        <!--android:textStyle="bold" />-->
+        <!--</LinearLayout>-->
+
+        <!--<LinearLayout-->
+        <!--android:layout_width="@dimen/space_0dp"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_marginLeft="@dimen/space_16dp"-->
+        <!--android:layout_weight="1"-->
+        <!--android:background="@drawable/bg_button_image_viewer"-->
+        <!--android:padding="@dimen/space_10dp">-->
+
+        <!--<ImageView-->
+        <!--android:layout_width="@dimen/space_0dp"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_weight="1"-->
+        <!--android:padding="@dimen/space_2dp"-->
+        <!--android:src="@drawable/vec_delivery"-->
+        <!--android:tint="@color/white" />-->
+
+        <!--<TextView-->
+        <!--style="@style/SJLTexViewStyle"-->
+        <!--android:layout_width="@dimen/space_0dp"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_marginLeft="@dimen/space_4dp"-->
+        <!--android:layout_weight="4"-->
+        <!--android:gravity="center"-->
+        <!--android:text="Delivery"-->
+        <!--android:textColor="@color/white"-->
+        <!--android:textSize="@dimen/txt_15sp"-->
+        <!--android:textStyle="bold" />-->
+        <!--</LinearLayout>-->
+
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:gravity="right">
 
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/map_id"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
-            android:layout_margin="@dimen/fab_margin"
-            android:src="@drawable/vec_map_locals" />
+    <!--<LinearLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_gravity="bottom|end"-->
+    <!--android:gravity="left">-->
 
-    </LinearLayout>
+    <!--<android.support.design.widget.FloatingActionButton-->
+    <!--android:id="@+id/map_id"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_gravity="bottom|end"-->
+    <!--android:layout_margin="@dimen/fab_margin"-->
+    <!--android:src="@drawable/vec_map_locals" />-->
 
+    <!--</LinearLayout>-->
 
 </android.support.design.widget.CoordinatorLayout>

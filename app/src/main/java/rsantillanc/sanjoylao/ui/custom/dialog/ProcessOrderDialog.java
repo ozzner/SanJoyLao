@@ -3,12 +3,14 @@ package rsantillanc.sanjoylao.ui.custom.dialog;
 import android.app.DialogFragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.AppCompatRadioButton;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
-import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.Toast;
 
 import rsantillanc.sanjoylao.R;
 
@@ -17,16 +19,18 @@ import rsantillanc.sanjoylao.R;
  */
 public class ProcessOrderDialog extends DialogFragment implements View.OnClickListener {
 
-//    private OnNewCommentListener listener;
-    private EditText etComment;
+    //Views
     private Button btCancel;
     private Button btSend;
-    private boolean comment;
+    private AppCompatRadioButton appRbDelivery;
+    private AppCompatRadioButton appRbBooking;
+
+    //Properties
+    OnProcessOrderClickListener listener;
 
 
     public ProcessOrderDialog() {
     }
-
 
 
     public static ProcessOrderDialog newInstance() {
@@ -45,40 +49,67 @@ public class ProcessOrderDialog extends DialogFragment implements View.OnClickLi
     }
 
     private void initUIElements(View view) {
-//        etComment = (EditText) view.findViewById(R.id.et_input_comment);
-//        btCancel = (Button) view.findViewById(R.id.bt_cancel);
-//        btSend = (Button) view.findViewById(R.id.bt_send);
-//
-//        //Set listener
-//        btCancel.setOnClickListener(this);
-//        btSend.setOnClickListener(this);
+        appRbBooking = (AppCompatRadioButton) view.findViewById(R.id.app_rb_types_1);
+        appRbDelivery = (AppCompatRadioButton) view.findViewById(R.id.app_rb_types_2);
+        btCancel = (Button) view.findViewById(R.id.bt_cancel);
+        btSend = (Button) view.findViewById(R.id.bt_send);
+
+
+        //Set listener
+        appRbDelivery.setOnClickListener(this);
+        appRbBooking.setOnClickListener(this);
+        btCancel.setOnClickListener(this);
+        btSend.setOnClickListener(this);
+
     }
 
 
     @Override
     public void onClick(View view) {
-        if (view.equals(btCancel))
-            getDialog().cancel();
-        else {
-//            if (getComment().isEmpty())
-//                listener.onError(getActivity().getString(R.string.error_empty));
-//            else
-//                listener.onClickSendButton(getComment());
+        if (view instanceof Button) {
+            switch (view.getId()) {
+                case R.id.bt_cancel:
+                    getDialog().cancel();
+                    break;
+                case R.id.bt_send:
+                    getDialog().cancel();
+                    listener.onClickSendButton();
+                    break;
+            }
+
         }
 
     }
 
-//    private String getComment() {
-//        return etComment.getText().toString().trim();
-//    }
-//
-//    public void setOnNewCommentListener(OnNewCommentListener listener) {
-//        this.listener =listener;
-//    }
 
+    public void onRadioButtonClicked(View view) {
+        // Is the button now checked?
+        boolean checked = ((RadioButton) view).isChecked();
 
-    public interface OnNewCommentListener {
-        void onClickSendButton(String comment);
+        // Check which radio button was clicked
+        switch(view.getId()) {
+            case R.id.app_rb_types_1:
+                if (checked)
+                    Toast.makeText(getActivity(),appRbBooking.getText().toString(),Toast.LENGTH_LONG).show();
+                    break;
+            case R.id.app_rb_types_2:
+                if (checked)
+                    Toast.makeText(getActivity(),appRbDelivery.getText().toString(),Toast.LENGTH_LONG).show();
+                break;
+        }
+    }
+
+    public OnProcessOrderClickListener getListener() {
+        return listener;
+    }
+
+    public void setListener(OnProcessOrderClickListener listener) {
+        this.listener = listener;
+    }
+
+    public interface OnProcessOrderClickListener {
+        void onClickSendButton();
+
         void onError(CharSequence sc);
     }
 

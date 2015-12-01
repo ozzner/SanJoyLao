@@ -87,30 +87,39 @@
     android:gravity="center"
     android:orientation="horizontal">
 
-    <android.support.v7.widget.AppCompatRadioButton
-        android:id="@+id/app_rb_types_2"
-        android:layout_width="0dp"
-        android:layout_weight="1"
-        android:gravity="center"
+    <RadioGroup
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/booking_order"
-        android:padding="16dp">
+        android:orientation="horizontal">
+
+        <android.support.v7.widget.AppCompatRadioButton
+            android:id="@+id/app_rb_types_1"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:onClick="onRadioButtonClicked"
+            android:layout_height="wrap_content"
+            android:text="@string/booking_order"
+            android:padding="16dp">
 
 
-    </android.support.v7.widget.AppCompatRadioButton>
-    <android.support.v7.widget.AppCompatRadioButton
-        android:id="@+id/app_rb_types"
-        android:layout_width="0dp"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:checked="true"
-        android:layout_height="wrap_content"
-        android:text="@string/booking_delivery"
-        android:padding="16dp">
+        </android.support.v7.widget.AppCompatRadioButton>
+
+        <android.support.v7.widget.AppCompatRadioButton
+            android:id="@+id/app_rb_types_2"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:checked="true"
+            android:onClick="onRadioButtonClicked"
+            android:layout_height="wrap_content"
+            android:text="@string/booking_delivery"
+            android:padding="16dp">
+
+        </android.support.v7.widget.AppCompatRadioButton>
+    </RadioGroup>
 
 
-
-    </android.support.v7.widget.AppCompatRadioButton>
 
 
 </LinearLayout>
@@ -125,6 +134,8 @@
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:gravity="end">
+
+
 
         <Button
             android:id="@+id/bt_cancel"

@@ -1,5 +1,7 @@
 package rsantillanc.sanjoylao.ui.mvp.OrderHistory;
 
+import android.content.Context;
+
 import java.util.List;
 
 import rsantillanc.sanjoylao.model.OrderModel;
@@ -12,4 +14,5 @@ public interface IOrderHistoryView {
     void showLoader();
     void injectData(List<OrderModel> data);
     void showMessage(CharSequence error);
+    void refresh(Context details, String userID);
 }

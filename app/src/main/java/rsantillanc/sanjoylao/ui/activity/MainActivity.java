@@ -96,41 +96,8 @@ public class MainActivity extends BaseActivity
         //Synchronizing
         sync();
 
-        Log.e(Const.DEBUG, "onCreate main activity");
     }
 
-
-
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        Log.e(Const.DEBUG, "onStart main activity");
-    }
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        Log.e(Const.DEBUG, "onRestart main activity");
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        Log.e(Const.DEBUG, "onStop main activity");
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        Log.e(Const.DEBUG, "onPause main activity");
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Log.e(Const.DEBUG, "onDestroy main activity");
-    }
 
     @Override
     protected void onResume() {
@@ -248,7 +215,7 @@ public class MainActivity extends BaseActivity
         // get drawable del item
         LayerDrawable icon = (LayerDrawable) item.getIcon();
 
-        // update el counter
+        // update counter
         CountUtil.setCountCountView(this, icon, getCounter());
 
         return true;
@@ -297,6 +264,7 @@ public class MainActivity extends BaseActivity
     }
 
     private void goToLoginActivity() {
+        //TODO bad practice
         Intent login = new Intent(mContext, LoginActivity.class);
         startActivity(login);
         new UserDao(this).logout();
@@ -321,6 +289,7 @@ public class MainActivity extends BaseActivity
         mPresenter.loadPlate();
         mPresenter.loadOrderType();
         mPresenter.loadStatus();
+        mPresenter.loadOrders(app.getCurrentUser().getObjectId());
         mPresenter.savePreferences();
     }
 

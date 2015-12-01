@@ -3,12 +3,15 @@ package rsantillanc.sanjoylao.ui.mvp.OrderHistory;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 
 import java.util.List;
 
 import rsantillanc.sanjoylao.R;
 import rsantillanc.sanjoylao.model.OrderModel;
 import rsantillanc.sanjoylao.storage.dao.OrderDao;
+import rsantillanc.sanjoylao.storage.dao.StatusDao;
+import rsantillanc.sanjoylao.util.Const;
 
 /**
  * Created by RenzoD on 22/11/2015.
@@ -29,6 +32,14 @@ public class OrderHistoryIteractorImpl implements IOrderHistoryIteractor {
                     listener.onErrorLoad(c.getString(R.string.error_empty_data));
             }
         });
+    }
+
+    @Override
+    public void upgradeOrder(OrderModel order, Context c, int statusCode, OrderHistoryPresenter lis, String userID) {
+        int i = new OrderDao(c).updateOrderStatus(new StatusDao(c).getStatusByCode(statusCode), order);
+        Log.e(Const.DEBUG,"upgrade: " + i);
+        if (i>0)
+            lis.onSuccessOrderUpgraded(c,"success!", userID);
     }
 
 }

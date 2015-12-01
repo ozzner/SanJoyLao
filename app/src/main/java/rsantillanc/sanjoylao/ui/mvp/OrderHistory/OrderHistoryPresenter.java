@@ -5,6 +5,7 @@ import android.content.Context;
 import java.util.List;
 
 import rsantillanc.sanjoylao.model.OrderModel;
+import rsantillanc.sanjoylao.ui.activity.OrderHistoryActivity;
 
 /**
  * Created by RenzoD on 22/11/2015.
@@ -37,4 +38,17 @@ public class OrderHistoryPresenter implements IOrderHistoryPresenter, OnOrderHis
     public void onErrorLoad(CharSequence error) {
         view.showMessage(error);
     }
+
+    @Override
+    public void onSuccessOrderUpgraded(Context c, String s, String userID) {
+        if (OrderHistoryActivity.isActive)
+            view.refresh(c, userID);
+    }
+
+
+    public void changeOrderStatus(OrderModel order, Context context, int statusCode, String userID) {
+        implement.upgradeOrder(order, context, statusCode, this, userID);
+    }
+
+
 }

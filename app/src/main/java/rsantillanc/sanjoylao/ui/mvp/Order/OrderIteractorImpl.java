@@ -11,6 +11,9 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.parse.ParsePush;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -105,17 +108,29 @@ public class OrderIteractorImpl implements IOrderIteractor {
     }
 
     @Override
-    public void makePushNotification() {
+    public void makePushNotification(final OrderModel order) {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 ParsePush push = new ParsePush();
                 push.setChannel(Const.SJL_CHANNEL);
                 push.setMessage("Su orden ha esta lista.");
+                push.setData(buildJsonData(order));
                 push.sendInBackground();
             }
-        }, 30000);
+        }, 2500);
 
+    }
+
+    private JSONObject buildJsonData(OrderModel order) {
+        JSONObject data = new JSONObject();
+        try {
+            data.accumulate("order",new Gson().toJson(order));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return data;
     }
 
     private void updateCounterItemOrder(final Context c, final OrderDetailModel orderDetail, final OnOrderListener listener, boolean isIncrement) {
@@ -129,14 +144,18 @@ public class OrderIteractorImpl implements IOrderIteractor {
             @Override
             public void onResponse(Response<JsonObject> response, Retrofit retrofit) {
                 if (response.isSuccess()) {
-                    listener.onCounterSuccess(c, "¡Agregado!");
-                    Log.e(Const.DEBUG, "onResponse success " + response.body().toString());
+                    int counter = response.body().get("counter").getAsInt();
+                    orderDetail.setCounter(counter);
+                    listener.onCounterSuccess(c, "¡Agregado!",counter);
+                    int i = updateCounterItemOrderOnDevice(orderDetail, c);
+
+                    Log.e(Const.DEBUG, "update local: " + i);
+                    Log.e(Const.DEBUG, "counter onResponse success " + response.body().toString());
                 } else {
                     listener.onOrdersError(c, response.message());
                     Log.e(Const.DEBUG, "onResponse error " + response.message());
                 }
-                int i = updateCounterItemOrderOnDevice(orderDetail, c);
-                Log.e(Const.DEBUG, "update local: " + i);
+
             }
 
             @Override
@@ -368,7 +387,7 @@ public class OrderIteractorImpl implements IOrderIteractor {
     }
 
     public void checkoutOrder(final OnOrderListener listener, final Context c, final OrderModel order) {
-        final StatusModel status = new StatusDao(c).getStatusByCode(Const.STATUS_CONFIRMED);
+        final StatusModel status = new StatusDao(c).getStatusByCode(Const.STATUS_RECEIVED);
 
         //Local
         handler.post(new Runnable() {
@@ -379,7 +398,6 @@ public class OrderIteractorImpl implements IOrderIteractor {
                     Log.e(Const.DEBUG, "Order Updated correct. ");
                 else
                     Log.e(Const.DEBUG, "Order Updated error!. ");
-
             }
         });
 
@@ -395,7 +413,7 @@ public class OrderIteractorImpl implements IOrderIteractor {
             public void onResponse(Response<JsonObject> response, Retrofit retrofit) {
                 if (response != null) {
                     Log.e(Const.DEBUG, "Order Updated server OK!. ");
-                    listener.orderCheckoutSuccess("Correct!");
+                    listener.orderCheckoutSuccess("Correct!",order);
                 } else {
                     listener.errorUpdating("Error inténtelo de nuevo");
                     Log.e(Const.DEBUG, "Order Updated server error!. ");

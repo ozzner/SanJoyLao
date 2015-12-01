@@ -26,6 +26,7 @@ import java.util.List;
 import rsantillanc.sanjoylao.R;
 import rsantillanc.sanjoylao.SJLApplication;
 import rsantillanc.sanjoylao.model.OrderDetailModel;
+import rsantillanc.sanjoylao.model.OrderModel;
 import rsantillanc.sanjoylao.model.PlateModel;
 import rsantillanc.sanjoylao.model.PlateSizeModel;
 import rsantillanc.sanjoylao.ui.custom.adapter.RecyclerOrderAdapter;
@@ -40,7 +41,8 @@ import rsantillanc.sanjoylao.util.SJLStrings;
 public class OrderActivity extends BaseActivity implements
         View.OnClickListener,
         IOrderView,
-        RecyclerOrderAdapter.OnOrderItemClickListener, AppBarLayout.OnOffsetChangedListener {
+        RecyclerOrderAdapter.OnOrderItemClickListener,
+        AppBarLayout.OnOffsetChangedListener {
 
     //Views
     private Toolbar toolbar;
@@ -239,6 +241,7 @@ public class OrderActivity extends BaseActivity implements
         mOrdersAdapter = new RecyclerOrderAdapter(orders, this);
         mOrdersAdapter.setOnItemClickListener(this);
         mRecyclerView.setAdapter(mOrdersAdapter);
+        presenter.saveSizeOrders(mOrdersAdapter.countAll());
     }
 
     @Override
@@ -318,6 +321,7 @@ public class OrderActivity extends BaseActivity implements
     public void onIncrementCount() {
         mOrdersAdapter.notifyDataSetChanged();
         presenter.buildTotalPrice(mOrdersAdapter.getDetails());
+
     }
 
     @Override
@@ -384,7 +388,7 @@ public class OrderActivity extends BaseActivity implements
     }
 
     @Override
-    public void orderCheckoutSuccess(CharSequence s) {
+    public void orderCheckoutSuccess(CharSequence s, OrderModel order) {
         Snackbar.make(clickView, s, Snackbar.LENGTH_INDEFINITE)
                 .setActionTextColor(getResources().getColor(R.color.colorPrimary))
                 .setAction(getString(R.string.action_goto_order), new View.OnClickListener() {
@@ -393,7 +397,8 @@ public class OrderActivity extends BaseActivity implements
                         goToOrderHistory();
                     }
                 }).show();
-        presenter.sendPushNotification();
+        presenter.sendPushNotification(order);
     }
+
 
 }

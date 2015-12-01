@@ -14,6 +14,7 @@ import retrofit.Retrofit;
 import rsantillanc.sanjoylao.api.service.ParseAPIService;
 import rsantillanc.sanjoylao.model.APIResultPlateModel;
 import rsantillanc.sanjoylao.model.OrderDetailModel;
+import rsantillanc.sanjoylao.model.OrderModel;
 import rsantillanc.sanjoylao.model.PlateModel;
 import rsantillanc.sanjoylao.model.PlateSizeModel;
 import rsantillanc.sanjoylao.model.RelationPlateSizeModel;
@@ -96,7 +97,6 @@ public class PlateIteractorImpl implements OnOrderListener {
     }
 
 
-
     private String makeJson(CharSequence categoryID) {
         String s = "{\"idCategory\":{\"__type\":\"Pointer\",\"className\":\"Category\",\"objectId\":\"" + categoryID + "\"}}";
         return s;
@@ -117,13 +117,13 @@ public class PlateIteractorImpl implements OnOrderListener {
     @Override
     public void onLoadDetails(Context c, List<OrderDetailModel> orderDetails) {
         PlatePresenterImpl presenter = new PlatePresenterImpl();
-        presenter.onPlateAddSuccess(c, orderDetails.size());
+        presenter.onPlateAddSuccess(c);
     }
 
     @Override
-    public void onCounterSuccess(Context c, CharSequence ok) {
+    public void onCounterSuccess(Context c, CharSequence ok, long counter) {
         PlatePresenterImpl presenter = new PlatePresenterImpl();
-        presenter.onPlateCounterSuccess(c,ok);
+        presenter.onPlateCounterSuccess(c, ok, counter);
     }
 
     @Override
@@ -135,13 +135,14 @@ public class PlateIteractorImpl implements OnOrderListener {
     public void onDeleteSuccess(CharSequence message) {
 
     }
+
     @Override
     public void paymentCorrect(double amount) {
 
     }
 
     @Override
-    public void orderCheckoutSuccess(CharSequence s) {
+    public void orderCheckoutSuccess(CharSequence s, OrderModel order) {
 
     }
 

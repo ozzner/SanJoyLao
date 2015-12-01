@@ -266,7 +266,7 @@ public class MainIteractorImpl {
     }
 
 
-    public void syncOrders(final Context c, String userID) {
+    public void syncOrders(final Context c, final String userID) {
         if (countOrders(c) == 0) {
 
             Retrofit retrofit = new Retrofit.Builder()
@@ -285,6 +285,11 @@ public class MainIteractorImpl {
                         long rows = 0;
                         for (OrderModel order : list) {
                             rows = new OrderDao(c).insert(order);
+
+//                            if (order.getStatus().getCode() == Const.STATUS_TEMPORAL){
+//
+//                            }
+
                         }
                         Log.e(Const.DEBUG, "orders rows affected: " + rows);
                     }

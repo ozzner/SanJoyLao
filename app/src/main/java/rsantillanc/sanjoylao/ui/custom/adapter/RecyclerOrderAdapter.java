@@ -39,6 +39,7 @@ public class RecyclerOrderAdapter extends RecyclerView.Adapter<RecyclerOrderAdap
     private OnOrderItemClickListener mItemClickListener;
     private int position;
     private OrderDetailModel orderToDelete;
+    public int counter;
 
 
     public RecyclerOrderAdapter(List<OrderDetailModel> details, Activity ctx) {
@@ -117,8 +118,8 @@ public class RecyclerOrderAdapter extends RecyclerView.Adapter<RecyclerOrderAdap
 
                     /*Cuando se entregó la orden de manera satisfactoria.*/
                 case Const.STATUS_DELIVERED:
-                    orderHolder.cvStatus.setStrokeColor(activity.getResources().getColor(R.color.yellow_600));
-                    orderHolder.cvStatus.setFillColor(activity.getResources().getColor(R.color.yellow_600));
+                    orderHolder.cvStatus.setStrokeColor(activity.getResources().getColor(R.color.gray));
+                    orderHolder.cvStatus.setFillColor(activity.getResources().getColor(R.color.gray));
                     orderHolder.tvStatus.setText("Status: " + order.getStatus().getName());
                     break;
 
@@ -131,8 +132,8 @@ public class RecyclerOrderAdapter extends RecyclerView.Adapter<RecyclerOrderAdap
 
                     /*Cuando se culmina la orden, indica el tipo de pedido y la forma de pago.*/
                 case Const.STATUS_RECEIVED:
-                    orderHolder.cvStatus.setStrokeColor(activity.getResources().getColor(R.color.gray));
-                    orderHolder.cvStatus.setFillColor(activity.getResources().getColor(R.color.gray));
+                    orderHolder.cvStatus.setStrokeColor(activity.getResources().getColor(R.color.yellow_600));
+                    orderHolder.cvStatus.setFillColor(activity.getResources().getColor(R.color.yellow_600));
                     orderHolder.tvStatus.setText("Status: " + order.getStatus().getName());
                     break;
             }
@@ -228,16 +229,24 @@ public class RecyclerOrderAdapter extends RecyclerView.Adapter<RecyclerOrderAdap
                 } else {
 
                 }
-
-
         }
     }
+
+
+    public long countAll(){
+        for (OrderDetailModel detailModel : getDetails())
+            counter += detailModel.getCounter();
+
+
+        return counter;
+
+    }
+
 
     private void deleteItemDetail(OrderDetailModel orderDetail) {
         this.orderToDelete = orderDetail;
         SJLAlertDialog.showWarningAlert(activity, this,
                 Html.fromHtml("<font color='#E53935'>" + this.activity.getString(R.string.alert_delete_order_item) + "</font>"));
-
     }
 
     private void decrementCounter(int position) {

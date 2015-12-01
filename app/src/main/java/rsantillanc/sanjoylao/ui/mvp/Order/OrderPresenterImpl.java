@@ -9,19 +9,19 @@ import rsantillanc.sanjoylao.R;
 import rsantillanc.sanjoylao.model.OrderDetailModel;
 import rsantillanc.sanjoylao.model.OrderModel;
 import rsantillanc.sanjoylao.storage.sp.SJLPreferences;
-import rsantillanc.sanjoylao.ui.activity.MainActivity;
 import rsantillanc.sanjoylao.ui.custom.dialog.ProcessOrderDialog;
 import rsantillanc.sanjoylao.util.Const;
 
 /**
  * Created by rsantillanc on 27/10/2015.
  */
-public class OrderPresenterImpl implements IOrderPresenter, OnOrderListener {
+public class OrderPresenterImpl implements IOrderPresenter, OnOrderListener , ProcessOrderDialog.OnProcessOrderClickListener{
 
     public static final double MIN_PRICE_TO_DISCOUNT = 300.00;
     public static final int DISCOUNT = 12;
     public static final double PERCENT = (100.00 - DISCOUNT) / 100.00;
     double amount;
+    int counter;
 
 
     private OrderIteractorImpl iteractor;
@@ -30,7 +30,7 @@ public class OrderPresenterImpl implements IOrderPresenter, OnOrderListener {
     public boolean flagSave = false;
     private SJLPreferences preferences;
     private ProcessOrderDialog processOrder;
-    private int counter = 0;
+
 
     public OrderPresenterImpl(IOrderView view, Activity activity) {
         this.iteractor = new OrderIteractorImpl();
@@ -72,23 +72,23 @@ public class OrderPresenterImpl implements IOrderPresenter, OnOrderListener {
     }
 
     @Override
-    public void onCounterSuccess(Context c, CharSequence ok) {
+    public void onCounterSuccess(Context c, CharSequence ok, long counter) {
 
     }
 
     @Override
     public void paymentCorrect(final double amount) {
-        view.hideLoader();
+        view.updateMessageProgressDialog(mActivity.getString(R.string.correct_payment));
         view.enabledPaymentButton(false);
         view.onPaymentSuccess(amount);
-
     }
 
     @Override
-    public void orderCheckoutSuccess(final CharSequence s) {
+    public void orderCheckoutSuccess(final CharSequence s, OrderModel order) {
         view.hideLoader();
         view.clearAll();
-        view.orderCheckoutSuccess(s);
+        view.orderCheckoutSuccess(s, order);
+        preferences.saveCounter(0);
     }
 
     @Override
@@ -98,11 +98,14 @@ public class OrderPresenterImpl implements IOrderPresenter, OnOrderListener {
 
     public void buildTotalPrice(List<OrderDetailModel> orderDetails) {
         amount = 0.0;
+        counter = 0;
+
         double beforeAmount = preferences.getCurrentAmount();
 
-        for (OrderDetailModel orderDetail : orderDetails)
+        for (OrderDetailModel orderDetail : orderDetails) {
             amount = (orderDetail.getPlateSize().getPrice() * orderDetail.getCounter()) + amount;
-
+            counter += orderDetail.getCounter();
+        }
         //If is required
         updateFlag(beforeAmount);
 
@@ -114,6 +117,7 @@ public class OrderPresenterImpl implements IOrderPresenter, OnOrderListener {
 
         //Save value
         preferences.saveCurrentAmount(amount);
+        preferences.saveCounter(counter);
 
     }
 
@@ -151,18 +155,31 @@ public class OrderPresenterImpl implements IOrderPresenter, OnOrderListener {
     }
 
     @Override
-    public void sendPushNotification() {
-        iteractor.makePushNotification();
+    public void sendPushNotification(OrderModel order) {
+        iteractor.makePushNotification(order);
     }
 
     public void showAlertDialogOrder() {
         processOrder = new ProcessOrderDialog();
-//        processOrder.setOnNewCommentListener(this);
+        processOrder.setListener(this);
         processOrder.show(mActivity.getFragmentManager(), "alert_input_order");
     }
 
-    public void updateGeneralCounter() {
-        MainActivity main = new MainActivity();
-        main.updateNotificationsBadge(counter);
+
+    @Override
+    public void onClickSendButton() {
+        processPayment();
+    }
+
+    @Override
+    public void onError(CharSequence sc) {
+
+    }
+
+    public void saveSizeOrders(long size) {
+        if (preferences == null)
+            preferences = new SJLPreferences(mActivity);
+
+        preferences.saveCounter((int) size);
     }
 }

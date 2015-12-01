@@ -12,6 +12,6 @@ import rsantillanc.sanjoylao.model.RelationPlateSizeModel;
 public interface OnPlateListener {
     void onListFilterSuccess(List<RelationPlateSizeModel> platesFilter);
     void onListFilterError(CharSequence error);
-    void onPlateAddSuccess(Context c, int size);
+    void onPlateAddSuccess(Context c);
 
 }

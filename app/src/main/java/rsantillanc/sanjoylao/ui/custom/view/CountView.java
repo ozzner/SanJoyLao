@@ -2,7 +2,6 @@ package rsantillanc.sanjoylao.ui.custom.view;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.ColorFilter;
 import android.graphics.Paint;
 import android.graphics.PixelFormat;
@@ -28,12 +27,12 @@ public class CountView extends Drawable{
         mTextSize = context.getResources().getDimension(R.dimen.count_view_size);
 
         mPaint = new Paint();
-        mPaint.setColor(context.getResources().getColor(R.color.yellow_600));
+        mPaint.setColor(context.getResources().getColor(R.color.black));
         mPaint.setAntiAlias(true);
         mPaint.setStyle(Paint.Style.FILL);
 
         mTextPaint = new Paint();
-        mTextPaint.setColor(Color.WHITE);
+        mTextPaint.setColor(context.getResources().getColor(R.color.white));
         mTextPaint.setTypeface(Typeface.DEFAULT_BOLD);
         mTextPaint.setTextSize(mTextSize);
         mTextPaint.setAntiAlias(true);

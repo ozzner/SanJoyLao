@@ -173,7 +173,7 @@ public class OrderDao {
     }
 
     public List<OrderModel> getOrders(String userID, Context c) {
-        Cursor cur = db.query(Tables.ORDERS, null, idUser + COMPARE, new String[]{userID}, null, null, createdAt + " ASC");
+        Cursor cur = db.query(Tables.ORDERS, null, idUser + COMPARE, new String[]{userID}, null, null, createdAt + " DESC");
         return loopOrders(cur, new ArrayList<OrderModel>(), c);
     }
 
@@ -274,5 +274,9 @@ public class OrderDao {
         ContentValues cv = new ContentValues();
         cv.put(price, order.getPrice());
         return db.update(Tables.ORDERS, cv, objectId + COMPARE, new String[]{order.getObjectId()});
+    }
+
+    public long countAll(String userID, String objectId) {
+        return 0;
     }
 }

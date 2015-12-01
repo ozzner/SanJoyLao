@@ -1,5 +1,6 @@
 package rsantillanc.sanjoylao.ui.activity;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -27,6 +28,7 @@ public class OrderHistoryActivity extends BaseActivity implements IOrderHistoryV
     private RecyclerOrderAdapter orderAdapter;
     private OrderHistoryPresenter presenter;
     private SJLApplication app;
+    public static boolean isActive = false;
 
 
     @Override
@@ -39,6 +41,19 @@ public class OrderHistoryActivity extends BaseActivity implements IOrderHistoryV
         payloads();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        isActive = true;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        isActive = false;
+    }
+
+
     private void init() {
         presenter = new OrderHistoryPresenter(_context,this);
         app = ((SJLApplication) getApplication());
@@ -50,6 +65,9 @@ public class OrderHistoryActivity extends BaseActivity implements IOrderHistoryV
     }
 
     private void payloads() {
+        if (app == null)
+            app = ((SJLApplication) getApplication());
+
         presenter.loadOrderHistory(app.getCurrentUser().getObjectId());
     }
 
@@ -63,14 +81,13 @@ public class OrderHistoryActivity extends BaseActivity implements IOrderHistoryV
         rcvHistory.setLayoutManager(new LinearLayoutManager(this));
         rcvHistory.setItemAnimator(new DefaultItemAnimator());
         rcvHistory.setHasFixedSize(false);
-
     }
-
 
     private void setupAdapter(List<OrderModel> data) {
         orderAdapter = new RecyclerOrderAdapter(data, this, true);
         rcvHistory.setAdapter(orderAdapter);
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -111,6 +128,11 @@ public class OrderHistoryActivity extends BaseActivity implements IOrderHistoryV
     @Override
     public void showMessage(CharSequence message) {
         showToast(message);
+    }
+
+    @Override
+    public void refresh(Context c, String userID) {
+        presenter.loadOrderHistory(userID);
     }
 
 

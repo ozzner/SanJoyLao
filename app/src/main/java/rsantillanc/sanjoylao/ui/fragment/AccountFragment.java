@@ -79,7 +79,7 @@ public class AccountFragment extends Fragment implements IAccountView, View.OnCl
 
         buildProfileData();
 
-               fields = new EditText[]{etIdentity, etPhoneNumber, etBirthday};
+        fields = new EditText[]{etIdentity, etPhoneNumber, etBirthday};
     }
 
     private void buildProfileData() {
@@ -96,8 +96,8 @@ public class AccountFragment extends Fragment implements IAccountView, View.OnCl
         tvLastLogin.setText(SJLDates.customDateConverter(user.getUpdatedAt(), SJLStrings.PARSE_DATE_FORMAT, SJLDates.FORMAT_DATE_GENERAL));
 
         //Reservations
-        etIdentity.setText(String.valueOf(user.getIdentificationDocument()));
-        etPhoneNumber.setText(String.valueOf(user.getPhoneNumber()));
+        etIdentity.setText(String.valueOf(user.getIdentificationDocument() == 0 ? Const.EMPTY : user.getIdentificationDocument()));
+        etPhoneNumber.setText(String.valueOf(user.getPhoneNumber() == 0 ? Const.EMPTY : user.getPhoneNumber()));
         etBirthday.setText(String.valueOf(user.getBirthday()));
 
 

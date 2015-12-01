@@ -2,6 +2,7 @@ package rsantillanc.sanjoylao.ui.mvp.Order;
 
 import android.content.Context;
 
+import rsantillanc.sanjoylao.model.OrderModel;
 import rsantillanc.sanjoylao.model.PlateSizeModel;
 import rsantillanc.sanjoylao.model.UserModel;
 
@@ -11,5 +12,5 @@ import rsantillanc.sanjoylao.model.UserModel;
 public interface IOrderIteractor {
     void getOrdersFromServer(String clausule, OnOrderListener listener, Context c);
     void addItemToOrder(Context c,PlateSizeModel plateSize, UserModel user, OnOrderListener listener);
-    void makePushNotification();
+    void makePushNotification(OrderModel order);
 }

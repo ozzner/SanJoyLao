@@ -15,7 +15,7 @@ import rsantillanc.sanjoylao.ui.activity.PlateActivity;
 /**
  * Created by RenzoD on 29/10/2015.
  */
-public class PlatePresenterImpl implements IPlatePresenter,OnPlateListener {
+public class PlatePresenterImpl implements IPlatePresenter, OnPlateListener {
 
     private final Activity mActivity;
     PlateIteractorImpl iteractor;
@@ -57,19 +57,23 @@ public class PlatePresenterImpl implements IPlatePresenter,OnPlateListener {
     }
 
     @Override
-    public void onPlateAddSuccess(Context c, int size) {
-        preferences= new SJLPreferences(c);
-        preferences.saveCounter(size);
+    public void onPlateAddSuccess(Context c) {
+        preferences = new SJLPreferences(c);
+        preferences.saveCounter(preferences.getCounter() + 1);
         PlateActivity view = new PlateActivity();
-        view.onPlateAddOrderCorrect(c, size);
+        view.onPlateAddOrderCorrect(c, preferences.getCounter());
     }
 
     public void addPlateToOrder(PlateSizeModel plateSize, UserModel user) {
         iteractor.addPlate(mActivity, plateSize, user);
     }
 
-    public void onPlateCounterSuccess(Context c, CharSequence ok) {
-        IPlateView v = new PlateActivity();
-        v.onPlateCounterUpdated(c,ok);
+    public void onPlateCounterSuccess(Context c, CharSequence ok, long counter) {
+        if (preferences == null)
+            preferences = new SJLPreferences(c);
+
+        preferences.saveCounter(preferences.getCounter() + 1);
+        PlateActivity v = new PlateActivity();
+        v.onPlateCounterUpdated(c, ok, preferences.getCounter());
     }
 }

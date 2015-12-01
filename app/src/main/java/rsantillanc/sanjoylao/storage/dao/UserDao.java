@@ -71,7 +71,7 @@ public class UserDao extends BaseDao implements BaseColumns {
         cv.put(phoneNumber, user.getPhoneNumber());
         cv.put(isEnabled, user.isEnabled());
         cv.put(sessionToken, user.getSessionToken());
-        cv.put(birthday, user.getBirthday());
+        cv.put(birthday, user.getBirthday() == null ? "" : user.getBirthday());
         cv.put(identificationDocument, user.getIdentificationDocument());
 
         long rows = db.insert(Tables.USER, null, cv);
@@ -155,10 +155,10 @@ public class UserDao extends BaseDao implements BaseColumns {
 
     public int update(UserModel user) {
         ContentValues cv = new ContentValues();
-        cv.put(identificationDocument,user.getIdentificationDocument());
-        cv.put(phoneNumber,user.getPhoneNumber());
-        cv.put(birthday,user.getBirthday());
-        cv.put(updatedAt,user.getUpdatedAt());
-        return db.update(Tables.USER,cv,objectId + COMPARE,new String[] {user.getObjectId()});
+        cv.put(identificationDocument, user.getIdentificationDocument());
+        cv.put(phoneNumber, user.getPhoneNumber());
+        cv.put(birthday, user.getBirthday());
+        cv.put(updatedAt, user.getUpdatedAt());
+        return db.update(Tables.USER, cv, objectId + COMPARE, new String[]{user.getObjectId()});
     }
 }

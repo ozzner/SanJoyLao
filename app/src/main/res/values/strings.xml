@@ -83,7 +83,7 @@
 
     <!--Bookings-->
     <string name="booking_table">Servicio a la mesa</string>
-    <string name="booking_order">Reservar</string>
+    <string name="booking_order">Reserva</string>
     <string name="booking_delivery">Delivery</string>
     <string name="title_activity_survey">Encuesta</string>
     <string name="action_settings">Settings</string>
@@ -140,5 +140,8 @@
     <string name="title_dialog_do_order">Realizar pedido</string>
     <string name="hint_card_number">Credit card code</string>
     <string name="hint_address">My address</string>
+    <string name="correct_payment">¡Pago correcto!</string>
+    <string name="sjl_home_address"><![CDATA[<b>Caminos del Inca 1899</b>, Santiago de Surco  Lima 33. Reservas <b>(01) 2790888</b>]]></string>
+    <string name="google_maps_key">AIzaSyBrH0Y50F2oS9Nv3680yju37ETcYlNRrYM</string>
 
 </resources>

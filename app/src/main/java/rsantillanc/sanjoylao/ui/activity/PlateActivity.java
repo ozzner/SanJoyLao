@@ -39,6 +39,7 @@ public class PlateActivity extends BaseActivity implements IPlateView, RecyclerP
     //Runtime
     PlatePresenterImpl mpresenter;
     private SJLApplication app;
+    private RecyclerPlateAdapter plateAdapter;
 
 
     //[Activity lifecycle ]
@@ -85,7 +86,7 @@ public class PlateActivity extends BaseActivity implements IPlateView, RecyclerP
         if (id == R.id.action_plate_add_order) {
             goToOrderActivity();
         } else {
-           finish();
+            finish();
         }
 
         return true;
@@ -145,12 +146,12 @@ public class PlateActivity extends BaseActivity implements IPlateView, RecyclerP
     }
 
     private void setUpAdapter(List<RelationPlateSizeModel> relations) {
-        RecyclerPlateAdapter ap = new RecyclerPlateAdapter(relations, this);
-        ap.setOnItemPlateClickListener(this);
+        plateAdapter = new RecyclerPlateAdapter(relations, this);
+        plateAdapter.setOnItemPlateClickListener(this);
         mRecycler.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         mRecycler.addItemDecoration(new DividerItemDecoration(getApplicationContext(), DividerItemDecoration.VERTICAL_LIST));
         mRecycler.setItemAnimator(new DefaultItemAnimator());
-        mRecycler.setAdapter(ap);
+        mRecycler.setAdapter(plateAdapter);
     }
 
 
@@ -179,10 +180,10 @@ public class PlateActivity extends BaseActivity implements IPlateView, RecyclerP
     }
 
     @Override
-    public void onPlateCounterUpdated(Context c, CharSequence ok) {
+    public void onPlateCounterUpdated(Context c, CharSequence ok, long counter) {
+        ((PlateActivity) c).updateNotificationsBadge((int) counter);
         Toast.makeText(c, ok, Toast.LENGTH_SHORT).show();
     }
-
 
 
     // {PLATE ITEM LISTENER}
