@@ -98,11 +98,13 @@ public class Const {
     public static final String CLASS_PLATE_SIZE = "PlateSize";
 
     //[ STATUS ]
-    public static final int STATUS_TEMPORAL = 1;
+    public static final int STATUS_CODE_TEMPORAL = 1;
     public static final int STATUS_RECEIVED = 2;
     public static final int STATUS_CONFIRMED = 3;
     public static final int STATUS_ON_ROAD = 4;
     public static final int STATUS_DELIVERED = 5;
     public static final int STATUS_CANCELLED = 6;
     public static final int DEFAULT_COUNTER = 1;
+
+
 }

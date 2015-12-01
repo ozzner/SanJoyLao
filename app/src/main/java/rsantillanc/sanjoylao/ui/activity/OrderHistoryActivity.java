@@ -1,23 +1,30 @@
 package rsantillanc.sanjoylao.ui.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
+import java.io.Serializable;
 import java.util.List;
 
 import rsantillanc.sanjoylao.R;
 import rsantillanc.sanjoylao.SJLApplication;
+import rsantillanc.sanjoylao.model.OrderDetailModel;
 import rsantillanc.sanjoylao.model.OrderModel;
+import rsantillanc.sanjoylao.model.StatusModel;
 import rsantillanc.sanjoylao.ui.custom.adapter.RecyclerOrderAdapter;
 import rsantillanc.sanjoylao.ui.mvp.OrderHistory.IOrderHistoryView;
 import rsantillanc.sanjoylao.ui.mvp.OrderHistory.OrderHistoryPresenter;
 import rsantillanc.sanjoylao.util.Android;
+import rsantillanc.sanjoylao.util.Const;
 
 public class OrderHistoryActivity extends BaseActivity implements IOrderHistoryView {
 
@@ -29,6 +36,7 @@ public class OrderHistoryActivity extends BaseActivity implements IOrderHistoryV
     private OrderHistoryPresenter presenter;
     private SJLApplication app;
     public static boolean isActive = false;
+    private View view;
 
 
     @Override
@@ -55,7 +63,7 @@ public class OrderHistoryActivity extends BaseActivity implements IOrderHistoryV
 
 
     private void init() {
-        presenter = new OrderHistoryPresenter(_context,this);
+        presenter = new OrderHistoryPresenter(_context, this);
         app = ((SJLApplication) getApplication());
     }
 
@@ -96,6 +104,20 @@ public class OrderHistoryActivity extends BaseActivity implements IOrderHistoryV
     }
 
     @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        Log.e(Const.DEBUG, "New intent!");
+
+        if (intent.getExtras() == null)
+            return;
+
+        presenter.loopOrdersAndUpdate(
+                (OrderModel) intent.getSerializableExtra(Const.EXTRA_ORDER),
+                orderAdapter.getOrders());
+
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == android.R.id.home)
@@ -108,6 +130,7 @@ public class OrderHistoryActivity extends BaseActivity implements IOrderHistoryV
     private void close() {
         finish();
     }
+
 
     //{Order History View}
     @Override
@@ -135,5 +158,19 @@ public class OrderHistoryActivity extends BaseActivity implements IOrderHistoryV
         ((OrderHistoryActivity) c.getApplicationContext()).payloads();
     }
 
+    @Override
+    public void updateOrdersAdapter(List<OrderModel> orders) {
+        orderAdapter.setOrders(orders);
+    }
 
+    @Override
+    public void refreshAdapter() {
+        orderAdapter.notifyDataSetChanged();
+    }
+
+
+    public void showSnack() {
+        showSnackbar(getString(R.string.notification_order_confirmed),
+                rcvHistory, getString(R.string.ok));
+    }
 }

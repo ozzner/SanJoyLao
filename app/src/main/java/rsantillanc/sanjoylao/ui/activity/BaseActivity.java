@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.Toast;
 
+import rsantillanc.sanjoylao.R;
 import rsantillanc.sanjoylao.storage.sp.SJLPreferences;
 
 public class BaseActivity extends AppCompatActivity {
@@ -26,9 +27,21 @@ public class BaseActivity extends AppCompatActivity {
         Toast.makeText(getApplicationContext(), sequence, Toast.LENGTH_SHORT).show();
     }
 
-    protected void showSnackbar(CharSequence message, View view, int value) {
-        Snackbar.make(view, message,value)
+    public void showSnackbar(CharSequence message, View view, int value) {
+        Snackbar.make(view, message, value)
                 .setAction("Action", null).show();
+    }
+
+    public void showSnackbar(CharSequence message, View view, CharSequence actionName) {
+        Snackbar.make(view, message, Snackbar.LENGTH_INDEFINITE)
+                .setActionTextColor(getResources().getColor(R.color.colorPrimary))
+                .setAction(actionName, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        v.animate();
+                    }
+                })
+                .show();
     }
 
     public void showMessage(CharSequence sc) {
