@@ -99,42 +99,42 @@ public class RecyclerOrderAdapter extends RecyclerView.Adapter<RecyclerOrderAdap
                 case Const.STATUS_TEMPORAL:
                     orderHolder.cvStatus.setStrokeColor(activity.getResources().getColor(R.color.blue));
                     orderHolder.cvStatus.setFillColor(activity.getResources().getColor(R.color.blue));
-                    orderHolder.tvStatus.setText("Status: " + order.getStatus().getName());
+                    orderHolder.tvStatus.setText(order.getStatus().getName());
                     break;
 
                      /*Cuando se cancela una orden por cliente.*/
                 case Const.STATUS_CANCELLED:
                     orderHolder.cvStatus.setStrokeColor(activity.getResources().getColor(R.color.red));
                     orderHolder.cvStatus.setFillColor(activity.getResources().getColor(R.color.red));
-                    orderHolder.tvStatus.setText("Status: " + order.getStatus().getName());
+                    orderHolder.tvStatus.setText(order.getStatus().getName());
                     break;
 
                     /*Cuando se determina el tiempo de entrega de la orden o de recojo.*/
                 case Const.STATUS_CONFIRMED:
                     orderHolder.cvStatus.setStrokeColor(activity.getResources().getColor(R.color.my_green));
                     orderHolder.cvStatus.setFillColor(activity.getResources().getColor(R.color.my_green));
-                    orderHolder.tvStatus.setText("Status: " + order.getStatus().getName());
+                    orderHolder.tvStatus.setText(order.getStatus().getName());
                     break;
 
                     /*Cuando se entregó la orden de manera satisfactoria.*/
                 case Const.STATUS_DELIVERED:
                     orderHolder.cvStatus.setStrokeColor(activity.getResources().getColor(R.color.gray));
                     orderHolder.cvStatus.setFillColor(activity.getResources().getColor(R.color.gray));
-                    orderHolder.tvStatus.setText("Status: " + order.getStatus().getName());
+                    orderHolder.tvStatus.setText(order.getStatus().getName());
                     break;
 
                     /*Cuando la orden esta en camino (Solo Delivery).*/
                 case Const.STATUS_ON_ROAD:
                     orderHolder.cvStatus.setStrokeColor(activity.getResources().getColor(R.color.orange_800));
                     orderHolder.cvStatus.setFillColor(activity.getResources().getColor(R.color.orange_800));
-                    orderHolder.tvStatus.setText("Status: " + order.getStatus().getName());
+                    orderHolder.tvStatus.setText(order.getStatus().getName());
                     break;
 
                     /*Cuando se culmina la orden, indica el tipo de pedido y la forma de pago.*/
                 case Const.STATUS_RECEIVED:
                     orderHolder.cvStatus.setStrokeColor(activity.getResources().getColor(R.color.yellow_600));
                     orderHolder.cvStatus.setFillColor(activity.getResources().getColor(R.color.yellow_600));
-                    orderHolder.tvStatus.setText("Status: " + order.getStatus().getName());
+                    orderHolder.tvStatus.setText(order.getStatus().getName());
                     break;
             }
         }

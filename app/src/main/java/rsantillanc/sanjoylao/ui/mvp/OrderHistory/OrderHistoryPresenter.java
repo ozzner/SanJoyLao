@@ -12,11 +12,11 @@ import rsantillanc.sanjoylao.ui.activity.OrderHistoryActivity;
  */
 public class OrderHistoryPresenter implements IOrderHistoryPresenter, OnOrderHistoryListener {
 
-    private IOrderHistoryView view;
+    private OrderHistoryActivity view;
     private OrderHistoryIteractorImpl implement;
     private Context _context;
 
-    public OrderHistoryPresenter(Context _context, IOrderHistoryView view) {
+    public OrderHistoryPresenter(Context _context, OrderHistoryActivity view) {
         this._context = _context;
         this.view = view;
         implement = new OrderHistoryIteractorImpl();

@@ -132,7 +132,7 @@ public class OrderHistoryActivity extends BaseActivity implements IOrderHistoryV
 
     @Override
     public void refresh(Context c, String userID) {
-        presenter.loadOrderHistory(userID);
+        ((OrderHistoryActivity) c.getApplicationContext()).payloads();
     }
 
 
