@@ -147,8 +147,8 @@
     <string name="notification_order_confirmed">¡Orden confirmada!</string>
     <string name="ok">ok</string>
     <string name="title_activity_history">Historial de pedidos</string>
-    <string name="hint_card_expires">Expires</string>
+    <string name="hint_card_expires">Expires MM/dd</string>
     <string name="hint_card_cvv">CVV</string>
-    <string name="hint_card_names">Cardholder's name</string>
+    <string name="hint_card_names">Cardholder\'s name</string>
 
 </resources>

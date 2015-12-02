@@ -1,163 +1,201 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
     android:orientation="vertical">
 
     <TextView
+        android:id="@+id/header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"
         android:gravity="center"
         android:padding="16dp"
-        android:textSize="@dimen/txt_16sp"
         android:text="@string/title_dialog_do_order"
-        android:textColor="@color/white" />
+        android:textColor="@color/white"
+        android:textSize="@dimen/txt_16sp" />
 
-    <LinearLayout
+
+    <rsantillanc.sanjoylao.ui.custom.view.OrderPagerView
+        android:id="@+id/viewpager_process_order"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/space_4dp">
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="45dp"
-            android:src="@drawable/logo_visa_verified"
-            />
+        android:layout_height="300dp"
+        android:minHeight="250dp"
+        android:layout_below="@+id/header">
 
-    </LinearLayout>
-
-
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/tilName12"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/space_8dp">
-
-        <EditText
-            android:id="@+id/et_input_comment1"
+        <!-- Payment-->
+        <LinearLayout
+            android:id="@+id/lay_process_payment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/hint_card_number"
-            android:paddingLeft="@dimen/space_10dp"
-            android:textColor="@color/visa"
-            android:inputType="number"/>
+            android:orientation="vertical">
 
-    </android.support.design.widget.TextInputLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:weightSum="2"
-        android:orientation="horizontal">
-
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/tilName2"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/space_8dp">
-
-            <EditText
-                android:id="@+id/et_input_comment2"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/hint_card_expires"
-                android:paddingLeft="@dimen/space_10dp"
-                android:inputType="text"/>
+                android:layout_marginTop="@dimen/space_4dp"
+                android:layout_marginBottom="@dimen/space_4dp"
+                android:gravity="center"
+                android:visibility="visible">
 
-        </android.support.design.widget.TextInputLayout>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="45dp"
+                    android:src="@drawable/logo_visa_verified" />
 
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/tilName3"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/space_8dp">
+            </LinearLayout>
 
-            <EditText
-                android:id="@+id/et_input_comment3"
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/tilName12"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/space_8dp">
+
+                <EditText
+                    android:id="@+id/et_input_comment1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/hint_card_number"
+                    android:inputType="number"
+                    android:paddingLeft="@dimen/space_10dp"
+                    android:textColor="@color/visa" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/hint_card_cvv"
-                android:paddingLeft="@dimen/space_10dp"
-                android:inputType="text"/>
+                android:orientation="horizontal"
+                android:weightSum="2">
 
-        </android.support.design.widget.TextInputLayout>
-    </LinearLayout>
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/tilName2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:padding="@dimen/space_8dp">
+
+                    <EditText
+                        android:id="@+id/et_input_comment2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/hint_card_expires"
+                        android:inputType="text"
+                        android:paddingLeft="@dimen/space_10dp"
+                        android:textColor="@color/visa" />
+
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/tilName3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:padding="@dimen/space_8dp">
+
+                    <EditText
+                        android:id="@+id/et_input_comment3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/hint_card_cvv"
+                        android:inputType="number"
+                        android:paddingLeft="@dimen/space_10dp"
+                        android:textColor="@color/visa" />
+
+                </android.support.design.widget.TextInputLayout>
+            </LinearLayout>
 
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/tilName"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/space_8dp">
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/tilName"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/space_8dp">
 
-        <EditText
-            android:id="@+id/et_input_comment"
+                <EditText
+                    android:id="@+id/et_input_comment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/hint_card_names"
+                    android:inputType="textPersonName"
+                    android:paddingLeft="@dimen/space_10dp" />
+
+            </android.support.design.widget.TextInputLayout>
+
+
+        </LinearLayout>
+
+        <!--Location-->
+
+        <LinearLayout
+            android:id="@+id/lay_process_location"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/hint_card_names"
+            android:gravity="center"
+            android:visibility="visible"
+            android:orientation="horizontal"
             android:paddingLeft="@dimen/space_10dp"
-            android:inputType="text"/>
+            android:paddingRight="@dimen/space_10dp"
+            android:weightSum="2">
 
-    </android.support.design.widget.TextInputLayout>
-
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:paddingLeft="@dimen/space_10dp"
-    android:paddingRight="@dimen/space_10dp"
-    android:weightSum="2"
-    android:gravity="center"
-    android:orientation="horizontal">
-
-    <RadioGroup
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <android.support.v7.widget.AppCompatRadioButton
-            android:id="@+id/app_rb_types_1"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:onClick="onRadioButtonClicked"
-            android:layout_height="wrap_content"
-            android:text="@string/booking_order"
-            android:padding="16dp">
+            <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/map"
+                android:name="com.google.android.gms.maps.SupportMapFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+               />
 
 
-        </android.support.v7.widget.AppCompatRadioButton>
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
-        <android.support.v7.widget.AppCompatRadioButton
-            android:id="@+id/app_rb_types_2"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:checked="true"
-            android:onClick="onRadioButtonClicked"
-            android:layout_height="wrap_content"
-            android:text="@string/booking_delivery"
-            android:padding="16dp">
-
-        </android.support.v7.widget.AppCompatRadioButton>
-    </RadioGroup>
-
+                <android.support.v7.widget.AppCompatRadioButton
+                    android:id="@+id/app_rb_types_1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:onClick="onRadioButtonClicked"
+                    android:padding="16dp"
+                    android:text="@string/booking_order">
 
 
+                </android.support.v7.widget.AppCompatRadioButton>
 
-</LinearLayout>
+                <android.support.v7.widget.AppCompatRadioButton
+                    android:id="@+id/app_rb_types_2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:checked="true"
+                    android:gravity="center"
+                    android:onClick="onRadioButtonClicked"
+                    android:padding="16dp"
+                    android:text="@string/booking_delivery">
 
+                </android.support.v7.widget.AppCompatRadioButton>
+            </RadioGroup>
+
+        </LinearLayout>
+
+
+    </rsantillanc.sanjoylao.ui.custom.view.OrderPagerView>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
+        android:layout_above="@+id/lay_buttons"
         android:background="@color/gray_color_0" />
 
     <LinearLayout
+        android:id="@+id/lay_buttons"
         android:layout_width="match_parent"
         android:layout_height="48dp"
+        android:layout_below="@+id/viewpager_process_order"
         android:gravity="end">
 
         <Button
@@ -166,7 +204,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
-            android:text="@string/cancel"/>
+            android:text="@string/cancel" />
 
         <Button
             android:id="@+id/bt_send"
@@ -178,5 +216,4 @@
             android:textColor="?attr/colorPrimary" />
 
     </LinearLayout>
-
-</LinearLayout>
+</RelativeLayout>

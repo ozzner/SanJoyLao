@@ -1,7 +1,9 @@
 package rsantillanc.sanjoylao.ui.mvp.Order;
 
+
 import android.app.Activity;
 import android.content.Context;
+import android.support.v7.app.AppCompatActivity;
 
 import java.util.List;
 
@@ -9,6 +11,7 @@ import rsantillanc.sanjoylao.R;
 import rsantillanc.sanjoylao.model.OrderDetailModel;
 import rsantillanc.sanjoylao.model.OrderModel;
 import rsantillanc.sanjoylao.storage.sp.SJLPreferences;
+import rsantillanc.sanjoylao.ui.activity.OrderActivity;
 import rsantillanc.sanjoylao.ui.custom.dialog.ProcessOrderDialog;
 import rsantillanc.sanjoylao.util.Const;
 
@@ -25,14 +28,14 @@ public class OrderPresenterImpl implements IOrderPresenter, OnOrderListener , Pr
 
 
     private OrderIteractorImpl iteractor;
-    private IOrderView view;
+    private OrderActivity view;
     private Activity mActivity;
     public boolean flagSave = false;
     private SJLPreferences preferences;
     private ProcessOrderDialog processOrder;
 
 
-    public OrderPresenterImpl(IOrderView view, Activity activity) {
+    public OrderPresenterImpl(OrderActivity view, Activity activity) {
         this.iteractor = new OrderIteractorImpl();
         this.view = view;
         this.mActivity = activity;
@@ -162,7 +165,7 @@ public class OrderPresenterImpl implements IOrderPresenter, OnOrderListener , Pr
     public void showAlertDialogOrder() {
         processOrder = new ProcessOrderDialog();
         processOrder.setListener(this);
-        processOrder.show(mActivity.getFragmentManager(), "alert_input_order");
+        processOrder.show(view.getSupportFragmentManager(), "alert_input_order");
     }
 
 
