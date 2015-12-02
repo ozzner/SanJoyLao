@@ -16,4 +16,5 @@ public interface IPlateView {
     void onError(CharSequence error);
     void onPlateAddOrderCorrect(Context c, int size);
     void onPlateCounterUpdated(Context c, CharSequence ok, long counter);
+    void enabledImageForEmpty(boolean on);
 }

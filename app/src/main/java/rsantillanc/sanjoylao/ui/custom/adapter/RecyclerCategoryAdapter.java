@@ -64,6 +64,8 @@ public class RecyclerCategoryAdapter extends RecyclerView.Adapter<RecyclerCatego
         if (categories.get(index).getImage() != null){
             Picasso.with(_context)
                     .load(categories.get(index).getImage().getUrl())
+                    .placeholder(R.drawable.ic_no_image)
+                    .error(R.drawable.ic_no_image)
                     .into(holder.ivImage);
         }
 
