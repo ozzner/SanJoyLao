@@ -16,7 +16,7 @@ public class SJLDatabase extends SQLiteOpenHelper {
     private static final String TAG = SJLDatabase.class.getSimpleName();
 
     //Database
-    private static final int VERSION = 12;
+    private static final int VERSION = 13;
     private static final String DATABASE = "SJLDatabase.db";
 
     //Runtime
@@ -90,7 +90,7 @@ public class SJLDatabase extends SQLiteOpenHelper {
         try {
             db.execSQL(Tables.DROP_TABLE + table);
         } catch (Exception ex) {
-            Log.e(Const.DEBUG, TAG + " Error dropping table, because " + table + " no exist.",ex);
+            Log.e(Const.DEBUG, TAG + " Error dropping table, because " + table + " no exist.", ex);
         }
     }
 }

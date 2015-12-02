@@ -142,7 +142,7 @@ public class OrderDao {
     }
 
     public List<OrderDetailModel> getOrderDetailsByOrderID(String orderID) {
-        Cursor cur = db.query(Tables.ORDER_DETAIL, null, idOrder + COMPARE, new String[]{orderID}, null, null, createdAt + " ASC");
+        Cursor cur = db.query(Tables.ORDER_DETAIL, null, idOrder + COMPARE, new String[]{orderID}, null, null, createdAt + " DESC");
         return loopDetails(cur, new ArrayList<OrderDetailModel>());
     }
 
