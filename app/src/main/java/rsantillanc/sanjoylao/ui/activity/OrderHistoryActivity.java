@@ -81,6 +81,7 @@ public class OrderHistoryActivity extends BaseActivity implements IOrderHistoryV
         //Toolbar
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle(getString(R.string.title_activity_history));
 
         //Recycler view
         rcvHistory.setLayoutManager(new LinearLayoutManager(this));
