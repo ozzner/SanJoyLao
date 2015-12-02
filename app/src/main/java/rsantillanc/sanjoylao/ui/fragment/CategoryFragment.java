@@ -120,8 +120,9 @@ public class CategoryFragment extends Fragment implements RecyclerCategoryAdapte
 
     private void goToPlateActivity(CategoryModel category) {
         Intent plate = new Intent(getActivity(), PlateActivity.class);
-        plate.putExtra(Const.EXTRA_CATEGORY_ID, category.getObjectId());
-        plate.putExtra(Const.EXTRA_CATEGORY_NAME, category.getName());
+        Bundle ob = new Bundle();
+        ob.putSerializable(Const.EXTRA_CATEGORY,category);
+        plate.putExtras(ob);
         startActivity(plate);
     }
 }

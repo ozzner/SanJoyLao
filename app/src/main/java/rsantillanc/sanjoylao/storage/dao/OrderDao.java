@@ -142,7 +142,7 @@ public class OrderDao {
     }
 
     public List<OrderDetailModel> getOrderDetailsByOrderID(String orderID) {
-        Cursor cur = db.query(Tables.ORDER_DETAIL, null, idOrder + COMPARE, new String[]{orderID}, null, null, createdAt + " ASC");
+        Cursor cur = db.query(Tables.ORDER_DETAIL, null, idOrder + COMPARE, new String[]{orderID}, null, null, createdAt + " DESC");
         return loopDetails(cur, new ArrayList<OrderDetailModel>());
     }
 
@@ -157,12 +157,14 @@ public class OrderDao {
                 detail.setPlateSize(makePlateSize(cur.getString(cur.getColumnIndex(idPlateSize))));
                 detail.setCounter(cur.getInt(cur.getColumnIndex(counter)));
                 detail.setCreatedAt(cur.getString(cur.getColumnIndex(createdAtDetail)));
+
                 //Add if exist
                 if (cur.getString(cur.getColumnIndex(idFeastPlate)) != null)
                     detail.setFeastPlate(makeFeastPlate(cur.getString(cur.getColumnIndex(idFeastPlate))));
 
                 detail.setUpdatedAt(cur.getString(cur.getColumnIndex(updatedAtDetail)));
                 listDetails.add(detail);
+
             } while (cur.moveToNext());
 
         if (!cur.isClosed()) {

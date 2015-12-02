@@ -146,5 +146,6 @@
     <string name="status_confirmed">confirmado</string>
     <string name="notification_order_confirmed">¡Orden confirmada!</string>
     <string name="ok">ok</string>
+    <string name="title_activity_history">Historial de pedidos</string>
 
 </resources>

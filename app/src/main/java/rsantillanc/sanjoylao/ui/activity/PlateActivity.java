@@ -12,12 +12,15 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import java.util.List;
 
 import rsantillanc.sanjoylao.R;
 import rsantillanc.sanjoylao.SJLApplication;
+import rsantillanc.sanjoylao.model.CategoryModel;
 import rsantillanc.sanjoylao.model.PlateModel;
 import rsantillanc.sanjoylao.model.PlateSizeModel;
 import rsantillanc.sanjoylao.model.RelationPlateSizeModel;
@@ -34,12 +37,15 @@ public class PlateActivity extends BaseActivity implements IPlateView, RecyclerP
     //View
     Toolbar mtoolbar;
     RecyclerView mRecycler;
+    ImageView previewImage;
 
 
     //Runtime
     PlatePresenterImpl mpresenter;
     private SJLApplication app;
     private RecyclerPlateAdapter plateAdapter;
+    private LinearLayout layForEmpty;
+    private CategoryModel currentCategory;
 
 
     //[Activity lifecycle ]
@@ -120,28 +126,31 @@ public class PlateActivity extends BaseActivity implements IPlateView, RecyclerP
     private void init() {
         mpresenter = new PlatePresenterImpl(this, this);
         app = ((SJLApplication) getApplication());
+
+        if (getIntent().getExtras() != null)
+            currentCategory = (CategoryModel) getIntent().getExtras().getSerializable(Const.EXTRA_CATEGORY);
     }
 
     private void initUIElements() {
         mtoolbar = ((Toolbar) findViewById(R.id.toolbar));
         mRecycler = (RecyclerView) findViewById(R.id.rv_plates);
+        layForEmpty = (LinearLayout) findViewById(R.id.lay_plate_for_empty);
+        previewImage = (ImageView) findViewById(R.id.iv_history_preview_image);
     }
 
     private void initSetUpsElements() {
         setUpToolbar();
-        setUpRecyclerView(getIntent().getExtras());
+        setUpRecyclerView();
     }
 
-    private void setUpRecyclerView(Bundle extras) {
-        String categoryID = extras.getString(Const.EXTRA_CATEGORY_ID);
-        mpresenter.loadPlatesByCategory(categoryID);
+    private void setUpRecyclerView() {
+        mpresenter.loadPlatesByCategory(currentCategory.getObjectId());
     }
 
 
     private void setUpToolbar() {
-        String name = getIntent().getExtras().getString(Const.EXTRA_CATEGORY_NAME);
         setSupportActionBar(mtoolbar);
-        getSupportActionBar().setTitle(name);
+        getSupportActionBar().setTitle(currentCategory.getName());
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
@@ -183,6 +192,19 @@ public class PlateActivity extends BaseActivity implements IPlateView, RecyclerP
     public void onPlateCounterUpdated(Context c, CharSequence ok, long counter) {
         ((PlateActivity) c).updateNotificationsBadge((int) counter);
         Toast.makeText(c, ok, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void enabledImageForEmpty(boolean on) {
+        if (on) {
+            layForEmpty.setVisibility(View.VISIBLE);
+            mRecycler.setVisibility(View.GONE);
+            mpresenter.loadCategoryImage(currentCategory.getImage().getUrl(),previewImage);
+        } else {
+            layForEmpty.setVisibility(View.GONE);
+            mRecycler.setVisibility(View.VISIBLE);
+        }
+
     }
 
 

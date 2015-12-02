@@ -119,9 +119,9 @@ public class MainActivity extends BaseActivity
         setUpDrawerToggle();
         setUpOrientation();
         setUpProfile();
-        mAppbarLayout.setExpanded(false);
         setupTitleTitles(getString(R.string.app_name), getString(R.string.home));
         ivLogout.setOnClickListener(this);
+        mAppbarLayout.setExpanded(false);
 
     }
 

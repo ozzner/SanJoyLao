@@ -2,9 +2,13 @@ package rsantillanc.sanjoylao.ui.mvp.Plate;
 
 import android.app.Activity;
 import android.content.Context;
+import android.widget.ImageView;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import rsantillanc.sanjoylao.R;
 import rsantillanc.sanjoylao.model.PlateModel;
 import rsantillanc.sanjoylao.model.PlateSizeModel;
 import rsantillanc.sanjoylao.model.RelationPlateSizeModel;
@@ -19,12 +23,12 @@ public class PlatePresenterImpl implements IPlatePresenter, OnPlateListener {
 
     private final Activity mActivity;
     PlateIteractorImpl iteractor;
-    IPlateView mView;
+    PlateActivity view;
     SJLPreferences preferences;
 
-    public PlatePresenterImpl(Activity activity, IPlateView mView) {
+    public PlatePresenterImpl(Activity activity, PlateActivity mView) {
         this.iteractor = new PlateIteractorImpl(activity);
-        this.mView = mView;
+        this.view = mView;
         this.mActivity = activity;
         this.preferences = new SJLPreferences(activity);
     }
@@ -48,12 +52,16 @@ public class PlatePresenterImpl implements IPlatePresenter, OnPlateListener {
     //{ON_PLATE_LISTENER}
     @Override
     public void onListFilterSuccess(List<RelationPlateSizeModel> platesFilter) {
-        mView.onPlatesLoadSuccess(platesFilter);
+        if (platesFilter.size() == 0) {
+            view.enabledImageForEmpty(true);
+            view.showMessage(mActivity.getString(R.string.error_empty_data));
+        } else
+            view.onPlatesLoadSuccess(platesFilter);
     }
 
     @Override
     public void onListFilterError(CharSequence error) {
-        mView.onError(error);
+        view.onError(error);
     }
 
     @Override
@@ -75,5 +83,13 @@ public class PlatePresenterImpl implements IPlatePresenter, OnPlateListener {
         preferences.saveCounter(preferences.getCounter() + 1);
         PlateActivity v = new PlateActivity();
         v.onPlateCounterUpdated(c, ok, preferences.getCounter());
+    }
+
+    public void loadCategoryImage(String url, ImageView previewImage) {
+        Picasso.with(mActivity)
+                .load(url)
+                .placeholder(R.drawable.ic_no_image)
+                .error(R.drawable.ic_no_image)
+                .into(previewImage);
     }
 }
