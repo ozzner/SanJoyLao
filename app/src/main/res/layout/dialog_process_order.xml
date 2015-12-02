@@ -11,8 +11,22 @@
         android:background="?attr/colorPrimary"
         android:gravity="center"
         android:padding="16dp"
+        android:textSize="@dimen/txt_16sp"
         android:text="@string/title_dialog_do_order"
         android:textColor="@color/white" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/space_4dp">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="45dp"
+            android:src="@drawable/logo_visa_verified"
+            />
+
+    </LinearLayout>
+
 
     <android.support.design.widget.TextInputLayout
         android:id="@+id/tilName12"
@@ -26,41 +40,52 @@
             android:layout_height="wrap_content"
             android:hint="@string/hint_card_number"
             android:paddingLeft="@dimen/space_10dp"
-            android:inputType="text"/>
+            android:textColor="@color/visa"
+            android:inputType="number"/>
 
     </android.support.design.widget.TextInputLayout>
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/tilName2"
-        android:layout_width="fill_parent"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/space_8dp">
+        android:weightSum="2"
+        android:orientation="horizontal">
 
-        <EditText
-            android:id="@+id/et_input_comment2"
-            android:layout_width="match_parent"
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/tilName2"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:hint="@string/hint_card_number"
-            android:paddingLeft="@dimen/space_10dp"
-            android:inputType="text"/>
+            android:padding="@dimen/space_8dp">
 
-    </android.support.design.widget.TextInputLayout>
+            <EditText
+                android:id="@+id/et_input_comment2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/hint_card_expires"
+                android:paddingLeft="@dimen/space_10dp"
+                android:inputType="text"/>
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/tilName3"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/space_8dp">
+        </android.support.design.widget.TextInputLayout>
 
-        <EditText
-            android:id="@+id/et_input_comment3"
-            android:layout_width="match_parent"
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/tilName3"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:hint="@string/hint_card_number"
-            android:paddingLeft="@dimen/space_10dp"
-            android:inputType="text"/>
+            android:padding="@dimen/space_8dp">
 
-    </android.support.design.widget.TextInputLayout>
+            <EditText
+                android:id="@+id/et_input_comment3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/hint_card_cvv"
+                android:paddingLeft="@dimen/space_10dp"
+                android:inputType="text"/>
+
+        </android.support.design.widget.TextInputLayout>
+    </LinearLayout>
+
 
     <android.support.design.widget.TextInputLayout
         android:id="@+id/tilName"
@@ -72,7 +97,7 @@
             android:id="@+id/et_input_comment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/hint_address"
+            android:hint="@string/hint_card_names"
             android:paddingLeft="@dimen/space_10dp"
             android:inputType="text"/>
 
@@ -134,8 +159,6 @@
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:gravity="end">
-
-
 
         <Button
             android:id="@+id/bt_cancel"

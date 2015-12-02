@@ -138,7 +138,7 @@
     <string name="error_validate_fields">No debe haber campos vacios.</string>
     <string name="message_save_correct">Datos guardados correctamente.</string>
     <string name="title_dialog_do_order">Realizar pedido</string>
-    <string name="hint_card_number">Credit card code</string>
+    <string name="hint_card_number">Credit card number</string>
     <string name="hint_address">My address</string>
     <string name="correct_payment">¡Pago correcto!</string>
     <string name="sjl_home_address"><![CDATA[<b>Caminos del Inca 1899</b>, Santiago de Surco  Lima 33. Reservas <b>(01) 2790888</b>]]></string>
@@ -147,5 +147,8 @@
     <string name="notification_order_confirmed">¡Orden confirmada!</string>
     <string name="ok">ok</string>
     <string name="title_activity_history">Historial de pedidos</string>
+    <string name="hint_card_expires">Expires</string>
+    <string name="hint_card_cvv">CVV</string>
+    <string name="hint_card_names">Cardholder's name</string>
 
 </resources>
