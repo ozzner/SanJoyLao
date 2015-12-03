@@ -25,7 +25,9 @@
         <item name="android:textColor">@color/white</item>
     </style>
 
-
+    <style name="SJLSwitchCompat" parent="Widget.AppCompat.CompoundButton.Switch">
+        <item name="colorControlActivated">@color/colorPrimary</item>
+    </style>
     <!-- popup menu theme. -->
     <style name="PopupMenu" parent="SJLTheme.Base.PopupOverlay">
         <!--<item name="android:background">@color/transparent_black</item>-->
