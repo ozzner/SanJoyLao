@@ -17,6 +17,8 @@
         android:textSize="@dimen/txt_16sp" />
 
 
+
+
     <rsantillanc.sanjoylao.ui.custom.view.OrderPagerView
         android:id="@+id/viewpager_process_order"
         android:layout_width="match_parent"
@@ -179,19 +181,18 @@
         </LinearLayout>
 
         <!--Location-->
-
         <LinearLayout
             android:id="@+id/lay_process_location"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal"
+            android:gravity="top"
+            android:orientation="vertical"
             android:visibility="visible"
             android:weightSum="2">
 
             <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="200dp">
+                android:layout_height="250dp">
 
                 <fragment
                     android:id="@+id/map"
@@ -235,7 +236,6 @@
             </RadioGroup>
 
         </LinearLayout>
-
 
     </rsantillanc.sanjoylao.ui.custom.view.OrderPagerView>
 

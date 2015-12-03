@@ -14,7 +14,6 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.RadioButton;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -125,6 +124,7 @@ public class ProcessOrderDialog extends DialogFragment implements View.OnClickLi
 
         //Map
         launchMap();
+        focusMap();
 
 //        Timer tm = new Timer();
 //        TimerTask task = new TimerTask() {
@@ -139,11 +139,23 @@ public class ProcessOrderDialog extends DialogFragment implements View.OnClickLi
 
     }
 
+    private void focusMap() {
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
+                new LatLng(-18.142, 178.431), 2));
+
+    }
+
     private void launchMap() {
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         mapFragment = (SupportMapFragment) getActivity().getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+//        mMapFragment = MapFragment.newInstance();
+//        FragmentTransaction fragmentTransaction =
+//                getFragmentManager().beginTransaction();
+//        fragmentTransaction.add(R.id.my_container, mMapFragment);
+//        fragmentTransaction.commit();
 
     }
 
@@ -160,7 +172,6 @@ public class ProcessOrderDialog extends DialogFragment implements View.OnClickLi
                 case R.id.bt_cancel:
                     getDialog().cancel();
                     getDialog().onBackPressed();
-                    mapFragment.onDestroy();
                     break;
                 case R.id.bt_send:
                     getDialog().cancel();
@@ -173,30 +184,22 @@ public class ProcessOrderDialog extends DialogFragment implements View.OnClickLi
     }
 
 
-    public void onRadioButtonClicked(View view) {
-        // Is the button now checked?
-        boolean checked = ((RadioButton) view).isChecked();
-
-        // Check which radio button was clicked
-        switch (view.getId()) {
-            case R.id.app_rb_types_1:
-                if (checked)
-                    Toast.makeText(getActivity(), appRbBooking.getText().toString(), Toast.LENGTH_LONG).show();
-                break;
-            case R.id.app_rb_types_2:
-                if (checked)
-                    Toast.makeText(getActivity(), appRbDelivery.getText().toString(), Toast.LENGTH_LONG).show();
-                break;
-        }
-    }
-
-    public OnProcessOrderClickListener getListener() {
-        return listener;
-    }
-
-    public void setListener(OnProcessOrderClickListener listener) {
-        this.listener = listener;
-    }
+//    public void onRadioButtonClicked(View view) {
+//        // Is the button now checked?
+//        boolean checked = ((RadioButton) view).isChecked();
+//
+//        // Check which radio button was clicked
+//        switch (view.getId()) {
+//            case R.id.app_rb_types_1:
+//                if (checked)
+//                    Toast.makeText(getActivity(), appRbBooking.getText().toString(), Toast.LENGTH_LONG).show();
+//                break;
+//            case R.id.app_rb_types_2:
+//                if (checked)
+//                    Toast.makeText(getActivity(), appRbDelivery.getText().toString(), Toast.LENGTH_LONG).show();
+//                break;
+//        }
+//    }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
@@ -205,7 +208,8 @@ public class ProcessOrderDialog extends DialogFragment implements View.OnClickLi
         // Add a marker in Sydney and move the camera
         LatLng sydney = new LatLng(-34, 151);
         mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney,10));
+        mMap.setMyLocationEnabled(true);
     }
 
     @Override
@@ -243,6 +247,15 @@ public class ProcessOrderDialog extends DialogFragment implements View.OnClickLi
 
     private void showMessage(String msj) {
         Toast.makeText(getActivity(), msj, Toast.LENGTH_LONG).show();
+    }
+
+
+    public OnProcessOrderClickListener getListener() {
+        return listener;
+    }
+
+    public void setListener(OnProcessOrderClickListener listener) {
+        this.listener = listener;
     }
 
     public interface OnProcessOrderClickListener {
