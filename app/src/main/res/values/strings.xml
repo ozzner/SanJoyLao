@@ -150,5 +150,8 @@
     <string name="hint_card_expires">Expires MM/dd</string>
     <string name="hint_card_cvv">CVV</string>
     <string name="hint_card_names">Cardholder\'s name</string>
+    <string name="pay_cash">En efectivo</string>
+    <string name="cash">S/. 100</string>
+    <string name="info_chash">Indicar. ¿Con cuánto va a cancelar?</string>
 
 </resources>

@@ -20,110 +20,161 @@
     <rsantillanc.sanjoylao.ui.custom.view.OrderPagerView
         android:id="@+id/viewpager_process_order"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:minHeight="250dp"
-        android:layout_below="@+id/header">
+        android:layout_height="320dp"
+        android:layout_below="@+id/header"
+        android:minHeight="250dp">
+
 
         <!-- Payment-->
         <LinearLayout
             android:id="@+id/lay_process_payment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/header"
             android:orientation="vertical">
 
+            <!--  Visa -->
             <LinearLayout
+                android:id="@+id/lay_process_visa"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/space_4dp"
-                android:layout_marginBottom="@dimen/space_4dp"
-                android:gravity="center"
-                android:visibility="visible">
+                android:orientation="vertical">
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="45dp"
-                    android:src="@drawable/logo_visa_verified" />
+                <!-- Logo visa-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/space_4dp"
+                    android:layout_marginTop="@dimen/space_4dp"
+                    android:gravity="center"
+                    android:visibility="visible">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="45dp"
+                        android:src="@drawable/logo_visa_verified" />
+
+                </LinearLayout>
+
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/tilName12"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/space_8dp">
+
+                    <EditText
+                        android:id="@+id/et_input_card_number"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/hint_card_number"
+                        android:inputType="number"
+                        android:maxLength="16"
+                        android:paddingLeft="@dimen/space_10dp"
+                        android:textColor="@color/visa" />
+
+                </android.support.design.widget.TextInputLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <android.support.design.widget.TextInputLayout
+                        android:id="@+id/tilName2"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:padding="@dimen/space_8dp">
+
+                        <EditText
+                            android:id="@+id/et_input_card_expires"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/hint_card_expires"
+                            android:inputType="number"
+                            android:maxLength="4"
+                            android:paddingLeft="@dimen/space_10dp"
+                            android:textColor="@color/visa" />
+
+                    </android.support.design.widget.TextInputLayout>
+
+                    <android.support.design.widget.TextInputLayout
+                        android:id="@+id/tilName3"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:padding="@dimen/space_8dp">
+
+                        <EditText
+                            android:id="@+id/et_input_card_cvv"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/hint_card_cvv"
+                            android:inputType="number"
+                            android:maxLength="3"
+                            android:paddingLeft="@dimen/space_10dp"
+                            android:textColor="@color/visa" />
+
+                    </android.support.design.widget.TextInputLayout>
+                </LinearLayout>
+
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/tilName"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/space_8dp">
+
+                    <EditText
+                        android:id="@+id/et_input_card_names"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/hint_card_names"
+                        android:inputType="textCapWords"
+                        android:paddingLeft="@dimen/space_10dp" />
+
+                </android.support.design.widget.TextInputLayout>
 
             </LinearLayout>
 
-
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/tilName12"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/space_8dp">
-
-                <EditText
-                    android:id="@+id/et_input_comment1"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/hint_card_number"
-                    android:inputType="number"
-                    android:paddingLeft="@dimen/space_10dp"
-                    android:textColor="@color/visa" />
-
-            </android.support.design.widget.TextInputLayout>
-
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="45dp"
+                android:gravity="center"
                 android:orientation="horizontal"
+                android:paddingLeft="@dimen/space_8dp"
+                android:paddingRight="@dimen/space_8dp"
                 android:weightSum="2">
 
-                <android.support.design.widget.TextInputLayout
-                    android:id="@+id/tilName2"
-                    android:layout_width="0dp"
+                <android.support.v7.widget.AppCompatCheckBox
+                    android:id="@+id/chb_process_cash"
+                    android:layout_width="@dimen/space_0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:padding="@dimen/space_8dp">
+                    android:text="@string/pay_cash" />
 
-                    <EditText
-                        android:id="@+id/et_input_comment2"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/hint_card_expires"
-                        android:inputType="text"
-                        android:paddingLeft="@dimen/space_10dp"
-                        android:textColor="@color/visa" />
-
-                </android.support.design.widget.TextInputLayout>
-
-                <android.support.design.widget.TextInputLayout
-                    android:id="@+id/tilName3"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                <LinearLayout
+                    android:layout_width="@dimen/space_0dp"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:padding="@dimen/space_8dp">
+                    android:gravity="right">
 
                     <EditText
-                        android:id="@+id/et_input_comment3"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/hint_card_cvv"
+                        android:id="@+id/et_process_cash"
+                        android:layout_width="120dp"
+                        android:visibility="gone"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:hint="@string/cash"
                         android:inputType="number"
-                        android:paddingLeft="@dimen/space_10dp"
-                        android:textColor="@color/visa" />
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/transparent_2"
+                        android:textSize="@dimen/txt_20sp" />
+                </LinearLayout>
 
-                </android.support.design.widget.TextInputLayout>
             </LinearLayout>
-
-
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/tilName"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/space_8dp">
-
-                <EditText
-                    android:id="@+id/et_input_comment"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/hint_card_names"
-                    android:inputType="textPersonName"
-                    android:paddingLeft="@dimen/space_10dp" />
-
-            </android.support.design.widget.TextInputLayout>
-
 
         </LinearLayout>
 
@@ -134,18 +185,21 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:visibility="visible"
             android:orientation="horizontal"
-            android:paddingLeft="@dimen/space_10dp"
-            android:paddingRight="@dimen/space_10dp"
+            android:visibility="visible"
             android:weightSum="2">
 
-            <fragment xmlns:android="http://schemas.android.com/apk/res/android"
-                android:id="@+id/map"
-                android:name="com.google.android.gms.maps.SupportMapFragment"
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-               />
+                android:layout_height="200dp">
+
+                <fragment
+                    android:id="@+id/map"
+                    android:name="com.google.android.gms.maps.SupportMapFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+            </FrameLayout>
 
 
             <RadioGroup
