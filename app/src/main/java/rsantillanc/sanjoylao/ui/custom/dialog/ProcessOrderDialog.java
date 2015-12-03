@@ -31,6 +31,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import rsantillanc.sanjoylao.R;
 import rsantillanc.sanjoylao.ui.custom.adapter.ProcessPagerAdapter;
@@ -42,7 +43,7 @@ import rsantillanc.sanjoylao.util.Const;
 public class ProcessOrderDialog extends DialogFragment implements
         View.OnClickListener,
         OnMapReadyCallback,
-        CompoundButton.OnCheckedChangeListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, RadioGroup.OnCheckedChangeListener {
+        CompoundButton.OnCheckedChangeListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, RadioGroup.OnCheckedChangeListener, GoogleMap.OnMapClickListener {
 
     //Views
     private Button btCancel;
@@ -259,12 +260,19 @@ public class ProcessOrderDialog extends DialogFragment implements
 
     }
 
-
+    //{Google map callbacks}
     @Override
     public void onMapReady(GoogleMap gmap) {
         googleMap = gmap;
         googleMap.setMyLocationEnabled(true);
+        googleMap.setOnMapClickListener(this);
     }
+
+    @Override
+    public void onMapClick(LatLng latLng) {
+        googleMap.addMarker(new MarkerOptions());
+    }
+
 
     @Override
     public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -275,17 +283,16 @@ public class ProcessOrderDialog extends DialogFragment implements
                 else
                     enableVisa(true);
                 break;
-             case R.id.sw_here:
-                 if (b)
-                     showMessage("Usaremos tu ubicación para traer el pedido.");
-                 else
-                     showMessage("Elige un punto en el mapa.");
+            case R.id.sw_here:
+                if (b)
+                    showMessage("Usaremos tu ubicación para traer el pedido.");
+                else
+                    showMessage("Elige un punto en el mapa.");
 
 
-                 break;
+                break;
 
         }
-
 
 
     }
@@ -325,12 +332,12 @@ public class ProcessOrderDialog extends DialogFragment implements
         switch (checkedId) {
 
             case R.id.app_rb_types_1:
-                    Toast.makeText(getActivity(),
-                            appRbBooking.getText().toString(), Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(),
+                        appRbBooking.getText().toString(), Toast.LENGTH_LONG).show();
                 break;
             case R.id.app_rb_types_2:
-                    Toast.makeText(getActivity(),
-                            appRbDelivery.getText().toString(), Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(),
+                        appRbDelivery.getText().toString(), Toast.LENGTH_LONG).show();
                 break;
         }
     }
@@ -365,6 +372,7 @@ public class ProcessOrderDialog extends DialogFragment implements
     public void setListener(OnProcessOrderClickListener listener) {
         this.listener = listener;
     }
+
 
     public interface OnProcessOrderClickListener {
         void onClickSendButton();
