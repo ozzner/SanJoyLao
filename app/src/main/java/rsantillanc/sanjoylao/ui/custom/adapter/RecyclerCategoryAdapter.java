@@ -69,7 +69,6 @@ public class RecyclerCategoryAdapter extends RecyclerView.Adapter<RecyclerCatego
                     .into(holder.ivImage);
         }
 
-
     }
 
     @Override
