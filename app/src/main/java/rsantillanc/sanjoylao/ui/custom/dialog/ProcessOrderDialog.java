@@ -124,7 +124,7 @@ public class ProcessOrderDialog extends DialogFragment implements View.OnClickLi
 
         //Map
         launchMap();
-        focusMap();
+
 
 //        Timer tm = new Timer();
 //        TimerTask task = new TimerTask() {
@@ -210,6 +210,7 @@ public class ProcessOrderDialog extends DialogFragment implements View.OnClickLi
         mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney,10));
         mMap.setMyLocationEnabled(true);
+        focusMap();
     }
 
     @Override
