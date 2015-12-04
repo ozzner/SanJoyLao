@@ -74,7 +74,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/hint_type_address"
-                    android:inputType="number"
+                    android:inputType="text"
                     android:textSize="@dimen/txt_13sp"
                     android:paddingLeft="@dimen/space_10dp"
                     android:textColor="@color/visa" />

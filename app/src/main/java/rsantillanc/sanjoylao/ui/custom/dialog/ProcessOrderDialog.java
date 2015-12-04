@@ -14,6 +14,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.SwitchCompat;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,6 +36,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.TileOverlay;
 
 import java.io.IOException;
 import java.util.List;
@@ -67,6 +69,7 @@ public class ProcessOrderDialog extends DialogFragment implements
     private EditText etCash;
     private EditText typeTelephone;
     private EditText typeAddress;
+    private EditText typeReference;
 
 
     //Properties
@@ -79,6 +82,7 @@ public class ProcessOrderDialog extends DialogFragment implements
     private Location mLastLocation;
     private int step = 0;
     private Marker addMarker;
+    private LatLng latLonOrder;
 
 
     @SuppressLint("ValidFragment")
@@ -152,6 +156,7 @@ public class ProcessOrderDialog extends DialogFragment implements
         switchHere = (SwitchCompat) view.findViewById(R.id.sw_here);
         typeTelephone = (EditText) view.findViewById(R.id.et_input_type_telephone);
         typeAddress = (EditText) view.findViewById(R.id.et_input_type_address);
+        typeReference = (EditText) view.findViewById(R.id.et_input_type_reference);
 
 
         //Set listener
@@ -194,18 +199,6 @@ public class ProcessOrderDialog extends DialogFragment implements
 
         //Google api client
         buildGoogleApiClient();
-
-
-//        Timer tm = new Timer();
-//        TimerTask task = new TimerTask() {
-//            @Override
-//            public void run() {
-//                Log.e(Const.DEBUG, "Change");
-//                viewPager.setCurrentItem(1);
-//            }
-//        };
-//
-//        tm.schedule(task, 15500);
 
     }
 
@@ -259,16 +252,92 @@ public class ProcessOrderDialog extends DialogFragment implements
                 case R.id.bt_send:
 
                     if (step == processAdapter.getCount() - 1) {
-                        getDialog().cancel();
-                        listener.onClickSendButton();
+                        if (checkFieldsPayment()) {
+                            getDialog().cancel();
+                            listener.onClickSendButton();
+                        }
                     } else {
-                        step++;
-                        viewPager.setCurrentItem(step);
+                        if (checkFieldsDelivery()) {
+                            step++;
+                            viewPager.setCurrentItem(step);
+                        }
+
                     }
 
                     break;
             }
         }
+    }
+
+    private boolean checkFieldsPayment() {
+
+        if (etCardNumber.getText().toString().isEmpty() && etCardNumber.getText().length() < 8) {
+            etCardNumber.requestFocus();
+            etCardNumber.setError("Error número de tarjeta");
+            return false;
+        }
+
+        if (etCardExpires.getText().toString().isEmpty() && etCardExpires.getText().length() < 4) {
+            etCardExpires.requestFocus();
+            etCardExpires.setError("Error.");
+            return false;
+        }
+
+        if (etCardCVV.getText().toString().isEmpty() && etCardCVV.getText().length() < 3) {
+            etCardCVV.requestFocus();
+            etCardCVV.setError("Error. CVV 3 digit");
+            return false;
+        }
+
+        if (etCardNames.getText().toString().isEmpty()) {
+            etCardNames.requestFocus();
+            etCardNames.setError("No puede estar vacío.");
+            return false;
+        }
+
+
+        return true;
+    }
+
+    private boolean checkFieldsDelivery() {
+
+        //Check address
+        if (typeAddress.getText().toString().isEmpty()) {
+            typeAddress.requestFocus();
+            typeAddress.setError("Campo obligatorio.");
+            return false;
+        }
+
+        //Check reference
+        if (typeReference.getText().toString().isEmpty()) {
+            typeReference.requestFocus();
+            typeReference.setError("Este campo es necesario.");
+            return false;
+        }
+
+        //Check telephone
+        if (typeTelephone.getText().toString().isEmpty()) {
+            typeTelephone.requestFocus();
+            typeTelephone.setError("Campo requierido.");
+            return false;
+        }
+
+        //Check telephone long
+        if (typeTelephone.getText().toString().length() < 9) {
+            typeTelephone.requestFocus();
+            typeTelephone.setError("Ingrese un número valido");
+            return false;
+        }
+
+
+        if (switchHere.isChecked()) {
+            latLonOrder = addMarker.getPosition();
+        } else {
+            latLonOrder = new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
+        }
+
+        return true;
+
     }
 
     //{Google map callbacks}
@@ -298,7 +367,8 @@ public class ProcessOrderDialog extends DialogFragment implements
     }
 
     private void getAddress(Marker marker) {
-        Address address;
+
+        Address address = null;
         Geocoder coder = new Geocoder(getContext());
         List<Address> list_address = null;
         LatLng latLng = marker.getPosition();
@@ -306,15 +376,24 @@ public class ProcessOrderDialog extends DialogFragment implements
         try {
             list_address = coder.getFromLocation(latLng.latitude, latLng.longitude, 1);
             address = list_address.get(0);
-            marker.setTitle(address.getSubLocality());
+            if (address.getSubLocality() != null)
+                marker.setTitle(address.getSubLocality());
+            else {
+                marker.setTitle(address.getAdminArea());
+            }
             marker.setSnippet(address.getThoroughfare());
-            typeAddress.getText().clear();
-            typeAddress.setText((address.getSubLocality() == null) ? "" : address.getSubLocality() + ", " + address.getThoroughfare());
-            marker.showInfoWindow();
         } catch (IOException e) {
+
+            if (marker.isVisible()) {
+                marker.hideInfoWindow();
+            }
+
             e.printStackTrace();
         }
 
+        marker.showInfoWindow();
+        typeAddress.getText().clear();
+        typeAddress.setText((address.getSubLocality() == null) ? address.getAdminArea() + ", " + address.getThoroughfare() : address.getSubLocality() + ", " + address.getThoroughfare());
 
     }
 
@@ -332,12 +411,17 @@ public class ProcessOrderDialog extends DialogFragment implements
                 break;
 
             case R.id.sw_here:
-                if (b)
+                if (b) {
+                    clearMap();
                     showMessage("Usaremos tu ubicación para traer el pedido.");
-                else
+                } else
                     showMessage("Elige un punto en el mapa.");
                 break;
         }
+    }
+
+    private void clearMap() {
+        googleMap.clear();
     }
 
     private void enableVisa(boolean b) {
@@ -364,7 +448,9 @@ public class ProcessOrderDialog extends DialogFragment implements
     }
 
     private void showMessage(String msj) {
-        Toast.makeText(getActivity(), msj, Toast.LENGTH_LONG).show();
+        Toast toast = Toast.makeText(getActivity(), msj, Toast.LENGTH_LONG);
+        toast.setGravity(Gravity.CENTER, 0, 0);
+        toast.show();
     }
 
 
@@ -387,6 +473,7 @@ public class ProcessOrderDialog extends DialogFragment implements
 
     @Override
     public void onMarkerDragEnd(Marker marker) {
+        addMarker = marker;
         getAddress(marker);
     }
 
