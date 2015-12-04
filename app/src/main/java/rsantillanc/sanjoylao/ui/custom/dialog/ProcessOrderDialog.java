@@ -1,12 +1,17 @@
 package rsantillanc.sanjoylao.ui.custom.dialog;
 
 
+import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.AppCompatRadioButton;
+import android.support.v7.widget.SwitchCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,8 +19,13 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -25,17 +35,22 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import rsantillanc.sanjoylao.R;
 import rsantillanc.sanjoylao.ui.custom.adapter.ProcessPagerAdapter;
+import rsantillanc.sanjoylao.util.Const;
 
 /**
  * Created by RenzoD on 18/11/2015.
  */
-public class ProcessOrderDialog extends DialogFragment implements View.OnClickListener, OnMapReadyCallback, CompoundButton.OnCheckedChangeListener {
+public class ProcessOrderDialog extends DialogFragment implements
+        View.OnClickListener,
+        OnMapReadyCallback,
+        CompoundButton.OnCheckedChangeListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, RadioGroup.OnCheckedChangeListener, GoogleMap.OnMapClickListener {
 
     //Views
     private Button btCancel;
     private Button btSend;
     private AppCompatRadioButton appRbDelivery;
     private AppCompatRadioButton appRbBooking;
+    private SwitchCompat switchHere;
     private ViewPager viewPager;
     private AppCompatCheckBox chbCash;
     private EditText etCardNumber;
@@ -48,12 +63,16 @@ public class ProcessOrderDialog extends DialogFragment implements View.OnClickLi
     //Properties
     OnProcessOrderClickListener listener;
     private ProcessPagerAdapter processAdapter;
-    private GoogleMap mMap;
+    private GoogleMap googleMap;
     private View view = null;
     SupportMapFragment mapFragment;
+    private GoogleApiClient googleApiClient;
+    private Location mLastLocation;
+    private RadioGroup rgroup;
 
 
     public ProcessOrderDialog() {
+
     }
 
 
@@ -72,6 +91,32 @@ public class ProcessOrderDialog extends DialogFragment implements View.OnClickLi
             initUIElements(view);
         }
         return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (googleApiClient != null) {
+            googleApiClient.connect();
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        if (googleApiClient.isConnected()) {
+            googleApiClient.disconnect();
+        }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        FragmentManager fm = getActivity().getSupportFragmentManager();
+//        mapFragment = (fm.findFragmentById(R.id.map));
+        FragmentTransaction ft = fm.beginTransaction();
+        ft.remove(mapFragment);
+        ft.commit();
     }
 
     private void initUIElements(View view) {
@@ -95,6 +140,8 @@ public class ProcessOrderDialog extends DialogFragment implements View.OnClickLi
         //Location
         appRbBooking = (AppCompatRadioButton) view.findViewById(R.id.app_rb_types_1);
         appRbDelivery = (AppCompatRadioButton) view.findViewById(R.id.app_rb_types_2);
+        rgroup = (RadioGroup) view.findViewById(R.id.rg_type_order);
+        switchHere = (SwitchCompat) view.findViewById(R.id.sw_here);
 
 
         //Set listener
@@ -103,6 +150,8 @@ public class ProcessOrderDialog extends DialogFragment implements View.OnClickLi
         btCancel.setOnClickListener(this);
         btSend.setOnClickListener(this);
         chbCash.setOnCheckedChangeListener(this);
+        rgroup.setOnCheckedChangeListener(this);
+        switchHere.setOnCheckedChangeListener(this);
 
         //Adapter
         processAdapter = new ProcessPagerAdapter();
@@ -122,8 +171,12 @@ public class ProcessOrderDialog extends DialogFragment implements View.OnClickLi
             }
         });
 
+
         //Map
         launchMap();
+
+        //Google api client
+        buildGoogleApiClient();
 
 
 //        Timer tm = new Timer();
@@ -139,23 +192,45 @@ public class ProcessOrderDialog extends DialogFragment implements View.OnClickLi
 
     }
 
-    private void focusMap() {
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
-                new LatLng(-18.142, 178.431), 2));
+    private void launchCamera() {
+        mLastLocation = LocationServices.FusedLocationApi
+                .getLastLocation(googleApiClient);
+
+        if (mLastLocation != null) {
+            googleMap.moveCamera(
+                    CameraUpdateFactory.newLatLngZoom(
+                            new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude()), 16f));
+
+            googleMap.setMyLocationEnabled(true);
+        }
+
 
     }
 
+    /**
+     * Creating google api client object
+     */
+    protected synchronized void buildGoogleApiClient() {
+        googleApiClient = new GoogleApiClient.Builder(getActivity())
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .addApi(LocationServices.API).build();
+    }
+
     private void launchMap() {
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+//         Obtain the SupportMapFragment and get notified when the googleMap is ready to be used.
+
         mapFragment = (SupportMapFragment) getActivity().getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-
-//        mMapFragment = MapFragment.newInstance();
+//
+//        mapFragment = SupportMapFragment.newInstance();
 //        FragmentTransaction fragmentTransaction =
 //                getFragmentManager().beginTransaction();
-//        fragmentTransaction.add(R.id.my_container, mMapFragment);
+//        fragmentTransaction.add(R.id.map_fragment_content, mapFragment);
 //        fragmentTransaction.commit();
+
+        mapFragment.getMapAsync(this);
 
     }
 
@@ -167,7 +242,9 @@ public class ProcessOrderDialog extends DialogFragment implements View.OnClickLi
 
     @Override
     public void onClick(View view) {
+
         if (view instanceof Button) {
+
             switch (view.getId()) {
                 case R.id.bt_cancel:
                     getDialog().cancel();
@@ -183,42 +260,40 @@ public class ProcessOrderDialog extends DialogFragment implements View.OnClickLi
 
     }
 
-
-//    public void onRadioButtonClicked(View view) {
-//        // Is the button now checked?
-//        boolean checked = ((RadioButton) view).isChecked();
-//
-//        // Check which radio button was clicked
-//        switch (view.getId()) {
-//            case R.id.app_rb_types_1:
-//                if (checked)
-//                    Toast.makeText(getActivity(), appRbBooking.getText().toString(), Toast.LENGTH_LONG).show();
-//                break;
-//            case R.id.app_rb_types_2:
-//                if (checked)
-//                    Toast.makeText(getActivity(), appRbDelivery.getText().toString(), Toast.LENGTH_LONG).show();
-//                break;
-//        }
-//    }
-
+    //{Google map callbacks}
     @Override
-    public void onMapReady(GoogleMap googleMap) {
-        mMap = googleMap;
-
-        // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney,10));
-        mMap.setMyLocationEnabled(true);
-        focusMap();
+    public void onMapReady(GoogleMap gmap) {
+        googleMap = gmap;
+        googleMap.setMyLocationEnabled(true);
+        googleMap.setOnMapClickListener(this);
     }
 
     @Override
+    public void onMapClick(LatLng latLng) {
+        googleMap.addMarker(new MarkerOptions());
+    }
+
+
+    @Override
     public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-        if (b)
-            enableCash(true);
-        else
-            enableVisa(true);
+        switch (compoundButton.getId()) {
+            case R.id.rg_type_order:
+                if (b)
+                    enableCash(true);
+                else
+                    enableVisa(true);
+                break;
+            case R.id.sw_here:
+                if (b)
+                    showMessage("Usaremos tu ubicación para traer el pedido.");
+                else
+                    showMessage("Elige un punto en el mapa.");
+
+
+                break;
+
+        }
+
 
     }
 
@@ -251,6 +326,45 @@ public class ProcessOrderDialog extends DialogFragment implements View.OnClickLi
     }
 
 
+    @Override
+    public void onCheckedChanged(RadioGroup group, int checkedId) {
+
+        switch (checkedId) {
+
+            case R.id.app_rb_types_1:
+                Toast.makeText(getActivity(),
+                        appRbBooking.getText().toString(), Toast.LENGTH_LONG).show();
+                break;
+            case R.id.app_rb_types_2:
+                Toast.makeText(getActivity(),
+                        appRbDelivery.getText().toString(), Toast.LENGTH_LONG).show();
+                break;
+        }
+    }
+
+
+    //{Google Client}
+
+    @Override
+    public void onConnected(Bundle bundle) {
+        Log.e(Const.DEBUG, "onConnected!");
+        launchCamera();
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+        googleApiClient.connect();
+    }
+
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+        Log.i(Const.DEBUG, "Connection failed: ConnectionResult = "
+                + connectionResult.getErrorCode());
+    }
+
+
+    //{Listener}
+
     public OnProcessOrderClickListener getListener() {
         return listener;
     }
@@ -258,6 +372,7 @@ public class ProcessOrderDialog extends DialogFragment implements View.OnClickLi
     public void setListener(OnProcessOrderClickListener listener) {
         this.listener = listener;
     }
+
 
     public interface OnProcessOrderClickListener {
         void onClickSendButton();

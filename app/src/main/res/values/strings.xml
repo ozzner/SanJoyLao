@@ -153,5 +153,6 @@
     <string name="pay_cash">En efectivo</string>
     <string name="cash">S/. 100</string>
     <string name="info_chash">Indicar. ¿Con cuánto va a cancelar?</string>
+    <string name="map_here">Tráelo aquí</string>
 
 </resources>

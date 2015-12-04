@@ -19,12 +19,88 @@
 
 
 
+
     <rsantillanc.sanjoylao.ui.custom.view.OrderPagerView
         android:id="@+id/viewpager_process_order"
         android:layout_width="match_parent"
         android:layout_height="320dp"
         android:layout_below="@+id/header"
         android:minHeight="250dp">
+
+
+        <!--Location-->
+        <LinearLayout
+            android:id="@+id/lay_process_location"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="top"
+            android:orientation="vertical"
+            android:visibility="visible"
+            android:weightSum="2">
+
+
+
+
+            <fragment
+                android:id="@+id/map"
+                android:name="com.google.android.gms.maps.SupportMapFragment"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                >
+                <android.support.v7.widget.SwitchCompat
+                    android:id="@+id/sw_here"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/map_here"
+                    android:textSize="@dimen/txt_13sp"
+                    android:checked="false"
+                    android:shadowColor="@color/gray_color_4"
+                    android:shadowDx="1"
+                    android:shadowDy="1"
+                    android:shadowRadius="1"
+                    android:textColorLink="@color/red"
+                    android:layout_margin="@dimen/space_8dp"
+                    android:background="@drawable/bg_map_viewer"
+                    android:textColor="@color/white"
+                    style="@style/SJLSwitchCompat"/>
+
+            </fragment>
+
+
+
+            <RadioGroup
+                android:id="@+id/rg_type_order"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/space_10dp"
+                android:orientation="horizontal">
+
+                <android.support.v7.widget.AppCompatRadioButton
+                    android:id="@+id/app_rb_types_1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center|left"
+                    android:padding="16dp"
+                    android:text="@string/booking_order">
+
+
+                </android.support.v7.widget.AppCompatRadioButton>
+
+                <android.support.v7.widget.AppCompatRadioButton
+                    android:id="@+id/app_rb_types_2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:checked="true"
+                    android:gravity="center|left"
+                    android:padding="16dp"
+                    android:text="@string/booking_delivery">
+
+                </android.support.v7.widget.AppCompatRadioButton>
+            </RadioGroup>
+
+        </LinearLayout>
 
 
         <!-- Payment-->
@@ -175,67 +251,9 @@
                         android:textColorHint="@color/transparent_2"
                         android:textSize="@dimen/txt_20sp" />
                 </LinearLayout>
-
             </LinearLayout>
-
         </LinearLayout>
 
-        <!--Location-->
-        <LinearLayout
-            android:id="@+id/lay_process_location"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="top"
-            android:orientation="vertical"
-            android:visibility="visible"
-            android:weightSum="2">
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="250dp">
-
-                <fragment
-                    android:id="@+id/map"
-                    android:name="com.google.android.gms.maps.SupportMapFragment"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
-
-            </FrameLayout>
-
-
-            <RadioGroup
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <android.support.v7.widget.AppCompatRadioButton
-                    android:id="@+id/app_rb_types_1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:onClick="onRadioButtonClicked"
-                    android:padding="16dp"
-                    android:text="@string/booking_order">
-
-
-                </android.support.v7.widget.AppCompatRadioButton>
-
-                <android.support.v7.widget.AppCompatRadioButton
-                    android:id="@+id/app_rb_types_2"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:checked="true"
-                    android:gravity="center"
-                    android:onClick="onRadioButtonClicked"
-                    android:padding="16dp"
-                    android:text="@string/booking_delivery">
-
-                </android.support.v7.widget.AppCompatRadioButton>
-            </RadioGroup>
-
-        </LinearLayout>
 
     </rsantillanc.sanjoylao.ui.custom.view.OrderPagerView>
 
