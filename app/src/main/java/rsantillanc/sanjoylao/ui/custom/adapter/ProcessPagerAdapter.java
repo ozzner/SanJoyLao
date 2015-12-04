@@ -1,6 +1,5 @@
 package rsantillanc.sanjoylao.ui.custom.adapter;
 
-import android.app.Activity;
 import android.support.v4.view.PagerAdapter;
 import android.view.View;
 
@@ -28,10 +27,10 @@ public class ProcessPagerAdapter extends PagerAdapter {
         int resId = 0;
         switch (position) {
             case 0:
-                resId = R.id.lay_process_payment;
+                resId = R.id.lay_process_location;
                 break;
             case 1:
-                resId = R.id.lay_process_location;
+                resId = R.id.lay_process_payment;
                 break;
 
         }

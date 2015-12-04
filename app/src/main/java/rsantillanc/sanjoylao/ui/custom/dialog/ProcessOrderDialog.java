@@ -1,6 +1,9 @@
 package rsantillanc.sanjoylao.ui.custom.dialog;
 
 
+import android.annotation.SuppressLint;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,7 +12,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.AppCompatCheckBox;
-import android.support.v7.widget.AppCompatRadioButton;
 import android.support.v7.widget.SwitchCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,7 +21,6 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
@@ -30,26 +31,32 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.io.IOException;
+import java.util.List;
+
 import rsantillanc.sanjoylao.R;
+import rsantillanc.sanjoylao.model.UserModel;
 import rsantillanc.sanjoylao.ui.custom.adapter.ProcessPagerAdapter;
 import rsantillanc.sanjoylao.util.Const;
 
 /**
  * Created by RenzoD on 18/11/2015.
  */
+@SuppressLint("ValidFragment")
 public class ProcessOrderDialog extends DialogFragment implements
         View.OnClickListener,
         OnMapReadyCallback,
-        CompoundButton.OnCheckedChangeListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, RadioGroup.OnCheckedChangeListener, GoogleMap.OnMapClickListener {
+        CompoundButton.OnCheckedChangeListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, RadioGroup.OnCheckedChangeListener, GoogleMap.OnMapClickListener, GoogleMap.OnMarkerDragListener {
 
+    private UserModel user;
     //Views
     private Button btCancel;
     private Button btSend;
-    private AppCompatRadioButton appRbDelivery;
-    private AppCompatRadioButton appRbBooking;
     private SwitchCompat switchHere;
     private ViewPager viewPager;
     private AppCompatCheckBox chbCash;
@@ -58,6 +65,8 @@ public class ProcessOrderDialog extends DialogFragment implements
     private EditText etCardCVV;
     private EditText etCardNames;
     private EditText etCash;
+    private EditText typeTelephone;
+    private EditText typeAddress;
 
 
     //Properties
@@ -65,19 +74,22 @@ public class ProcessOrderDialog extends DialogFragment implements
     private ProcessPagerAdapter processAdapter;
     private GoogleMap googleMap;
     private View view = null;
-    SupportMapFragment mapFragment;
+    private SupportMapFragment mapFragment;
     private GoogleApiClient googleApiClient;
     private Location mLastLocation;
-    private RadioGroup rgroup;
+    private int step = 0;
+    private Marker addMarker;
 
 
-    public ProcessOrderDialog() {
-
+    @SuppressLint("ValidFragment")
+    public ProcessOrderDialog(Bundle bundle) {
+        if (bundle != null)
+            user = (UserModel) bundle.getSerializable(Const.EXTRA_USER);
     }
 
 
-    public static ProcessOrderDialog newInstance() {
-        return new ProcessOrderDialog();
+    public static ProcessOrderDialog newInstance(Bundle bundle) {
+        return new ProcessOrderDialog(bundle);
     }
 
 
@@ -121,7 +133,6 @@ public class ProcessOrderDialog extends DialogFragment implements
 
     private void initUIElements(View view) {
         //Get views
-
         btCancel = (Button) view.findViewById(R.id.bt_cancel);
         btSend = (Button) view.findViewById(R.id.bt_send);
         viewPager = (ViewPager) view.findViewById(R.id.viewpager_process_order);
@@ -138,19 +149,15 @@ public class ProcessOrderDialog extends DialogFragment implements
 
 
         //Location
-        appRbBooking = (AppCompatRadioButton) view.findViewById(R.id.app_rb_types_1);
-        appRbDelivery = (AppCompatRadioButton) view.findViewById(R.id.app_rb_types_2);
-        rgroup = (RadioGroup) view.findViewById(R.id.rg_type_order);
         switchHere = (SwitchCompat) view.findViewById(R.id.sw_here);
+        typeTelephone = (EditText) view.findViewById(R.id.et_input_type_telephone);
+        typeAddress = (EditText) view.findViewById(R.id.et_input_type_address);
 
 
         //Set listener
-        appRbDelivery.setOnClickListener(this);
-        appRbBooking.setOnClickListener(this);
         btCancel.setOnClickListener(this);
         btSend.setOnClickListener(this);
         chbCash.setOnCheckedChangeListener(this);
-        rgroup.setOnCheckedChangeListener(this);
         switchHere.setOnCheckedChangeListener(this);
 
         //Adapter
@@ -159,17 +166,27 @@ public class ProcessOrderDialog extends DialogFragment implements
         viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                Log.e(Const.DEBUG, "onPageScrolled: " + position);
+                step = position;
+                if (position == processAdapter.getCount() - 1) {
+                    btSend.setText(getActivity().getString(R.string.button_pay));
+                }
             }
 
             @Override
             public void onPageSelected(int position) {
+                Log.e(Const.DEBUG, "onPageSelected: " + position);
+
             }
 
             @Override
             public void onPageScrollStateChanged(int state) {
-
+                Log.e(Const.DEBUG, "onPageScrollStateChanged: " + state);
             }
         });
+
+        if (user.getPhoneNumber() > 0)
+            typeTelephone.setText(String.valueOf(user.getPhoneNumber()));
 
 
         //Map
@@ -184,11 +201,11 @@ public class ProcessOrderDialog extends DialogFragment implements
 //            @Override
 //            public void run() {
 //                Log.e(Const.DEBUG, "Change");
-//                viewPager.setCurrentItem(0);
+//                viewPager.setCurrentItem(1);
 //            }
 //        };
 //
-//        tm.schedule(task, 10500);
+//        tm.schedule(task, 15500);
 
     }
 
@@ -203,8 +220,6 @@ public class ProcessOrderDialog extends DialogFragment implements
 
             googleMap.setMyLocationEnabled(true);
         }
-
-
     }
 
     /**
@@ -218,26 +233,17 @@ public class ProcessOrderDialog extends DialogFragment implements
     }
 
     private void launchMap() {
-//         Obtain the SupportMapFragment and get notified when the googleMap is ready to be used.
-
+        //Obtain the SupportMapFragment and get notified when the googleMap is ready to be used.
         mapFragment = (SupportMapFragment) getActivity().getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-//
-//        mapFragment = SupportMapFragment.newInstance();
-//        FragmentTransaction fragmentTransaction =
-//                getFragmentManager().beginTransaction();
-//        fragmentTransaction.add(R.id.map_fragment_content, mapFragment);
-//        fragmentTransaction.commit();
-
-        mapFragment.getMapAsync(this);
-
     }
+
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        viewPager.setCurrentItem(1);
+        viewPager.setCurrentItem(0);
     }
 
     @Override
@@ -251,13 +257,18 @@ public class ProcessOrderDialog extends DialogFragment implements
                     getDialog().onBackPressed();
                     break;
                 case R.id.bt_send:
-                    getDialog().cancel();
-                    listener.onClickSendButton();
+
+                    if (step == processAdapter.getCount() - 1) {
+                        getDialog().cancel();
+                        listener.onClickSendButton();
+                    } else {
+                        step++;
+                        viewPager.setCurrentItem(step);
+                    }
+
                     break;
             }
-
         }
-
     }
 
     //{Google map callbacks}
@@ -266,35 +277,67 @@ public class ProcessOrderDialog extends DialogFragment implements
         googleMap = gmap;
         googleMap.setMyLocationEnabled(true);
         googleMap.setOnMapClickListener(this);
+        googleMap.setOnMarkerDragListener(this);
     }
 
     @Override
     public void onMapClick(LatLng latLng) {
-        googleMap.addMarker(new MarkerOptions());
+        MarkerOptions markerOptions = new MarkerOptions();
+
+        if (addMarker != null)
+            addMarker.remove();
+
+        addMarker = googleMap.addMarker(markerOptions
+                .position(latLng)
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_add))
+                .draggable(true));
+
+        getAddress(addMarker);
+
+
+    }
+
+    private void getAddress(Marker marker) {
+        Address address;
+        Geocoder coder = new Geocoder(getContext());
+        List<Address> list_address = null;
+        LatLng latLng = marker.getPosition();
+
+        try {
+            list_address = coder.getFromLocation(latLng.latitude, latLng.longitude, 1);
+            address = list_address.get(0);
+            marker.setTitle(address.getSubLocality());
+            marker.setSnippet(address.getThoroughfare());
+            typeAddress.getText().clear();
+            typeAddress.setText((address.getSubLocality() == null) ? "" : address.getSubLocality() + ", " + address.getThoroughfare());
+            marker.showInfoWindow();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
     }
 
 
     @Override
     public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+
         switch (compoundButton.getId()) {
-            case R.id.rg_type_order:
+
+            case R.id.chb_process_cash:
                 if (b)
                     enableCash(true);
                 else
                     enableVisa(true);
                 break;
+
             case R.id.sw_here:
                 if (b)
                     showMessage("Usaremos tu ubicación para traer el pedido.");
                 else
                     showMessage("Elige un punto en el mapa.");
-
-
                 break;
-
         }
-
-
     }
 
     private void enableVisa(boolean b) {
@@ -308,7 +351,6 @@ public class ProcessOrderDialog extends DialogFragment implements
     }
 
     private void enableCash(boolean b) {
-
 
         if (b) {
             enableVisa(!b);
@@ -331,15 +373,21 @@ public class ProcessOrderDialog extends DialogFragment implements
 
         switch (checkedId) {
 
-            case R.id.app_rb_types_1:
-                Toast.makeText(getActivity(),
-                        appRbBooking.getText().toString(), Toast.LENGTH_LONG).show();
-                break;
-            case R.id.app_rb_types_2:
-                Toast.makeText(getActivity(),
-                        appRbDelivery.getText().toString(), Toast.LENGTH_LONG).show();
-                break;
+
         }
+    }
+
+    @Override
+    public void onMarkerDragStart(Marker marker) {
+    }
+
+    @Override
+    public void onMarkerDrag(Marker marker) {
+    }
+
+    @Override
+    public void onMarkerDragEnd(Marker marker) {
+        getAddress(marker);
     }
 
 

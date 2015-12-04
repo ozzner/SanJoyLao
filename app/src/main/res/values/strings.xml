@@ -130,7 +130,7 @@
     <string name="progress_message_doing_order">Enviando pedido...</string>
     <string name="error_empty_orders">No hay pedidos.</string>
     <string name="home">Inicio</string>
-    <string name="action_goto_order">Ir a pedido.</string>
+    <string name="action_goto_order">Ver estado.</string>
     <string name="warning">Atención</string>
     <string name="alert_delete_order_item">¿Seguro de eliminar este pedido?</string>
     <string name="yes">Si</string>
@@ -154,5 +154,10 @@
     <string name="cash">S/. 100</string>
     <string name="info_chash">Indicar. ¿Con cuánto va a cancelar?</string>
     <string name="map_here">Tráelo aquí</string>
+    <string name="hint_type_address">Address</string>
+    <string name="hint_type_reference">Reference</string>
+    <string name="hint_type_number">Telephone number</string>
+    <string name="button_pay">Pagar</string>
+    <string name="button_next">Sig.</string>
 
 </resources>

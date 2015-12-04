@@ -15,7 +15,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -64,13 +63,16 @@ public class OrderActivity extends BaseActivity implements
     private CollapsingToolbarLayout mCollapsing;
     private AppBarLayout mAppBar;
     private View clickView;
+    private SJLApplication app;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order);
-        presenter = new OrderPresenterImpl(this, OrderActivity.this);
+
+        //Data
+        init();
 
         //Init views
         initUIComponents();
@@ -79,6 +81,11 @@ public class OrderActivity extends BaseActivity implements
         setUpUIComponents();
 
 
+    }
+
+    private void init() {
+        app = ((SJLApplication) getApplication());
+        presenter = new OrderPresenterImpl(this, OrderActivity.this);
     }
 
 
@@ -170,8 +177,6 @@ public class OrderActivity extends BaseActivity implements
     }
 
     private void goToMainActivity() {
-        SJLApplication app = ((SJLApplication) getApplication());
-
         final Bundle bundle = new Bundle();
         bundle.putSerializable(Const.EXTRA_USER, app.getCurrentUser());
 
@@ -216,7 +221,7 @@ public class OrderActivity extends BaseActivity implements
                 showMessage(getString(R.string.error_empty_orders));
                 return;
             } else if (!mOrdersAdapter.getDetails().isEmpty() || mOrdersAdapter.getDetails().size() > 0)
-                presenter.showAlertDialogOrder();
+                presenter.showAlertDialogOrder(app.getCurrentUser());
             else
                 showMessage(getString(R.string.error_empty_orders));
 

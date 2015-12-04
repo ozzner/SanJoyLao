@@ -3,13 +3,14 @@ package rsantillanc.sanjoylao.ui.mvp.Order;
 
 import android.app.Activity;
 import android.content.Context;
-import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 
 import java.util.List;
 
 import rsantillanc.sanjoylao.R;
 import rsantillanc.sanjoylao.model.OrderDetailModel;
 import rsantillanc.sanjoylao.model.OrderModel;
+import rsantillanc.sanjoylao.model.UserModel;
 import rsantillanc.sanjoylao.storage.sp.SJLPreferences;
 import rsantillanc.sanjoylao.ui.activity.OrderActivity;
 import rsantillanc.sanjoylao.ui.custom.dialog.ProcessOrderDialog;
@@ -162,8 +163,10 @@ public class OrderPresenterImpl implements IOrderPresenter, OnOrderListener , Pr
         iteractor.makePushNotification(order);
     }
 
-    public void showAlertDialogOrder() {
-        processOrder = new ProcessOrderDialog();
+    public void showAlertDialogOrder(UserModel currentUser) {
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(Const.EXTRA_USER,currentUser);
+        processOrder = new ProcessOrderDialog(bundle);
         processOrder.setListener(this);
         processOrder.show(view.getSupportFragmentManager(), "alert_input_order");
     }
