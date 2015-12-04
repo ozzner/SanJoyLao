@@ -167,8 +167,10 @@ public class PlateDetailActivity extends BaseActivity implements IPlateDetailVie
 
     @Override
     public void addComment(CommentModel newComment) {
-        mAdapter.getComments().add(0, newComment);
-        mAdapter.notifyDataSetChanged();
+        if (mAdapter != null) {
+            mAdapter.getComments().add(0, newComment);
+            mAdapter.notifyDataSetChanged();
+        }
     }
 
 
