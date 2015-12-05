@@ -27,9 +27,12 @@ public class ProcessPagerAdapter extends PagerAdapter {
         int resId = 0;
         switch (position) {
             case 0:
-                resId = R.id.lay_process_location;
+                resId = R.id.lay_process_booking;
                 break;
             case 1:
+                resId = R.id.lay_process_location;
+                break;
+            case 2:
                 resId = R.id.lay_process_payment;
                 break;
 

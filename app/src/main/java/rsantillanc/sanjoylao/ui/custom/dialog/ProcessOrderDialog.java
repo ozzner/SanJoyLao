@@ -19,10 +19,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -36,7 +39,6 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.maps.model.TileOverlay;
 
 import java.io.IOException;
 import java.util.List;
@@ -53,15 +55,21 @@ import rsantillanc.sanjoylao.util.Const;
 public class ProcessOrderDialog extends DialogFragment implements
         View.OnClickListener,
         OnMapReadyCallback,
-        CompoundButton.OnCheckedChangeListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, RadioGroup.OnCheckedChangeListener, GoogleMap.OnMapClickListener, GoogleMap.OnMarkerDragListener {
+        CompoundButton.OnCheckedChangeListener,
+        GoogleApiClient.ConnectionCallbacks,
+        GoogleApiClient.OnConnectionFailedListener,
+        RadioGroup.OnCheckedChangeListener,
+        GoogleMap.OnMapClickListener,
+        GoogleMap.OnMarkerDragListener {
 
     private UserModel user;
     //Views
     private Button btCancel;
     private Button btSend;
     private SwitchCompat switchHere;
-    private ViewPager viewPager;
     private AppCompatCheckBox chbCash;
+    private ViewPager viewPager;
+    private Spinner autoLocals;
     private EditText etCardNumber;
     private EditText etCardExpires;
     private EditText etCardCVV;
@@ -70,6 +78,9 @@ public class ProcessOrderDialog extends DialogFragment implements
     private EditText typeTelephone;
     private EditText typeAddress;
     private EditText typeReference;
+    private EditText etDNI;
+    private EditText etBooking;
+    private TextView etLocalDetails;
 
 
     //Properties
@@ -152,12 +163,20 @@ public class ProcessOrderDialog extends DialogFragment implements
         etCash = (EditText) view.findViewById(R.id.et_process_cash);
 
 
-        //Location
+        //Delivery
         switchHere = (SwitchCompat) view.findViewById(R.id.sw_here);
         typeTelephone = (EditText) view.findViewById(R.id.et_input_type_telephone);
         typeAddress = (EditText) view.findViewById(R.id.et_input_type_address);
         typeReference = (EditText) view.findViewById(R.id.et_input_type_reference);
 
+        //Booking
+        autoLocals = (Spinner)view.findViewById(R.id.spiner_process_locales);
+        etDNI = (EditText)view.findViewById(R.id.et_input_type_dni);
+        etBooking = (EditText)view.findViewById(R.id.et_input_type_number_booking);
+
+        String[] languages={"Android ","java","IOS","SQL","JDBC","Web services"};
+        ArrayAdapter adapter = new ArrayAdapter(getActivity(),android.R.layout.simple_list_item_1,languages);
+        autoLocals.setAdapter(adapter);
 
         //Set listener
         btCancel.setOnClickListener(this);

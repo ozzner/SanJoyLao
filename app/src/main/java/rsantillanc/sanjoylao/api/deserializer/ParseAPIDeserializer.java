@@ -20,6 +20,7 @@ import rsantillanc.sanjoylao.model.OrderTypeModel;
 import rsantillanc.sanjoylao.model.PlateModel;
 import rsantillanc.sanjoylao.model.PlateSizeModel;
 import rsantillanc.sanjoylao.model.RelationPlateSizeModel;
+import rsantillanc.sanjoylao.model.RestaurantModel;
 import rsantillanc.sanjoylao.model.SizeModel;
 import rsantillanc.sanjoylao.model.StatusModel;
 import rsantillanc.sanjoylao.ui.mvp.Plate.PlateIteractorImpl;
@@ -74,25 +75,31 @@ public class ParseAPIDeserializer<T> implements JsonDeserializer<T> {
             array = json.getAsJsonObject().getAsJsonArray(ConstAPI.PARSE_KEY_RESULT);
             return ((T) getModelsFromJsonArray(array, StatusModel.class));
 
-           //OrderDetailModel
+            //OrderDetailModel
         } else if (typeOfT.equals(OrderDetailModel.class)) {
 
             array = json.getAsJsonObject().getAsJsonArray(ConstAPI.PARSE_KEY_RESULT);
             return ((T) getModelsFromJsonArray(array, OrderDetailModel.class));
 
             //OrderModel
-        }else if (typeOfT.equals(OrderModel.class)) {
+        } else if (typeOfT.equals(OrderModel.class)) {
 
             array = json.getAsJsonObject().getAsJsonArray(ConstAPI.PARSE_KEY_RESULT);
             return ((T) getModelsFromJsonArray(array, OrderModel.class));
 
             //CommentModel
-        }else if (typeOfT.equals(CommentModel.class)) {
+        } else if (typeOfT.equals(CommentModel.class)) {
 
             array = json.getAsJsonObject().getAsJsonArray(ConstAPI.PARSE_KEY_RESULT);
             return ((T) getModelsFromJsonArray(array, CommentModel.class));
 
-        }else
+            //RestaurantModel
+        } else if (typeOfT.equals(RestaurantModel.class)) {
+
+            array = json.getAsJsonObject().getAsJsonArray(ConstAPI.PARSE_KEY_RESULT);
+            return ((T) getModelsFromJsonArray(array, RestaurantModel.class));
+
+        } else
             return null;
     }
 

@@ -28,6 +28,7 @@ import rsantillanc.sanjoylao.model.OrderModel;
 import rsantillanc.sanjoylao.model.OrderTypeModel;
 import rsantillanc.sanjoylao.model.PlateModel;
 import rsantillanc.sanjoylao.model.PlateSizeModel;
+import rsantillanc.sanjoylao.model.RestaurantModel;
 import rsantillanc.sanjoylao.model.SizeModel;
 import rsantillanc.sanjoylao.model.StatusModel;
 import rsantillanc.sanjoylao.storage.dao.CategoryDao;
@@ -35,6 +36,7 @@ import rsantillanc.sanjoylao.storage.dao.OrderDao;
 import rsantillanc.sanjoylao.storage.dao.OrderTypeDao;
 import rsantillanc.sanjoylao.storage.dao.PlateDao;
 import rsantillanc.sanjoylao.storage.dao.PlateSizeDao;
+import rsantillanc.sanjoylao.storage.dao.RestaurantDao;
 import rsantillanc.sanjoylao.storage.dao.SizeDao;
 import rsantillanc.sanjoylao.storage.dao.StatusDao;
 import rsantillanc.sanjoylao.util.Const;
@@ -308,7 +310,44 @@ public class MainIteractorImpl {
     }
 
 
+    public void syncRestaurants(final Context c) {
+        if (countRestaurants(c) == 0) {
+
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl(ConstAPI.PARSE_URL_BASE)
+                    .addConverterFactory(myConverter(RestaurantModel.class))
+                    .build();
+
+            Call<RestaurantModel> call = retrofit.create(ParseAPIService.class).getAllRestaurants();
+            call.enqueue(new Callback<RestaurantModel>() {
+                @Override
+                public void onResponse(Response<RestaurantModel> response, Retrofit retrofit) {
+                    if (response.isSuccess()&&response.body()!= null){
+                        List<RestaurantModel> restaurants = (List<RestaurantModel>) response.body();
+                        for (RestaurantModel restaurant : restaurants) {
+                            long insert = new RestaurantDao(c).insert(restaurant);
+                            Log.e(Const.DEBUG, "Restaurants rows affected: " + insert);
+                        }
+                    }else
+                        Log.e(Const.DEBUG, "Restaurants error load: " + response.message());
+
+                }
+
+                @Override
+                public void onFailure(Throwable t) {
+                    Log.e(Const.DEBUG, "Restaurants onFailure: ");
+                }
+            });
+        }
+
+
+    }
+
+
     //--------------------{COUNTERS}--------------------
+    private int countRestaurants(Context c) {
+        return new RestaurantDao(c).count();
+    }
 
     private int countStatus(Context c) {
         return new StatusDao(c).count();

@@ -24,6 +24,7 @@ import rsantillanc.sanjoylao.model.OrderModel;
 import rsantillanc.sanjoylao.model.OrderTypeModel;
 import rsantillanc.sanjoylao.model.PlateModel;
 import rsantillanc.sanjoylao.model.PlateSizeModel;
+import rsantillanc.sanjoylao.model.RestaurantModel;
 import rsantillanc.sanjoylao.model.SizeModel;
 import rsantillanc.sanjoylao.model.StatusModel;
 import rsantillanc.sanjoylao.model.UserModel;
@@ -189,5 +190,13 @@ public interface ParseAPIService {
             "Content-Type: application/json"
     })
     @PUT("users/{objectId}")
-    Call<JsonObject> updateUser(@Body String jsonUser, @Path("objectId") String objectId,@Header("X-Parse-Session-Token") String token);
+    Call<JsonObject> updateUser(@Body String jsonUser, @Path("objectId") String objectId, @Header("X-Parse-Session-Token") String token);
+
+
+    @Headers({
+            "X-Parse-Application-Id: RTM3ioKCBgaAJjXmDRr493sb13uYzGrMnePLhzhm",
+            "X-Parse-REST-API-Key: 6xr428CvfJT8WMGByPUhfvJWmFaxjozudaPy9bUB",
+    })
+    @GET("classes/Restaurant")
+    Call<RestaurantModel> getAllRestaurants();
 }

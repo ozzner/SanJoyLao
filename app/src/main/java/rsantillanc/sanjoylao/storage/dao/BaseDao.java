@@ -6,4 +6,9 @@ package rsantillanc.sanjoylao.storage.dao;
 public class BaseDao {
     protected static final String COMPARE = " =?";
 
+    //General columns
+    protected String objectId = "objectId";
+    protected String createdAt = "createdAt";
+    protected String updatedAt = "updatedAt";
+
 }

@@ -11,10 +11,13 @@
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"
         android:gravity="center"
-        android:padding="@dimen/space_6dp"
+        android:padding="@dimen/space_12dp"
         android:text="@string/title_dialog_do_order"
         android:textColor="@color/white"
         android:textSize="@dimen/txt_16sp" />
+
+
+
 
 
     <rsantillanc.sanjoylao.ui.custom.view.OrderPagerView
@@ -24,8 +27,90 @@
         android:layout_below="@+id/header"
         android:minHeight="250dp">
 
+        <!-- Book Order-->
+        <LinearLayout
+            android:id="@+id/lay_process_booking"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="top"
+            android:orientation="vertical"
+            android:visibility="visible"
+            android:weightSum="2">
 
-        <!--Location Delivery-->
+
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/tilName16"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/space_4dp"
+                android:paddingRight="@dimen/space_4dp"
+                android:layout_marginTop="@dimen/space_4dp"
+                >
+
+                <android.support.v7.widget.AppCompatSpinner
+                    android:id="@+id/spiner_process_locales"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:textColor="@color/visa" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <!--<TextView-->
+                <!--android:id="@+id/et_input_type_details_local"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:hint="@string/hint_type_address"-->
+                <!--android:inputType="text"-->
+                <!--android:gravity="left|center"-->
+                <!--android:padding="@dimen/space_16dp"-->
+                <!--android:layout_marginBottom="@dimen/space_8dp"-->
+                <!--android:textColor="@color/colorAccent" />-->
+
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/tilName18"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/space_4dp"
+                android:paddingRight="@dimen/space_4dp"
+                >
+
+                <EditText
+                    android:id="@+id/et_input_type_dni"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/hint_type_dni"
+                    android:inputType="number"
+                    android:maxLength="8"
+                    android:paddingLeft="@dimen/space_10dp"
+                    android:textColor="@color/visa" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/tilName19"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/space_4dp"
+                android:paddingRight="@dimen/space_4dp"
+                >
+
+                <EditText
+                    android:id="@+id/et_input_type_number_booking"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/hint_type_number"
+                    android:inputType="number"
+                    android:maxLength="11"
+                    android:paddingLeft="@dimen/space_10dp"
+                    android:textColor="@color/visa" />
+
+            </android.support.design.widget.TextInputLayout>
+
+        </LinearLayout>
+
+        <!-- Delivery-->
         <LinearLayout
             android:id="@+id/lay_process_location"
             android:layout_width="match_parent"

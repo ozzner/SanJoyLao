@@ -290,6 +290,7 @@ public class MainActivity extends BaseActivity
         mPresenter.loadOrderType();
         mPresenter.loadStatus();
         mPresenter.loadOrders(app.getCurrentUser().getObjectId());
+        mPresenter.loadRestaurants();
         mPresenter.savePreferences();
     }
 

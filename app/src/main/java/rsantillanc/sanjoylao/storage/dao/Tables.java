@@ -125,10 +125,10 @@ public class Tables {
 
   public static final String CREATE_LOCAL_RESTAURANT = "CREATE TABLE `LOCAL_RESTAURANT` (\n" +
           "\t`objectId`\tTEXT NOT NULL,\n" +
-          "\t`Field2`\tINTEGER,\n" +
-          "\t`deliveriAvailable`\tINTEGER DEFAULT 0,\n" +
+          "\t`deliveryAvailable`\tINTEGER DEFAULT 0,\n" +
           "\t`idRestaurant`\tTEXT,\n" +
           "\t`location`\tTEXT,\n" +
+          "\t`address`\tTEXT,\n" +
           "\t`reservationAvailable`\tINTEGER DEFAULT 0,\n" +
           "\t`createdAt`\tTEXT,\n" +
           "\t`updatedAt`\tTEXT,\n" +

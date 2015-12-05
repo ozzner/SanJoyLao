@@ -86,10 +86,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:layout_gravity="bottom"
-                    android:background="@color/transparent_3"
+                    android:background="@color/transparent_4"
                     android:gravity="right|center"
-                    android:orientation="horizontal"
                     android:padding="@dimen/space_2dp"
+                    android:orientation="horizontal"
                     android:weightSum="6">
 
                     <LinearLayout
@@ -100,12 +100,19 @@
                         android:background="@drawable/selector_item_list"
                         android:orientation="horizontal">
 
-                        <ImageView
-                            android:layout_width="0dp"
+                        <LinearLayout
+                            android:layout_width="@dimen/space_0dp"
                             android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:src="@drawable/vec_call"
-                            android:tint="@color/colorPrimaryDark" />
+                            android:gravity="center"
+                            android:layout_weight="1">
+
+                            <ImageView
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:src="@drawable/vec_call"
+                                android:tint="@color/colorPrimaryDark" />
+                        </LinearLayout>
+
 
                         <TextView
                             android:layout_width="0dp"
@@ -142,12 +149,20 @@
                             android:textColor="@color/black"
                             android:tint="@color/colorAccent" />
 
-                        <ImageView
-                            android:layout_width="0dp"
+                        <LinearLayout
+                            android:layout_width="@dimen/space_0dp"
                             android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:src="@drawable/vec_locals"
-                            android:tint="@color/colorPrimaryDark" />
+                            android:gravity="center"
+                            android:layout_weight="1">
+
+                            <ImageView
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:src="@drawable/vec_locals"
+                                android:tint="@color/colorPrimaryDark" />
+                        </LinearLayout>
+
+
 
 
                     </LinearLayout>

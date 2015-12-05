@@ -159,5 +159,7 @@
     <string name="hint_type_number">Telephone number</string>
     <string name="button_pay">Pagar</string>
     <string name="button_next">Sig.</string>
+    <string name="hint_type_locals">Locales</string>
+    <string name="hint_type_dni">DNI</string>
 
 </resources>
