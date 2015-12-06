@@ -17,8 +17,8 @@ public class OrderTypeModel implements Serializable {
         this.name = name;
     }
 
-
-
+    public OrderTypeModel() {
+    }
 
     public String getObjectId() {
         return objectId;

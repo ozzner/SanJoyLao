@@ -231,7 +231,7 @@
                             android:layout_height="match_parent"
                             android:layout_weight="3"
                             android:padding="@dimen/space_8dp"
-                            android:text="@string/label_title_reserve"
+                            android:text="@string/label_title_personal_data"
                             android:textColor="@color/colorPrimary" />
 
                         <ImageView

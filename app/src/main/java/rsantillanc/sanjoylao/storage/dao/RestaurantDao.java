@@ -50,4 +50,24 @@ public class RestaurantDao extends BaseDao {
         return cur.getCount();
     }
 
+    public RestaurantModel get() {
+        Cursor cur = db.query(Tables.RESTAURANT, null, null, null, null, null, null);
+
+        RestaurantModel restaurant;
+
+        if (cur.moveToFirst()) {
+            restaurant = new RestaurantModel();
+            restaurant.setObjectId(cur.getString(cur.getColumnIndex(objectId)));
+            restaurant.setCreatedAt(cur.getString(cur.getColumnIndex(createdAt)));
+            restaurant.setUpdatedAt(cur.getString(cur.getColumnIndex(updatedAt)));
+            restaurant.setName(cur.getString(cur.getColumnIndex(name)));
+            restaurant.setAbout(cur.getString(cur.getColumnIndex(about)));
+            restaurant.setRuc(cur.getLong(cur.getColumnIndex(ruc)));
+            restaurant.setCentralCallNumber(cur.getLong(cur.getColumnIndex(centralCallNumber)));
+            restaurant.setSlogan(cur.getString(cur.getColumnIndex(slogan)));
+        } else
+            return null;
+
+        return restaurant;
+    }
 }

@@ -1,5 +1,6 @@
 package rsantillanc.sanjoylao.ui.mvp.Order;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
@@ -29,13 +30,17 @@ import rsantillanc.sanjoylao.api.deserializer.ParseAPIDeserializer;
 import rsantillanc.sanjoylao.api.service.ParseAPIService;
 import rsantillanc.sanjoylao.model.APIRequestOrderDetailModel;
 import rsantillanc.sanjoylao.model.APIRequestOrderModel;
+import rsantillanc.sanjoylao.model.LocalRestaurantModel;
 import rsantillanc.sanjoylao.model.OrderDetailModel;
 import rsantillanc.sanjoylao.model.OrderModel;
+import rsantillanc.sanjoylao.model.OrderTypeModel;
 import rsantillanc.sanjoylao.model.ParsePointerModel;
 import rsantillanc.sanjoylao.model.PlateSizeModel;
 import rsantillanc.sanjoylao.model.StatusModel;
 import rsantillanc.sanjoylao.model.UserModel;
+import rsantillanc.sanjoylao.storage.dao.LocalRestaurantDao;
 import rsantillanc.sanjoylao.storage.dao.OrderDao;
+import rsantillanc.sanjoylao.storage.dao.OrderTypeDao;
 import rsantillanc.sanjoylao.storage.dao.StatusDao;
 import rsantillanc.sanjoylao.util.Const;
 import rsantillanc.sanjoylao.util.ConstAPI;
@@ -413,7 +418,7 @@ public class OrderIteractorImpl implements IOrderIteractor {
             public void onResponse(Response<JsonObject> response, Retrofit retrofit) {
                 if (response != null) {
                     Log.e(Const.DEBUG, "Order Updated server OK!. ");
-                    listener.orderCheckoutSuccess("Correct!",order);
+                    listener.orderCheckoutSuccess("Correct!", order);
                 } else {
                     listener.errorUpdating("Error inténtelo de nuevo");
                     Log.e(Const.DEBUG, "Order Updated server error!. ");
@@ -461,6 +466,14 @@ public class OrderIteractorImpl implements IOrderIteractor {
 
             }
         }).start();
+    }
+
+    public List<LocalRestaurantModel> getLocals(Context c) {
+        return new LocalRestaurantDao(c).getAll();
+    }
+
+    public List<OrderTypeModel> getOrderTypes(Activity mActivity) {
+        return new OrderTypeDao(mActivity).list();
     }
 
     public interface OnSaveListener {

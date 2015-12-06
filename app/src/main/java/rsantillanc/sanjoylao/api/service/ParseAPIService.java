@@ -19,6 +19,7 @@ import rsantillanc.sanjoylao.model.APIResponseUserModel;
 import rsantillanc.sanjoylao.model.APIResultCategoryModel;
 import rsantillanc.sanjoylao.model.APIResultPlateModel;
 import rsantillanc.sanjoylao.model.CommentModel;
+import rsantillanc.sanjoylao.model.LocalRestaurantModel;
 import rsantillanc.sanjoylao.model.OrderDetailModel;
 import rsantillanc.sanjoylao.model.OrderModel;
 import rsantillanc.sanjoylao.model.OrderTypeModel;
@@ -199,4 +200,12 @@ public interface ParseAPIService {
     })
     @GET("classes/Restaurant")
     Call<RestaurantModel> getAllRestaurants();
+
+
+    @Headers({
+            "X-Parse-Application-Id: RTM3ioKCBgaAJjXmDRr493sb13uYzGrMnePLhzhm",
+            "X-Parse-REST-API-Key: 6xr428CvfJT8WMGByPUhfvJWmFaxjozudaPy9bUB",
+    })
+    @GET("classes/LocalRestaurant?include=idRestaurant")
+    Call<LocalRestaurantModel> getAllLocalRestaurants();
 }

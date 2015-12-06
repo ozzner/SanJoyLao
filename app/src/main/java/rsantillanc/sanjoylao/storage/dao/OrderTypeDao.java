@@ -5,6 +5,9 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import rsantillanc.sanjoylao.model.OrderTypeModel;
 
 /**
@@ -33,6 +36,7 @@ public class OrderTypeDao {
         return cur.getCount();
     }
 
+    //Primitive methods
     public long insert(OrderTypeModel OrderType) {
         ContentValues cv = new ContentValues();
         cv.put(objectId, OrderType.getObjectId());
@@ -40,4 +44,30 @@ public class OrderTypeDao {
         return db.insert(Tables.ORDER_TYPE, null, cv);
     }
 
+    public List<OrderTypeModel> list() {
+        Cursor cur = db.query(Tables.ORDER_TYPE, null, null,null, null, null, null);
+        return loopOrdersType(cur,new ArrayList<OrderTypeModel>());
+    }
+
+
+    //{----Helpers----}
+
+    private List<OrderTypeModel> loopOrdersType(Cursor cur, List<OrderTypeModel> types) {
+
+        if (cur.moveToFirst())
+            do {
+
+                OrderTypeModel type = new OrderTypeModel();
+                type.setObjectId(cur.getString(cur.getColumnIndex(objectId)));
+                type.setName(cur.getString(cur.getColumnIndex(name)));
+                types.add(type);
+
+            } while (cur.moveToNext());
+
+        if (!cur.isClosed()) {
+            cur.close();
+        }
+
+        return types;
+    }
 }

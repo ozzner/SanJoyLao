@@ -127,7 +127,8 @@ public class Tables {
           "\t`objectId`\tTEXT NOT NULL,\n" +
           "\t`deliveryAvailable`\tINTEGER DEFAULT 0,\n" +
           "\t`idRestaurant`\tTEXT,\n" +
-          "\t`location`\tTEXT,\n" +
+          "\t`locationLatitude`\tREAL,\n" +
+          "\t`locationLongitude`\tREAL,\n" +
           "\t`address`\tTEXT,\n" +
           "\t`reservationAvailable`\tINTEGER DEFAULT 0,\n" +
           "\t`createdAt`\tTEXT,\n" +

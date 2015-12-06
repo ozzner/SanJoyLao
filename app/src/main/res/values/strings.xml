@@ -77,7 +77,7 @@
     <string name="label_excellent">Excelente</string>
     <string name="label_send_comments">Envíanos tus comentarios</string>
     <string name="label_title_access">Datos de acceso</string>
-    <string name="label_title_reserve">Para reservas</string>
+    <string name="label_title_personal_data">Datos personales</string>
     <string name="label_title_status">Estado</string>
 
 
@@ -161,5 +161,6 @@
     <string name="button_next">Sig.</string>
     <string name="hint_type_locals">Locales</string>
     <string name="hint_type_dni">DNI</string>
+    <string name="hint_type_local_address">Seleccione un local</string>
 
 </resources>

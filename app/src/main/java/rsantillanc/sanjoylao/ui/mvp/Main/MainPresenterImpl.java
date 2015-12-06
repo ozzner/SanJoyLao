@@ -75,7 +75,8 @@ public class MainPresenterImpl {
         iteractor.syncOrders(mainActivity.getApplicationContext(), userID);
     }
 
-    public void loadRestaurants() {
+    public void loadLocalRestaurant() {
+        iteractor.syncLocals(mainActivity.getApplicationContext());
         iteractor.syncRestaurants(mainActivity.getApplicationContext());
     }
 

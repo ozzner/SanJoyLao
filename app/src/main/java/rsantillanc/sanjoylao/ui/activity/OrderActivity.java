@@ -21,14 +21,22 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import rsantillanc.sanjoylao.R;
 import rsantillanc.sanjoylao.SJLApplication;
+import rsantillanc.sanjoylao.model.LocalRestaurantModel;
 import rsantillanc.sanjoylao.model.OrderDetailModel;
 import rsantillanc.sanjoylao.model.OrderModel;
+import rsantillanc.sanjoylao.model.OrderTypeModel;
 import rsantillanc.sanjoylao.model.PlateModel;
 import rsantillanc.sanjoylao.model.PlateSizeModel;
+import rsantillanc.sanjoylao.model.RelationLocalRestaurant;
+import rsantillanc.sanjoylao.model.RelationOrder;
 import rsantillanc.sanjoylao.ui.custom.adapter.RecyclerOrderAdapter;
 import rsantillanc.sanjoylao.ui.custom.dialog.SJLAlertDialog;
 import rsantillanc.sanjoylao.ui.custom.view.DividerItemDecoration;
@@ -46,24 +54,31 @@ public class OrderActivity extends BaseActivity implements
 
     //Views
     private Toolbar toolbar;
-    private FloatingActionButton mFloatingActionButton;
+    private FloatingActionButton fabMain;
+    private FloatingActionButton fabBooking;
+    private FloatingActionButton fabDelivery;
     private RecyclerView mRecyclerView;
     private TextView tvTotalPrice;
     private TextView tvPercent;
     private TextView tvDiscount;
     private ProgressBar mProgressBar;
     private ProgressDialog mProgressDialog;
+    private AppBarLayout mAppBar;
+    private View clickView;
 
     //Globals
     private LinearLayoutManager mLinearLayoutManager;
     private RecyclerOrderAdapter mOrdersAdapter;
+    private RelationOrder buildOrder;
+    private SJLApplication app;
+    private boolean isOpen = false;
+    private boolean isDelivery = false;
+    private OrderTypeModel orderType;
+    private ArrayList<OrderTypeModel> ordersType;
 
     //MVP
     private OrderPresenterImpl presenter;
     private CollapsingToolbarLayout mCollapsing;
-    private AppBarLayout mAppBar;
-    private View clickView;
-    private SJLApplication app;
 
 
     @Override
@@ -80,12 +95,14 @@ public class OrderActivity extends BaseActivity implements
         //Config
         setUpUIComponents();
 
-
     }
 
     private void init() {
         app = ((SJLApplication) getApplication());
         presenter = new OrderPresenterImpl(this, OrderActivity.this);
+        buildOrder = new RelationOrder();
+        presenter.loadLocals();
+        presenter.loadOrdersType();
     }
 
 
@@ -98,7 +115,9 @@ public class OrderActivity extends BaseActivity implements
         tvPercent = (TextView) findViewById(R.id.tv_order_percent);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        mFloatingActionButton = (FloatingActionButton) findViewById(R.id.fab_order_payment);
+        fabMain = (FloatingActionButton) findViewById(R.id.fab_order_payment);
+        fabBooking = (FloatingActionButton) findViewById(R.id.fab_order_booking);
+        fabDelivery = (FloatingActionButton) findViewById(R.id.fab_order_delivery);
         mRecyclerView = (RecyclerView) findViewById(R.id.rcv_orders);
         mProgressBar = (ProgressBar) findViewById(R.id.pb_orders);
         mCollapsing = (CollapsingToolbarLayout) findViewById(R.id.ctlLayout);
@@ -121,7 +140,6 @@ public class OrderActivity extends BaseActivity implements
 
 
     private void setUpRecyclerView() {
-
         //Config recycler
         mLinearLayoutManager = new LinearLayoutManager(_context);
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
@@ -133,7 +151,9 @@ public class OrderActivity extends BaseActivity implements
 
 
     private void setUpFloatingButton() {
-        mFloatingActionButton.setOnClickListener(this);
+        fabMain.setOnClickListener(this);
+        fabBooking.setOnClickListener(this);
+        fabDelivery.setOnClickListener(this);
     }
 
 
@@ -208,27 +228,54 @@ public class OrderActivity extends BaseActivity implements
     }
 
 
-
     //---------------------- [CALLBAKCS]
 
     //OnClick
     @Override
     public void onClick(View v) {
         clickView = v;
-        if (v == mFloatingActionButton) {
+
+        if (v == fabMain) {
 
             if (mOrdersAdapter == null) {
                 showMessage(getString(R.string.error_empty_orders));
                 return;
-            } else if (!mOrdersAdapter.getDetails().isEmpty() || mOrdersAdapter.getDetails().size() > 0)
-                presenter.showAlertDialogOrder(app.getCurrentUser());
-            else
+            } else if (!mOrdersAdapter.getDetails().isEmpty() || mOrdersAdapter.getDetails().size() > 0) {
+                isOpen = !isOpen;
+                showSubmenu(isOpen);
+            } else
                 showMessage(getString(R.string.error_empty_orders));
 
+        } else if (v == fabBooking){
+            showMessage("Reserva");
+            isDelivery = false;
+            presenter.showAlertDialogOrder(app.getCurrentUser(),buildOrder,isDelivery);
         }
+        else if (v == fabDelivery){
+            isDelivery = true;
+            presenter.showAlertDialogOrder(app.getCurrentUser(), buildOrder, isDelivery);
+            showMessage("Delivery");
+        }
+
     }
 
+    private void showSubmenu(boolean on) {
+        if (on) {
 
+            fabBooking.setVisibility(View.VISIBLE);
+            YoYo.with(Techniques.FadeIn).duration(1000).playOn(fabBooking);
+
+            fabDelivery.setVisibility(View.VISIBLE);
+            YoYo.with(Techniques.FadeIn).duration(500).playOn(fabDelivery);
+
+
+        } else {
+            YoYo.with(Techniques.FadeOut).duration(500).playOn(fabBooking);
+            YoYo.with(Techniques.FadeOut).duration(1000).playOn(fabDelivery);
+
+        }
+
+    }
 
 
     // {IOrderView}
@@ -282,12 +329,36 @@ public class OrderActivity extends BaseActivity implements
             mCollapsing.requestLayout();
             mCollapsing.setTitle(getString(R.string.title_my_orders));
             mCollapsing.setTitleEnabled(true);
+            showFabs(true);
 
             //Collapsed
         } else {
+            showFabs(false);
             mCollapsing.setTitleEnabled(false);
             getSupportActionBar().setTitle(tvDiscount.getText().toString());
         }
+    }
+
+    private void showFabs(boolean on) {
+        if (on) {
+            if (isOpen)
+                fabDelivery.setVisibility(View.VISIBLE);
+
+            if (isOpen)
+                fabBooking.setVisibility(View.VISIBLE);
+
+            fabMain.setVisibility(View.VISIBLE);
+
+        }else {
+            if (isOpen)
+                fabDelivery.setVisibility(View.INVISIBLE);
+
+            if (isOpen)
+                fabBooking.setVisibility(View.INVISIBLE);
+
+            fabMain.setVisibility(View.INVISIBLE);
+        }
+
     }
 
     //{ON ORDERS ITEM LISTENER}
@@ -355,6 +426,7 @@ public class OrderActivity extends BaseActivity implements
 
     @Override
     public void onPaymentSuccess(double amount) {
+        showSubmenu(false);
         presenter.processOrder(mOrdersAdapter.getDetails().get(0).getOrder());
     }
 
@@ -368,11 +440,11 @@ public class OrderActivity extends BaseActivity implements
 
     @Override
     public void enabledPaymentButton(boolean on) {
-        mFloatingActionButton.setEnabled(on);
+        fabMain.setEnabled(on);
 
         if (!on) {
-            mFloatingActionButton.setImageResource(R.drawable.vec_disabled);
-            DrawableCompat.setTint(mFloatingActionButton.getDrawable(), Color.WHITE);
+            fabMain.setImageResource(R.drawable.vec_disabled);
+            DrawableCompat.setTint(fabMain.getDrawable(), Color.WHITE);
         }
 
     }
@@ -406,6 +478,18 @@ public class OrderActivity extends BaseActivity implements
                     }
                 }).show();
         presenter.sendPushNotification(order);
+    }
+
+    @Override
+    public void localsLoaded(ArrayList<LocalRestaurantModel> locals) {
+        RelationLocalRestaurant rel = new RelationLocalRestaurant();
+        rel.setLocals(locals);
+        buildOrder.setLocalRestaurant(rel);
+    }
+
+    @Override
+    public void ordersTypeLoaded(ArrayList<OrderTypeModel> ordersTypeList) {
+        this.ordersType = ordersTypeList;
     }
 
 

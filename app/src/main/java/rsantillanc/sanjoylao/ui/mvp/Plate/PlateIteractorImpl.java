@@ -17,7 +17,7 @@ import rsantillanc.sanjoylao.model.OrderDetailModel;
 import rsantillanc.sanjoylao.model.OrderModel;
 import rsantillanc.sanjoylao.model.PlateModel;
 import rsantillanc.sanjoylao.model.PlateSizeModel;
-import rsantillanc.sanjoylao.model.RelationPlateSizeModel;
+import rsantillanc.sanjoylao.model.RelationPlateSize;
 import rsantillanc.sanjoylao.model.UserModel;
 import rsantillanc.sanjoylao.storage.dao.PlateDao;
 import rsantillanc.sanjoylao.storage.dao.PlateSizeDao;
@@ -63,7 +63,7 @@ public class PlateIteractorImpl implements OnOrderListener {
                 public void onResponse(Response<APIResultPlateModel> response, Retrofit retrofit) {
                     if (response.isSuccess()) {
                         long count = 0;
-                        for (RelationPlateSizeModel relation : response.body().getResultArray()) {
+                        for (RelationPlateSize relation : response.body().getResultArray()) {
                             count = storePlate(relation.getCurrentPlate());
                         }
                         listener.onListFilterSuccess(response.body().getResultArray());
@@ -81,7 +81,7 @@ public class PlateIteractorImpl implements OnOrderListener {
             });
 
         } else {
-            List<RelationPlateSizeModel> relations = new PlateDao(mActivity).listByCategory(categoryID);
+            List<RelationPlateSize> relations = new PlateDao(mActivity).listByCategory(categoryID);
             listener.onListFilterSuccess(relations);
         }
 

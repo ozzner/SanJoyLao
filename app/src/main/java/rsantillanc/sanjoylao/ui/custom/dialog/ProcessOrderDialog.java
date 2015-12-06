@@ -44,6 +44,8 @@ import java.io.IOException;
 import java.util.List;
 
 import rsantillanc.sanjoylao.R;
+import rsantillanc.sanjoylao.model.LocalRestaurantModel;
+import rsantillanc.sanjoylao.model.RelationOrder;
 import rsantillanc.sanjoylao.model.UserModel;
 import rsantillanc.sanjoylao.ui.custom.adapter.ProcessPagerAdapter;
 import rsantillanc.sanjoylao.util.Const;
@@ -62,14 +64,18 @@ public class ProcessOrderDialog extends DialogFragment implements
         GoogleMap.OnMapClickListener,
         GoogleMap.OnMarkerDragListener {
 
+    //Data passing
+    private boolean isDelivery;
+    private RelationOrder buildOrder;
     private UserModel user;
+
     //Views
     private Button btCancel;
     private Button btSend;
     private SwitchCompat switchHere;
     private AppCompatCheckBox chbCash;
     private ViewPager viewPager;
-    private Spinner autoLocals;
+    private Spinner spinBookLocals;
     private EditText etCardNumber;
     private EditText etCardExpires;
     private EditText etCardCVV;
@@ -78,8 +84,8 @@ public class ProcessOrderDialog extends DialogFragment implements
     private EditText typeTelephone;
     private EditText typeAddress;
     private EditText typeReference;
-    private EditText etDNI;
-    private EditText etBooking;
+    private EditText etBookDNI;
+    private EditText etBookPhone;
     private TextView etLocalDetails;
 
 
@@ -98,10 +104,12 @@ public class ProcessOrderDialog extends DialogFragment implements
 
     @SuppressLint("ValidFragment")
     public ProcessOrderDialog(Bundle bundle) {
-        if (bundle != null)
+        if (bundle != null) {
             user = (UserModel) bundle.getSerializable(Const.EXTRA_USER);
+            buildOrder = (RelationOrder) bundle.getSerializable(Const.EXTRA_BUILD_ORDER);
+            isDelivery = bundle.getBoolean(Const.EXTRA_PARAM_IS_DELIVERY);
+        }
     }
-
 
     public static ProcessOrderDialog newInstance(Bundle bundle) {
         return new ProcessOrderDialog(bundle);
@@ -170,13 +178,10 @@ public class ProcessOrderDialog extends DialogFragment implements
         typeReference = (EditText) view.findViewById(R.id.et_input_type_reference);
 
         //Booking
-        autoLocals = (Spinner)view.findViewById(R.id.spiner_process_locales);
-        etDNI = (EditText)view.findViewById(R.id.et_input_type_dni);
-        etBooking = (EditText)view.findViewById(R.id.et_input_type_number_booking);
+        spinBookLocals = (Spinner) view.findViewById(R.id.spinner_process_locales);
+        etBookDNI = (EditText) view.findViewById(R.id.et_order_booking_dni);
+        etBookPhone = (EditText) view.findViewById(R.id.et_order_booking_phone);
 
-        String[] languages={"Android ","java","IOS","SQL","JDBC","Web services"};
-        ArrayAdapter adapter = new ArrayAdapter(getActivity(),android.R.layout.simple_list_item_1,languages);
-        autoLocals.setAdapter(adapter);
 
         //Set listener
         btCancel.setOnClickListener(this);
@@ -212,6 +217,8 @@ public class ProcessOrderDialog extends DialogFragment implements
         if (user.getPhoneNumber() > 0)
             typeTelephone.setText(String.valueOf(user.getPhoneNumber()));
 
+        //Load address
+        buildLocalArrayAdapter(buildOrder.getLocalRestaurant().getLocals());
 
         //Map
         launchMap();
@@ -219,6 +226,15 @@ public class ProcessOrderDialog extends DialogFragment implements
         //Google api client
         buildGoogleApiClient();
 
+    }
+
+    private void buildLocalArrayAdapter(List<LocalRestaurantModel> locals) {
+        String[] array = new String[locals.size()];
+        for (int i = 0; i < locals.size(); i++) {
+            array[i] = locals.get(i).getAddress();
+        }
+        ArrayAdapter adapter = new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1, array);
+        spinBookLocals.setAdapter(adapter);
     }
 
     private void launchCamera() {
@@ -245,7 +261,7 @@ public class ProcessOrderDialog extends DialogFragment implements
     }
 
     private void launchMap() {
-        //Obtain the SupportMapFragment and get notified when the googleMap is ready to be used.
+        //Obtain the SupportMapFragment and list notified when the googleMap is ready to be used.
         mapFragment = (SupportMapFragment) getActivity().getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
@@ -255,7 +271,14 @@ public class ProcessOrderDialog extends DialogFragment implements
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        viewPager.setCurrentItem(0);
+        step = 1;
+
+        if (isDelivery) {
+            viewPager.setCurrentItem(1);
+        } else {
+            viewPager.setCurrentItem(0);
+        }
+
     }
 
     @Override
@@ -276,11 +299,21 @@ public class ProcessOrderDialog extends DialogFragment implements
                             listener.onClickSendButton();
                         }
                     } else {
-                        if (checkFieldsDelivery()) {
-                            step++;
-                            viewPager.setCurrentItem(step);
-                        }
+                        if (isDelivery) {
 
+                            if (checkFieldsDelivery()) {
+                                step++;
+                                viewPager.setCurrentItem(2);
+                            }
+
+                        } else {
+                            //Is reserva
+                            if (checkFieldsBooking()) {
+                                step++;
+                                viewPager.setCurrentItem(2);
+                            }
+
+                        }
                     }
 
                     break;
@@ -288,7 +321,34 @@ public class ProcessOrderDialog extends DialogFragment implements
         }
     }
 
+    private boolean checkFieldsBooking() {
+
+        if (etBookDNI.getText().toString().isEmpty() && etBookDNI.getText().length() < 8) {
+            etBookDNI.requestFocus();
+            etBookDNI.setError("Error. Longitud incorrecta.");
+            return false;
+        }
+
+        if (etBookPhone.getText().toString().isEmpty() && etBookPhone.getText().length() < 11) {
+            etBookPhone.requestFocus();
+            etBookPhone.setError("Error. N° Telefónico incorrecto.");
+            return false;
+        }
+
+//
+
+        return true;
+    }
+
     private boolean checkFieldsPayment() {
+
+        if (chbCash.isChecked()) {
+            if (etCash.getText().toString().isEmpty()) {
+                etCash.requestFocus();
+                etCash.setError("Monto requerido");
+            }else
+                return true;
+        }
 
         if (etCardNumber.getText().toString().isEmpty() && etCardNumber.getText().length() < 8) {
             etCardNumber.requestFocus();
@@ -526,7 +586,6 @@ public class ProcessOrderDialog extends DialogFragment implements
     public void setListener(OnProcessOrderClickListener listener) {
         this.listener = listener;
     }
-
 
     public interface OnProcessOrderClickListener {
         void onClickSendButton();
