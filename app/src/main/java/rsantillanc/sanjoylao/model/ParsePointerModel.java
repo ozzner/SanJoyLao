@@ -18,7 +18,6 @@ public class ParsePointerModel implements Serializable {
     }
 
     public ParsePointerModel(String className, String objectId) {
-        this.__type = __type;
         this.className = className;
         this.objectId = objectId;
     }

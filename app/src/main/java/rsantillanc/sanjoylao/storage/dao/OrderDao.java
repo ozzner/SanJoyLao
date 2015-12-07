@@ -85,6 +85,24 @@ public class OrderDao {
         return db.insert(Tables.ORDERS, null, cv);
     }
 
+
+    public int update(StatusModel status, OrderModel order) {
+        ContentValues cv = new ContentValues();
+        cv.put(idStatus, status.getObjectId());
+        cv.put(idLocationDelivery,order.getLocationDelivery()==null?null:order.getLocationDelivery().getObjectId());
+        cv.put(idOrderType,order.getOrderType().getObjectId());
+        cv.put(price,order.getPrice());
+        return db.update(Tables.ORDERS, cv, objectId + COMPARE, new String[]{order.getObjectId()});
+    }
+
+    public int updateStatus(StatusModel status, OrderModel order) {
+        ContentValues cv = new ContentValues();
+        cv.put(idStatus, status.getObjectId());
+
+        return db.update(Tables.ORDERS, cv, objectId + COMPARE, new String[]{order.getObjectId()});
+    }
+
+
     public OrderModel getActiveOrderIfExist(String statusID) {
         Cursor cur = db.query(Tables.ORDERS, null, idStatus + COMPARE, new String[]{statusID}, null, null, null);
         OrderModel order;
@@ -266,11 +284,7 @@ public class OrderDao {
     }
 
 
-    public int updateOrderStatus(StatusModel status, OrderModel order) {
-        ContentValues cv = new ContentValues();
-        cv.put(idStatus, status.getObjectId());
-        return db.update(Tables.ORDERS, cv, objectId + COMPARE, new String[]{order.getObjectId()});
-    }
+
 
     public int updatePrice(OrderModel order) {
         ContentValues cv = new ContentValues();

@@ -52,6 +52,8 @@ public class OrderActivity extends BaseActivity implements
         RecyclerOrderAdapter.OnOrderItemClickListener,
         AppBarLayout.OnOffsetChangedListener {
 
+    private static final int BOOKING_POSITION = 0;
+    private static final int DELIVERY_POSITION = 1;
     //Views
     private Toolbar toolbar;
     private FloatingActionButton fabMain;
@@ -73,7 +75,6 @@ public class OrderActivity extends BaseActivity implements
     private SJLApplication app;
     private boolean isOpen = false;
     private boolean isDelivery = false;
-    private OrderTypeModel orderType;
     private ArrayList<OrderTypeModel> ordersType;
 
     //MVP
@@ -246,15 +247,20 @@ public class OrderActivity extends BaseActivity implements
             } else
                 showMessage(getString(R.string.error_empty_orders));
 
-        } else if (v == fabBooking){
+        } else if (v == fabBooking) {
+
             showMessage("Reserva");
             isDelivery = false;
-            presenter.showAlertDialogOrder(app.getCurrentUser(),buildOrder,isDelivery);
-        }
-        else if (v == fabDelivery){
+            buildOrder.getCurrentOrder().setOrderType(ordersType.get(BOOKING_POSITION));
+            presenter.showAlertDialogOrder(app.getCurrentUser(), buildOrder, isDelivery);
+
+        } else if (v == fabDelivery) {
+
             isDelivery = true;
+            buildOrder.getCurrentOrder().setOrderType(ordersType.get(DELIVERY_POSITION));
             presenter.showAlertDialogOrder(app.getCurrentUser(), buildOrder, isDelivery);
             showMessage("Delivery");
+
         }
 
     }
@@ -349,7 +355,7 @@ public class OrderActivity extends BaseActivity implements
 
             fabMain.setVisibility(View.VISIBLE);
 
-        }else {
+        } else {
             if (isOpen)
                 fabDelivery.setVisibility(View.INVISIBLE);
 
@@ -427,7 +433,8 @@ public class OrderActivity extends BaseActivity implements
     @Override
     public void onPaymentSuccess(double amount) {
         showSubmenu(false);
-        presenter.processOrder(mOrdersAdapter.getDetails().get(0).getOrder());
+        buildOrder.getCurrentOrder().setPrice(amount);
+        presenter.processOrder(buildOrder);
     }
 
     @Override
@@ -489,7 +496,17 @@ public class OrderActivity extends BaseActivity implements
 
     @Override
     public void ordersTypeLoaded(ArrayList<OrderTypeModel> ordersTypeList) {
+        //First is reserva (0) and last is delivery (1)
         this.ordersType = ordersTypeList;
+        if (mOrdersAdapter != null)
+            if (mOrdersAdapter.getDetails().size() > 0)
+                this.buildOrder.setCurrentOrder(mOrdersAdapter.getDetails().get(0).getOrder());
+    }
+
+    @Override
+    public void buildOrderSuccess(RelationOrder buildOrder) {
+        this.buildOrder = buildOrder;
+
     }
 
 

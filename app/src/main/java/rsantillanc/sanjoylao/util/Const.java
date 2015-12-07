@@ -93,11 +93,13 @@ public class Const {
 
 
     public static final String KEY_POINTER = "Pointer";
+    public static final String CLASS_ORDER_TYPE = "OrderType";
     public static final String CLASS_USER = "_User";
     public static final String CLASS_PLATE = "Plate";
     public static final String CLASS_STATUS = "Status";
     public static final String CLASS_ORDER = "Order";
     public static final String CLASS_PLATE_SIZE = "PlateSize";
+    public static final String CLASS_LOCATION_DELIVERY = "LocationDelivery";
 
     //[ STATUS ]
     public static final int STATUS_CODE_TEMPORAL = 1;

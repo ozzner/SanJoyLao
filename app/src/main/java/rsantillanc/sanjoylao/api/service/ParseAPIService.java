@@ -182,7 +182,7 @@ public interface ParseAPIService {
             "Content-Type: application/json"
     })
     @PUT("classes/Order/{objectId}")
-    Call<JsonObject> updateOrderStatus(@Body JsonObject json, @Path("objectId") String objectId);
+    Call<JsonObject> updateOrder(@Body String jsonBody, @Path("objectId") String objectId);
 
 
     @Headers({

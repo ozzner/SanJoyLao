@@ -7,6 +7,7 @@ import rsantillanc.sanjoylao.model.LocalRestaurantModel;
 import rsantillanc.sanjoylao.model.OrderDetailModel;
 import rsantillanc.sanjoylao.model.OrderModel;
 import rsantillanc.sanjoylao.model.OrderTypeModel;
+import rsantillanc.sanjoylao.model.RelationOrder;
 
 /**
  * Created by rsantillanc on 27/10/2015.
@@ -26,4 +27,5 @@ public interface IOrderView {
     void orderCheckoutSuccess(CharSequence s, OrderModel order);
     void localsLoaded(ArrayList<LocalRestaurantModel> locals);
     void ordersTypeLoaded(ArrayList<OrderTypeModel> ordersTypeList);
+    void buildOrderSuccess(RelationOrder buildOrder);
 }

@@ -45,8 +45,8 @@ public class OrderTypeDao {
     }
 
     public List<OrderTypeModel> list() {
-        Cursor cur = db.query(Tables.ORDER_TYPE, null, null,null, null, null, null);
-        return loopOrdersType(cur,new ArrayList<OrderTypeModel>());
+        Cursor cur = db.query(Tables.ORDER_TYPE, null, null, null, null, null, name + " DESC");
+        return loopOrdersType(cur, new ArrayList<OrderTypeModel>());
     }
 
 

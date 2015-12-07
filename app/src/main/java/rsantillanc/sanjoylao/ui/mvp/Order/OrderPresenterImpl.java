@@ -72,9 +72,9 @@ public class OrderPresenterImpl implements IOrderPresenter, OnOrderListener, Pro
         buildTotalPrice(orderDetails);
     }
 
-    public void processOrder(OrderModel order) {
+    public void processOrder(RelationOrder buildOrder) {
         view.updateMessageProgressDialog(mActivity.getString(R.string.progress_message_doing_order));
-        iteractor.checkoutOrder(this, mActivity.getApplicationContext(), order);
+        iteractor.checkoutOrder(this, mActivity.getApplicationContext(), buildOrder);
     }
 
     @Override
@@ -88,7 +88,7 @@ public class OrderPresenterImpl implements IOrderPresenter, OnOrderListener, Pro
     }
 
     @Override
-    public void paymentCorrect(final double amount) {
+    public void paymentCorrect( final double amount) {
         view.updateMessageProgressDialog(mActivity.getString(R.string.correct_payment));
         view.enabledPaymentButton(false);
         view.onPaymentSuccess(amount);
@@ -150,9 +150,9 @@ public class OrderPresenterImpl implements IOrderPresenter, OnOrderListener, Pro
         iteractor.callDeleteDetail(c, itemDetail, this);
     }
 
-    public void processPayment() {
+    public void processPayment(RelationOrder buildOrder) {
         view.showLoader(mActivity.getString(R.string.progress_message_processing));
-        iteractor.sendPayment((amount > MIN_PRICE_TO_DISCOUNT) ? getPriceWithDiscount(amount) : amount, this);
+        iteractor.sendPayment(buildOrder,(amount > MIN_PRICE_TO_DISCOUNT) ? getPriceWithDiscount(amount) : amount, this);
     }
 
     public void saveChanges(List<OrderDetailModel> details) {
@@ -182,8 +182,9 @@ public class OrderPresenterImpl implements IOrderPresenter, OnOrderListener, Pro
 
 
     @Override
-    public void onClickSendButton() {
-        processPayment();
+    public void onClickSendButton(RelationOrder buildOrder) {
+        view.buildOrderSuccess(buildOrder);
+        processPayment(buildOrder);
     }
 
     @Override
@@ -199,13 +200,17 @@ public class OrderPresenterImpl implements IOrderPresenter, OnOrderListener, Pro
     }
 
     public void loadLocals() {
-        new AsyncTaskProcess().execute(1);
+        new AsyncTaskProcess().execute(ACTION_LOCALS);
     }
 
     public void loadOrdersType() {
-        new AsyncTaskProcess().execute(2);
+        new AsyncTaskProcess().execute(ACTION_ORDER_TYPE);
     }
 
+
+    /**
+     * AsyncTask
+     **/
 
     class AsyncTaskProcess extends AsyncTask<Object, Object, Object> {
         private Object object;

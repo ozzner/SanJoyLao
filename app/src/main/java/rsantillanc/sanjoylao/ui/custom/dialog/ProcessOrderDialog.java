@@ -39,12 +39,18 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.parse.ParseException;
+import com.parse.ParseGeoPoint;
+import com.parse.ParseObject;
+import com.parse.SaveCallback;
 
 import java.io.IOException;
 import java.util.List;
 
 import rsantillanc.sanjoylao.R;
 import rsantillanc.sanjoylao.model.LocalRestaurantModel;
+import rsantillanc.sanjoylao.model.LocationDeliveryModel;
+import rsantillanc.sanjoylao.model.ParseGeoPointModel;
 import rsantillanc.sanjoylao.model.RelationOrder;
 import rsantillanc.sanjoylao.model.UserModel;
 import rsantillanc.sanjoylao.ui.custom.adapter.ProcessPagerAdapter;
@@ -63,6 +69,10 @@ public class ProcessOrderDialog extends DialogFragment implements
         RadioGroup.OnCheckedChangeListener,
         GoogleMap.OnMapClickListener,
         GoogleMap.OnMarkerDragListener {
+
+
+    private static final int BOOKING = 0;
+    private static final int DELIVERY = 1;
 
     //Data passing
     private boolean isDelivery;
@@ -110,6 +120,7 @@ public class ProcessOrderDialog extends DialogFragment implements
             isDelivery = bundle.getBoolean(Const.EXTRA_PARAM_IS_DELIVERY);
         }
     }
+
 
     public static ProcessOrderDialog newInstance(Bundle bundle) {
         return new ProcessOrderDialog(bundle);
@@ -296,14 +307,16 @@ public class ProcessOrderDialog extends DialogFragment implements
                     if (step == processAdapter.getCount() - 1) {
                         if (checkFieldsPayment()) {
                             getDialog().cancel();
-                            listener.onClickSendButton();
+                            listener.onClickSendButton(buildOrder);
                         }
                     } else {
+
                         if (isDelivery) {
 
                             if (checkFieldsDelivery()) {
                                 step++;
                                 viewPager.setCurrentItem(2);
+                                addLocation(DELIVERY);
                             }
 
                         } else {
@@ -311,6 +324,7 @@ public class ProcessOrderDialog extends DialogFragment implements
                             if (checkFieldsBooking()) {
                                 step++;
                                 viewPager.setCurrentItem(2);
+                                addLocation(BOOKING);
                             }
 
                         }
@@ -318,6 +332,35 @@ public class ProcessOrderDialog extends DialogFragment implements
 
                     break;
             }
+        }
+    }
+
+    private void addLocation(int type) {
+        final LocationDeliveryModel deliveryModel = new LocationDeliveryModel();
+        switch (type) {
+            case BOOKING:
+                buildOrder.getCurrentOrder().setLocationDelivery(null);
+                break;
+            case DELIVERY:
+                final ParseObject delivery = ParseObject.create(Const.CLASS_LOCATION_DELIVERY);
+                delivery.add("address", typeAddress.getText().toString());
+                delivery.add("location", new ParseGeoPoint(latLonOrder.latitude, latLonOrder.longitude));
+                delivery.add("reference", typeReference.getText().toString());
+                delivery.saveInBackground(new SaveCallback() {
+                    @Override
+                    public void done(ParseException e) {
+                        if (e == null) {
+                            deliveryModel.setObjectId(delivery.getObjectId());
+                            deliveryModel.setCreatedAt(delivery.getCreatedAt().toString());
+                            deliveryModel.setUpdatedAt(delivery.getUpdatedAt().toString());
+                            deliveryModel.setLocation(new ParseGeoPointModel(latLonOrder.latitude, latLonOrder.longitude));
+                            deliveryModel.setAddress(typeAddress.getText().toString());
+                            deliveryModel.setReference(typeReference.getText().toString());
+                            buildOrder.getCurrentOrder().setLocationDelivery(deliveryModel);
+                        }
+                    }
+                });
+                break;
         }
     }
 
@@ -346,7 +389,7 @@ public class ProcessOrderDialog extends DialogFragment implements
             if (etCash.getText().toString().isEmpty()) {
                 etCash.requestFocus();
                 etCash.setError("Monto requerido");
-            }else
+            } else
                 return true;
         }
 
@@ -472,7 +515,9 @@ public class ProcessOrderDialog extends DialogFragment implements
 
         marker.showInfoWindow();
         typeAddress.getText().clear();
-        typeAddress.setText((address.getSubLocality() == null) ? address.getAdminArea() + ", " + address.getThoroughfare() : address.getSubLocality() + ", " + address.getThoroughfare());
+        if (address != null)
+            typeAddress.setText((address.getSubLocality() == null) ? address.getAdminArea() + ", " + address.getThoroughfare()
+                                : address.getSubLocality() + ", " + address.getThoroughfare());
 
     }
 
@@ -588,7 +633,7 @@ public class ProcessOrderDialog extends DialogFragment implements
     }
 
     public interface OnProcessOrderClickListener {
-        void onClickSendButton();
+        void onClickSendButton(RelationOrder buildOrder);
 
         void onError(CharSequence sc);
     }
