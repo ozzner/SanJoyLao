@@ -162,5 +162,6 @@
     <string name="hint_type_locals">Locales</string>
     <string name="hint_type_dni">DNI</string>
     <string name="hint_type_local_address">Seleccione un local</string>
+    <string name="sending">Enviando...</string>
 
 </resources>

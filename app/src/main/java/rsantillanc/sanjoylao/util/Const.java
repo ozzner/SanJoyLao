@@ -1,5 +1,7 @@
 package rsantillanc.sanjoylao.util;
 
+import com.parse.ParseObject;
+
 /**
  * Created by RenzoD on 04/06/2015.
  */
@@ -91,7 +93,7 @@ public class Const {
     public static final String EXTRA_PARAM_IS_DELIVERY = "extra.param.flagIsDelivery";
     public static final String SJL_CHANNEL = "SJLChannel";
 
-
+    //[PARSE CLASS]
     public static final String KEY_POINTER = "Pointer";
     public static final String CLASS_ORDER_TYPE = "OrderType";
     public static final String CLASS_USER = "_User";
@@ -100,6 +102,15 @@ public class Const {
     public static final String CLASS_ORDER = "Order";
     public static final String CLASS_PLATE_SIZE = "PlateSize";
     public static final String CLASS_LOCATION_DELIVERY = "LocationDelivery";
+    public static final String CLASS_ORDER_DETAIL = "OrderDetail";
+    //[PARSE COLUMNS]
+    public static final String ORDER_COLUMN_ID_ORDER_TYPE = "idOrderType";
+    public static final String ORDER_COLUMN_PRICE = "price";
+    public static final String ORDER_COLUMN_ID_LOCATION_DELIVERY = "idLocationDelivery";
+    public static final String ORDER_COLUMN_ID_STATUS = "idStatus";
+    public static final String ORDER_DETAIL_COLUMN_COUNTER = "counter";
+
+
 
     //[ STATUS ]
     public static final int STATUS_CODE_TEMPORAL = 1;

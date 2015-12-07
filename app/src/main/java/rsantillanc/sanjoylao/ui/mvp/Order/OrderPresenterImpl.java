@@ -117,6 +117,7 @@ public class OrderPresenterImpl implements IOrderPresenter, OnOrderListener, Pro
             amount = (orderDetail.getPlateSize().getPrice() * orderDetail.getCounter()) + amount;
             counter += orderDetail.getCounter();
         }
+
         //If is required
         updateFlag(beforeAmount);
 
@@ -151,7 +152,7 @@ public class OrderPresenterImpl implements IOrderPresenter, OnOrderListener, Pro
     }
 
     public void processPayment(RelationOrder buildOrder) {
-        view.showLoader(mActivity.getString(R.string.progress_message_processing));
+        view.updateMessageProgressDialog(mActivity.getString(R.string.progress_message_processing));
         iteractor.sendPayment(buildOrder,(amount > MIN_PRICE_TO_DISCOUNT) ? getPriceWithDiscount(amount) : amount, this);
     }
 
@@ -182,13 +183,20 @@ public class OrderPresenterImpl implements IOrderPresenter, OnOrderListener, Pro
 
 
     @Override
-    public void onClickSendButton(RelationOrder buildOrder) {
-        view.buildOrderSuccess(buildOrder);
-        processPayment(buildOrder);
+    public void onClickSendButton() {
+        view.showLoader(mActivity.getString(R.string.sending));
     }
 
     @Override
     public void onError(CharSequence sc) {
+        view.hideLoader();
+        view.showMessage(sc);
+    }
+
+    @Override
+    public void onStart(RelationOrder buildOrder) {
+        view.buildOrderSuccess(buildOrder);
+        processPayment(buildOrder);
 
     }
 

@@ -1,9 +1,11 @@
 package rsantillanc.sanjoylao.model;
 
+import java.io.Serializable;
+
 /**
  * Created by RenzoD on 06/11/2015.
  */
-public class ParseGeoPointModel {
+public class ParseGeoPointModel implements Serializable{
 
     private String __type ;
     private double latitude;

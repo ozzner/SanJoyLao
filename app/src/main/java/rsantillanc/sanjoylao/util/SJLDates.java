@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.TimeZone;
 
 /**
  * Created by RenzoD on 28/10/2015.
@@ -73,30 +74,24 @@ public class SJLDates {
         return strDate;
     }
 
-//    String dtc = "2014-04-02T07:59:02.111Z";
-//    SimpleDateFormat readDate = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
-//    readDate.setTimeZone(TimeZone.getTimeZone("GMT")); // missing line
-//    Date date = readDate.parse(dtc);
-//    SimpleDateFormat writeDate = new SimpleDateFormat("dd.MM.yyyy, HH.mm");
-//    writeDate.setTimeZone(TimeZone.getTimeZone("GMT+04:00"));
-//    String s = writeDate.format(date);
+
 
 
     public static String customDateConverter(String Mydate, String MyformatIn, String MyformatOut) {
-        String inputStringDate = Mydate;
-        SimpleDateFormat inputFormat = new SimpleDateFormat(MyformatIn);
-        Date inputDate = null;
 
+        SimpleDateFormat readDate = new SimpleDateFormat(MyformatIn);
+        readDate.setTimeZone(TimeZone.getTimeZone("GMT"));
+        Date date = null;
         try {
-            inputDate = inputFormat.parse(inputStringDate);
-        } catch (ParseException ex) {
+            date = readDate.parse(Mydate);
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
+        SimpleDateFormat writeDate = new SimpleDateFormat(MyformatOut);
+        writeDate.setTimeZone(TimeZone.getDefault());
+        String s = writeDate.format(date);
 
-        SimpleDateFormat outputFormat = new SimpleDateFormat(
-                MyformatOut);
-        String outputStringDate = outputFormat.format(inputDate);
-
-        return outputStringDate;
+        return s;
     }
 
     public static final SimpleDateFormat SDF1 = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());

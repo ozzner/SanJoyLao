@@ -307,16 +307,16 @@ public class ProcessOrderDialog extends DialogFragment implements
                     if (step == processAdapter.getCount() - 1) {
                         if (checkFieldsPayment()) {
                             getDialog().cancel();
-                            listener.onClickSendButton(buildOrder);
+                            listener.onClickSendButton();
+                            addLocation(isDelivery ? DELIVERY : BOOKING);
                         }
+
                     } else {
 
                         if (isDelivery) {
-
                             if (checkFieldsDelivery()) {
                                 step++;
                                 viewPager.setCurrentItem(2);
-                                addLocation(DELIVERY);
                             }
 
                         } else {
@@ -324,7 +324,6 @@ public class ProcessOrderDialog extends DialogFragment implements
                             if (checkFieldsBooking()) {
                                 step++;
                                 viewPager.setCurrentItem(2);
-                                addLocation(BOOKING);
                             }
 
                         }
@@ -343,9 +342,9 @@ public class ProcessOrderDialog extends DialogFragment implements
                 break;
             case DELIVERY:
                 final ParseObject delivery = ParseObject.create(Const.CLASS_LOCATION_DELIVERY);
-                delivery.add("address", typeAddress.getText().toString());
-                delivery.add("location", new ParseGeoPoint(latLonOrder.latitude, latLonOrder.longitude));
-                delivery.add("reference", typeReference.getText().toString());
+                delivery.put("address", typeAddress.getText().toString());
+                delivery.put("location", new ParseGeoPoint(latLonOrder.latitude, latLonOrder.longitude));
+                delivery.put("reference", typeReference.getText().toString());
                 delivery.saveInBackground(new SaveCallback() {
                     @Override
                     public void done(ParseException e) {
@@ -357,7 +356,10 @@ public class ProcessOrderDialog extends DialogFragment implements
                             deliveryModel.setAddress(typeAddress.getText().toString());
                             deliveryModel.setReference(typeReference.getText().toString());
                             buildOrder.getCurrentOrder().setLocationDelivery(deliveryModel);
-                        }
+                            listener.onStart(buildOrder);
+                        } else
+                            listener.onError(e.getMessage()+ "\nerror code: "+e.getCode());
+
                     }
                 });
                 break;
@@ -453,9 +455,9 @@ public class ProcessOrderDialog extends DialogFragment implements
 
 
         if (switchHere.isChecked()) {
-            latLonOrder = addMarker.getPosition();
-        } else {
             latLonOrder = new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
+        } else {
+            latLonOrder = addMarker.getPosition();
         }
 
         return true;
@@ -517,7 +519,7 @@ public class ProcessOrderDialog extends DialogFragment implements
         typeAddress.getText().clear();
         if (address != null)
             typeAddress.setText((address.getSubLocality() == null) ? address.getAdminArea() + ", " + address.getThoroughfare()
-                                : address.getSubLocality() + ", " + address.getThoroughfare());
+                    : address.getSubLocality() + ", " + address.getThoroughfare());
 
     }
 
@@ -633,9 +635,9 @@ public class ProcessOrderDialog extends DialogFragment implements
     }
 
     public interface OnProcessOrderClickListener {
-        void onClickSendButton(RelationOrder buildOrder);
-
+        void onClickSendButton();
         void onError(CharSequence sc);
+        void onStart(RelationOrder buildOrder);
     }
 
 }

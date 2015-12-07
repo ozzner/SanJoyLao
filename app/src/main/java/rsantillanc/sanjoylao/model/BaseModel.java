@@ -8,9 +8,9 @@ import java.io.Serializable;
 public abstract class BaseModel implements Serializable{
     private static final long serialVersionUID = 0L;
 
-    private String objectId;
-    private String createdAt;
-    private String updatedAt;
+    protected String objectId;
+    protected String createdAt;
+    protected String updatedAt;
 
 
     public String getObjectId() {

@@ -506,7 +506,6 @@ public class OrderActivity extends BaseActivity implements
     @Override
     public void buildOrderSuccess(RelationOrder buildOrder) {
         this.buildOrder = buildOrder;
-
     }
 
 

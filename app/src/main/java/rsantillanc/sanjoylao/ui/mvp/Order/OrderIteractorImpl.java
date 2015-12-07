@@ -10,7 +10,12 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.parse.GetCallback;
+import com.parse.ParseException;
+import com.parse.ParseObject;
 import com.parse.ParsePush;
+import com.parse.ParseQuery;
+import com.parse.SaveCallback;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -407,30 +412,69 @@ public class OrderIteractorImpl implements IOrderIteractor {
             }
         });
 
-        //Server
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(ConstAPI.PARSE_URL_BASE)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        Call<JsonObject> call = retrofit.create(ParseAPIService.class).updateOrder(buildBodyJson(status, buildOrder), buildOrder.getCurrentOrder().getObjectId());
-        call.enqueue(new Callback<JsonObject>() {
+        //Server SDK
+        ParseQuery<ParseObject> queryOrder = ParseQuery.getQuery(Const.CLASS_ORDER);
+        queryOrder.getInBackground(buildOrder.getCurrentOrder().getObjectId(), new GetCallback<ParseObject>() {
             @Override
-            public void onResponse(Response<JsonObject> response, Retrofit retrofit) {
-                if (response != null) {
-                    Log.e(Const.DEBUG, "Order Updated server OK!. ");
-                    listener.orderCheckoutSuccess("Correct!", buildOrder.getCurrentOrder());
+            public void done(ParseObject currentOrder, ParseException e) {
+
+                if (e == null) {
+
+                    //Put data
+                    currentOrder.put(Const.ORDER_COLUMN_ID_STATUS,
+                            ParseObject.createWithoutData(Const.CLASS_STATUS, status.getObjectId()));
+                    currentOrder.put(Const.ORDER_COLUMN_ID_ORDER_TYPE,
+                            ParseObject.createWithoutData(Const.CLASS_ORDER_TYPE,
+                                    buildOrder.getCurrentOrder().getOrderType().getObjectId()));
+                    currentOrder.put(Const.ORDER_COLUMN_PRICE, buildOrder.getCurrentOrder().getPrice());
+                    if (buildOrder.getCurrentOrder().getLocationDelivery() != null)
+                        currentOrder.put(Const.ORDER_COLUMN_ID_LOCATION_DELIVERY,
+                                ParseObject.createWithoutData(Const.CLASS_LOCATION_DELIVERY,
+                                        buildOrder.getCurrentOrder().getLocationDelivery().getObjectId()));
+                    //Save
+                    currentOrder.saveInBackground(new SaveCallback() {
+                        @Override
+                        public void done(ParseException e) {
+                            if (e == null) {
+                                Log.e(Const.DEBUG, "Order Updated Success!. ");
+                                listener.orderCheckoutSuccess("Success!", buildOrder.getCurrentOrder());
+                            } else {
+                                listener.errorUpdating("Error updating!. " + e.getMessage());
+                            }
+                        }
+                    });
+
                 } else {
-                    listener.errorUpdating("Error inténtelo de nuevo");
-                    Log.e(Const.DEBUG, "Order Updated server error!. ");
+                    listener.errorUpdating(e.getMessage() + "\ncode: " + e.getCode());
                 }
-            }
 
-            @Override
-            public void onFailure(Throwable t) {
-                listener.errorUpdating("Inténtelo más tarde.");
             }
         });
+
+        //Server API-REST
+//        Retrofit retrofit = new Retrofit.Builder()
+//                .baseUrl(ConstAPI.PARSE_URL_BASE)
+//                .addConverterFactory(GsonConverterFactory.create())
+//                .build();
+//
+//        Call<JsonObject> call = retrofit.create(ParseAPIService.class).updateOrder(buildBodyJson(status, buildOrder), buildOrder.getCurrentOrder().getObjectId());
+//        call.enqueue(new Callback<JsonObject>() {
+//            @Override
+//            public void onResponse(Response<JsonObject> response, Retrofit retrofit) {
+//                if (response != null) {
+//                    Log.e(Const.DEBUG, "Order Updated server OK!. ");
+//                    listener.orderCheckoutSuccess("Correct!", buildOrder.getCurrentOrder());
+//                } else {
+//                    listener.errorUpdating("Error inténtelo de nuevo");
+//                    Log.e(Const.DEBUG, "Order Updated server error!. ");
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Throwable t) {
+//                listener.errorUpdating("Inténtelo más tarde.");
+//            }
+//        });
 
 
     }
@@ -449,11 +493,13 @@ public class OrderIteractorImpl implements IOrderIteractor {
 
 //        json.addProperty("idOrderType", buildOrder.getCurrentOrder().getOrderType().getObjectId());
         json.addProperty("idOrderType", new Gson().toJson(type));
-        return "{\"idOrderType\":{\"__type\":\"Pointer\",\"className\":\"OrderType\",\"objectId\":\"" + buildOrder.getCurrentOrder().getObjectId() + "\"}}";
+        String body = "{\"idOrderType\":{\"__type\":\"Pointer\",\"className\":\"OrderType\",\"objectId\":\"" + buildOrder.getCurrentOrder().getOrderType().getObjectId() + "\"}}";
+        return body;
     }
 
     public void saveAllChanges(final double currentAmount, final List<OrderDetailModel> details, final Context c, final OnSaveListener save) {
 
+        //{Local & Server}
         new Thread(new Runnable() {
 
             @Override
@@ -462,8 +508,10 @@ public class OrderIteractorImpl implements IOrderIteractor {
                 if (details.size() > 0) {
 
                     int x = 0;
-                    for (OrderDetailModel detail : details)
+                    for (OrderDetailModel detail : details){
                         x += new OrderDao(c).updateCounter(detail);
+                        updateOrderOnServer(detail);
+                    }
                     Log.e(Const.DEBUG, "update counters: " + x);
 
                     OrderModel currentOrder = details.get(0).getOrder();
@@ -476,7 +524,35 @@ public class OrderIteractorImpl implements IOrderIteractor {
                 }
 
             }
+
+            private void updateOrderOnServer(final OrderDetailModel detail) {
+                ParseQuery<ParseObject> detailQuery = ParseQuery.getQuery(Const.CLASS_ORDER_DETAIL);
+                detailQuery.getInBackground(detail.getObjectId(), new GetCallback<ParseObject>() {
+                    @Override
+                    public void done(ParseObject detailToUpdate, ParseException e) {
+                        if (e == null){
+                            detailToUpdate.put(Const.ORDER_DETAIL_COLUMN_COUNTER,detail.getCounter());
+                            detailToUpdate.saveInBackground();
+                        }
+                    }
+                });
+            }
         }).start();
+
+        //{Server}
+
+        // Save price
+        ParseQuery<ParseObject> order = ParseQuery.getQuery(Const.CLASS_ORDER);
+        order.getInBackground(details.get(0).getOrder().getObjectId(), new GetCallback<ParseObject>() {
+            @Override
+            public void done(ParseObject orderToUpdate, ParseException e) {
+                if (e == null){
+                    orderToUpdate.put(Const.ORDER_COLUMN_PRICE,currentAmount);
+                    orderToUpdate.saveInBackground();
+                }
+            }
+        });
+
     }
 
     public List<LocalRestaurantModel> getLocals(Context c) {

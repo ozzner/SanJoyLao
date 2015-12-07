@@ -4,14 +4,14 @@ package rsantillanc.sanjoylao.model;
  * Created by RenzoD on 06/11/2015.
  */
 public class LocationDeliveryModel extends BaseModel{
+    private static final long serialVersionUID = 0L;
 
-    private String objectId;
     private String address;
     private String reference;
     private ParseGeoPointModel location;
 
-    public LocationDeliveryModel(String objectId, ParseGeoPointModel location) {
-        this.objectId = objectId;
+    public LocationDeliveryModel(String objID, ParseGeoPointModel location) {
+        this.objectId = objID;
         this.location = location;
     }
 
