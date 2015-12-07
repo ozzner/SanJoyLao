@@ -1,5 +1,6 @@
 package rsantillanc.sanjoylao.ui.mvp.Order;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
@@ -29,13 +30,18 @@ import rsantillanc.sanjoylao.api.deserializer.ParseAPIDeserializer;
 import rsantillanc.sanjoylao.api.service.ParseAPIService;
 import rsantillanc.sanjoylao.model.APIRequestOrderDetailModel;
 import rsantillanc.sanjoylao.model.APIRequestOrderModel;
+import rsantillanc.sanjoylao.model.LocalRestaurantModel;
 import rsantillanc.sanjoylao.model.OrderDetailModel;
 import rsantillanc.sanjoylao.model.OrderModel;
+import rsantillanc.sanjoylao.model.OrderTypeModel;
 import rsantillanc.sanjoylao.model.ParsePointerModel;
 import rsantillanc.sanjoylao.model.PlateSizeModel;
+import rsantillanc.sanjoylao.model.RelationOrder;
 import rsantillanc.sanjoylao.model.StatusModel;
 import rsantillanc.sanjoylao.model.UserModel;
+import rsantillanc.sanjoylao.storage.dao.LocalRestaurantDao;
 import rsantillanc.sanjoylao.storage.dao.OrderDao;
+import rsantillanc.sanjoylao.storage.dao.OrderTypeDao;
 import rsantillanc.sanjoylao.storage.dao.StatusDao;
 import rsantillanc.sanjoylao.util.Const;
 import rsantillanc.sanjoylao.util.ConstAPI;
@@ -125,7 +131,7 @@ public class OrderIteractorImpl implements IOrderIteractor {
     private JSONObject buildJsonData(OrderModel order) {
         JSONObject data = new JSONObject();
         try {
-            data.accumulate("order",new Gson().toJson(order));
+            data.accumulate("order", new Gson().toJson(order));
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -146,7 +152,7 @@ public class OrderIteractorImpl implements IOrderIteractor {
                 if (response.isSuccess()) {
                     int counter = response.body().get("counter").getAsInt();
                     orderDetail.setCounter(counter);
-                    listener.onCounterSuccess(c, "¡Agregado!",counter);
+                    listener.onCounterSuccess(c, "¡Agregado!", counter);
                     int i = updateCounterItemOrderOnDevice(orderDetail, c);
 
                     Log.e(Const.DEBUG, "update local: " + i);
@@ -377,7 +383,7 @@ public class OrderIteractorImpl implements IOrderIteractor {
     }
 
 
-    public void sendPayment(final double amount, final OnOrderListener listener) {
+    public void sendPayment(final RelationOrder buildOrder, final double amount, final OnOrderListener listener) {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -386,14 +392,14 @@ public class OrderIteractorImpl implements IOrderIteractor {
         }, 4200);
     }
 
-    public void checkoutOrder(final OnOrderListener listener, final Context c, final OrderModel order) {
+    public void checkoutOrder(final OnOrderListener listener, final Context c, final RelationOrder buildOrder) {
         final StatusModel status = new StatusDao(c).getStatusByCode(Const.STATUS_RECEIVED);
 
         //Local
         handler.post(new Runnable() {
             @Override
             public void run() {
-                int i = new OrderDao(c).updateOrderStatus(status, order);
+                int i = new OrderDao(c).update(status, buildOrder.getCurrentOrder());
                 if (i > 0)
                     Log.e(Const.DEBUG, "Order Updated correct. ");
                 else
@@ -407,18 +413,17 @@ public class OrderIteractorImpl implements IOrderIteractor {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-        Call<JsonObject> call = retrofit.create(ParseAPIService.class).updateOrderStatus(buildBodyJson(status), order.getObjectId());
+        Call<JsonObject> call = retrofit.create(ParseAPIService.class).updateOrder(buildBodyJson(status, buildOrder), buildOrder.getCurrentOrder().getObjectId());
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Response<JsonObject> response, Retrofit retrofit) {
                 if (response != null) {
                     Log.e(Const.DEBUG, "Order Updated server OK!. ");
-                    listener.orderCheckoutSuccess("Correct!",order);
+                    listener.orderCheckoutSuccess("Correct!", buildOrder.getCurrentOrder());
                 } else {
                     listener.errorUpdating("Error inténtelo de nuevo");
                     Log.e(Const.DEBUG, "Order Updated server error!. ");
                 }
-
             }
 
             @Override
@@ -430,10 +435,21 @@ public class OrderIteractorImpl implements IOrderIteractor {
 
     }
 
-    private JsonObject buildBodyJson(StatusModel status) {
+    private String buildBodyJson(StatusModel status, RelationOrder buildOrder) {
+//        {"opponents":{"__op":"AddRelation","objects":[{"__type":"Pointer","className":"Player","objectId":"Vx4nudeWn"}]}}
+
+//        ParseOpponentsRelation opponents = new ParseOpponentsRelation();
+//        opponents.getObjects().add(new ParsePointerModel(Const.CLASS_STATUS,status.getObjectId()));
+//        opponents.getObjects().add(new ParsePointerModel(Const.CLASS_ORDER_TYPE, buildOrder.getCurrentOrder().getOrderType().getObjectId()));
+//        opponents.getObjects().add(new ParsePointerModel(Const.CLASS_LOCATION_DELIVERY, buildOrder.getCurrentOrder().getLocationDelivery().getObjectId()));
+
         JsonObject json = new JsonObject();
-        json.addProperty("idStatus", status.getObjectId());
-        return json;
+        ParsePointerModel type = new ParsePointerModel(Const.CLASS_ORDER_TYPE, buildOrder.getCurrentOrder().getOrderType().getObjectId());
+
+
+//        json.addProperty("idOrderType", buildOrder.getCurrentOrder().getOrderType().getObjectId());
+        json.addProperty("idOrderType", new Gson().toJson(type));
+        return "{\"idOrderType\":{\"__type\":\"Pointer\",\"className\":\"OrderType\",\"objectId\":\"" + buildOrder.getCurrentOrder().getObjectId() + "\"}}";
     }
 
     public void saveAllChanges(final double currentAmount, final List<OrderDetailModel> details, final Context c, final OnSaveListener save) {
@@ -461,6 +477,14 @@ public class OrderIteractorImpl implements IOrderIteractor {
 
             }
         }).start();
+    }
+
+    public List<LocalRestaurantModel> getLocals(Context c) {
+        return new LocalRestaurantDao(c).getAll();
+    }
+
+    public List<OrderTypeModel> getOrderTypes(Activity mActivity) {
+        return new OrderTypeDao(mActivity).list();
     }
 
     public interface OnSaveListener {

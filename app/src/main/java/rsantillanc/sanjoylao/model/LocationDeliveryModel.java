@@ -1,14 +1,13 @@
 package rsantillanc.sanjoylao.model;
 
-import java.io.Serializable;
-
 /**
  * Created by RenzoD on 06/11/2015.
  */
-public class LocationDeliveryModel implements Serializable {
-    private static final long serialVersionUID = 0L;
+public class LocationDeliveryModel extends BaseModel{
 
     private String objectId;
+    private String address;
+    private String reference;
     private ParseGeoPointModel location;
 
     public LocationDeliveryModel(String objectId, ParseGeoPointModel location) {
@@ -16,12 +15,8 @@ public class LocationDeliveryModel implements Serializable {
         this.location = location;
     }
 
-    public String getObjectId() {
-        return objectId;
-    }
+    public LocationDeliveryModel() {
 
-    public void setObjectId(String objectId) {
-        this.objectId = objectId;
     }
 
     public ParseGeoPointModel getLocation() {
@@ -30,5 +25,21 @@ public class LocationDeliveryModel implements Serializable {
 
     public void setLocation(ParseGeoPointModel location) {
         this.location = location;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getReference() {
+        return reference;
+    }
+
+    public void setReference(String reference) {
+        this.reference = reference;
     }
 }

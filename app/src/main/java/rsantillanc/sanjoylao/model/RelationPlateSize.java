@@ -5,18 +5,18 @@ import java.util.List;
 /**
  * Created by RenzoD on 08/11/2015.
  */
-public class RelationPlateSizeModel {
+public class RelationPlateSize {
 
     private PlateModel currentPlate;
     private List<PlateSizeModel> listSizes;
 
 
-    public RelationPlateSizeModel(List<PlateSizeModel> listSizes, PlateModel currentPlate) {
+    public RelationPlateSize(List<PlateSizeModel> listSizes, PlateModel currentPlate) {
         this.listSizes = listSizes;
         this.currentPlate = currentPlate;
     }
 
-    public RelationPlateSizeModel() {
+    public RelationPlateSize() {
 
     }
 

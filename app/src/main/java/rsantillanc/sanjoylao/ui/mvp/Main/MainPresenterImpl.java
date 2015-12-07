@@ -75,6 +75,11 @@ public class MainPresenterImpl {
         iteractor.syncOrders(mainActivity.getApplicationContext(), userID);
     }
 
+    public void loadLocalRestaurant() {
+        iteractor.syncLocals(mainActivity.getApplicationContext());
+        iteractor.syncRestaurants(mainActivity.getApplicationContext());
+    }
+
     public void displayFragment(int id) {
 
         switch (id) {
@@ -124,4 +129,6 @@ public class MainPresenterImpl {
         mView.closeMenu();
         mView.markItemSelected(id);
     }
+
+
 }

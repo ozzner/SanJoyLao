@@ -15,7 +15,7 @@ import rsantillanc.sanjoylao.model.CategoryModel;
 import rsantillanc.sanjoylao.model.ParseFileModel;
 import rsantillanc.sanjoylao.model.PlateModel;
 import rsantillanc.sanjoylao.model.PlateSizeModel;
-import rsantillanc.sanjoylao.model.RelationPlateSizeModel;
+import rsantillanc.sanjoylao.model.RelationPlateSize;
 import rsantillanc.sanjoylao.util.Const;
 
 /**
@@ -84,9 +84,9 @@ public class PlateDao {
             return plate.getImage().getUrl();
     }
 
-    public List<RelationPlateSizeModel> listByCategory(String categoryID) {
+    public List<RelationPlateSize> listByCategory(String categoryID) {
         Cursor query = db.query(Tables.PLATE, null, idCategory + "=?", new String[]{categoryID}, null, null, null);
-        return buildRelationPlateSize(query, new ArrayList<RelationPlateSizeModel>());
+        return buildRelationPlateSize(query, new ArrayList<RelationPlateSize>());
     }
 
 
@@ -116,13 +116,13 @@ public class PlateDao {
     }
 
 
-    private List<RelationPlateSizeModel> buildRelationPlateSize(Cursor cur, List<RelationPlateSizeModel> list) {
-        RelationPlateSizeModel relation;
+    private List<RelationPlateSize> buildRelationPlateSize(Cursor cur, List<RelationPlateSize> list) {
+        RelationPlateSize relation;
 
         if (cur.moveToFirst()) {
             PlateModel plate;
             do {
-                relation = new RelationPlateSizeModel();
+                relation = new RelationPlateSize();
                 plate = new PlateModel();
 
                 plate.setObjectId(cur.getString(cur.getColumnIndex(objectId)));

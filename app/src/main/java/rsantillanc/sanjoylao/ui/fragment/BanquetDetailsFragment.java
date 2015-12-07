@@ -197,7 +197,7 @@ public class BanquetDetailsFragment extends Fragment implements GridViewAdapter.
 
         Intent popup = new Intent(getActivity(), DetailsOptionsPopup.class);
 //        Bundle bundle = new Bundle();
-//        bundle.putSerializable(Const.TAG_DETAILS_OPTIONS,options.get(0));
+//        bundle.putSerializable(Const.TAG_DETAILS_OPTIONS,options.list(0));
 //        popup.putExtras(bundle);
         startActivity(popup);
     }

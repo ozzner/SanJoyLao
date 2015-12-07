@@ -1,6 +1,7 @@
 package rsantillanc.sanjoylao.ui.custom.adapter;
 
 import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.view.View;
 
 import rsantillanc.sanjoylao.R;
@@ -13,7 +14,7 @@ public class ProcessPagerAdapter extends PagerAdapter {
 
     @Override
     public int getCount() {
-        return 2;
+        return 3;
     }
 
 
@@ -27,9 +28,12 @@ public class ProcessPagerAdapter extends PagerAdapter {
         int resId = 0;
         switch (position) {
             case 0:
-                resId = R.id.lay_process_location;
+                resId = R.id.lay_process_booking;
                 break;
             case 1:
+                resId = R.id.lay_process_delivery;
+                break;
+            case 2:
                 resId = R.id.lay_process_payment;
                 break;
 
@@ -37,7 +41,10 @@ public class ProcessPagerAdapter extends PagerAdapter {
         return container.findViewById(resId);
     }
 
-
+    @Override
+    public void destroyItem(View container, int position, Object object) {
+        ((ViewPager) container).removeView((View) object);
+    }
 
 
 }

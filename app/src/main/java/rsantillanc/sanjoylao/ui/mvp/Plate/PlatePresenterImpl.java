@@ -11,7 +11,7 @@ import java.util.List;
 import rsantillanc.sanjoylao.R;
 import rsantillanc.sanjoylao.model.PlateModel;
 import rsantillanc.sanjoylao.model.PlateSizeModel;
-import rsantillanc.sanjoylao.model.RelationPlateSizeModel;
+import rsantillanc.sanjoylao.model.RelationPlateSize;
 import rsantillanc.sanjoylao.model.UserModel;
 import rsantillanc.sanjoylao.storage.sp.SJLPreferences;
 import rsantillanc.sanjoylao.ui.activity.PlateActivity;
@@ -51,7 +51,7 @@ public class PlatePresenterImpl implements IPlatePresenter, OnPlateListener {
 
     //{ON_PLATE_LISTENER}
     @Override
-    public void onListFilterSuccess(List<RelationPlateSizeModel> platesFilter) {
+    public void onListFilterSuccess(List<RelationPlateSize> platesFilter) {
         if (platesFilter.size() == 0) {
             view.enabledImageForEmpty(true);
             view.showMessage(mActivity.getString(R.string.error_empty_data));

@@ -24,17 +24,22 @@ import rsantillanc.sanjoylao.api.deserializer.ParseAPIDeserializer;
 import rsantillanc.sanjoylao.api.service.ParseAPIService;
 import rsantillanc.sanjoylao.model.APIResultCategoryModel;
 import rsantillanc.sanjoylao.model.CategoryModel;
+import rsantillanc.sanjoylao.model.LocalRestaurantModel;
 import rsantillanc.sanjoylao.model.OrderModel;
 import rsantillanc.sanjoylao.model.OrderTypeModel;
 import rsantillanc.sanjoylao.model.PlateModel;
 import rsantillanc.sanjoylao.model.PlateSizeModel;
+import rsantillanc.sanjoylao.model.RelationLocalRestaurant;
+import rsantillanc.sanjoylao.model.RestaurantModel;
 import rsantillanc.sanjoylao.model.SizeModel;
 import rsantillanc.sanjoylao.model.StatusModel;
 import rsantillanc.sanjoylao.storage.dao.CategoryDao;
+import rsantillanc.sanjoylao.storage.dao.LocalRestaurantDao;
 import rsantillanc.sanjoylao.storage.dao.OrderDao;
 import rsantillanc.sanjoylao.storage.dao.OrderTypeDao;
 import rsantillanc.sanjoylao.storage.dao.PlateDao;
 import rsantillanc.sanjoylao.storage.dao.PlateSizeDao;
+import rsantillanc.sanjoylao.storage.dao.RestaurantDao;
 import rsantillanc.sanjoylao.storage.dao.SizeDao;
 import rsantillanc.sanjoylao.storage.dao.StatusDao;
 import rsantillanc.sanjoylao.util.Const;
@@ -308,7 +313,91 @@ public class MainIteractorImpl {
     }
 
 
+    public void syncRestaurants(final Context c) {
+        if (countRestaurants(c) == 0) {
+
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl(ConstAPI.PARSE_URL_BASE)
+                    .addConverterFactory(myConverter(RestaurantModel.class))
+                    .build();
+
+            Call<RestaurantModel> call = retrofit.create(ParseAPIService.class).getAllRestaurants();
+            call.enqueue(new Callback<RestaurantModel>() {
+                @Override
+                public void onResponse(Response<RestaurantModel> response, Retrofit retrofit) {
+                    if (response.isSuccess() && response.body() != null) {
+                        List<RestaurantModel> restaurants = (List<RestaurantModel>) response.body();
+                        for (RestaurantModel restaurant : restaurants) {
+                            long insert = new RestaurantDao(c).insert(restaurant);
+                            Log.e(Const.DEBUG, "Restaurants rows affected: " + insert);
+                        }
+                    } else
+                        Log.e(Const.DEBUG, "Restaurants error load: " + response.message());
+
+                }
+
+                @Override
+                public void onFailure(Throwable t) {
+                    Log.e(Const.DEBUG, "Restaurants onFailure: ");
+                }
+            });
+        }
+
+
+    }
+
+
+    public void syncLocals(final Context c) {
+        if (countLocalRestaurants(c) == 0) {
+
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl(ConstAPI.PARSE_URL_BASE)
+                    .addConverterFactory(myConverter(LocalRestaurantModel.class))
+                    .build();
+
+
+            Call<LocalRestaurantModel> call = retrofit.create(ParseAPIService.class).getAllLocalRestaurants();
+            call.enqueue(new Callback<LocalRestaurantModel>() {
+                @Override
+                public void onResponse(Response<LocalRestaurantModel> response, Retrofit retrofit) {
+                    if (response.isSuccess() && response.body() != null) {
+                        RelationLocalRestaurant relation = new RelationLocalRestaurant();
+                        relation.setLocals((List<LocalRestaurantModel>) response.body());
+
+                        for (LocalRestaurantModel local : relation.getLocals()) {
+                            long insert = new LocalRestaurantDao(c).insert(local);
+                            Log.e(Const.DEBUG, "LocalRestaurant rows affected: " + insert);
+                        }
+
+                    } else
+                        Log.e(Const.DEBUG, "LocalRestaurant error: " + response.message());
+
+                }
+
+                @Override
+                public void onFailure(Throwable t) {
+                    Log.e(Const.DEBUG, "Restaurants onFailure: " + t.getMessage());
+                }
+            });
+
+        }
+
+    }
+
+    private int countLocalRestaurants(Context c) {
+        return countLocals(c);
+    }
+
+
     //--------------------{COUNTERS}--------------------
+
+    private int countLocals(Context c) {
+        return new LocalRestaurantDao(c).count();
+    }
+
+    private int countRestaurants(Context c) {
+        return new RestaurantDao(c).count();
+    }
 
     private int countStatus(Context c) {
         return new StatusDao(c).count();
@@ -360,6 +449,5 @@ public class MainIteractorImpl {
         String s = "{\"idUser\":{\"__type\":\"Pointer\",\"className\":\"_User\",\"objectId\":\"" + userID + "\"}}";
         return s;
     }
-
 
 }

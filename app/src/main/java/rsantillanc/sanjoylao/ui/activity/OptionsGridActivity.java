@@ -182,7 +182,7 @@ public class OptionsGridActivity extends ActionBarActivity implements GridViewAd
 
         Intent popup = new Intent(getApplicationContext(), DetailsOptionsPopup.class);
 //        Bundle bundle = new Bundle();
-//        bundle.putSerializable(Const.TAG_DETAILS_OPTIONS,options.get(0));
+//        bundle.putSerializable(Const.TAG_DETAILS_OPTIONS,options.list(0));
 //        popup.putExtras(bundle);
         startActivity(popup);
 

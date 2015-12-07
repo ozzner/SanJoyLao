@@ -23,7 +23,7 @@ import rsantillanc.sanjoylao.SJLApplication;
 import rsantillanc.sanjoylao.model.CategoryModel;
 import rsantillanc.sanjoylao.model.PlateModel;
 import rsantillanc.sanjoylao.model.PlateSizeModel;
-import rsantillanc.sanjoylao.model.RelationPlateSizeModel;
+import rsantillanc.sanjoylao.model.RelationPlateSize;
 import rsantillanc.sanjoylao.storage.sp.SJLPreferences;
 import rsantillanc.sanjoylao.ui.custom.adapter.RecyclerPlateAdapter;
 import rsantillanc.sanjoylao.ui.custom.view.DividerItemDecoration;
@@ -76,7 +76,7 @@ public class PlateActivity extends BaseActivity implements IPlateView, RecyclerP
 
         MenuItem item = menu.findItem(R.id.action_plate_add_order);
 
-        // get drawable del item
+        // list drawable del item
         LayerDrawable icon = (LayerDrawable) item.getIcon();
 
         // update el counter
@@ -154,7 +154,7 @@ public class PlateActivity extends BaseActivity implements IPlateView, RecyclerP
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
-    private void setUpAdapter(List<RelationPlateSizeModel> relations) {
+    private void setUpAdapter(List<RelationPlateSize> relations) {
         plateAdapter = new RecyclerPlateAdapter(relations, this);
         plateAdapter.setOnItemPlateClickListener(this);
         mRecycler.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
@@ -167,7 +167,7 @@ public class PlateActivity extends BaseActivity implements IPlateView, RecyclerP
     // {IView}
 
     @Override
-    public void onPlatesLoadSuccess(List<RelationPlateSizeModel> relations) {
+    public void onPlatesLoadSuccess(List<RelationPlateSize> relations) {
         setUpAdapter(relations);
     }
 

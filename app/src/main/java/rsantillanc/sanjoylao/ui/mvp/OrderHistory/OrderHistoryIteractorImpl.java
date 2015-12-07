@@ -34,17 +34,17 @@ public class OrderHistoryIteractorImpl implements IOrderHistoryIteractor {
         });
     }
 
-    @Override
-    public void upgradeOrder(OrderModel order, Context c, int statusCode, OrderHistoryPresenter lis, String userID) {
-        int i = new OrderDao(c).updateOrderStatus(new StatusDao(c).getStatusByCode(statusCode), order);
-        Log.e(Const.DEBUG,"upgrade: " + i);
-        if (i>0)
-            lis.onSuccessOrderUpgraded(c,"success!", userID);
-    }
+//    @Override
+//    public void upgradeOrder(OrderModel order, Context c, int statusCode, OrderHistoryPresenter lis, String userID) {
+//        int i = new OrderDao(c).update(new StatusDao(c).getStatusByCode(statusCode), order);
+//        Log.e(Const.DEBUG,"upgrade: " + i);
+//        if (i>0)
+//            lis.onSuccessOrderUpgraded(c,"success!", userID);
+//    }
 
     @Override
     public void updateOrder(Context c, OrderModel order, String objectId, int statusCode) {
-        int i = new OrderDao(c).updateOrderStatus(new StatusDao(c).getStatusByCode(statusCode), order);
+        int i = new OrderDao(c).updateStatus(new StatusDao(c).getStatusByCode(statusCode), order);
         Log.e(Const.DEBUG,"upgrade: " + i);
     }
 

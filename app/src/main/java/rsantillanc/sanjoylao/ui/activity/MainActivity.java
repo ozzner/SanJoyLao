@@ -212,7 +212,7 @@ public class MainActivity extends BaseActivity
         //Show all icons overflow
         MenuColorizer.showIcons(menu);
 
-        // get drawable del item
+        // list drawable del item
         LayerDrawable icon = (LayerDrawable) item.getIcon();
 
         // update counter
@@ -290,6 +290,7 @@ public class MainActivity extends BaseActivity
         mPresenter.loadOrderType();
         mPresenter.loadStatus();
         mPresenter.loadOrders(app.getCurrentUser().getObjectId());
+        mPresenter.loadLocalRestaurant();
         mPresenter.savePreferences();
     }
 

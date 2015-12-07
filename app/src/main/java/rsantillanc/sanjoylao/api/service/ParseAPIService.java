@@ -19,11 +19,13 @@ import rsantillanc.sanjoylao.model.APIResponseUserModel;
 import rsantillanc.sanjoylao.model.APIResultCategoryModel;
 import rsantillanc.sanjoylao.model.APIResultPlateModel;
 import rsantillanc.sanjoylao.model.CommentModel;
+import rsantillanc.sanjoylao.model.LocalRestaurantModel;
 import rsantillanc.sanjoylao.model.OrderDetailModel;
 import rsantillanc.sanjoylao.model.OrderModel;
 import rsantillanc.sanjoylao.model.OrderTypeModel;
 import rsantillanc.sanjoylao.model.PlateModel;
 import rsantillanc.sanjoylao.model.PlateSizeModel;
+import rsantillanc.sanjoylao.model.RestaurantModel;
 import rsantillanc.sanjoylao.model.SizeModel;
 import rsantillanc.sanjoylao.model.StatusModel;
 import rsantillanc.sanjoylao.model.UserModel;
@@ -180,7 +182,7 @@ public interface ParseAPIService {
             "Content-Type: application/json"
     })
     @PUT("classes/Order/{objectId}")
-    Call<JsonObject> updateOrderStatus(@Body JsonObject json, @Path("objectId") String objectId);
+    Call<JsonObject> updateOrder(@Body String jsonBody, @Path("objectId") String objectId);
 
 
     @Headers({
@@ -189,5 +191,21 @@ public interface ParseAPIService {
             "Content-Type: application/json"
     })
     @PUT("users/{objectId}")
-    Call<JsonObject> updateUser(@Body String jsonUser, @Path("objectId") String objectId,@Header("X-Parse-Session-Token") String token);
+    Call<JsonObject> updateUser(@Body String jsonUser, @Path("objectId") String objectId, @Header("X-Parse-Session-Token") String token);
+
+
+    @Headers({
+            "X-Parse-Application-Id: RTM3ioKCBgaAJjXmDRr493sb13uYzGrMnePLhzhm",
+            "X-Parse-REST-API-Key: 6xr428CvfJT8WMGByPUhfvJWmFaxjozudaPy9bUB",
+    })
+    @GET("classes/Restaurant")
+    Call<RestaurantModel> getAllRestaurants();
+
+
+    @Headers({
+            "X-Parse-Application-Id: RTM3ioKCBgaAJjXmDRr493sb13uYzGrMnePLhzhm",
+            "X-Parse-REST-API-Key: 6xr428CvfJT8WMGByPUhfvJWmFaxjozudaPy9bUB",
+    })
+    @GET("classes/LocalRestaurant?include=idRestaurant")
+    Call<LocalRestaurantModel> getAllLocalRestaurants();
 }

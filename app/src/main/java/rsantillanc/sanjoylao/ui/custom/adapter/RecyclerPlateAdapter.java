@@ -20,7 +20,7 @@ import java.util.List;
 import rsantillanc.sanjoylao.R;
 import rsantillanc.sanjoylao.model.PlateModel;
 import rsantillanc.sanjoylao.model.PlateSizeModel;
-import rsantillanc.sanjoylao.model.RelationPlateSizeModel;
+import rsantillanc.sanjoylao.model.RelationPlateSize;
 import rsantillanc.sanjoylao.util.Const;
 import rsantillanc.sanjoylao.util.SJLStrings;
 
@@ -31,13 +31,13 @@ public class RecyclerPlateAdapter extends RecyclerView.Adapter<RecyclerPlateAdap
 
     private final Activity mActivity;
     private LayoutInflater layIn;
-    private List<RelationPlateSizeModel> relations = Collections.EMPTY_LIST;
+    private List<RelationPlateSize> relations = Collections.EMPTY_LIST;
     private OnItemPlateClickListener mItemClickListener;
     private Context _context;
     private int currentIndex;
 
 
-    public RecyclerPlateAdapter(List<RelationPlateSizeModel> items, Activity activity) {
+    public RecyclerPlateAdapter(List<RelationPlateSize> items, Activity activity) {
         this.layIn = LayoutInflater.from(activity);
         this.relations = items;
         this._context = activity;
@@ -53,7 +53,7 @@ public class RecyclerPlateAdapter extends RecyclerView.Adapter<RecyclerPlateAdap
     @Override
     public void onBindViewHolder(PlateHolder holder, int index) {
 
-        RelationPlateSizeModel relation = relations.get(index);
+        RelationPlateSize relation = relations.get(index);
         TextView[] names = {holder.tvName1, holder.tvName2, holder.tvName3};
         TextView[] prices = {holder.tvPrice1, holder.tvPrice2, holder.tvPrice3};
 
@@ -95,7 +95,7 @@ public class RecyclerPlateAdapter extends RecyclerView.Adapter<RecyclerPlateAdap
     }
 
 
-    private void showPopupMenu(View v, final RelationPlateSizeModel rel) {
+    private void showPopupMenu(View v, final RelationPlateSize rel) {
         Context wrapper = new ContextThemeWrapper(_context, R.style.PopupMenu);
         final PopupMenu popup = new PopupMenu(wrapper, v);
         popup.getMenuInflater().inflate(R.menu.menu_size_popup, popup.getMenu());

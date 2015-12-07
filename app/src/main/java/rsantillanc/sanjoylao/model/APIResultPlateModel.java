@@ -12,13 +12,13 @@ import rsantillanc.sanjoylao.util.ConstAPI;
 public class APIResultPlateModel {
 
     @SerializedName(ConstAPI.PARSE_KEY_RESULT)
-    private ArrayList<RelationPlateSizeModel> resultArray;
+    private ArrayList<RelationPlateSize> resultArray;
 
-    public ArrayList<RelationPlateSizeModel> getResultArray() {
+    public ArrayList<RelationPlateSize> getResultArray() {
         return resultArray;
     }
 
-    public void setResultArray(ArrayList<RelationPlateSizeModel> resultArray) {
+    public void setResultArray(ArrayList<RelationPlateSize> resultArray) {
         this.resultArray = resultArray;
     }
 }

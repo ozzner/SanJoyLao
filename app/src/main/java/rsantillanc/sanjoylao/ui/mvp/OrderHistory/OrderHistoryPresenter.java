@@ -49,9 +49,9 @@ public class OrderHistoryPresenter implements IOrderHistoryPresenter, OnOrderHis
     }
 
 
-    public void changeOrderStatus(OrderModel order, Context context, int statusCode, String userID) {
-        implement.upgradeOrder(order, context, statusCode, this, userID);
-    }
+//    public void changeOrderStatus(OrderModel order, Context context, int statusCode, String userID) {
+//        implement.upgradeOrder(order, context, statusCode, this, userID);
+//    }
 
 
     public void loopOrdersAndUpdate(OrderModel serialOrder, List<OrderModel> orders) {
