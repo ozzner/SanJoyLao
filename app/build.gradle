@@ -1,17 +1,6 @@
 apply plugin: 'com.android.application'
-apply plugin: 'com.google.gms.google-services'
-apply plugin: 'com.parse'
 
 
-buildscript {
-    repositories {
-        mavenCentral()
-        maven { url 'https://maven.parse.com/repo' }
-    }
-    dependencies {
-        classpath 'com.parse.tools:gradle:1.+'
-    }
-}
 
 android {
 
@@ -20,18 +9,25 @@ android {
 
     defaultConfig {
         applicationId "rsantillanc.sanjoylao"
-        minSdkVersion 15
+        minSdkVersion 12
         targetSdkVersion 23
         versionCode 1
         versionName "1.0.1"
         multiDexEnabled true
     }
+
+    dexOptions {
+        javaMaxHeapSize "4g"
+        preDexLibraries = false
+    }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
 
     compileOptions {
         encoding "UTF-8"
@@ -40,17 +36,14 @@ android {
     }
 }
 
-repositories {
-    mavenCentral()
-}
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    testCompile 'junit:junit:4.12'
-
+    compile fileTree(dir: 'libs', include: 'Parse-1.9.3.jar')
     compile 'com.parse.bolts:bolts-android:1.2.1'
-    compile 'com.parse:parse-android:1.10.3'
-    compile 'com.google.android.gms:play-services:8.1.0'
+    compile 'com.facebook.android:facebook-android-sdk:4.1.2'
+    compile 'com.google.android.gms:play-services-plus:8.1.0'
+    compile 'com.google.android.gms:play-services-maps:8.1.0'
+    compile 'com.google.android.gms:play-services-location:8.1.0'
     compile 'com.google.android.gms:play-services-identity:8.1.0'
     compile 'com.android.support:appcompat-v7:23.0.1'
     compile 'com.android.support:design:23.0.1'
@@ -61,9 +54,9 @@ dependencies {
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.squareup.retrofit:retrofit:2.0.0-beta2'
     compile 'com.squareup.retrofit:converter-gson:2.0.0-beta2'
-    compile ('com.facebook.android:facebook-android-sdk:4.6.0') {
-        exclude module: 'bolts-android'
-    }
+    compile 'com.android.support:multidex:1.0.0'
+
+
     //Animations
     compile 'com.nineoldandroids:library:2.4.0'
     compile 'com.daimajia.easing:library:1.0.1@aar'

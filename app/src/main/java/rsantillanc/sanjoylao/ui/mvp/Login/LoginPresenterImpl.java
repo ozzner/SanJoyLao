@@ -211,6 +211,8 @@ public class LoginPresenterImpl implements ILoginPresenter, OnRegisterListener, 
             Object user = new UserDao(mActivity).getCurrentUser(Const.USER_ENABLED).get(0);
             if (user != null)
                 mLoginView.goToDashboard(user);
+        } catch (IndexOutOfBoundsException idnx){
+            Log.e(Const.DEBUG, "Error obteniendo usuarios activos", idnx);
         } catch (Exception ex) {
             Log.e(Const.DEBUG, "Error obteniendo usuarios activos", ex);
         }

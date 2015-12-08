@@ -1,17 +1,18 @@
 package rsantillanc.sanjoylao;
 
-import android.app.Application;
+import android.support.multidex.MultiDexApplication;
 
 import com.parse.Parse;
 import com.parse.ParseInstallation;
 import com.parse.ParsePush;
+
 import rsantillanc.sanjoylao.model.UserModel;
 import rsantillanc.sanjoylao.util.Const;
 
 /**
  * Created by RenzoD on 02/06/2015.
  */
-public class SJLApplication extends Application {
+public class SJLApplication extends MultiDexApplication {
 
     private UserModel currentUser;
 

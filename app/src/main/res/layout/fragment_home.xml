@@ -13,19 +13,20 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:padding="@dimen/space_14dp"
+        android:gravity="center"
         android:weightSum="5">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/space_0dp"
             android:layout_weight="3.5"
-            android:gravity="center"
-            android:weightSum="1.2">
+            android:gravity="top|center"
+            android:weightSum="1.1">
 
             <ImageView
                 android:id="@+id/iv_logo_main"
                 android:layout_width="wrap_content"
-                android:layout_height="315dp"
+                android:layout_height="match_parent"
                 android:layout_weight="0.53"
                 android:padding="@dimen/space_10dp"
                 android:src="@drawable/logo" />
@@ -34,12 +35,13 @@
 
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="@dimen/space_0dp"
-            android:layout_weight="1.3"
+            android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:paddingTop="@dimen/space_8dp"
             android:visibility="visible"
+            android:layout_gravity="bottom"
             app:cardCornerRadius="@dimen/space_4dp"
+            android:layout_marginTop="@dimen/space_30dp"
             app:cardElevation="@dimen/space_4dp">
 
 
