@@ -119,24 +119,28 @@ public class OrderIteractorImpl implements IOrderIteractor {
     }
 
     @Override
-    public void makePushNotification(final OrderModel order) {
+    public void makePushNotification(final RelationOrder order) {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 ParsePush push = new ParsePush();
-                push.setChannel(Const.SJL_CHANNEL);
-                push.setMessage("Su orden ha esta lista.");
+                push.setChannel(Const.SJL_CHANNEL_ADMIN);
+                push.setMessage("Orden recibida");
                 push.setData(buildJsonData(order));
                 push.sendInBackground();
             }
-        }, 2500);
+        }, 500);
 
     }
 
-    private JSONObject buildJsonData(OrderModel order) {
+    private JSONObject buildJsonData(RelationOrder order) {
         JSONObject data = new JSONObject();
+
         try {
-            data.accumulate("order", new Gson().toJson(order));
+
+            data.accumulate("data", new Gson().toJson(order));
+            Log.e(Const.DEBUG,"Data json: " +data.toString());
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -394,7 +398,7 @@ public class OrderIteractorImpl implements IOrderIteractor {
             public void run() {
                 listener.paymentCorrect(amount);
             }
-        }, 4200);
+        }, 1000);
     }
 
     public void checkoutOrder(final OnOrderListener listener, final Context c, final RelationOrder buildOrder) {
@@ -404,7 +408,7 @@ public class OrderIteractorImpl implements IOrderIteractor {
         handler.post(new Runnable() {
             @Override
             public void run() {
-                int i = new OrderDao(c).update(status, buildOrder.getCurrentOrder());
+                int i = new OrderDao(c).update(status, buildOrder.getOrder());
                 if (i > 0)
                     Log.e(Const.DEBUG, "Order Updated correct. ");
                 else
@@ -414,7 +418,7 @@ public class OrderIteractorImpl implements IOrderIteractor {
 
         //Server SDK
         ParseQuery<ParseObject> queryOrder = ParseQuery.getQuery(Const.CLASS_ORDER);
-        queryOrder.getInBackground(buildOrder.getCurrentOrder().getObjectId(), new GetCallback<ParseObject>() {
+        queryOrder.getInBackground(buildOrder.getOrder().getObjectId(), new GetCallback<ParseObject>() {
             @Override
             public void done(ParseObject currentOrder, ParseException e) {
 
@@ -425,19 +429,19 @@ public class OrderIteractorImpl implements IOrderIteractor {
                             ParseObject.createWithoutData(Const.CLASS_STATUS, status.getObjectId()));
                     currentOrder.put(Const.ORDER_COLUMN_ID_ORDER_TYPE,
                             ParseObject.createWithoutData(Const.CLASS_ORDER_TYPE,
-                                    buildOrder.getCurrentOrder().getOrderType().getObjectId()));
-                    currentOrder.put(Const.ORDER_COLUMN_PRICE, buildOrder.getCurrentOrder().getPrice());
-                    if (buildOrder.getCurrentOrder().getLocationDelivery() != null)
+                                    buildOrder.getOrder().getOrderType().getObjectId()));
+                    currentOrder.put(Const.ORDER_COLUMN_PRICE, buildOrder.getOrder().getPrice());
+                    if (buildOrder.getOrder().getLocationDelivery() != null)
                         currentOrder.put(Const.ORDER_COLUMN_ID_LOCATION_DELIVERY,
                                 ParseObject.createWithoutData(Const.CLASS_LOCATION_DELIVERY,
-                                        buildOrder.getCurrentOrder().getLocationDelivery().getObjectId()));
+                                        buildOrder.getOrder().getLocationDelivery().getObjectId()));
                     //Save
                     currentOrder.saveInBackground(new SaveCallback() {
                         @Override
                         public void done(ParseException e) {
                             if (e == null) {
                                 Log.e(Const.DEBUG, "Order Updated Success!. ");
-                                listener.orderCheckoutSuccess("Success!", buildOrder.getCurrentOrder());
+                                listener.orderCheckoutSuccess("Success!", buildOrder.getOrder());
                             } else {
                                 listener.errorUpdating("Error updating!. " + e.getMessage());
                             }
@@ -457,13 +461,13 @@ public class OrderIteractorImpl implements IOrderIteractor {
 //                .addConverterFactory(GsonConverterFactory.create())
 //                .build();
 //
-//        Call<JsonObject> call = retrofit.create(ParseAPIService.class).updateOrder(buildBodyJson(status, buildOrder), buildOrder.getCurrentOrder().getObjectId());
+//        Call<JsonObject> call = retrofit.create(ParseAPIService.class).updateOrder(buildBodyJson(status, buildOrder), buildOrder.getOrder().getObjectId());
 //        call.enqueue(new Callback<JsonObject>() {
 //            @Override
 //            public void onResponse(Response<JsonObject> response, Retrofit retrofit) {
 //                if (response != null) {
 //                    Log.e(Const.DEBUG, "Order Updated server OK!. ");
-//                    listener.orderCheckoutSuccess("Correct!", buildOrder.getCurrentOrder());
+//                    listener.orderCheckoutSuccess("Correct!", buildOrder.getOrder());
 //                } else {
 //                    listener.errorUpdating("Error inténtelo de nuevo");
 //                    Log.e(Const.DEBUG, "Order Updated server error!. ");
@@ -484,16 +488,16 @@ public class OrderIteractorImpl implements IOrderIteractor {
 
 //        ParseOpponentsRelation opponents = new ParseOpponentsRelation();
 //        opponents.getObjects().add(new ParsePointerModel(Const.CLASS_STATUS,status.getObjectId()));
-//        opponents.getObjects().add(new ParsePointerModel(Const.CLASS_ORDER_TYPE, buildOrder.getCurrentOrder().getOrderType().getObjectId()));
-//        opponents.getObjects().add(new ParsePointerModel(Const.CLASS_LOCATION_DELIVERY, buildOrder.getCurrentOrder().getLocationDelivery().getObjectId()));
+//        opponents.getObjects().add(new ParsePointerModel(Const.CLASS_ORDER_TYPE, buildOrder.getOrder().getOrderType().getObjectId()));
+//        opponents.getObjects().add(new ParsePointerModel(Const.CLASS_LOCATION_DELIVERY, buildOrder.getOrder().getLocationDelivery().getObjectId()));
 
         JsonObject json = new JsonObject();
-        ParsePointerModel type = new ParsePointerModel(Const.CLASS_ORDER_TYPE, buildOrder.getCurrentOrder().getOrderType().getObjectId());
+        ParsePointerModel type = new ParsePointerModel(Const.CLASS_ORDER_TYPE, buildOrder.getOrder().getOrderType().getObjectId());
 
 
-//        json.addProperty("idOrderType", buildOrder.getCurrentOrder().getOrderType().getObjectId());
+//        json.addProperty("idOrderType", buildOrder.getOrder().getOrderType().getObjectId());
         json.addProperty("idOrderType", new Gson().toJson(type));
-        String body = "{\"idOrderType\":{\"__type\":\"Pointer\",\"className\":\"OrderType\",\"objectId\":\"" + buildOrder.getCurrentOrder().getOrderType().getObjectId() + "\"}}";
+        String body = "{\"idOrderType\":{\"__type\":\"Pointer\",\"className\":\"OrderType\",\"objectId\":\"" + buildOrder.getOrder().getOrderType().getObjectId() + "\"}}";
         return body;
     }
 

@@ -9,7 +9,7 @@ android {
 
     defaultConfig {
         applicationId "rsantillanc.sanjoylao"
-        minSdkVersion 12
+        minSdkVersion 15
         targetSdkVersion 23
         versionCode 1
         versionName "1.0.1"
@@ -38,9 +38,11 @@ android {
 
 
 dependencies {
-    compile fileTree(dir: 'libs', include: 'Parse-1.9.3.jar')
     compile 'com.parse.bolts:bolts-android:1.2.1'
-    compile 'com.facebook.android:facebook-android-sdk:4.1.2'
+    compile 'com.parse:parse-android:1.10.3'
+    compile ('com.facebook.android:facebook-android-sdk:4.6.0') {
+        exclude module: 'bolts-android'
+    }
     compile 'com.google.android.gms:play-services-plus:8.1.0'
     compile 'com.google.android.gms:play-services-maps:8.1.0'
     compile 'com.google.android.gms:play-services-location:8.1.0'

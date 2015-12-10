@@ -45,7 +45,7 @@ public class OrderPushReceiver extends ParsePushBroadcastReceiver {
         this._context = context;
 
         app = ((SJLApplication) context.getApplicationContext());
-        Log.e(Const.DEBUG_PUSH, "Incoming push notification");
+            Log.e(Const.DEBUG_PUSH, "Incoming push notification");
 
         if (intent == null)
             return;

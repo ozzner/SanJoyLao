@@ -1,7 +1,5 @@
 package rsantillanc.sanjoylao.util;
 
-import com.parse.ParseObject;
-
 /**
  * Created by RenzoD on 04/06/2015.
  */
@@ -91,8 +89,8 @@ public class Const {
     public static final String EXTRA_PLATE_DETAIL = "plate_detail";
     public static final String EXTRA_USER = "user";
     public static final String EXTRA_PARAM_IS_DELIVERY = "extra.param.flagIsDelivery";
-    public static final String SJL_CHANNEL = "SJLChannel";
-
+    public static final String SJL_CHANNEL = "clients";
+    public static final String SJL_CHANNEL_ADMIN = "admin";
     //[PARSE CLASS]
     public static final String KEY_POINTER = "Pointer";
     public static final String CLASS_ORDER_TYPE = "OrderType";

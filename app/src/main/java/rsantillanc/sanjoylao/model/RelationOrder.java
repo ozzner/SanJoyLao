@@ -1,6 +1,7 @@
 package rsantillanc.sanjoylao.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created by RenzoD on 05/12/2015.
@@ -10,15 +11,24 @@ public class RelationOrder implements Serializable {
     public static final long serialVersionUID = 0L;
 
     RelationLocalRestaurant localRestaurant;
-    OrderModel currentOrder;
+    OrderModel order;
+    List<OrderDetailModel> orderDetails;
 
 
-    public OrderModel getCurrentOrder() {
-        return currentOrder;
+    public List<OrderDetailModel> getOrderDetails() {
+        return orderDetails;
     }
 
-    public void setCurrentOrder(OrderModel currentOrder) {
-        this.currentOrder = currentOrder;
+    public void setOrderDetails(List<OrderDetailModel> orderDetails) {
+        this.orderDetails = orderDetails;
+    }
+
+    public OrderModel getOrder() {
+        return order;
+    }
+
+    public void setOrder(OrderModel order) {
+        this.order = order;
     }
 
     public RelationLocalRestaurant getLocalRestaurant() {

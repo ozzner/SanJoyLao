@@ -338,7 +338,8 @@ public class ProcessOrderDialog extends DialogFragment implements
         final LocationDeliveryModel deliveryModel = new LocationDeliveryModel();
         switch (type) {
             case BOOKING:
-                buildOrder.getCurrentOrder().setLocationDelivery(null);
+                buildOrder.getOrder().setLocationDelivery(null);
+                listener.onStart(buildOrder);
                 break;
             case DELIVERY:
                 final ParseObject delivery = ParseObject.create(Const.CLASS_LOCATION_DELIVERY);
@@ -355,7 +356,7 @@ public class ProcessOrderDialog extends DialogFragment implements
                             deliveryModel.setLocation(new ParseGeoPointModel(latLonOrder.latitude, latLonOrder.longitude));
                             deliveryModel.setAddress(typeAddress.getText().toString());
                             deliveryModel.setReference(typeReference.getText().toString());
-                            buildOrder.getCurrentOrder().setLocationDelivery(deliveryModel);
+                            buildOrder.getOrder().setLocationDelivery(deliveryModel);
                             listener.onStart(buildOrder);
                         } else
                             listener.onError(e.getMessage()+ "\nerror code: "+e.getCode());

@@ -10,11 +10,6 @@ public class RelationLocalRestaurant implements Serializable{
     public static final long serialVersionUID = 0L;
 
     private List<LocalRestaurantModel> locals;
-
-
-
-
-
     public List<LocalRestaurantModel> getLocals() {
         return locals;
     }

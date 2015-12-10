@@ -96,10 +96,11 @@ public class OrderPresenterImpl implements IOrderPresenter, OnOrderListener, Pro
 
     @Override
     public void orderCheckoutSuccess(final CharSequence s, OrderModel order) {
-        view.hideLoader();
-        view.clearAll();
-        view.orderCheckoutSuccess(s, order);
+        flagSave = false;
         preferences.saveCounter(0);
+        view.hideLoader();
+        view.orderCheckoutSuccess(s, order);
+//        view.clearAll();
     }
 
     @Override
@@ -167,7 +168,7 @@ public class OrderPresenterImpl implements IOrderPresenter, OnOrderListener, Pro
     }
 
     @Override
-    public void sendPushNotification(OrderModel order) {
+    public void sendPushNotification(RelationOrder order) {
         iteractor.makePushNotification(order);
     }
 

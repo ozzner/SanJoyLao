@@ -251,13 +251,13 @@ public class OrderActivity extends BaseActivity implements
 
             showMessage("Reserva");
             isDelivery = false;
-            buildOrder.getCurrentOrder().setOrderType(ordersType.get(BOOKING_POSITION));
+            buildOrder.getOrder().setOrderType(ordersType.get(BOOKING_POSITION));
             presenter.showAlertDialogOrder(app.getCurrentUser(), buildOrder, isDelivery);
 
         } else if (v == fabDelivery) {
 
             isDelivery = true;
-            buildOrder.getCurrentOrder().setOrderType(ordersType.get(DELIVERY_POSITION));
+            buildOrder.getOrder().setOrderType(ordersType.get(DELIVERY_POSITION));
             presenter.showAlertDialogOrder(app.getCurrentUser(), buildOrder, isDelivery);
             showMessage("Delivery");
 
@@ -433,7 +433,7 @@ public class OrderActivity extends BaseActivity implements
     @Override
     public void onPaymentSuccess(double amount) {
         showSubmenu(false);
-        buildOrder.getCurrentOrder().setPrice(amount);
+        buildOrder.getOrder().setPrice(amount);
         presenter.processOrder(buildOrder);
     }
 
@@ -476,6 +476,8 @@ public class OrderActivity extends BaseActivity implements
 
     @Override
     public void orderCheckoutSuccess(CharSequence s, OrderModel order) {
+        List<OrderDetailModel> listOrders = mOrdersAdapter.getDetails();
+        buildOrder.setOrderDetails(listOrders);
         Snackbar.make(clickView, s, Snackbar.LENGTH_INDEFINITE)
                 .setActionTextColor(getResources().getColor(R.color.colorPrimary))
                 .setAction(getString(R.string.action_goto_order), new View.OnClickListener() {
@@ -484,7 +486,8 @@ public class OrderActivity extends BaseActivity implements
                         goToOrderHistory();
                     }
                 }).show();
-        presenter.sendPushNotification(order);
+        presenter.sendPushNotification(buildOrder);
+//        clearAll();
     }
 
     @Override
@@ -500,12 +503,13 @@ public class OrderActivity extends BaseActivity implements
         this.ordersType = ordersTypeList;
         if (mOrdersAdapter != null)
             if (mOrdersAdapter.getDetails().size() > 0)
-                this.buildOrder.setCurrentOrder(mOrdersAdapter.getDetails().get(0).getOrder());
+                this.buildOrder.setOrder(mOrdersAdapter.getDetails().get(0).getOrder());
     }
 
     @Override
     public void buildOrderSuccess(RelationOrder buildOrder) {
         this.buildOrder = buildOrder;
+        this.buildOrder.getOrder().setUser(app.getCurrentUser());
     }
 
 
