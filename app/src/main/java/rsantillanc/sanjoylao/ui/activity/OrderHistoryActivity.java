@@ -41,6 +41,7 @@ public class OrderHistoryActivity extends BaseActivity implements IOrderHistoryV
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_history);
+        Log.e(Const.DEBUG, "onCreate intent!°");
         init();
         initUIElements();
         configUIElements();
@@ -89,7 +90,7 @@ public class OrderHistoryActivity extends BaseActivity implements IOrderHistoryV
         rcvHistory.setHasFixedSize(false);
     }
 
-    private void setupAdapter(List<OrderModel> data) {
+    public void setupAdapter(List<OrderModel> data) {
         orderAdapter = new RecyclerOrderAdapter(data, this, true);
         rcvHistory.setAdapter(orderAdapter);
     }
@@ -110,8 +111,7 @@ public class OrderHistoryActivity extends BaseActivity implements IOrderHistoryV
             return;
 
         PushOrderModel pushOrder = (PushOrderModel) intent.getSerializableExtra(Const.EXTRA_PUSH_ORDER);
-        orderAdapter.setEstimatedTime(pushOrder.getEstimatedTime());
-        presenter.loopOrdersAndUpdate(pushOrder, orderAdapter);
+        presenter.loopOrdersAndUpdate(pushOrder, orderAdapter.getOrders(), true);
     }
 
     @Override
@@ -142,7 +142,11 @@ public class OrderHistoryActivity extends BaseActivity implements IOrderHistoryV
 
     @Override
     public void injectData(List<OrderModel> data) {
-        setupAdapter(data);
+        if (getIntent().getExtras() != null) {
+            PushOrderModel pushOrder = (PushOrderModel) getIntent().getSerializableExtra(Const.EXTRA_PUSH_ORDER);
+            presenter.loopOrdersAndUpdate(pushOrder, data, false);
+        } else
+            setupAdapter(data);
     }
 
     @Override
@@ -161,6 +165,7 @@ public class OrderHistoryActivity extends BaseActivity implements IOrderHistoryV
     @Override
     public void updateOrdersAdapter(List<OrderModel> orders) {
         orderAdapter.setOrders(orders);
+        orderAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -169,8 +174,9 @@ public class OrderHistoryActivity extends BaseActivity implements IOrderHistoryV
     }
 
 
-    public void showSnack() {
-        showSnackbar(getString(R.string.notification_order_confirmed),
+    public void showSnack(CharSequence snack) {
+
+        showSnackbar(snack,
                 rcvHistory, getString(R.string.ok));
     }
 }

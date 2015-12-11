@@ -23,6 +23,7 @@ public class OrderModel implements Serializable {
     @SerializedName("idUser")
     private UserModel user;
     private double price;
+    private int orderTimePreparation;
     private String createdAt;
     private String updatedAt;
 
@@ -44,6 +45,14 @@ public class OrderModel implements Serializable {
 
     public String getObjectId() {
         return objectId;
+    }
+
+    public int getOrderTimePreparation() {
+        return orderTimePreparation;
+    }
+
+    public void setOrderTimePreparation(int orderTimePreparation) {
+        this.orderTimePreparation = orderTimePreparation;
     }
 
     public void setObjectId(String objectId) {

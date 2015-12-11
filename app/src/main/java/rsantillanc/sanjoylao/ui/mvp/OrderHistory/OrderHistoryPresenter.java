@@ -9,7 +9,6 @@ import rsantillanc.sanjoylao.model.OrderModel;
 import rsantillanc.sanjoylao.model.PushOrderModel;
 import rsantillanc.sanjoylao.model.StatusModel;
 import rsantillanc.sanjoylao.ui.activity.OrderHistoryActivity;
-import rsantillanc.sanjoylao.ui.custom.adapter.RecyclerOrderAdapter;
 import rsantillanc.sanjoylao.util.Const;
 
 /**
@@ -56,8 +55,8 @@ public class OrderHistoryPresenter implements IOrderHistoryPresenter, OnOrderHis
 //    }
 
 
-    public void loopOrdersAndUpdate(PushOrderModel pushOrder, RecyclerOrderAdapter recyclerAdapter) {
-        List<OrderModel> orders = recyclerAdapter.getOrders();
+    public void loopOrdersAndUpdate(PushOrderModel pushOrder, List<OrderModel> list, boolean isNewIntent) {
+        List<OrderModel> orders = list;
 
         for (int i = 0; i < orders.size(); i++) {
             OrderModel orderItem = orders.get(i);
@@ -70,17 +69,33 @@ public class OrderHistoryPresenter implements IOrderHistoryPresenter, OnOrderHis
                     case Const.STATUS_CONFIRMED:
                         status.setName(view.getString(R.string.status_confirmed));
                         break;
+
                     case Const.STATUS_CANCELLED:
                         status.setName(view.getString(R.string.status_cancelled));
                         break;
                 }
 
-                //update
+                //Update
                 orderItem.setStatus(status);
+                orderItem.setOrderTimePreparation(pushOrder.getEstimatedTime());
                 orders.set(i, orderItem);
-                view.updateOrdersAdapter(orders);
-                view.refreshAdapter();
-                view.showSnack();
+
+                if (isNewIntent) {
+                    view.updateOrdersAdapter(orders);
+                    view.refreshAdapter();
+                    CharSequence snack = null;
+                    switch (status.getCode()) {
+                        case Const.STATUS_CONFIRMED:
+                            snack = view.getString(R.string.notification_order_confirmed);
+                            break;
+                        case Const.STATUS_CANCELLED:
+                            snack = view.getString(R.string.notification_order_cancelled);
+                            break;
+                    }
+                    view.showSnack(snack);
+                } else
+                    view.setupAdapter(orders);
+
                 break;
             }
         }

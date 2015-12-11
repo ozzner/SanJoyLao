@@ -40,7 +40,6 @@ public class RecyclerOrderAdapter extends RecyclerView.Adapter<RecyclerOrderAdap
     private int position;
     private OrderDetailModel orderToDelete;
     public int counter;
-    private int estimatedTime = 0;
 
 
     public RecyclerOrderAdapter(List<OrderDetailModel> details, Activity ctx) {
@@ -95,7 +94,6 @@ public class RecyclerOrderAdapter extends RecyclerView.Adapter<RecyclerOrderAdap
             orderHolder.tvPrice.setText(Const.PRICE_PEN + SJLStrings.format((order.getPrice()), SJLStrings.FORMAT_MILES_EN));
             orderHolder.tvDatatime.setText(SJLDates.customDateConverter(order.getCreatedAt(), SJLStrings.PARSE_DATE_FORMAT, SJLDates.FORMAT_DATE_2));
             orderHolder.tvTimer.setVisibility(View.GONE);
-            orderHolder.tvTimer.setText(getEstimatedTime() + Const.MIN);
 
 
             switch (order.getStatus().getCode()) {
@@ -112,6 +110,8 @@ public class RecyclerOrderAdapter extends RecyclerView.Adapter<RecyclerOrderAdap
                     orderHolder.cvStatus.setStrokeColor(activity.getResources().getColor(R.color.red));
                     orderHolder.cvStatus.setFillColor(activity.getResources().getColor(R.color.red));
                     orderHolder.tvStatus.setText(order.getStatus().getName());
+                    orderHolder.tvTimer.setText(Html.fromHtml("<u>" + order.getOrderTimePreparation() + Const.MIN + "</u>"));
+                    orderHolder.tvTimer.setTextColor(activity.getResources().getColor(R.color.red));
 
                     break;
 
@@ -121,7 +121,8 @@ public class RecyclerOrderAdapter extends RecyclerView.Adapter<RecyclerOrderAdap
                     orderHolder.cvStatus.setFillColor(activity.getResources().getColor(R.color.my_green));
                     orderHolder.tvStatus.setText(order.getStatus().getName());
                     orderHolder.tvTimer.setVisibility(View.VISIBLE);
-//                    orderHolder.tvTimer.setText();
+                    orderHolder.tvTimer.setText(order.getOrderTimePreparation() + Const.MIN);
+                    orderHolder.tvTimer.setTextColor(activity.getResources().getColor(R.color.my_green));
                     break;
 
                     /*Cuando se entregó la orden de manera satisfactoria.*/
@@ -160,7 +161,9 @@ public class RecyclerOrderAdapter extends RecyclerView.Adapter<RecyclerOrderAdap
 
     }
 
-    /**Setters and getters*/
+    /**
+     * Setters and getters
+     */
 
     public List<OrderDetailModel> getDetails() {
         return details;
@@ -178,13 +181,6 @@ public class RecyclerOrderAdapter extends RecyclerView.Adapter<RecyclerOrderAdap
         this.orders = orders;
     }
 
-    public void setEstimatedTime(int estimatedTime) {
-        this.estimatedTime = estimatedTime;
-    }
-
-    public int getEstimatedTime() {
-        return estimatedTime;
-    }
 
     class OrderViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
@@ -203,7 +199,7 @@ public class RecyclerOrderAdapter extends RecyclerView.Adapter<RecyclerOrderAdap
         private TextView tvStatus;
         private TextView tvDatatime;
         private CircleView cvStatus;
-        private  TextView tvTimer;
+        private TextView tvTimer;
 
 
         public OrderViewHolder(View vi) {
@@ -267,7 +263,7 @@ public class RecyclerOrderAdapter extends RecyclerView.Adapter<RecyclerOrderAdap
     }
 
 
-    public long countAll(){
+    public long countAll() {
         for (OrderDetailModel detailModel : getDetails())
             counter += detailModel.getCounter();
 
@@ -302,14 +298,12 @@ public class RecyclerOrderAdapter extends RecyclerView.Adapter<RecyclerOrderAdap
     }
 
 
-
     //{Positive listener}
     @Override
     public void positiveClick() {
         details.remove(position);
         mItemClickListener.onDeleteItem(this.orderToDelete);
     }
-
 
 
     public void setOnItemClickListener(OnOrderItemClickListener mListener) {

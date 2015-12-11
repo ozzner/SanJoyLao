@@ -145,6 +145,7 @@
     <string name="google_maps_key">AIzaSyBrH0Y50F2oS9Nv3680yju37ETcYlNRrYM</string>
     <string name="status_confirmed">confirmado</string>
     <string name="notification_order_confirmed">¡Orden confirmada!</string>
+    <string name="notification_order_cancelled">¡Pedido cancelado!</string>
     <string name="ok">ok</string>
     <string name="title_activity_history">Historial de pedidos</string>
     <string name="hint_card_expires">Expires MM/dd</string>

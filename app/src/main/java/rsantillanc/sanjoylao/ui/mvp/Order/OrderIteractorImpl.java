@@ -18,6 +18,7 @@ import com.parse.ParseQuery;
 import com.parse.SaveCallback;
 import com.parse.SendCallback;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -142,32 +143,42 @@ public class OrderIteractorImpl implements IOrderIteractor {
 
     }
 
-    private JSONObject buildJsonData(RelationOrder builOrder) {
+    private JSONObject buildJsonData(RelationOrder buildOrder) {
         JSONObject data = new JSONObject();
         JSONObject order = new JSONObject();
         JSONObject item;
+        JSONArray details = null;
 
         try {
-            order.put("objectId", builOrder.getOrder().getObjectId());
-            order.put("amount", builOrder.getOrder().getPrice());
-            order.put("clientID", builOrder.getOrder().getUser().getObjectId());
-            order.put("clientName", builOrder.getOrder().getUser().getFullName());
-            order.put("clientDni", builOrder.getOrder().getUser().getIdentificationDocument());
-            order.put("clientPhone", builOrder.getOrder().getUser().getPhoneNumber());
+            order.put("objectId", buildOrder.getOrder().getObjectId());
+            order.put("amount", buildOrder.getOrder().getPrice());
+            order.put("type", buildOrder.getOrder().getOrderType().getName());
+            order.put("cash", buildOrder.getOrder().getOrderType().getName());
+            order.put("clientID", buildOrder.getOrder().getUser().getObjectId());
+            order.put("clientName", buildOrder.getOrder().getUser().getFullName());
+            order.put("clientDni", buildOrder.getOrder().getUser().getIdentificationDocument());
+            order.put("clientPhone", buildOrder.getOrder().getUser().getPhoneNumber());
 
-            for (OrderDetailModel detail : builOrder.getOrderDetails()) {
+            details = new JSONArray();
+            for (int i = 0; i < buildOrder.getOrderDetails().size(); i++) {
                 item = new JSONObject();
-                item.put("plateName", detail.getPlateSize().getPlate().getName());
-                item.put("platePrice", detail.getPlateSize().getPrice());
-                item.put("plateCounter", detail.getCounter());
-                item.put("plateTime", detail.getPlateSize().getTimeOfPreparation());
-                order.accumulate("details", item);
+
+                item.put("plateName", buildOrder.getOrderDetails().get(i).getPlateSize().getPlate().getName());
+                item.put("platePrice", buildOrder.getOrderDetails().get(i).getPlateSize().getPrice());
+                item.put("plateCounter", buildOrder.getOrderDetails().get(i).getCounter());
+                item.put("plateTime", buildOrder.getOrderDetails().get(i).getPlateSize().getTimeOfPreparation());
+                details.put(i, item);
             }
+            order.accumulate("details", details);
 
             data.accumulate("data", order);
             Log.e(Const.DEBUG, "Data json: " + data.toString());
 
-        } catch (JSONException e) {
+        } catch (
+                JSONException e
+                )
+
+        {
             e.printStackTrace();
         }
 
@@ -573,7 +584,7 @@ public class OrderIteractorImpl implements IOrderIteractor {
 
         // Save price
         ParseQuery<ParseObject> order = ParseQuery.getQuery(Const.CLASS_ORDER);
-        if (details != null)
+        if (details != null && details.size() > 0)
             order.getInBackground(details.get(0).getOrder().getObjectId(), new GetCallback<ParseObject>() {
                 @Override
                 public void done(ParseObject orderToUpdate, ParseException e) {
