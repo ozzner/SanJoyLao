@@ -16,6 +16,7 @@ import com.parse.ParseObject;
 import com.parse.ParsePush;
 import com.parse.ParseQuery;
 import com.parse.SaveCallback;
+import com.parse.SendCallback;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -127,19 +128,43 @@ public class OrderIteractorImpl implements IOrderIteractor {
                 push.setChannel(Const.SJL_CHANNEL_ADMIN);
                 push.setMessage("Orden recibida");
                 push.setData(buildJsonData(order));
-                push.sendInBackground();
+                push.sendInBackground(new SendCallback() {
+                    @Override
+                    public void done(ParseException e) {
+                        if (e == null)
+                            Log.e(Const.DEBUG, "PushDone ok");
+                        else
+                            Log.e(Const.DEBUG, "PushDone Error:" + e.getMessage() + "\n code: " + e.getCode());
+                    }
+                });
             }
         }, 500);
 
     }
 
-    private JSONObject buildJsonData(RelationOrder order) {
+    private JSONObject buildJsonData(RelationOrder builOrder) {
         JSONObject data = new JSONObject();
+        JSONObject order = new JSONObject();
+        JSONObject item;
 
         try {
+            order.put("objectId", builOrder.getOrder().getObjectId());
+            order.put("amount", builOrder.getOrder().getPrice());
+            order.put("clientName", builOrder.getOrder().getUser().getFullName());
+            order.put("clientDni", builOrder.getOrder().getUser().getIdentificationDocument());
+            order.put("clientPhone", builOrder.getOrder().getUser().getPhoneNumber());
 
-            data.accumulate("data", new Gson().toJson(order));
-            Log.e(Const.DEBUG,"Data json: " +data.toString());
+            for (OrderDetailModel detail : builOrder.getOrderDetails()) {
+                item = new JSONObject();
+                item.put("plateName", detail.getPlateSize().getPlate().getName());
+                item.put("platePrice", detail.getPlateSize().getPrice());
+                item.put("plateCounter", detail.getCounter());
+                item.put("plateTime", detail.getPlateSize().getTimeOfPreparation());
+                order.accumulate("details", item);
+            }
+
+            data.accumulate("data",order);
+            Log.e(Const.DEBUG, "Data json: " + data.toString());
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -512,7 +537,7 @@ public class OrderIteractorImpl implements IOrderIteractor {
                 if (details.size() > 0) {
 
                     int x = 0;
-                    for (OrderDetailModel detail : details){
+                    for (OrderDetailModel detail : details) {
                         x += new OrderDao(c).updateCounter(detail);
                         updateOrderOnServer(detail);
                     }
@@ -534,8 +559,8 @@ public class OrderIteractorImpl implements IOrderIteractor {
                 detailQuery.getInBackground(detail.getObjectId(), new GetCallback<ParseObject>() {
                     @Override
                     public void done(ParseObject detailToUpdate, ParseException e) {
-                        if (e == null){
-                            detailToUpdate.put(Const.ORDER_DETAIL_COLUMN_COUNTER,detail.getCounter());
+                        if (e == null) {
+                            detailToUpdate.put(Const.ORDER_DETAIL_COLUMN_COUNTER, detail.getCounter());
                             detailToUpdate.saveInBackground();
                         }
                     }
@@ -550,8 +575,8 @@ public class OrderIteractorImpl implements IOrderIteractor {
         order.getInBackground(details.get(0).getOrder().getObjectId(), new GetCallback<ParseObject>() {
             @Override
             public void done(ParseObject orderToUpdate, ParseException e) {
-                if (e == null){
-                    orderToUpdate.put(Const.ORDER_COLUMN_PRICE,currentAmount);
+                if (e == null) {
+                    orderToUpdate.put(Const.ORDER_COLUMN_PRICE, currentAmount);
                     orderToUpdate.saveInBackground();
                 }
             }
