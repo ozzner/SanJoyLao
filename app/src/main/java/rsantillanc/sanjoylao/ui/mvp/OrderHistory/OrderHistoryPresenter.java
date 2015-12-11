@@ -6,8 +6,10 @@ import java.util.List;
 
 import rsantillanc.sanjoylao.R;
 import rsantillanc.sanjoylao.model.OrderModel;
+import rsantillanc.sanjoylao.model.PushOrderModel;
 import rsantillanc.sanjoylao.model.StatusModel;
 import rsantillanc.sanjoylao.ui.activity.OrderHistoryActivity;
+import rsantillanc.sanjoylao.ui.custom.adapter.RecyclerOrderAdapter;
 import rsantillanc.sanjoylao.util.Const;
 
 /**
@@ -54,14 +56,24 @@ public class OrderHistoryPresenter implements IOrderHistoryPresenter, OnOrderHis
 //    }
 
 
-    public void loopOrdersAndUpdate(OrderModel serialOrder, List<OrderModel> orders) {
+    public void loopOrdersAndUpdate(PushOrderModel pushOrder, RecyclerOrderAdapter recyclerAdapter) {
+        List<OrderModel> orders = recyclerAdapter.getOrders();
+
         for (int i = 0; i < orders.size(); i++) {
             OrderModel orderItem = orders.get(i);
 
-            if (orderItem.getObjectId().equals(serialOrder.getObjectId())) {
+            if (orderItem.getObjectId().equals(pushOrder.getOrderObjectId())) {
                 StatusModel status = orderItem.getStatus();
-                status.setCode(Const.STATUS_CONFIRMED);
-                status.setName(view.getString(R.string.status_confirmed));
+                status.setCode(pushOrder.getStatusCode());
+
+                switch (pushOrder.getStatusCode()) {
+                    case Const.STATUS_CONFIRMED:
+                        status.setName(view.getString(R.string.status_confirmed));
+                        break;
+                    case Const.STATUS_CANCELLED:
+                        status.setName(view.getString(R.string.status_cancelled));
+                        break;
+                }
 
                 //update
                 orderItem.setStatus(status);

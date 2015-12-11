@@ -5,6 +5,7 @@ package rsantillanc.sanjoylao.util;
  */
 public class Const {
 
+    public static final String MIN = " min";
     public static final String BLANK_SPACE = " ";
     public static final String EMPTY = "";
     public static final String EMPTY_JSON = "{}";
@@ -89,6 +90,7 @@ public class Const {
     public static final String EXTRA_PLATE_DETAIL = "plate_detail";
     public static final String EXTRA_USER = "user";
     public static final String EXTRA_PARAM_IS_DELIVERY = "extra.param.flagIsDelivery";
+    public static final String EXTRA_PUSH_ORDER = "extra.push.order";
     public static final String SJL_CHANNEL = "clients";
     public static final String SJL_CHANNEL_ADMIN = "admin";
     //[PARSE CLASS]

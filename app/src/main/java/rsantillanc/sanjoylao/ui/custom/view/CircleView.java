@@ -79,6 +79,8 @@ public class CircleView
 
         canvas.drawCircle(ox, oy, circleRadius, getStroke());
         canvas.drawCircle(ox, oy, circleRadius - circleGap, getFill());
+
+        invalidate();
     }
 
     private Paint getStroke()

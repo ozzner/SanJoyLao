@@ -150,6 +150,7 @@ public class OrderIteractorImpl implements IOrderIteractor {
         try {
             order.put("objectId", builOrder.getOrder().getObjectId());
             order.put("amount", builOrder.getOrder().getPrice());
+            order.put("clientID", builOrder.getOrder().getUser().getObjectId());
             order.put("clientName", builOrder.getOrder().getUser().getFullName());
             order.put("clientDni", builOrder.getOrder().getUser().getIdentificationDocument());
             order.put("clientPhone", builOrder.getOrder().getUser().getPhoneNumber());
@@ -163,7 +164,7 @@ public class OrderIteractorImpl implements IOrderIteractor {
                 order.accumulate("details", item);
             }
 
-            data.accumulate("data",order);
+            data.accumulate("data", order);
             Log.e(Const.DEBUG, "Data json: " + data.toString());
 
         } catch (JSONException e) {
@@ -572,15 +573,16 @@ public class OrderIteractorImpl implements IOrderIteractor {
 
         // Save price
         ParseQuery<ParseObject> order = ParseQuery.getQuery(Const.CLASS_ORDER);
-        order.getInBackground(details.get(0).getOrder().getObjectId(), new GetCallback<ParseObject>() {
-            @Override
-            public void done(ParseObject orderToUpdate, ParseException e) {
-                if (e == null) {
-                    orderToUpdate.put(Const.ORDER_COLUMN_PRICE, currentAmount);
-                    orderToUpdate.saveInBackground();
+        if (details != null)
+            order.getInBackground(details.get(0).getOrder().getObjectId(), new GetCallback<ParseObject>() {
+                @Override
+                public void done(ParseObject orderToUpdate, ParseException e) {
+                    if (e == null) {
+                        orderToUpdate.put(Const.ORDER_COLUMN_PRICE, currentAmount);
+                        orderToUpdate.saveInBackground();
+                    }
                 }
-            }
-        });
+            });
 
     }
 

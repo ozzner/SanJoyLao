@@ -69,7 +69,7 @@ public class MainActivity extends BaseActivity
     private Context mContext = null;
     private boolean backPressedToExitOnce = false;
     private static AppBarLayout mAppbarLayout;
-    private MainPresenterImpl mPresenter;
+    private MainPresenterImpl presenter;
     private SJLApplication app;
     private TextView tvTitle;
     private TextView tvSubtitle;
@@ -91,7 +91,7 @@ public class MainActivity extends BaseActivity
         setUpsUIComponents();
 
         //Display home
-        mPresenter.displayFragment(HOME);
+        presenter.displayFragment(HOME);
 
         //Synchronizing
         sync();
@@ -109,7 +109,7 @@ public class MainActivity extends BaseActivity
     private void initContextAndData() {
         app = ((SJLApplication) getApplication());
         mContext = getApplicationContext();
-        mPresenter = new MainPresenterImpl(MainActivity.this, this);
+        presenter = new MainPresenterImpl(MainActivity.this, this);
     }
 
 
@@ -147,8 +147,9 @@ public class MainActivity extends BaseActivity
         email.setText(serializable.getEmail());
 
         //Long process
-        mPresenter.loadProfileImage(serializable.getUrlProfileImage(), profileImage);
-        mPresenter.loadOrders(serializable.getObjectId());
+        presenter.loadProfileImage(serializable.getUrlProfileImage(), profileImage);
+        presenter.loadOrders(serializable.getObjectId());
+        presenter.subscriberOwnChannel(app.getCurrentUser().getObjectId());
 
     }
 
@@ -283,15 +284,15 @@ public class MainActivity extends BaseActivity
     //-----------------------[Sub routines]
 
     private void sync() {
-        mPresenter.loadCategories();
-        mPresenter.loadSizes();
-        mPresenter.loadPlatesSize();
-        mPresenter.loadPlate();
-        mPresenter.loadOrderType();
-        mPresenter.loadStatus();
-        mPresenter.loadOrders(app.getCurrentUser().getObjectId());
-        mPresenter.loadLocalRestaurant();
-        mPresenter.savePreferences();
+        presenter.loadCategories();
+        presenter.loadSizes();
+        presenter.loadPlatesSize();
+        presenter.loadPlate();
+        presenter.loadOrderType();
+        presenter.loadStatus();
+        presenter.loadOrders(app.getCurrentUser().getObjectId());
+        presenter.loadLocalRestaurant();
+        presenter.savePreferences();
     }
 
     @Override
@@ -371,7 +372,7 @@ public class MainActivity extends BaseActivity
     /*------------------------ LISTENERS ---------------------*/
     @Override
     public boolean onNavigationItemSelected(MenuItem menuItem) {
-        mPresenter.displayFragment(menuItem.getItemId());
+        presenter.displayFragment(menuItem.getItemId());
         return false;
     }
 

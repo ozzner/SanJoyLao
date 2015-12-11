@@ -1,5 +1,6 @@
 package rsantillanc.sanjoylao.receiver;
 
+import android.annotation.TargetApi;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -21,7 +22,7 @@ import java.io.Serializable;
 
 import rsantillanc.sanjoylao.R;
 import rsantillanc.sanjoylao.SJLApplication;
-import rsantillanc.sanjoylao.model.OrderModel;
+import rsantillanc.sanjoylao.model.PushOrderModel;
 import rsantillanc.sanjoylao.model.UserModel;
 import rsantillanc.sanjoylao.ui.activity.OrderHistoryActivity;
 import rsantillanc.sanjoylao.ui.mvp.OrderHistory.OrderHistoryIteractorImpl;
@@ -45,7 +46,7 @@ public class OrderPushReceiver extends ParsePushBroadcastReceiver {
         this._context = context;
 
         app = ((SJLApplication) context.getApplicationContext());
-            Log.e(Const.DEBUG_PUSH, "Incoming push notification");
+        Log.e(Const.DEBUG_PUSH, "Incoming push notification");
 
         if (intent == null)
             return;
@@ -53,43 +54,43 @@ public class OrderPushReceiver extends ParsePushBroadcastReceiver {
         try {
             historyIntent = intent;
             //Get model
-            OrderModel order = getModelFromJson(intent);
-            Log.e(Const.DEBUG_PUSH, TAG + order.toString());
+            PushOrderModel pushOrder = getModelFromJson(intent);
+            Log.e(Const.DEBUG_PUSH, TAG + intent.getExtras().getString("com.parse.Data"));
 
             //Set data & show
-            buildDataToSend(order, context);
+            buildDataToSend(pushOrder, context);
 
         } catch (JSONException e) {
             Log.e(Const.DEBUG_PUSH, "Push notification JSONException : " + e.getMessage());
         }
     }
 
-    private void buildDataToSend(Serializable order, Context context) {
+    private void buildDataToSend(Serializable pushOrder, Context context) {
         Intent result = new Intent(context, OrderHistoryActivity.class);
         Bundle bundle = new Bundle();
-        bundle.putSerializable(Const.EXTRA_ORDER, order);
-        bundle.putInt(Const.KEY_PUSH_STATUS, Const.STATUS_CONFIRMED);
+        bundle.putSerializable(Const.EXTRA_PUSH_ORDER, pushOrder);
         historyIntent.putExtras(bundle);
 
         //Show
-        showNotificationOrder(result,((OrderModel) order));
-        changeStatusAtCurrentOrder(((OrderModel) order), app.getCurrentUser());
+        showNotificationOrder(result, (PushOrderModel) pushOrder);
+        changeStatusAtCurrentOrder((PushOrderModel) pushOrder, app.getCurrentUser());
     }
 
-    private void changeStatusAtCurrentOrder(OrderModel order, UserModel user) {
+    private void changeStatusAtCurrentOrder(PushOrderModel pushOrder, UserModel user) {
         OrderHistoryIteractorImpl impl = new OrderHistoryIteractorImpl();
-        impl.updateOrder(_context, order, user.getObjectId(), Const.STATUS_CONFIRMED);
+        impl.updateOrder(_context, pushOrder.getOrderObjectId(), user.getObjectId(), pushOrder.getStatusCode());
     }
 
 
-    private void showNotificationOrder(Intent result, OrderModel order) {
+    private void showNotificationOrder(Intent result, PushOrderModel pushOrder) {
         result.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         result.putExtras(historyIntent.getExtras());
 
-        buildNotification(result,order);
+        buildNotification(result, pushOrder);
     }
 
-    private void buildNotification(Intent notifyIntent, OrderModel order) {
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+    private void buildNotification(Intent notifyIntent, PushOrderModel pushOrder) {
         if (Android.isAppIsInBackground(_context)) {
 
             /**Build PendingIntent*/
@@ -100,8 +101,8 @@ public class OrderPushReceiver extends ParsePushBroadcastReceiver {
             Notification.Builder builder = new Notification.Builder(_context);
             builder.setSmallIcon(R.drawable.vec_notification_default);
             builder.setContentTitle(_context.getString(R.string.notification_order_confirmed));
-            builder.setContentText("Order: " + order.getObjectId());
-            builder.setSubText("Sr(a). "+ app.getCurrentUser().getFullName());
+            builder.setContentText("Order: " + pushOrder.getOrderObjectId());
+            builder.setSubText("Sr(a). " + app.getCurrentUser().getFullName());
             builder.setTicker(_context.getString(R.string.app_name));
             builder.setLights(0xff00ff00, 300, 1000);
             builder.setContentIntent(pendingIntent);
@@ -123,9 +124,8 @@ public class OrderPushReceiver extends ParsePushBroadcastReceiver {
         }
     }
 
-    private OrderModel getModelFromJson(Intent intent) throws JSONException {
+    private PushOrderModel getModelFromJson(Intent intent) throws JSONException {
         JSONObject json = new JSONObject(intent.getExtras().getString("com.parse.Data"));
-        String sOrder = json.get("order").toString();
-        return new Gson().fromJson(sOrder, OrderModel.class);
+        return new Gson().fromJson(String.valueOf(json), PushOrderModel.class);
     }
 }

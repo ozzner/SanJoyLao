@@ -131,4 +131,7 @@ public class MainPresenterImpl {
     }
 
 
+    public void subscriberOwnChannel(String objectId) {
+        iteractor.subscriberMe(objectId);
+    }
 }

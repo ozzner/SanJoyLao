@@ -27,12 +27,19 @@ public class OrderHistoryIteractorImpl implements IOrderHistoryIteractor {
             public void run() {
                 List<OrderModel> orders = new OrderDao(c).getOrders(userID, c);
                 if (orders != null)
-                    listener.onFindDataSuccess(orders,c);
+                    listener.onFindDataSuccess(orders, c);
                 else
                     listener.onErrorLoad(c.getString(R.string.error_empty_data));
             }
         });
     }
+
+    @Override
+    public void updateOrder(Context c, String orderID, String objectId, int statusCode) {
+        int i = new OrderDao(c).updateStatus(new StatusDao(c).getStatusByCode(statusCode), orderID);
+        Log.e(Const.DEBUG, "upgrade: " + i);
+    }
+
 
 //    @Override
 //    public void upgradeOrder(OrderModel order, Context c, int statusCode, OrderHistoryPresenter lis, String userID) {
@@ -42,10 +49,5 @@ public class OrderHistoryIteractorImpl implements IOrderHistoryIteractor {
 //            lis.onSuccessOrderUpgraded(c,"success!", userID);
 //    }
 
-    @Override
-    public void updateOrder(Context c, OrderModel order, String objectId, int statusCode) {
-        int i = new OrderDao(c).updateStatus(new StatusDao(c).getStatusByCode(statusCode), order);
-        Log.e(Const.DEBUG,"upgrade: " + i);
-    }
 
 }

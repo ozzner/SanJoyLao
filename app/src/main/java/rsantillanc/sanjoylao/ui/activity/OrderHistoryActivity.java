@@ -17,6 +17,7 @@ import java.util.List;
 import rsantillanc.sanjoylao.R;
 import rsantillanc.sanjoylao.SJLApplication;
 import rsantillanc.sanjoylao.model.OrderModel;
+import rsantillanc.sanjoylao.model.PushOrderModel;
 import rsantillanc.sanjoylao.ui.custom.adapter.RecyclerOrderAdapter;
 import rsantillanc.sanjoylao.ui.mvp.OrderHistory.IOrderHistoryView;
 import rsantillanc.sanjoylao.ui.mvp.OrderHistory.OrderHistoryPresenter;
@@ -34,7 +35,6 @@ public class OrderHistoryActivity extends BaseActivity implements IOrderHistoryV
     private SJLApplication app;
     public static boolean isActive = false;
     private View view;
-
 
 
     @Override
@@ -109,10 +109,9 @@ public class OrderHistoryActivity extends BaseActivity implements IOrderHistoryV
         if (intent.getExtras() == null)
             return;
 
-        presenter.loopOrdersAndUpdate(
-                (OrderModel) intent.getSerializableExtra(Const.EXTRA_ORDER),
-                orderAdapter.getOrders());
-
+        PushOrderModel pushOrder = (PushOrderModel) intent.getSerializableExtra(Const.EXTRA_PUSH_ORDER);
+        orderAdapter.setEstimatedTime(pushOrder.getEstimatedTime());
+        presenter.loopOrdersAndUpdate(pushOrder, orderAdapter);
     }
 
     @Override
@@ -154,9 +153,9 @@ public class OrderHistoryActivity extends BaseActivity implements IOrderHistoryV
     @Override
     public void refresh(Context c, String userID) {
         if (presenter == null)
-            presenter = new OrderHistoryPresenter(this,this);
+            presenter = new OrderHistoryPresenter(this, this);
 
-        presenter.loadOrderHistory(c,userID);
+        presenter.loadOrderHistory(c, userID);
     }
 
     @Override

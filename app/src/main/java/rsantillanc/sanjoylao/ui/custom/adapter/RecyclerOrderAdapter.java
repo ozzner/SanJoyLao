@@ -40,6 +40,7 @@ public class RecyclerOrderAdapter extends RecyclerView.Adapter<RecyclerOrderAdap
     private int position;
     private OrderDetailModel orderToDelete;
     public int counter;
+    private int estimatedTime = 0;
 
 
     public RecyclerOrderAdapter(List<OrderDetailModel> details, Activity ctx) {
@@ -94,6 +95,8 @@ public class RecyclerOrderAdapter extends RecyclerView.Adapter<RecyclerOrderAdap
             orderHolder.tvPrice.setText(Const.PRICE_PEN + SJLStrings.format((order.getPrice()), SJLStrings.FORMAT_MILES_EN));
             orderHolder.tvDatatime.setText(SJLDates.customDateConverter(order.getCreatedAt(), SJLStrings.PARSE_DATE_FORMAT, SJLDates.FORMAT_DATE_2));
             orderHolder.tvTimer.setVisibility(View.GONE);
+            orderHolder.tvTimer.setText(getEstimatedTime() + Const.MIN);
+
 
             switch (order.getStatus().getCode()) {
 
@@ -109,6 +112,7 @@ public class RecyclerOrderAdapter extends RecyclerView.Adapter<RecyclerOrderAdap
                     orderHolder.cvStatus.setStrokeColor(activity.getResources().getColor(R.color.red));
                     orderHolder.cvStatus.setFillColor(activity.getResources().getColor(R.color.red));
                     orderHolder.tvStatus.setText(order.getStatus().getName());
+
                     break;
 
                     /*Cuando se determina el tiempo de entrega de la orden o de recojo.*/
@@ -141,6 +145,8 @@ public class RecyclerOrderAdapter extends RecyclerView.Adapter<RecyclerOrderAdap
                     orderHolder.tvStatus.setText(order.getStatus().getName());
                     break;
             }
+
+//            orderHolder.cvStatus.invalidate();
         }
 
     }
@@ -170,6 +176,14 @@ public class RecyclerOrderAdapter extends RecyclerView.Adapter<RecyclerOrderAdap
 
     public void setOrders(List<OrderModel> orders) {
         this.orders = orders;
+    }
+
+    public void setEstimatedTime(int estimatedTime) {
+        this.estimatedTime = estimatedTime;
+    }
+
+    public int getEstimatedTime() {
+        return estimatedTime;
     }
 
     class OrderViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

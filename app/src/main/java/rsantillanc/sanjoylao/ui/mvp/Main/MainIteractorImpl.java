@@ -6,6 +6,7 @@ import android.widget.ImageView;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.parse.ParsePush;
 import com.squareup.picasso.Picasso;
 
 import java.lang.reflect.Type;
@@ -450,4 +451,7 @@ public class MainIteractorImpl {
         return s;
     }
 
+    public void subscriberMe(String objectId) {
+        ParsePush.subscribeInBackground(objectId);
+    }
 }

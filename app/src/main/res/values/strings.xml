@@ -163,5 +163,6 @@
     <string name="hint_type_dni">DNI</string>
     <string name="hint_type_local_address">Seleccione un local</string>
     <string name="sending">Enviando...</string>
+    <string name="status_cancelled">cancelado</string>
 
 </resources>

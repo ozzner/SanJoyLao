@@ -95,11 +95,10 @@ public class OrderDao {
         return db.update(Tables.ORDERS, cv, objectId + COMPARE, new String[]{order.getObjectId()});
     }
 
-    public int updateStatus(StatusModel status, OrderModel order) {
+    public int updateStatus(StatusModel status, String orderID) {
         ContentValues cv = new ContentValues();
         cv.put(idStatus, status.getObjectId());
-
-        return db.update(Tables.ORDERS, cv, objectId + COMPARE, new String[]{order.getObjectId()});
+        return db.update(Tables.ORDERS, cv, objectId + COMPARE, new String[]{orderID});
     }
 
 
