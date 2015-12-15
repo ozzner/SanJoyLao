@@ -170,15 +170,10 @@ public class OrderIteractorImpl implements IOrderIteractor {
                 details.put(i, item);
             }
             order.accumulate("details", details);
-
             data.accumulate("data", order);
             Log.e(Const.DEBUG, "Data json: " + data.toString());
 
-        } catch (
-                JSONException e
-                )
-
-        {
+        } catch (JSONException e) {
             e.printStackTrace();
         }
 

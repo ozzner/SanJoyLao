@@ -179,7 +179,7 @@ public class LoginPresenterImpl implements ILoginPresenter, OnRegisterListener, 
         if (flagOauthGoogle)
             mLoginView.closeGoogleConnection();
         else
-            mLoginView.closeFacebookConection();
+            mLoginView.closeFacebookConnection();
     }
 
     /**

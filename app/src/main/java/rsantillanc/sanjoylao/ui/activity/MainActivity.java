@@ -48,6 +48,10 @@ public class MainActivity extends BaseActivity
     private static final String TAG = MainActivity.class.getSimpleName();
     private static final long DELAY_SHORT = 0b11111010;
     private static final long DELAY_LONG = 0b111110100;
+    public static final int HOME = 10;
+    public static final String TAG_COLLAPSED = "collapsed";
+    public static final String TAG_EXPANDED = "expanded";
+
 
     //views
     private Toolbar toolbar;
@@ -58,11 +62,6 @@ public class MainActivity extends BaseActivity
     private TextView email;
     private CircleImageView profileImage;
 
-
-
-    public static final int HOME = 10;
-    public static final String TAG_COLLAPSED = "collapsed";
-    public static final String TAG_EXPANDED = "expanded";
 
 
     //Global vars
