@@ -9,23 +9,64 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import java.util.List;
+
 import rsantillanc.sanjoylao.R;
+import rsantillanc.sanjoylao.model.LocalRestaurantModel;
+import rsantillanc.sanjoylao.model.ParseGeoPointModel;
+import rsantillanc.sanjoylao.ui.mvp.Map.IMapView;
+import rsantillanc.sanjoylao.ui.mvp.Map.MapPresenterImpl;
 
-public class MapActivity extends FragmentActivity implements OnMapReadyCallback {
+public class MapActivity extends FragmentActivity implements
+        OnMapReadyCallback, IMapView{
 
+    private GoogleMap map;
+    private MapPresenterImpl presenter;
 
-    private GoogleMap mMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
+
+        //Data & context
+        init();
+
+
+    }
+
+    private void init() {
+        startMap();
+        presenter = new MapPresenterImpl(MapActivity.this);
+    }
+
+    private void startMap() {
         // Obtain the SupportMapFragment and list notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
     }
 
+
+    private void buildMarkers(List<LocalRestaurantModel> locals) {
+        ParseGeoPointModel local = null;
+
+        for (int i = 0; i < locals.size(); i++) {
+            local = locals.get(i).getLocation();
+
+            map.addMarker(new MarkerOptions().position(
+                    new LatLng(
+                            local.getLatitude(),
+                            local.getLongitude())
+            ).title(locals.get(i).getRestaurant().getName())
+                    .snippet(locals.get(i).getAddress()));
+        }
+
+        if (local != null){
+
+            map.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(local.getLatitude(), local.getLongitude())));}
+    }
 
     /**
      * Manipulates the map once available.
@@ -38,11 +79,21 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
      */
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        mMap = googleMap;
-
-        // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        map = googleMap;
+        map.setMyLocationEnabled(true);
+//        map.setOnMyLocationButtonClickListener(this);
+        presenter.findLocals();
     }
+
+
+
+
+
+    //{IMapView}
+
+    @Override
+    public void printLocals(List<LocalRestaurantModel> locals) {
+        buildMarkers(locals);
+    }
+
 }

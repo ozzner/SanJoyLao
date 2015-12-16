@@ -10,5 +10,5 @@ public interface ILoginView {
     void onError(CharSequence s);
     void goToDashboard(Object obj);
     void closeGoogleConnection();
-    void closeFacebookConection();
+    void closeFacebookConnection();
 }

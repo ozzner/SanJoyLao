@@ -330,7 +330,7 @@ public class LoginActivity extends BaseActivity implements ILoginView,
     }
 
     @Override
-    public void closeFacebookConection() {
+    public void closeFacebookConnection() {
         if (mLoginManager != null){
             mLoginManager.logOut();
             mButtonFacebook = null;
