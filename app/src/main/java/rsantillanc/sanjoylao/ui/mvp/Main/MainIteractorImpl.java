@@ -1,11 +1,13 @@
 package rsantillanc.sanjoylao.ui.mvp.Main;
 
+import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 import android.widget.ImageView;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.parse.ParseInstallation;
 import com.parse.ParsePush;
 import com.squareup.picasso.Picasso;
 
@@ -34,6 +36,7 @@ import rsantillanc.sanjoylao.model.RelationLocalRestaurant;
 import rsantillanc.sanjoylao.model.RestaurantModel;
 import rsantillanc.sanjoylao.model.SizeModel;
 import rsantillanc.sanjoylao.model.StatusModel;
+import rsantillanc.sanjoylao.model.UserModel;
 import rsantillanc.sanjoylao.storage.dao.CategoryDao;
 import rsantillanc.sanjoylao.storage.dao.LocalRestaurantDao;
 import rsantillanc.sanjoylao.storage.dao.OrderDao;
@@ -43,6 +46,7 @@ import rsantillanc.sanjoylao.storage.dao.PlateSizeDao;
 import rsantillanc.sanjoylao.storage.dao.RestaurantDao;
 import rsantillanc.sanjoylao.storage.dao.SizeDao;
 import rsantillanc.sanjoylao.storage.dao.StatusDao;
+import rsantillanc.sanjoylao.storage.dao.UserDao;
 import rsantillanc.sanjoylao.util.Const;
 import rsantillanc.sanjoylao.util.ConstAPI;
 import rsantillanc.sanjoylao.util.SJLStrings;
@@ -452,6 +456,15 @@ public class MainIteractorImpl {
     }
 
     public void subscriberMe(String objectId) {
-        ParsePush.subscribeInBackground(objectId);
+        ParsePush.subscribeInBackground(Const.SJL_CHANNEL_CLIENT + objectId);
+    }
+
+    public void closeSession(Activity mView, UserModel currentUser) {
+        new UserDao(mView).logout();
+        List<String> subscribedChannels = ParseInstallation.getCurrentInstallation().getList("channels");
+        for (int i = 0; i < subscribedChannels.size(); i++) {
+            ParsePush.unsubscribeInBackground(subscribedChannels.get(i));
+        }
+
     }
 }

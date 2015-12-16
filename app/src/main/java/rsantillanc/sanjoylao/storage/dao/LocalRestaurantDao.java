@@ -44,7 +44,7 @@ public class LocalRestaurantDao extends BaseDao {
         cv.put(updatedAt, local.getUpdatedAt());
         cv.put(deliveryAvailable, local.isDeliveryAvailable() ? 1 : 0);
         cv.put(idRestaurant, local.getRestaurant().getObjectId());
-        cv.put(locationLongitude, local.getLocation().getLongitude());
+        cv.put(locationLatitude, local.getLocation().getLatitude());
         cv.put(locationLongitude, local.getLocation().getLongitude());
         cv.put(address, local.getAddress());
         cv.put(reservationAvailable, local.isReservationAvailable() ? 1 : 0);
