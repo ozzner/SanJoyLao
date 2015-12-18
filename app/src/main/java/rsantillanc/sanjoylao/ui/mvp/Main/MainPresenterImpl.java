@@ -131,7 +131,6 @@ public class MainPresenterImpl implements IMainPresenter {
         mView.markItemSelected(id);
     }
 
-
     public void subscriberOwnChannel(String objectId) {
         iteractor.subscriberMe(objectId);
     }
