@@ -10,6 +10,7 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import com.google.gson.Gson;
@@ -98,15 +99,36 @@ public class OrderPushReceiver extends ParsePushBroadcastReceiver {
                     0, notifyIntent, PendingIntent.FLAG_CANCEL_CURRENT);
 
             /**Build Notification*/
-            Notification.Builder builder = new Notification.Builder(_context);
+
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(_context);
+
+
+            //Set status
+            switch (pushOrder.getStatusCode()) {
+                case Const.STATUS_CONFIRMED:
+                    builder.setContentTitle(_context.getString(R.string.notification_order_confirmed));
+                    builder.setContentText("Sr(a). " + app.getCurrentUser().getFullName()
+                            + " su order ha tardará aproximadamente " + pushOrder.getEstimatedTime() + " min.");
+                    builder.setStyle(new NotificationCompat.BigTextStyle().bigText("Sr(a). " + app.getCurrentUser().getFullName()
+                            + " su order ha tardará aproximadamente " + pushOrder.getEstimatedTime() + " min."));
+                    break;
+                case Const.STATUS_CANCELLED:
+                    builder.setContentTitle(_context.getString(R.string.notification_order_cancelled));
+                    builder.setContentText("Sr(a). " + app.getCurrentUser().getFullName()
+                            + " su order ha sido cancelada, lamentamos los inconvenientes.");
+                    builder.setStyle(new NotificationCompat.BigTextStyle().bigText("Sr(a). " + app.getCurrentUser().getFullName()
+                            + " su order ha sido cancelada, lamentamos los inconvenientes."));
+                    break;
+            }
+
+
             builder.setSmallIcon(R.drawable.vec_notification_default);
-            builder.setContentTitle(_context.getString(R.string.notification_order_confirmed));
-            builder.setContentText("Order: " + pushOrder.getOrderObjectId());
-            builder.setSubText("Sr(a). " + app.getCurrentUser().getFullName());
+            builder.setSubText("Código orden: " + pushOrder.getOrderObjectId());
             builder.setTicker(_context.getString(R.string.app_name));
             builder.setLights(0xff00ff00, 300, 1000);
             builder.setContentIntent(pendingIntent);
             builder.setAutoCancel(true);
+
 
             //sound
             Uri soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
