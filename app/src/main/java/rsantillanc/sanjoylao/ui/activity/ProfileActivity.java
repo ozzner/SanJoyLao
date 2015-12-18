@@ -7,6 +7,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
+import android.test.mock.MockApplication;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import rsantillanc.sanjoylao.R;
+import rsantillanc.sanjoylao.SJLApplication;
 import rsantillanc.sanjoylao.model.UserModel;
 import rsantillanc.sanjoylao.ui.custom.adapter.ViewPagerAdapter;
 import rsantillanc.sanjoylao.ui.fragment.AccountFragment;
@@ -43,7 +45,7 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
     private ProfilePresenterImpl presenter;
     private ViewPagerAdapter pagerAdapter;
     private List<Fragment> fragments;
-    private UserModel currentUser;
+    private SJLApplication app;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,9 +63,9 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
     }
 
     private void init() {
+        app = ((SJLApplication) getApplication());
         presenter = new ProfilePresenterImpl(this);
         fragments = new ArrayList<>();
-        currentUser = (UserModel) getIntent().getExtras().getSerializable(Const.EXTRA_USER);
     }
 
 
@@ -89,7 +91,7 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
     }
 
     private void buildFragments() {
-        fragments.add(new AccountFragment(currentUser));
+        fragments.add(new AccountFragment(app.getCurrentUser()));
         fragments.add(new FavoriteFragment());
         setFragments(fragments);
     }
@@ -150,7 +152,7 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
             showToast(getString(R.string.app_name) + Android.getAppVersion(this));
             return true;
         } else {
-            goToMainActivity((UserModel) getIntent().getExtras().getSerializable(Const.EXTRA_USER));
+            goToMainActivity(app.getCurrentUser());
             return true;
         }
 
@@ -167,7 +169,7 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
 
     @Override
     public void onBackPressed() {
-        goToMainActivity((UserModel) getIntent().getExtras().getSerializable(Const.EXTRA_USER));
+        goToMainActivity(app.getCurrentUser());
     }
 
     //---------------------- [CALLBAKCS]
@@ -195,7 +197,7 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
 
     @Override
     public void validateFieldsOk() {
-        presenter.save(((AccountFragment) getFragments().get(0)).getFields(),currentUser);
+        presenter.save(((AccountFragment) getFragments().get(0)).getFields(),app.getCurrentUser());
     }
 
 

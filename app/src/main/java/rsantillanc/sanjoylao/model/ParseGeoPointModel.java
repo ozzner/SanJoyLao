@@ -2,6 +2,8 @@ package rsantillanc.sanjoylao.model;
 
 import java.io.Serializable;
 
+import rsantillanc.sanjoylao.util.Const;
+
 /**
  * Created by RenzoD on 06/11/2015.
  */
@@ -14,6 +16,7 @@ public class ParseGeoPointModel implements Serializable{
     public ParseGeoPointModel(double latitude, double longitude) {
         this.latitude = latitude;
         this.longitude = longitude;
+        this.__type = Const.KEY_POINTER;
     }
 
     public double getLatitude() {

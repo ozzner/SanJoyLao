@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.widget.ImageView;
 
 import rsantillanc.sanjoylao.R;
+import rsantillanc.sanjoylao.model.UserModel;
 import rsantillanc.sanjoylao.storage.sp.SJLPreferences;
 import rsantillanc.sanjoylao.ui.fragment.CategoryFragment;
 import rsantillanc.sanjoylao.ui.fragment.HomeFragment;
@@ -11,7 +12,7 @@ import rsantillanc.sanjoylao.ui.fragment.HomeFragment;
 /**
  * Created by rsantillanc on 20/10/2015.
  */
-public class MainPresenterImpl {
+public class MainPresenterImpl implements IMainPresenter {
     //Constants
     public static final int ENTREE = R.id.nav_main_entree;
     public static final int SOUP = R.id.nav_main_soup;
@@ -130,8 +131,13 @@ public class MainPresenterImpl {
         mView.markItemSelected(id);
     }
 
-
     public void subscriberOwnChannel(String objectId) {
         iteractor.subscriberMe(objectId);
+    }
+
+
+    @Override
+    public void logout(UserModel currentUser) {
+        iteractor.closeSession(mainActivity,currentUser);
     }
 }

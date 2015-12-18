@@ -1,9 +1,11 @@
 package rsantillanc.sanjoylao.ui.mvp.Profile;
 
+import android.test.mock.MockApplication;
 import android.text.TextUtils;
 import android.widget.EditText;
 
 import rsantillanc.sanjoylao.R;
+import rsantillanc.sanjoylao.SJLApplication;
 import rsantillanc.sanjoylao.interfaces.OnSaveListener;
 import rsantillanc.sanjoylao.model.UserModel;
 import rsantillanc.sanjoylao.ui.activity.ProfileActivity;
@@ -44,6 +46,8 @@ public class ProfilePresenterImpl implements IProfilePresenter,OnSaveListener {
         userSerializable.setIdentificationDocument(Long.parseLong(fields[0].getText().toString().trim()));
         userSerializable.setPhoneNumber(Long.parseLong(fields[1].getText().toString().trim()));
         userSerializable.setBirthday((fields[2].getText().toString().trim()));
+        SJLApplication app = (SJLApplication) view.getApplication();
+        app.setCurrentUser(userSerializable);
         iteractor.saveIn(userSerializable, this);
     }
 

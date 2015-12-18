@@ -19,7 +19,7 @@ import rsantillanc.sanjoylao.ui.mvp.Map.IMapView;
 import rsantillanc.sanjoylao.ui.mvp.Map.MapPresenterImpl;
 
 public class MapActivity extends FragmentActivity implements
-        OnMapReadyCallback, IMapView{
+        OnMapReadyCallback, IMapView {
 
     private GoogleMap map;
     private MapPresenterImpl presenter;
@@ -60,12 +60,13 @@ public class MapActivity extends FragmentActivity implements
                             local.getLatitude(),
                             local.getLongitude())
             ).title(locals.get(i).getRestaurant().getName())
-                    .snippet(locals.get(i).getAddress()));
+                    .snippet(locals.get(i).getAddress())).showInfoWindow();
         }
 
-        if (local != null){
+        if (local != null) {
+            map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(local.getLatitude(), local.getLongitude()),16f));
 
-            map.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(local.getLatitude(), local.getLongitude())));}
+        }
     }
 
     /**
@@ -84,9 +85,6 @@ public class MapActivity extends FragmentActivity implements
 //        map.setOnMyLocationButtonClickListener(this);
         presenter.findLocals();
     }
-
-
-
 
 
     //{IMapView}

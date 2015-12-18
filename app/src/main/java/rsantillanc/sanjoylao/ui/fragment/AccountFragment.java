@@ -1,6 +1,7 @@
 package rsantillanc.sanjoylao.ui.fragment;
 
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -21,6 +22,7 @@ import rsantillanc.sanjoylao.util.SJLStrings;
 /**
  * A simple {@link Fragment} subclass.
  */
+@SuppressLint("ValidFragment")
 public class AccountFragment extends Fragment implements IAccountView, View.OnClickListener {
 
     //public & static
@@ -41,6 +43,7 @@ public class AccountFragment extends Fragment implements IAccountView, View.OnCl
     private EditText[] fields;
 
 
+    @SuppressLint("ValidFragment")
     public AccountFragment(UserModel currentUser) {
         user = currentUser;
         presenter = new AccountPresenterImpl(getActivity(), this);

@@ -15,11 +15,9 @@ import rsantillanc.sanjoylao.util.Const;
 public class SJLApplication extends MultiDexApplication {
 
     private UserModel currentUser;
-
     public UserModel getCurrentUser() {
         return currentUser;
     }
-
     public void setCurrentUser(UserModel currentUser) {
         this.currentUser = currentUser;
     }

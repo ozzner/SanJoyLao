@@ -95,6 +95,8 @@ public class MainActivity extends BaseActivity
         //Synchronizing
         sync();
 
+
+
     }
 
 
@@ -267,7 +269,7 @@ public class MainActivity extends BaseActivity
         //TODO bad practice
         Intent login = new Intent(mContext, LoginActivity.class);
         startActivity(login);
-        new UserDao(this).logout();
+        presenter.logout(app.getCurrentUser());
 
         //End main
         finish();
